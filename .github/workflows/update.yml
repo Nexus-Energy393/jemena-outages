@@ -2,9 +2,8 @@ name: Update Jemena outages map
 
 on:
   schedule:
-    # 20:00 UTC = 06:00 AEST (Melbourne, non-daylight-saving).
-    # During daylight saving (Oct-Apr) this runs at 07:00 AEDT. If that bothers you,
-    # change to '0 19 * * *' for 06:00 AEDT / 05:00 AEST.
+    # 20:00 UTC = 06:00 AEST / 07:00 AEDT. Change to '0 19 * * *' if you'd
+    # rather get 06:00 AEDT / 05:00 AEST.
     - cron: '0 20 * * *'
   workflow_dispatch: {}
 
@@ -39,9 +38,11 @@ jobs:
         run: python -m playwright install --with-deps chromium
 
       - name: Run scraper and rebuild map
+        id: scrape
+        continue-on-error: true
         run: python scrape.py
 
-      - name: Commit updated docs
+      - name: Commit updated docs and cache
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -49,6 +50,16 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes to commit."
           else
-            git commit -m "Update outage data ($(date -u +%Y-%m-%dT%H:%M:%SZ))"
+            if [ "${{ steps.scrape.outcome }}" = "success" ]; then
+              git commit -m "Update outage data ($(date -u +%Y-%m-%dT%H:%M:%SZ))"
+            else
+              git commit -m "Scrape failed, saving debug files ($(date -u +%Y-%m-%dT%H:%M:%SZ))"
+            fi
             git push
           fi
+
+      - name: Fail the run if the scrape itself failed
+        if: steps.scrape.outcome == 'failure'
+        run: |
+          echo "::error::Scrape step failed. See docs/_last_scrape.png and docs/_last_scrape_raw.json."
+          exit 1
