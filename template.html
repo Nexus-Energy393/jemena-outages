@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Jemena planned outages — affected streets</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<style>
+  html, body { margin:0; height:100%; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; color:#222; }
+  #map { position:absolute; inset:0; }
+  .info-box { background:#fff; padding:10px 14px; border-radius:6px; box-shadow:0 1px 6px rgba(0,0,0,.25); font-size:13px; line-height:1.45; max-width:260px; }
+  .info-box h4 { margin:0 0 6px; font-size:14px; font-weight:600; }
+  .legend-item { display:flex; align-items:center; gap:8px; margin:4px 0; }
+  .legend-swatch { width:20px; height:4px; border-radius:2px; }
+  .legend-dot { width:12px; height:12px; border-radius:50%; border:2px solid #fff; box-shadow:0 0 0 1px rgba(0,0,0,.2); }
+  .leaflet-popup-content { margin:10px 14px; font-size:13px; line-height:1.5; max-width:320px; }
+  .leaflet-popup-content h3 { margin:0 0 6px; font-size:14px; }
+  .leaflet-popup-content h4 { margin:10px 0 4px; font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:#666; }
+  .leaflet-popup-content .outage { margin:2px 0 2px 2px; font-size:12px; }
+  .leaflet-popup-content .outage.cancelled { color:#aaa; text-decoration:line-through; }
+  .leaflet-popup-content .street-block { margin-top:6px; }
+  .leaflet-popup-content .street-block .street-name { font-weight:500; font-size:12px; }
+  .leaflet-popup-content .street-block .no-geom { font-size:10px; color:#999; font-weight:normal; }
+  .chip { display:inline-block; padding:1px 7px; border-radius:10px; font-size:11px; font-weight:500; margin-right:4px; }
+  .chip.planned { background:#ffebee; color:#b71c1c; }
+  .chip.cancelled { background:#eee; color:#666; }
+  .leaflet-container a { color:#0b57d0; }
+  #updated { position:absolute; top:12px; left:12px; z-index:1000; background:#fff; padding:6px 10px; border-radius:6px; box-shadow:0 1px 4px rgba(0,0,0,.15); font-size:11px; color:#555; }
+  #updated strong { color:#222; }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<div id="updated">Last updated: <strong id="updated-value">…</strong></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+const DATA = __DATA__;
+const MATCHED = new Set(DATA.matchedPairs);
+
+document.getElementById('updated-value').textContent = DATA.meta.extracted;
+
+const map = L.map('map', { preferCanvas: true }).setView([-37.74, 144.88], 11);
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+  maxZoom: 19, subdomains: 'abcd',
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a> | Outage data &copy; Jemena'
+}).addTo(map);
+
+function esc(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function norm(s) { return String(s || '').toLowerCase().replace(/\s+/g, ' ').trim(); }
+
+function buildSuburbPopup(s) {
+  const byStreet = {};
+  for (const o of DATA.outages.filter(o => o.suburb === s.name)) (byStreet[o.street] ||= []).push(o);
+  const streetHtml = Object.keys(byStreet).sort().map(street => {
+    const key = s.name.toLowerCase() + '||' + norm(street);
+    const hasGeom = MATCHED.has(key);
+    const list = byStreet[street].map(o => {
+      const c = o.status === 'Cancelled';
+      return `<div class="outage ${c?'cancelled':''}">${esc(o.start)} – ${esc(o.end)}${c?' <span class="chip cancelled">cancelled</span>':''}</div>`;
+    }).join('');
+    return `<div class="street-block"><div class="street-name">${esc(street)}${hasGeom?'':' <span class="no-geom">(not on map)</span>'}</div>${list}</div>`;
+  }).join('');
+  return `<div><h3>${esc(s.name)}</h3>
+    <div><span class="chip planned">${s.planned} planned</span>
+    ${s.cancelled ? `<span class="chip cancelled">${s.cancelled} cancelled</span>` : ''}
+    <span style="font-size:12px;color:#666"> · ${s.streets.length} streets</span></div>
+    <h4>Outages by street</h4>${streetHtml}</div>`;
+}
+
+function buildStreetPopup(suburbName, streetName, outages) {
+  const items = outages.map(o => {
+    const c = o.status === 'Cancelled';
+    return `<div class="outage ${c?'cancelled':''}">${esc(o.start)} – ${esc(o.end)}${c?' <span class="chip cancelled">cancelled</span>':''}</div>`;
+  }).join('');
+  return `<div><h3>${esc(streetName)}</h3>
+    <div style="font-size:12px;color:#666;margin-bottom:4px">${esc(suburbName)}</div>${items}</div>`;
+}
+
+const markerIcon = L.divIcon({ className:'', html:'<div style="width:14px;height:14px;border-radius:50%;background:#1565c0;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.35)"></div>', iconSize:[14,14], iconAnchor:[7,7] });
+const markerIconCancelled = L.divIcon({ className:'', html:'<div style="width:14px;height:14px;border-radius:50%;background:#f9a825;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.35)"></div>', iconSize:[14,14], iconAnchor:[7,7] });
+
+const streetLayer = L.layerGroup().addTo(map);
+for (const s of DATA.streets) {
+  L.polyline(s.coords, {
+    color: s.cancelled ? '#9e9e9e' : '#e53935',
+    weight: 6, opacity: 0.85, lineJoin: 'round', lineCap: 'round',
+  }).bindPopup(buildStreetPopup(s.suburb, s.name, s.outages))
+    .addTo(streetLayer);
+}
+
+const markerLayer = L.layerGroup().addTo(map);
+DATA.suburbs.forEach(s => {
+  L.marker([s.lat, s.lng], { icon: s.cancelled>0 ? markerIconCancelled : markerIcon, title: s.name })
+   .bindPopup(buildSuburbPopup(s), { maxHeight: 380 }).addTo(markerLayer);
+});
+
+if (DATA.suburbs.length) {
+  map.fitBounds(L.latLngBounds(DATA.suburbs.map(s => [s.lat, s.lng])).pad(0.15));
+}
+
+const legend = L.control({ position:'bottomright' });
+legend.onAdd = () => {
+  const div = L.DomUtil.create('div', 'info-box');
+  const unmapped = DATA.suburbs.reduce((a, s) => a + s.streets.filter(st => !MATCHED.has(s.name.toLowerCase() + '||' + norm(st))).length, 0);
+  div.innerHTML = `<h4>Jemena planned outages</h4>
+    <div class="legend-item"><span class="legend-swatch" style="background:#e53935"></span>Street with planned outage</div>
+    <div class="legend-item"><span class="legend-swatch" style="background:#9e9e9e"></span>Only cancelled outages</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#1565c0"></span>Suburb (click for details)</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#f9a825"></span>Suburb with cancellations</div>
+    <div style="font-size:11px;color:#666;margin-top:6px">${esc(DATA.streets.length)} street segments shaded · ${unmapped} streets in popup only</div>
+    <div style="font-size:11px;color:#666;margin-top:2px">${esc(DATA.meta.source)}</div>`;
+  return div;
+};
+legend.addTo(map);
+</script>
+</body>
+</html>
