@@ -1,172 +1,141 @@
-# Jemena planned outages — auto-updating map
+# Jemena planned outages — auto-updating map + client impact
 
 A self-updating interactive map showing Jemena's planned electricity outages
-(Melbourne's north and west). A GitHub Action scrapes Jemena's website once a
-day, matches each affected street to its OpenStreetMap geometry, rebuilds the
-map, and publishes it to GitHub Pages.
+(Melbourne's north and west), with automatic identification of affected
+client sites.
+
+A GitHub Action scrapes Jemena's website once a day, matches each affected
+street to its OpenStreetMap geometry, identifies which of your tracked
+clients are in those areas, and publishes everything to GitHub Pages.
 
 The map URL stays the same forever; contents refresh every morning.
 
 ---
 
-## First-time setup (once, ~15 minutes)
+## What's published
 
-### 1. Create a GitHub account
+Every morning, three things land on the Pages site:
 
-Go to https://github.com/signup. Pick a username — it shows up in your public
-URL later (e.g. `https://yourname.github.io/jemena-outages`), so choose
-something work-appropriate.
-
-### 2. Create the repository
-
-- Click the `+` icon at the top-right → **New repository**.
-- Repository name: `jemena-outages` (anything works, but short is nice).
-- Visibility: **Public**. GitHub Pages requires public on free accounts.
-- Tick **Add a README file**. You'll overwrite it in a moment.
-- Click **Create repository**.
-
-### 3. Upload the files
-
-- On your new repo's home page, click **Add file → Upload files**.
-- Drag every file from this folder into the browser — including the `.github`
-  folder and the `docs` folder. GitHub preserves folder structure.
-- Scroll down and click **Commit changes**.
-
-### 4. Enable GitHub Pages
-
-- Go to **Settings → Pages** (left sidebar).
-- Under **Build and deployment**:
-  - Source: **Deploy from a branch**
-  - Branch: **main**, folder: **/docs**
-- Click **Save**.
-- Wait 1–2 minutes. The page will show your live URL, something like
-  `https://yourname.github.io/jemena-outages/`.
-
-### 5. First run
-
-The workflow is scheduled for 6am Melbourne time daily, but you'll want to
-check it works now rather than waiting until tomorrow.
-
-- Go to the **Actions** tab.
-- If GitHub asks whether to enable workflows on this repo, click **Enable**.
-- Click **Update Jemena outages map** in the left sidebar.
-- Click **Run workflow → Run workflow** (top-right green button).
-- Watch the run. It takes about 3–5 minutes. Most time is spent installing
-  Playwright's headless browser.
-
-### 6. See the map
-
-Visit your Pages URL (`https://yourname.github.io/jemena-outages/`). You
-should see the map with today's outages.
-
-### 7. Share the URL with your team
-
-That's it — the same URL keeps showing fresh data every morning.
+- **`/`** — the interactive map with shaded streets, suburb pins, and client
+  markers (definitely affected in red, possibly affected in amber, others
+  in grey if you toggle the layer on)
+- **`/affected.html`** — a sortable, filterable table of impacted clients
+  with their contact details. Linked from a button on the main map.
+- **`/affected.csv`** — the same data as a spreadsheet for emails, mail
+  merge, etc.
 
 ---
 
-## How it works
+## Editing the client list
 
-Every day at 6am Melbourne time:
+The list of clients you want to track lives in `clients.csv` at the repo
+root. Open it on GitHub, click the pencil icon to edit, paste rows in,
+commit. The next daily run picks them up.
 
-1. GitHub Actions spins up a Ubuntu VM.
-2. `scrape.py` uses Playwright (headless Chrome) to open Jemena's planned
-   outages page. The page is a JavaScript app, so a headless browser is
-   needed — plain HTTP fetches get an empty shell.
-3. The scraper reads the outage table from the rendered DOM.
-4. For any suburb it hasn't seen before, it geocodes the name via
-   OpenStreetMap's Nominatim service. Results cache in `.cache/suburbs.json`
-   so we don't re-geocode day to day.
-5. It builds one Overpass API query covering every affected street, gets the
-   road geometries, and matches each segment to the Jemena outage data.
-6. It renders `docs/index.html` using `template.html` and commits the result
-   back to the repo. GitHub Pages auto-publishes the change.
+Required columns (header row must be present):
 
-If any step fails, the Action run goes red and GitHub emails you. The previous
-day's map remains live until you fix it.
+    name,address,suburb,postcode,category,contact_name,contact_phone,contact_email,notes
 
----
+Notes:
 
-## Customising
+- `name` and `suburb` are required for a row to be processed.
+- `address` should be just the street part (e.g. `123 Sydney Rd`). The
+  scraper geocodes each new address once via OpenStreetMap and caches
+  the result in `.cache/clients.json` so re-runs are instant.
+- `category` is freeform — what shows up as a coloured chip on the map.
+  Common ones: Retail, Hospitality, Manufacturing, Healthcare.
+- All contact fields are optional but they're what the affected page
+  shows when something needs a phone call.
 
-### Change the run time
-
-Edit `.github/workflows/update.yml`, line starting with `cron:`. The value is
-UTC time:
-
-- `0 20 * * *` = 06:00 AEST (standard time, May–Sep)
-- `0 19 * * *` = 06:00 AEDT (daylight saving, Oct–Apr)
-
-Pick whichever daylight regime matters more to you, or change it twice a year.
-GitHub doesn't let cron know about timezones.
-
-### Run more/less often
-
-Same file, same line. Replace `0 20` with `0 */6` for every 6 hours, or
-`0 20 * * 1-5` for weekdays only. Be polite to Jemena — once a day is
-plenty for data they update in business hours.
-
-### Different area (if Jemena ever change their scope)
-
-`scrape.py` works suburb-by-suburb based on whatever's in the table. No
-hardcoded suburb list; new suburbs get geocoded on the fly.
-
-### Identify the bot
-
-Set your repo URL in the User-Agent so Jemena can see who's hitting them if
-they ever check logs. Open `scrape.py`, find the `REPO_URL` line, replace
-with your URL. Or set a `REPO_URL` secret in the repo settings — it'll be
-picked up via environment variable.
+In addition to your list, the pipeline pulls major chains from
+OpenStreetMap automatically (refreshed weekly): McDonald's, Hungry Jack's,
+KFC, Aldi, Coles, Woolworths, IGA, Bunnings, Officeworks, Kmart, Target,
+Big W, and shopping centres. Edit the `CHAINS` list in `scrape.py` to
+add or remove.
 
 ---
 
-## When something breaks
+## Affected logic
 
-### "Scrape failed — could not find outage table"
+A client appears in the affected list if either:
 
-Jemena changed their page. The workflow saves two debug files to
-`docs/_last_scrape.png` (screenshot) and `docs/_last_scrape.html` (raw HTML).
-Open them to see what loaded. Most likely the table selector in
-`scrape.py → scrape_outages()` needs adjusting — update the JavaScript inside
-`page.evaluate(...)` to match the new markup.
+- **Definitely affected**: their address's street name + suburb appears
+  exactly in the day's outage list, OR
+- **Possibly affected**: they're within 200m of a shaded street segment
 
-### "Overpass failed"
+Both are shown separately so the team can prioritise. Definite goes red on
+the map and gets a red chip on the affected page; possible goes amber.
 
-The OpenStreetMap query server is volunteer-run and occasionally rate-limits.
-The scraper tries three mirrors in sequence. If all three are down for 5+ hours
-at a stretch, the daily run fails; tomorrow's run usually succeeds.
-
-### "Nominatim failed"
-
-Geocoding hiccups for a specific suburb. That suburb drops out of the map for
-the day but the rest stays. If it keeps failing, check the name spelling in
-the Jemena data.
-
-### Action runs succeed but the Pages URL shows an old map
-
-Wait 1–2 minutes after a successful run — GitHub Pages redeploys async. If
-still stale after 5 minutes, go to Settings → Pages and click whatever "redeploy"
-option is visible.
+The 200m default is set by `BUFFER_METRES` near the top of `scrape.py`.
 
 ---
 
-## Attribution and terms
+## Operational stuff
 
-This repo scrapes public data from jemena.com.au once a day and republishes
-it in a different visual form. It's operational reference data, not
-authoritative — always confirm directly with Jemena before acting on
-anything critical (particularly life-support notifications).
+### When the data changes
+- Daily run at 06:00 AEST (07:00 AEDT) — see `.github/workflows/update.yml`.
+- The chain list refreshes weekly to avoid hammering OpenStreetMap.
+- Every run saves debug snapshots to `docs/_last_scrape.png` and
+  `docs/_last_scrape_raw.json` so failures are diagnosable.
 
-Map data © OpenStreetMap contributors (ODbL). Base tiles © CARTO.
-Outage data © Jemena.
+### When something breaks
+- Failed run → check the Actions tab → click the red run → look at the
+  failing step. Most likely cause is Jemena changing their page markup;
+  the debug PNG and HTML get committed even on failure.
+- Failed geocode for a specific client row → that client just doesn't
+  appear on the map until you fix the address. No knock-on effect.
+- Overpass down → all three mirrors are tried in sequence. If all fail,
+  the workflow fails for the day, retries tomorrow.
+
+### Cost
+Free. GitHub Actions gives 2,000 free minutes/month for public repos
+(this run uses ~5/day = ~150/month). GitHub Pages is free. OSM/Nominatim/
+Overpass are free at our request rates. CARTO basemap tiles are free for
+non-commercial use up to 75k tiles/month.
 
 ---
 
-## Running locally (if you want to test changes first)
+## Setup, first time
 
-    pip install -r requirements.txt
-    python -m playwright install chromium
-    python scrape.py
+Same as before:
 
-Output goes to `docs/index.html`, same as in CI. Open it in a browser to
-verify before pushing.
+1. Create the repo, upload these files
+2. Settings → Pages → deploy from `main` / `/docs`
+3. Actions tab → enable workflows → run "Update Jemena outages map" once
+4. Your live URL: `https://<username>.github.io/<repo-name>/`
+
+If you're upgrading an existing v1 repo, you only need to:
+
+1. Upload the new `scrape.py`
+2. Upload the new `template.html`
+3. Upload the new `affected_template.html`
+4. Upload the new `clients.csv` (at repo root)
+5. Trigger a manual workflow run
+
+Existing caches (`.cache/suburbs.json`) carry over. New caches
+(`.cache/clients.json`, `.cache/chains.json`) get created on first run.
+
+---
+
+## Attribution and disclaimer
+
+Outage data © Jemena. Map tiles © CARTO and OpenStreetMap contributors
+(ODbL). Chain data and street geometries © OpenStreetMap contributors.
+
+This map is an unofficial visualisation. The "affected" determination is
+a best-effort estimate based on street-name and proximity matching —
+always confirm with Jemena and the customer directly before acting on
+anything operationally critical. In particular, life-support customers
+should rely on Jemena's own notifications, not this tool.
+
+---
+
+## Local testing
+
+```
+pip install -r requirements.txt
+python -m playwright install chromium
+python scrape.py
+```
+
+Output goes to `docs/`. Open `docs/index.html` in a browser to verify.
