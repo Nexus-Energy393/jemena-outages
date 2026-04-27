@@ -259,8 +259,14 @@ class PipedriveClient:
             cf[fmap["planned_outage_date"]] = opp["planned_outage_date"]
         if "time_off_on" in fmap and opp.get("time_off_on"):
             cf[fmap["time_off_on"]] = opp["time_off_on"]
-        if "type" in fmap and opp.get("type"):
-            cf[fmap["type"]] = opp["type"]
+        # Type is a Pipedrive dropdown (single-option) field — needs numeric
+        # option ID, not text. Set PIPEDRIVE_TYPE_OPTION_ID in env to populate.
+        type_option_id = os.environ.get("PIPEDRIVE_TYPE_OPTION_ID", "").strip()
+        if "type" in fmap and type_option_id:
+            try:
+                cf[fmap["type"]] = int(type_option_id)
+            except ValueError:
+                pass  # ignore non-numeric values
         # Skip incident_id when it's empty — Pipedrive may reject empty values
         # on certain field types (e.g. numeric).
         if "incident_id" in fmap and opp.get("incident_id"):
