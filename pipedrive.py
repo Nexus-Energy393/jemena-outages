@@ -257,8 +257,17 @@ class PipedriveClient:
             cf[fmap["locations"]] = opp["locations"]
         if "planned_outage_date" in fmap and opp.get("planned_outage_date"):
             cf[fmap["planned_outage_date"]] = opp["planned_outage_date"]
-        if "time_off_on" in fmap and opp.get("time_off_on"):
-            cf[fmap["time_off_on"]] = opp["time_off_on"]
+        # Pipedrive 'timeRange' field expects a structured object with
+        # 'from', 'until' (both HH:MM 24h) and 'timezone_id'.
+        if "time_off_on" in fmap:
+            t_off = opp.get("time_off") or ""
+            t_on = opp.get("time_on") or ""
+            if t_off and t_on:
+                cf[fmap["time_off_on"]] = {
+                    "from": t_off,
+                    "until": t_on,
+                    "timezone_id": "Australia/Melbourne",
+                }
         # Type is a Pipedrive dropdown (single-option) field — needs numeric
         # option ID, not text. Set PIPEDRIVE_TYPE_OPTION_ID in env to populate.
         type_option_id = os.environ.get("PIPEDRIVE_TYPE_OPTION_ID", "").strip()
@@ -480,7 +489,9 @@ def prepare_opportunities(affected, min_hours):
             primary = sorted(outages, key=lambda o: o.get("_distance_m") or 99999)[0]
             time_off = _extract_time(primary.get("start"), "time_only")
             time_on = primary.get("end") or ""
-            time_off_on = f"{time_off} - {time_on}" if time_off and time_on else (time_off or time_on)
+            # Parse to 24h HH:MM for Pipedrive's timeRange field
+            time_off_24 = _to_24h(time_off)
+            time_on_24 = _to_24h(time_on)
             opp = {
                 "client": client,
                 "title": title,
@@ -493,7 +504,9 @@ def prepare_opportunities(affected, min_hours):
                 "site_address": _format_site_address(client),
                 "locations": ", ".join(sorted({o.get("suburb", "") for o in outages})),
                 "planned_outage_date": iso_date,
-                "time_off_on": time_off_on,
+                # Pipedrive timeRange expects {"from", "until", "timezone_id"} structure
+                "time_off": time_off_24,
+                "time_on": time_on_24,
                 "type": "Planned",
                 "incident_id": "",
             }
@@ -549,6 +562,33 @@ def _extract_time(start_display, mode):
     if len(parts) >= 2:
         return parts[-1].strip()
     return start_display
+
+
+def _to_24h(t):
+    """Convert '7:30 AM' -> '07:30' for Pipedrive's timeRange field.
+
+    Returns empty string if the input can't be parsed.
+    """
+    if not t:
+        return ""
+    t = t.strip().upper()
+    # Handle 'AM'/'PM' suffix
+    is_pm = t.endswith("PM")
+    is_am = t.endswith("AM")
+    core = t[:-2].strip() if (is_pm or is_am) else t
+    # Split hour:minute
+    parts = core.split(":")
+    try:
+        hour = int(parts[0])
+        minute = int(parts[1]) if len(parts) > 1 else 0
+    except (ValueError, IndexError):
+        return ""
+    # 12 AM = 00, 12 PM = 12, 1-11 PM = +12
+    if is_am and hour == 12:
+        hour = 0
+    elif is_pm and hour != 12:
+        hour += 12
+    return f"{hour:02d}:{minute:02d}"
 
 
 # ---------------------------------------------------------------------------
