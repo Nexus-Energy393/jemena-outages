@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Affected clients — Jemena planned outages</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { --red:#b71c1c; --orange:#fb8c00; --grey:#9e9e9e; --bg:#fafafa; --border:#e0e0e0; }
+  html, body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; background:var(--bg); color:#222; }
+  header { background:#fff; border-bottom:1px solid var(--border); padding:14px 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+  header h1 { margin:0; font-size:18px; font-weight:600; }
+  header .meta { font-size:12px; color:#666; }
+  header .actions a { color:#0b57d0; text-decoration:none; margin-left:14px; font-size:13px; font-weight:500; }
+  header .actions a:hover { text-decoration:underline; }
+  .toolbar { padding:12px 20px; background:#fff; border-bottom:1px solid var(--border); display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+  .toolbar input, .toolbar select { padding:6px 10px; font-size:13px; border:1px solid var(--border); border-radius:4px; background:#fff; }
+  .toolbar input { min-width:240px; }
+  .toolbar .summary { margin-left:auto; font-size:12px; color:#666; }
+  table { width:100%; border-collapse:collapse; background:#fff; }
+  thead { position:sticky; top:0; background:#fff; z-index:10; box-shadow:0 1px 0 var(--border); }
+  th { text-align:left; padding:10px 14px; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.05em; color:#666; cursor:pointer; user-select:none; white-space:nowrap; }
+  th:hover { background:#f5f5f5; }
+  th.sort-asc::after { content:' ▲'; color:#999; }
+  th.sort-desc::after { content:' ▼'; color:#999; }
+  td { padding:10px 14px; border-top:1px solid var(--border); font-size:13px; vertical-align:top; }
+  tr:hover td { background:#fafbfc; }
+  .chip { display:inline-block; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:500; }
+  .chip.definite { background:var(--red); color:#fff; }
+  .chip.possible { background:var(--orange); color:#fff; }
+  .chip.cat { background:#e3f2fd; color:#0d47a1; }
+  .chip.cancelled { background:#eee; color:#666; text-decoration:line-through; }
+  .small { font-size:11px; color:#777; }
+  a { color:#0b57d0; }
+  .empty { padding:60px 20px; text-align:center; color:#666; }
+  @media (max-width: 700px) {
+    table, thead, tbody, th, td, tr { display:block; }
+    thead { display:none; }
+    tr { border:1px solid var(--border); border-radius:6px; margin:10px; padding:8px; background:#fff; }
+    td { border:none; padding:4px 8px; }
+    td::before { content: attr(data-label) ': '; font-weight:600; font-size:11px; color:#666; display:block; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Affected clients — Jemena planned outages</h1>
+    <div class="meta" id="meta"></div>
+  </div>
+  <div class="actions">
+    <a href="index.html">← Back to map</a>
+    <a href="affected.csv" download>Download CSV</a>
+  </div>
+</header>
+<div class="toolbar">
+  <input id="search" type="search" placeholder="Search client, suburb, street…" autofocus>
+  <select id="match-filter">
+    <option value="all">All matches</option>
+    <option value="definite">Definite only</option>
+    <option value="possible">Possible only</option>
+  </select>
+  <select id="category-filter"><option value="all">All categories</option></select>
+  <select id="status-filter">
+    <option value="active">Active only (hide cancelled)</option>
+    <option value="all">Show cancelled too</option>
+  </select>
+  <div class="summary" id="summary"></div>
+</div>
+<div id="table-wrap">
+  <table id="table">
+    <thead>
+      <tr>
+        <th data-sort="match">Match</th>
+        <th data-sort="name">Client</th>
+        <th data-sort="category">Category</th>
+        <th data-sort="suburb">Suburb</th>
+        <th data-sort="address">Address</th>
+        <th data-sort="contact">Contact</th>
+        <th data-sort="outage_when">When</th>
+        <th data-sort="outage_where">Outage location</th>
+        <th data-sort="distance">Distance</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</div>
+
+<script>
+const DATA = {"affected":[{"client":{"name":"KFC","category":"KFC","source":"osm","lat":-37.7882096,"lng":144.9331278},"definite":[],"possible":[{"suburb":"Kensington","street":"Parsons Street","start":"Sun 3 May, 7:00 AM","end":"5:30 PM","status":"Scheduled","_distance_m":194},{"suburb":"Flemington","street":"Racecourse Road","start":"Tue 28 Apr, 7:30 AM","end":"10:00 AM","status":"Scheduled","_distance_m":18},{"suburb":"Flemington","street":"Racecourse Road","start":"Tue 28 Apr, 3:30 PM","end":"5:00 PM","status":"Scheduled","_distance_m":18},{"suburb":"Flemington","street":"Racecourse Road","start":"Mon 4 May, 8:30 AM","end":"10:00 AM","status":"Scheduled","_distance_m":18},{"suburb":"Flemington","street":"Racecourse Road","start":"Mon 4 May, 3:30 PM","end":"5:00 PM","status":"Scheduled","_distance_m":18}],"nearest_street":"Racecourse Road, Flemington","nearest_distance_m":18},{"client":{"name":"Big W","category":"Big W","source":"osm","lat":-37.7007792,"lng":144.7753073},"definite":[],"possible":[{"suburb":"Sydenham","street":"Sydenham Road","start":"Tue 5 May, 8:00 AM","end":"5:30 PM","status":"Scheduled","_distance_m":127}],"nearest_street":"Sydenham Road, Sydenham","nearest_distance_m":127},{"client":{"name":"Kmart","category":"Kmart","source":"osm","address":"Melton Highway","postcode":"3038","lat":-37.6977146,"lng":144.7751785},"definite":[],"possible":[{"suburb":"Hillside","street":"Melton Highway","start":"Fri 1 May, 8:00 AM","end":"5:00 PM","status":"Scheduled","_distance_m":169}],"nearest_street":"Melton Highway, Hillside","nearest_distance_m":169},{"client":{"name":"Woolworths","category":"Woolworths","source":"osm","lat":-37.7871515,"lng":144.92789},"definite":[],"possible":[{"suburb":"Flemington","street":"Racecourse Road","start":"Tue 28 Apr, 7:30 AM","end":"10:00 AM","status":"Scheduled","_distance_m":83},{"suburb":"Flemington","street":"Racecourse Road","start":"Tue 28 Apr, 3:30 PM","end":"5:00 PM","status":"Scheduled","_distance_m":83},{"suburb":"Flemington","street":"Racecourse Road","start":"Mon 4 May, 8:30 AM","end":"10:00 AM","status":"Scheduled","_distance_m":83},{"suburb":"Flemington","street":"Racecourse Road","start":"Mon 4 May, 3:30 PM","end":"5:00 PM","status":"Scheduled","_distance_m":83},{"suburb":"Flemington","street":"Finsbury Street","start":"Wed 6 May, 7:30 AM","end":"5:30 PM","status":"Scheduled","_distance_m":179},{"suburb":"Flemington","street":"Pin Oak Crescent","start":"Wed 6 May, 7:30 AM","end":"5:30 PM","status":"Scheduled","_distance_m":119}],"nearest_street":"Racecourse Road, Flemington","nearest_distance_m":83},{"client":{"name":"Woolworths","category":"Woolworths","source":"osm","lat":-37.7758181,"lng":144.9618499},"definite":[],"possible":[{"suburb":"Coburg","street":"Charles Street","start":"Sun 3 May, 7:30 AM","end":"4:00 PM","status":"Scheduled","_distance_m":167}],"nearest_street":"Charles Street, Coburg","nearest_distance_m":167},{"client":{"name":"Coles","category":"Coles","source":"osm","lat":-37.7758523,"lng":144.9626265},"definite":[],"possible":[{"suburb":"Coburg","street":"Charles Street","start":"Sun 3 May, 7:30 AM","end":"4:00 PM","status":"Scheduled","_distance_m":118}],"nearest_street":"Charles Street, Coburg","nearest_distance_m":118},{"client":{"name":"Kmart","category":"Kmart","source":"osm","lat":-37.7755451,"lng":144.9621303},"definite":[],"possible":[{"suburb":"Coburg","street":"Charles Street","start":"Sun 3 May, 7:30 AM","end":"4:00 PM","status":"Scheduled","_distance_m":131}],"nearest_street":"Charles Street, Coburg","nearest_distance_m":131},{"client":{"name":"McDonald's","category":"McDonald's","source":"osm","lat":-37.7758536,"lng":144.8886765},"definite":[],"possible":[{"suburb":"Footscray","street":"Gordon Street","start":"Tue 5 May, 7:30 AM","end":"4:30 PM","status":"Scheduled","_distance_m":173}],"nearest_street":"Gordon Street, Footscray","nearest_distance_m":173},{"client":{"name":"KFC","category":"KFC","source":"osm","lat":-37.7756672,"lng":144.8888112},"definite":[],"possible":[{"suburb":"Footscray","street":"Gordon Street","start":"Tue 5 May, 7:30 AM","end":"4:30 PM","status":"Scheduled","_distance_m":175}],"nearest_street":"Gordon Street, Footscray","nearest_distance_m":175},{"client":{"name":"Coles","category":"Coles","source":"osm","address":"320-380 Epsom Road","lat":-37.7824349,"lng":144.9148103},"definite":[],"possible":[{"suburb":"Ascot Vale","street":"Epsom Road","start":"Thu 7 May, 8:00 AM","end":"4:00 PM","status":"Scheduled","_distance_m":112}],"nearest_street":"Epsom Road, Ascot Vale","nearest_distance_m":112},{"client":{"name":"ALDI","category":"Aldi","source":"osm","address":"292-298 Sydney Road","suburb":"BRUNSWICK","postcode":"3056","lat":-37.7709122,"lng":144.9616256},"definite":[],"possible":[{"suburb":"Coburg","street":"Dawson Street","start":"Sun 3 May, 7:30 AM","end":"4:00 PM","status":"Scheduled","_distance_m":74}],"nearest_street":"Dawson Street, Coburg","nearest_distance_m":74},{"client":{"name":"Kmart","category":"Kmart","source":"osm","address":"Hume Highway","lat":-37.6883847,"lng":144.9599766},"definite":[],"possible":[{"suburb":"Campbellfield","street":"Sydney Road","start":"Sun 3 May, 7:30 AM","end":"3:30 PM","status":"Scheduled","_distance_m":161}],"nearest_street":"Sydney Road, Campbellfield","nearest_distance_m":161},{"client":{"name":"IGA Friendly Grocer","category":"IGA","source":"osm","lat":-37.7911005,"lng":144.8899038},"definite":[],"possible":[{"suburb":"Footscray","street":"Gordon Street","start":"Tue 5 May, 7:30 AM","end":"4:30 PM","status":"Scheduled","_distance_m":32},{"suburb":"Footscray","street":"Empire Street","start":"Fri 8 May, 7:30 AM","end":"5:30 PM","status":"Scheduled","_distance_m":108}],"nearest_street":"Gordon Street, Footscray","nearest_distance_m":32},{"client":{"name":"Coles","category":"Coles","source":"osm","address":"1434-1468 Sydney Road","lat":-37.6889515,"lng":144.9599995},"definite":[],"possible":[{"suburb":"Campbellfield","street":"Sydney Road","start":"Sun 3 May, 7:30 AM","end":"3:30 PM","status":"Scheduled","_distance_m":155}],"nearest_street":"Sydney Road, Campbellfield","nearest_distance_m":155},{"client":{"name":"McDonald's","category":"McDonald's","source":"osm","lat":-37.6740154,"lng":144.9553412},"definite":[],"possible":[{"suburb":"Campbellfield","street":"Sydney Road","start":"Sun 3 May, 7:30 AM","end":"3:30 PM","status":"Scheduled","_distance_m":36}],"nearest_street":"Sydney Road, Campbellfield","nearest_distance_m":36},{"client":{"name":"KFC","category":"KFC","source":"osm","lat":-37.7575668,"lng":145.0691088},"definite":[],"possible":[{"suburb":"Heidelberg","street":"Cape Street","start":"Fri 1 May, 8:30 AM","end":"4:30 PM","status":"Scheduled","_distance_m":190},{"suburb":"Rosanna","street":"Rosanna Road","start":"Fri 1 May, 8:30 AM","end":"4:30 PM","status":"Scheduled","_distance_m":114}],"nearest_street":"Rosanna Road, Rosanna","nearest_distance_m":114},{"client":{"name":"Target","category":"Target","source":"osm","lat":-37.7817229,"lng":144.915166},"definite":[],"possible":[{"suburb":"Ascot Vale","street":"Epsom Road","start":"Thu 7 May, 8:00 AM","end":"4:00 PM","status":"Scheduled","_distance_m":39}],"nearest_street":"Epsom Road, Ascot Vale","nearest_distance_m":39},{"client":{"name":"Officeworks","category":"Officeworks","source":"osm","lat":-37.6948807,"lng":144.7760405},"definite":[],"possible":[{"suburb":"Hillside","street":"Melton Highway","start":"Fri 1 May, 8:00 AM","end":"5:00 PM","status":"Scheduled","_distance_m":131}],"nearest_street":"Melton Highway, Hillside","nearest_distance_m":131},{"client":{"name":"IGA","category":"IGA","source":"osm","address":"66-68 Gertz Avenue","lat":-37.6992371,"lng":145.0329186},"definite":[],"possible":[{"suburb":"Reservoir","street":"Tunaley Parade","start":"Thu 30 Apr, 7:30 AM","end":"5:30 PM","status":"Scheduled","_distance_m":192},{"suburb":"Reservoir","street":"Tunaley Parade","start":"Thu 7 May, 7:30 AM","end":"4:30 PM","status":"Scheduled","_distance_m":192},{"suburb":"Reservoir","street":"Clough Parade","start":"Thu 7 May, 7:30 AM","end":"4:30 PM","status":"Scheduled","_distance_m":153},{"suburb":"Reservoir","street":"Gertz Avenue","start":"Thu 7 May, 7:30 AM","end":"4:30 PM","status":"Scheduled","_distance_m":35}],"nearest_street":"Gertz Avenue, Reservoir","nearest_distance_m":35},{"client":{"name":"Coles","category":"Coles","source":"osm","address":"180 Gaffney Street","lat":-37.7315658,"lng":144.9503452},"definite":[],"possible":[{"suburb":"Coburg North","street":"Charles Street","start":"Sun 3 May, 7:30 AM","end":"4:00 PM","status":"Scheduled","_distance_m":173},{"suburb":"Coburg North","street":"Gaffney Street","start":"Sun 3 May, 7:30 AM","end":"4:00 PM","status":"Scheduled","_distance_m":111}],"nearest_street":"Gaffney Street, Coburg North","nearest_distance_m":111},{"client":{"name":"Coles","category":"Coles","source":"osm","address":"1 Greenvale Drive","suburb":"GREENVALE","postcode":"3059","lat":-37.639343,"lng":144.8825125},"definite":[],"possible":[{"suburb":"Greenvale","street":"Heversham Grove","start":"Wed 29 Apr, 9:00 AM","end":"3:00 PM","status":"Scheduled","_distance_m":85},{"suburb":"Greenvale","street":"Haworth Court","start":"Wed 29 Apr, 9:00 AM","end":"3:00 PM","status":"Scheduled","_distance_m":87}],"nearest_street":"Heversham Grove, Greenvale","nearest_distance_m":85},{"client":{"name":"Officeworks","category":"Officeworks","source":"osm","address":"1434 Hume Highway","lat":-37.6872768,"lng":144.959596},"definite":[],"possible":[{"suburb":"Campbellfield","street":"Sydney Road","start":"Sun 3 May, 7:30 AM","end":"3:30 PM","status":"Scheduled","_distance_m":142}],"nearest_street":"Sydney Road, Campbellfield","nearest_distance_m":142},{"client":{"name":"Local Grocer IGA","category":"IGA","source":"osm","lat":-37.8296604,"lng":144.8858342},"definite":[],"possible":[{"suburb":"Spotswood","street":"Hall Street","start":"Thu 30 Apr, 8:30 AM","end":"5:30 PM","status":"Scheduled","_distance_m":45}],"nearest_street":"Hall Street, Spotswood","nearest_distance_m":45},{"client":{"name":"Coles","category":"Coles","source":"osm","address":"127 Gourlay Road","suburb":"TAYLORS HILL","postcode":"3037","lat":-37.711603,"lng":144.7415653},"definite":[],"possible":[{"suburb":"Sydenham","street":"Hume Drive","start":"Tue 5 May, 8:00 AM","end":"5:30 PM","status":"Scheduled","_distance_m":149}],"nearest_street":"Hume Drive, Sydenham","nearest_distance_m":149},{"client":{"name":"Officeworks","category":"Officeworks","source":"osm","address":"399 Melton Highway","postcode":"3038","lat":-37.6968874,"lng":144.7766557},"definite":[],"possible":[{"suburb":"Hillside","street":"Melton Highway","start":"Fri 1 May, 8:00 AM","end":"5:00 PM","status":"Scheduled","_distance_m":47}],"nearest_street":"Melton Highway, Hillside","nearest_distance_m":47},{"client":{"name":"Officeworks","category":"Officeworks","source":"osm","address":"64 Gaffney Street","lat":-37.7330175,"lng":144.9584571},"definite":[],"possible":[{"suburb":"Coburg North","street":"Gaffney Street","start":"Sun 3 May, 7:30 AM","end":"4:00 PM","status":"Scheduled","_distance_m":35},{"suburb":"Coburg North","street":"Dawson Street","start":"Sun 3 May, 7:30 AM","end":"4:00 PM","status":"Scheduled","_distance_m":29}],"nearest_street":"Dawson Street, Coburg North","nearest_distance_m":29},{"client":{"name":"IGA","category":"IGA","source":"osm","lat":-37.7125819,"lng":144.7260158},"definite":[],"possible":[{"suburb":"Sydenham","street":"Hume Drive","start":"Tue 5 May, 8:00 AM","end":"5:30 PM","status":"Scheduled","_distance_m":147}],"nearest_street":"Hume Drive, Sydenham","nearest_distance_m":147},{"client":{"name":"Coles","category":"Coles","source":"osm","lat":-37.7052592,"lng":144.9167752},"definite":[],"possible":[{"suburb":"Glenroy","street":"Wheatsheaf Road","start":"Wed 29 Apr, 7:30 AM","end":"5:30 PM","status":"Scheduled","_distance_m":142}],"nearest_street":"Wheatsheaf Road, Glenroy","nearest_distance_m":142},{"client":{"name":"IGA","category":"IGA","source":"osm","lat":-37.7071083,"lng":144.9186123},"definite":[],"possible":[{"suburb":"Glenroy","street":"Wheatsheaf Road","start":"Wed 29 Apr, 7:30 AM","end":"5:30 PM","status":"Scheduled","_distance_m":96},{"suburb":"Glenroy","street":"Blucher Street","start":"Wed 29 Apr, 7:30 AM","end":"5:30 PM","status":"Scheduled","_distance_m":34}],"nearest_street":"Blucher Street, Glenroy","nearest_distance_m":34},{"client":{"name":"Woolworths","category":"Woolworths","source":"osm","lat":-37.6915795,"lng":144.7478699},"definite":[],"possible":[{"suburb":"Hillside","street":"Melton Highway","start":"Fri 1 May, 8:00 AM","end":"5:00 PM","status":"Scheduled","_distance_m":77}],"nearest_street":"Melton Highway, Hillside","nearest_distance_m":77},{"client":{"name":"KFC","category":"KFC","source":"osm","lat":-37.6668798,"lng":144.9539863},"definite":[],"possible":[{"suburb":"Campbellfield","street":"Sydney Road","start":"Sun 3 May, 7:30 AM","end":"3:30 PM","status":"Scheduled","_distance_m":66}],"nearest_street":"Sydney Road, Campbellfield","nearest_distance_m":66},{"client":{"name":"Woolworths","category":"Woolworths","source":"osm","lat":-37.7433645,"lng":145.067043},"definite":[],"possible":[{"suburb":"Rosanna","street":"Station Road","start":"Fri 1 May, 8:30 AM","end":"4:30 PM","status":"Scheduled","_distance_m":141},{"suburb":"Rosanna","street":"Station Road","start":"Thu 7 May, 7:30 AM","end":"4:30 PM","status":"Scheduled","_distance_m":141},{"suburb":"Rosanna","street":"Grove Road","start":"Fri 1 May, 8:30 AM","end":"4:30 PM","status":"Scheduled","_distance_m":114},{"suburb":"Rosanna","street":"Grove Road","start":"Thu 7 May, 7:30 AM","end":"4:30 PM","status":"Scheduled","_distance_m":114}],"nearest_street":"Grove Road, Rosanna","nearest_distance_m":114},{"client":{"name":"Woolworths","category":"Woolworths","source":"osm","lat":-37.7697835,"lng":144.9600119},"definite":[],"possible":[{"suburb":"Coburg","street":"Dawson Street","start":"Sun 3 May, 7:30 AM","end":"4:00 PM","status":"Scheduled","_distance_m":173}],"nearest_street":"Dawson Street, Coburg","nearest_distance_m":173},{"client":{"name":"Campbellfield Plaza","category":"Shopping centre","source":"osm","lat":-37.6882161,"lng":144.9598613},"definite":[],"possible":[{"suburb":"Campbellfield","street":"Sydney Road","start":"Sun 3 May, 7:30 AM","end":"3:30 PM","status":"Scheduled","_distance_m":153}],"nearest_street":"Sydney Road, Campbellfield","nearest_distance_m":153},{"client":{"name":"Bunnings Warehouse","category":"Bunnings","source":"osm","address":"100 Pearcedale Parade","lat":-37.6754787,"lng":144.9207521},"definite":[],"possible":[{"suburb":"Broadmeadows","street":"Riggall Street","start":"Sun 3 May, 7:30 AM","end":"4:30 PM","status":"Scheduled","_distance_m":63}],"nearest_street":"Riggall Street, Broadmeadows","nearest_distance_m":63},{"client":{"name":"Bunnings Warehouse","category":"Bunnings","source":"osm","address":"64 - 96 Gaffney Street","lat":-37.7323186,"lng":144.9601203},"definite":[],"possible":[{"suburb":"Coburg North","street":"Charles Street","start":"Sun 3 May, 7:30 AM","end":"4:00 PM","status":"Scheduled","_distance_m":149},{"suburb":"Coburg North","street":"Dawson Street","start":"Sun 3 May, 7:30 AM","end":"4:00 PM","status":"Scheduled","_distance_m":168},{"suburb":"Coburg North","street":"Gaffney Street","start":"Sun 3 May, 7:30 AM","end":"4:00 PM","status":"Scheduled","_distance_m":129}],"nearest_street":"Gaffney Street, Coburg North","nearest_distance_m":129},{"client":{"name":"Watergardens Town Centre","category":"Shopping centre","source":"osm","address":"399 Melton Highway","suburb":"TAYLORS LAKES","postcode":"3038","lat":-37.7006402,"lng":144.775359},"definite":[],"possible":[{"suburb":"Sydenham","street":"Sydenham Road","start":"Tue 5 May, 8:00 AM","end":"5:30 PM","status":"Scheduled","_distance_m":139}],"nearest_street":"Sydenham Road, Sydenham","nearest_distance_m":139},{"client":{"name":"Bunnings Warehouse","category":"Bunnings","source":"osm","address":"430 Melton Highway","postcode":"3038","lat":-37.6958058,"lng":144.7798188},"definite":[],"possible":[{"suburb":"Hillside","street":"Melton Highway","start":"Fri 1 May, 8:00 AM","end":"5:00 PM","status":"Scheduled","_distance_m":121}],"nearest_street":"Melton Highway, Hillside","nearest_distance_m":121},{"client":{"name":"KFC","category":"KFC","source":"osm","lat":-37.6758737,"lng":144.9223721},"definite":[],"possible":[{"suburb":"Broadmeadows","street":"Riggall Street","start":"Sun 3 May, 7:30 AM","end":"4:30 PM","status":"Scheduled","_distance_m":85}],"nearest_street":"Riggall Street, Broadmeadows","nearest_distance_m":85},{"client":{"name":"Greenvale Shopping Centre","category":"Shopping centre","source":"osm","lat":-37.6394035,"lng":144.8820894},"definite":[],"possible":[{"suburb":"Greenvale","street":"Heversham Grove","start":"Wed 29 Apr, 9:00 AM","end":"3:00 PM","status":"Scheduled","_distance_m":119},{"suburb":"Greenvale","street":"Haworth Court","start":"Wed 29 Apr, 9:00 AM","end":"3:00 PM","status":"Scheduled","_distance_m":125}],"nearest_street":"Heversham Grove, Greenvale","nearest_distance_m":119},{"client":{"name":"Aldi","category":"Aldi","source":"osm","address":"11 Edgewater Boulevard","lat":-37.7842775,"lng":144.8922627},"definite":[],"possible":[{"suburb":"Footscray","street":"Gordon Street","start":"Tue 5 May, 7:30 AM","end":"4:30 PM","status":"Scheduled","_distance_m":124}],"nearest_street":"Gordon Street, Footscray","nearest_distance_m":124},{"client":{"name":"Newmarket Plaza","category":"Shopping centre","source":"osm","lat":-37.7872887,"lng":144.9279339},"definite":[],"possible":[{"suburb":"Flemington","street":"Racecourse Road","start":"Tue 28 Apr, 7:30 AM","end":"10:00 AM","status":"Scheduled","_distance_m":69},{"suburb":"Flemington","street":"Racecourse Road","start":"Tue 28 Apr, 3:30 PM","end":"5:00 PM","status":"Scheduled","_distance_m":69},{"suburb":"Flemington","street":"Racecourse Road","start":"Mon 4 May, 8:30 AM","end":"10:00 AM","status":"Scheduled","_distance_m":69},{"suburb":"Flemington","street":"Racecourse Road","start":"Mon 4 May, 3:30 PM","end":"5:00 PM","status":"Scheduled","_distance_m":69},{"suburb":"Flemington","street":"Finsbury Street","start":"Wed 6 May, 7:30 AM","end":"5:30 PM","status":"Scheduled","_distance_m":191},{"suburb":"Flemington","street":"Pin Oak Crescent","start":"Wed 6 May, 7:30 AM","end":"5:30 PM","status":"Scheduled","_distance_m":117}],"nearest_street":"Racecourse Road, Flemington","nearest_distance_m":69},{"client":{"name":"Warringal Shopping Centre","category":"Shopping centre","source":"osm","lat":-37.755733,"lng":145.0685467},"definite":[],"possible":[{"suburb":"Heidelberg","street":"Cape Street","start":"Fri 1 May, 8:30 AM","end":"4:30 PM","status":"Scheduled","_distance_m":114},{"suburb":"Rosanna","street":"Rosanna Road","start":"Fri 1 May, 8:30 AM","end":"4:30 PM","status":"Scheduled","_distance_m":107}],"nearest_street":"Rosanna Road, Rosanna","nearest_distance_m":107},{"client":{"name":"KFC","category":"KFC","source":"osm","lat":-37.7984261,"lng":144.8899712},"definite":[],"possible":[{"suburb":"Footscray","street":"Gordon Street","start":"Tue 5 May, 7:30 AM","end":"4:30 PM","status":"Scheduled","_distance_m":151}],"nearest_street":"Gordon Street, Footscray","nearest_distance_m":151},{"client":{"name":"Coles","category":"Coles","source":"osm","address":"56 Burgundy Street","lat":-37.7557097,"lng":145.0693397},"definite":[],"possible":[{"suburb":"Rosanna","street":"Rosanna Road","start":"Fri 1 May, 8:30 AM","end":"4:30 PM","status":"Scheduled","_distance_m":39},{"suburb":"Heidelberg","street":"Cape Street","start":"Fri 1 May, 8:30 AM","end":"4:30 PM","status":"Scheduled","_distance_m":183}],"nearest_street":"Rosanna Road, Rosanna","nearest_distance_m":39},{"client":{"name":"Aldi","category":"Aldi","source":"osm","address":"56 Burgundy Street","lat":-37.7552816,"lng":145.0688142},"definite":[],"possible":[{"suburb":"Heidelberg","street":"Cape Street","start":"Fri 1 May, 8:30 AM","end":"4:30 PM","status":"Scheduled","_distance_m":131},{"suburb":"Rosanna","street":"Rosanna Road","start":"Fri 1 May, 8:30 AM","end":"4:30 PM","status":"Scheduled","_distance_m":91}],"nearest_street":"Rosanna Road, Rosanna","nearest_distance_m":91},{"client":{"name":"Coles","category":"Coles","source":"osm","address":"240 Glenroy Road","lat":-37.7052372,"lng":144.9167744},"definite":[],"possible":[{"suburb":"Glenroy","street":"Wheatsheaf Road","start":"Wed 29 Apr, 7:30 AM","end":"5:30 PM","status":"Scheduled","_distance_m":144}],"nearest_street":"Wheatsheaf Road, Glenroy","nearest_distance_m":144},{"client":{"name":"Taylors Hill Village","category":"Shopping centre","source":"osm","address":"127 Gourlay Road","suburb":"TAYLORS HILL","postcode":"3037","lat":-37.7112102,"lng":144.741594},"definite":[],"possible":[{"suburb":"Sydenham","street":"Hume Drive","start":"Tue 5 May, 8:00 AM","end":"5:30 PM","status":"Scheduled","_distance_m":106}],"nearest_street":"Hume Drive, Sydenham","nearest_distance_m":106},{"client":{"name":"Showgrounds Village","category":"Shopping centre","source":"osm","lat":-37.7820541,"lng":144.914808},"definite":[],"possible":[{"suburb":"Ascot Vale","street":"Epsom Road","start":"Thu 7 May, 8:00 AM","end":"4:00 PM","status":"Scheduled","_distance_m":86}],"nearest_street":"Epsom Road, Ascot Vale","nearest_distance_m":86},{"client":{"name":"Dallas Shopping Centre","category":"Shopping centre","source":"osm","lat":-37.6732145,"lng":144.930295},"definite":[],"possible":[{"suburb":"Dallas","street":"Blair Street","start":"Sun 3 May, 7:30 AM","end":"4:30 PM","status":"Scheduled","_distance_m":69},{"suburb":"Dallas","street":"Apollo Crescent","start":"Sun 3 May, 7:30 AM","end":"4:30 PM","status":"Scheduled","_distance_m":169}],"nearest_street":"Blair Street, Dallas","nearest_distance_m":69},{"client":{"name":"Hungry Jack's","category":"Hungry Jack's","source":"osm","address":"424 Melton Highway","suburb":"TAYLORS LAKES","postcode":"3038","lat":-37.6960014,"lng":144.7812823},"definite":[],"possible":[{"suburb":"Hillside","street":"Melton Highway","start":"Fri 1 May, 8:00 AM","end":"5:00 PM","status":"Scheduled","_distance_m":135}],"nearest_street":"Melton Highway, Hillside","nearest_distance_m":135},{"client":{"name":"KFC","category":"KFC","source":"osm","address":"1293 Sydney Road","suburb":"FAWKNER","postcode":"3060","lat":-37.7007572,"lng":144.9594353},"definite":[],"possible":[{"suburb":"Campbellfield","street":"Sydney Road","start":"Sun 3 May, 7:30 AM","end":"3:30 PM","status":"Scheduled","_distance_m":28}],"nearest_street":"Sydney Road, Campbellfield","nearest_distance_m":28},{"client":{"name":"Hungry Jack's","category":"Hungry Jack's","source":"osm","address":"1443 Sydney Road","lat":-37.6887472,"lng":144.957291},"definite":[],"possible":[{"suburb":"Campbellfield","street":"Sydney Road","start":"Sun 3 May, 7:30 AM","end":"3:30 PM","status":"Scheduled","_distance_m":53}],"nearest_street":"Sydney Road, Campbellfield","nearest_distance_m":53},{"client":{"name":"McDonald's","category":"McDonald's","source":"osm","lat":-37.6901345,"lng":144.9588754},"definite":[],"possible":[{"suburb":"Campbellfield","street":"Sydney Road","start":"Sun 3 May, 7:30 AM","end":"3:30 PM","status":"Scheduled","_distance_m":42}],"nearest_street":"Sydney Road, Campbellfield","nearest_distance_m":42},{"client":{"name":"McDonald's","category":"McDonald's","source":"osm","address":"260 Racecourse Road","lat":-37.7880914,"lng":144.9321049},"definite":[],"possible":[{"suburb":"Kensington","street":"Parsons Street","start":"Sun 3 May, 7:00 AM","end":"5:30 PM","status":"Scheduled","_distance_m":193},{"suburb":"Flemington","street":"Racecourse Road","start":"Tue 28 Apr, 7:30 AM","end":"10:00 AM","status":"Scheduled","_distance_m":25},{"suburb":"Flemington","street":"Racecourse Road","start":"Tue 28 Apr, 3:30 PM","end":"5:00 PM","status":"Scheduled","_distance_m":25},{"suburb":"Flemington","street":"Racecourse Road","start":"Mon 4 May, 8:30 AM","end":"10:00 AM","status":"Scheduled","_distance_m":25},{"suburb":"Flemington","street":"Racecourse Road","start":"Mon 4 May, 3:30 PM","end":"5:00 PM","status":"Scheduled","_distance_m":25}],"nearest_street":"Racecourse Road, Flemington","nearest_distance_m":25},{"client":{"name":"McDonald's","category":"McDonald's","source":"osm","address":"190 Ballarat Road","lat":-37.791111,"lng":144.8904071},"definite":[],"possible":[{"suburb":"Footscray","street":"Eldridge Street","start":"Fri 8 May, 7:30 AM","end":"5:30 PM","status":"Scheduled","_distance_m":193},{"suburb":"Footscray","street":"Gordon Street","start":"Tue 5 May, 7:30 AM","end":"4:30 PM","status":"Scheduled","_distance_m":76},{"suburb":"Footscray","street":"Empire Street","start":"Fri 8 May, 7:30 AM","end":"5:30 PM","status":"Scheduled","_distance_m":67}],"nearest_street":"Empire Street, Footscray","nearest_distance_m":67},{"client":{"name":"KFC","category":"KFC","source":"osm","address":"127 Gourlay Road","suburb":"TAYLORS HILL","postcode":"3037","lat":-37.7107418,"lng":144.7409138},"definite":[],"possible":[{"suburb":"Sydenham","street":"Hume Drive","start":"Tue 5 May, 8:00 AM","end":"5:30 PM","status":"Scheduled","_distance_m":63}],"nearest_street":"Hume Drive, Sydenham","nearest_distance_m":63},{"client":{"name":"Hungry Jack's","category":"Hungry Jack's","source":"osm","address":"419 Geelong Road","postcode":"3012","lat":-37.8110499,"lng":144.8708557},"definite":[],"possible":[{"suburb":"West Footscray","street":"Roberts Street","start":"Sun 3 May, 8:00 AM","end":"4:30 PM","status":"Scheduled","_distance_m":75}],"nearest_street":"Roberts Street, West Footscray","nearest_distance_m":75},{"client":{"name":"Barkly Square","category":"Shopping centre","source":"osm","address":"90-106 Sydney Road","suburb":"BRUNSWICK","postcode":"3056","lat":-37.7756022,"lng":144.9622904},"definite":[],"possible":[{"suburb":"Coburg","street":"Charles Street","start":"Sun 3 May, 7:30 AM","end":"4:00 PM","status":"Scheduled","_distance_m":121}],"nearest_street":"Charles Street, Coburg","nearest_distance_m":121},{"client":{"name":"Woolworths","category":"Woolworths","source":"osm","address":"451 Lower Heidelberg Road","suburb":"HEIDELBERG","postcode":"3084","lat":-37.7590857,"lng":145.0686273},"definite":[],"possible":[{"suburb":"Heidelberg","street":"Cape Street","start":"Fri 1 May, 8:30 AM","end":"4:30 PM","status":"Scheduled","_distance_m":175}],"nearest_street":"Cape Street, Heidelberg","nearest_distance_m":175},{"client":{"name":"McDonald's","category":"McDonald's","source":"osm","address":"585 Melton Highway","lat":-37.6938904,"lng":144.7549783},"definite":[],"possible":[{"suburb":"Hillside","street":"Melton Highway","start":"Fri 1 May, 8:00 AM","end":"5:00 PM","status":"Scheduled","_distance_m":54}],"nearest_street":"Melton Highway, Hillside","nearest_distance_m":54},{"client":{"name":"City Vista Shopping Centre","category":"IGA","source":"osm","address":"101 City Vista Court","suburb":"FRASER RISE","postcode":"3336","lat":-37.7124429,"lng":144.7260551},"definite":[],"possible":[{"suburb":"Sydenham","street":"Hume Drive","start":"Tue 5 May, 8:00 AM","end":"5:30 PM","status":"Scheduled","_distance_m":137}],"nearest_street":"Hume Drive, Sydenham","nearest_distance_m":137},{"client":{"name":"McDonald's","category":"McDonald's","source":"osm","address":"89 Keilor Park Drive","suburb":"KEILOR PARK","postcode":"3042","lat":-37.7184527,"lng":144.8528156},"definite":[],"possible":[{"suburb":"Keilor Park","street":"Spence Street","start":"Fri 8 May, 8:00 AM","end":"4:30 PM","status":"Scheduled","_distance_m":197},{"suburb":"Keilor East","street":"Keilor Park Drive","start":"Sun 10 May, 7:30 AM","end":"4:30 PM","status":"Scheduled","_distance_m":47}],"nearest_street":"Keilor Park Drive, Keilor East","nearest_distance_m":47},{"client":{"name":"KFC","category":"KFC","source":"osm","address":"420 Melton Highway","suburb":"TAYLORS LAKES","postcode":"3038","lat":-37.6967205,"lng":144.7810121},"definite":[],"possible":[{"suburb":"Hillside","street":"Melton Highway","start":"Fri 1 May, 8:00 AM","end":"5:00 PM","status":"Scheduled","_distance_m":52}],"nearest_street":"Melton Highway, Hillside","nearest_distance_m":52},{"client":{"name":"Campbellfield Plaza","category":"Shopping centre","source":"osm","lat":-37.688124,"lng":144.9593849},"definite":[],"possible":[{"suburb":"Campbellfield","street":"Sydney Road","start":"Sun 3 May, 7:30 AM","end":"3:30 PM","status":"Scheduled","_distance_m":113}],"nearest_street":"Sydney Road, Campbellfield","nearest_distance_m":113},{"client":{"name":"Hungry Jack's","category":"Hungry Jack's","source":"osm","address":"127 Gourlay Road","suburb":"TAYLORS HILL","postcode":"3037","lat":-37.7104127,"lng":144.7409641},"definite":[],"possible":[{"suburb":"Sydenham","street":"Hume Drive","start":"Tue 5 May, 8:00 AM","end":"5:30 PM","status":"Scheduled","_distance_m":26}],"nearest_street":"Hume Drive, Sydenham","nearest_distance_m":26},{"client":{"name":"Shopping centre","category":"Shopping centre","source":"osm","lat":-37.5440412,"lng":144.8920978},"definite":[],"possible":[{"suburb":"Mickleham","street":"Brossard Road","start":"Wed 29 Apr, 9:00 AM","end":"5:30 PM","status":"Scheduled","_distance_m":98}],"nearest_street":"Brossard Road, Mickleham","nearest_distance_m":98}],"meta":{"source":"Jemena planned outages (jemena.com.au) \u00b7 auto-updated","extracted":"Mon 27 Apr 2026, 10:14 AM AEST","totalOutages":207,"totalClients":1028,"definiteCount":0,"possibleCount":67,"bufferMetres":200}};
+document.getElementById('meta').textContent =
+  `Last updated ${DATA.meta.extracted}. ${DATA.meta.definiteCount} definite, ${DATA.meta.possibleCount} possible. ` +
+  `${DATA.meta.totalClients} total clients tracked.`;
+
+function esc(s) { return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+// Flatten: one row per (client, outage)
+const rows = [];
+for (const a of DATA.affected) {
+  const c = a.client;
+  for (const o of a.definite) {
+    rows.push({
+      match: 'Definite', sortMatch: 0,
+      client: c, outage: o,
+      distance: null,
+    });
+  }
+  for (const o of a.possible) {
+    rows.push({
+      match: 'Possible', sortMatch: 1,
+      client: c, outage: o,
+      distance: o._distance_m,
+    });
+  }
+}
+
+const categories = [...new Set(rows.map(r => r.client.category).filter(Boolean))].sort();
+const catFilter = document.getElementById('category-filter');
+for (const c of categories) {
+  const opt = document.createElement('option');
+  opt.value = c; opt.textContent = c;
+  catFilter.appendChild(opt);
+}
+
+let sortKey = 'match', sortDir = 1;
+const search = document.getElementById('search');
+const matchFilter = document.getElementById('match-filter');
+const statusFilter = document.getElementById('status-filter');
+const tbody = document.getElementById('tbody');
+const summary = document.getElementById('summary');
+
+function sortAndFilter() {
+  const q = search.value.trim().toLowerCase();
+  const mf = matchFilter.value;
+  const cf = catFilter.value;
+  const sf = statusFilter.value;
+
+  let filtered = rows.filter(r => {
+    if (mf !== 'all' && r.match.toLowerCase() !== mf) return false;
+    if (cf !== 'all' && r.client.category !== cf) return false;
+    if (sf === 'active' && r.outage.status === 'Cancelled') return false;
+    if (q) {
+      const hay = [
+        r.client.name, r.client.address, r.client.suburb, r.client.category,
+        r.outage.street, r.outage.suburb,
+      ].join(' ').toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+
+  filtered.sort((a, b) => {
+    let av, bv;
+    switch (sortKey) {
+      case 'match': av = a.sortMatch; bv = b.sortMatch; break;
+      case 'name': av = a.client.name||''; bv = b.client.name||''; break;
+      case 'category': av = a.client.category||''; bv = b.client.category||''; break;
+      case 'suburb': av = a.client.suburb||''; bv = b.client.suburb||''; break;
+      case 'address': av = a.client.address||''; bv = b.client.address||''; break;
+      case 'contact': av = a.client.contact_name||a.client.contact_phone||''; bv = b.client.contact_name||b.client.contact_phone||''; break;
+      case 'outage_when': av = a.outage.start||''; bv = b.outage.start||''; break;
+      case 'outage_where': av = `${a.outage.suburb} ${a.outage.street}`; bv = `${b.outage.suburb} ${b.outage.street}`; break;
+      case 'distance': av = a.distance===null ? -1 : a.distance; bv = b.distance===null ? -1 : b.distance; break;
+      default: av=''; bv='';
+    }
+    if (av < bv) return -sortDir;
+    if (av > bv) return sortDir;
+    return 0;
+  });
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="9" class="empty">No matching rows. Try clearing filters.</td></tr>`;
+  } else {
+    tbody.innerHTML = filtered.map(r => {
+      const c = r.client, o = r.outage;
+      const matchChip = `<span class="chip ${r.match.toLowerCase()}">${r.match}</span>`;
+      const cancelledChip = o.status === 'Cancelled' ? '<span class="chip cancelled">cancelled</span>' : '';
+      const contactBits = [];
+      if (c.contact_name) contactBits.push(esc(c.contact_name));
+      if (c.contact_phone) contactBits.push(`<a href="tel:${esc(c.contact_phone)}">${esc(c.contact_phone)}</a>`);
+      if (c.contact_email) contactBits.push(`<a href="mailto:${esc(c.contact_email)}">${esc(c.contact_email)}</a>`);
+      return `<tr>
+        <td data-label="Match">${matchChip}</td>
+        <td data-label="Client"><strong>${esc(c.name)}</strong>${c.notes?`<div class="small">${esc(c.notes)}</div>`:''}</td>
+        <td data-label="Category">${c.category?`<span class="chip cat">${esc(c.category)}</span>`:''}<div class="small">${esc(c.source||'')}</div></td>
+        <td data-label="Suburb">${esc(c.suburb||'')}<div class="small">${esc(c.postcode||'')}</div></td>
+        <td data-label="Address">${esc(c.address||'')}</td>
+        <td data-label="Contact">${contactBits.join('<br>')||'<span class="small">—</span>'}</td>
+        <td data-label="When">${esc(o.start)} – ${esc(o.end)} ${cancelledChip}</td>
+        <td data-label="Outage location">${esc(o.street)}<div class="small">${esc(o.suburb)}</div></td>
+        <td data-label="Distance">${r.distance!==null?`${r.distance}m`:'<span class="small">on street</span>'}</td>
+      </tr>`;
+    }).join('');
+  }
+  summary.textContent = `${filtered.length} row${filtered.length===1?'':'s'}`;
+}
+
+document.querySelectorAll('th[data-sort]').forEach(th => {
+  th.addEventListener('click', () => {
+    const k = th.dataset.sort;
+    if (sortKey === k) sortDir = -sortDir;
+    else { sortKey = k; sortDir = 1; }
+    document.querySelectorAll('th').forEach(x => x.classList.remove('sort-asc', 'sort-desc'));
+    th.classList.add(sortDir === 1 ? 'sort-asc' : 'sort-desc');
+    sortAndFilter();
+  });
+});
+
+[search, matchFilter, catFilter, statusFilter].forEach(el =>
+  el.addEventListener('input', sortAndFilter)
+);
+
+sortAndFilter();
+</script>
+</body>
+</html>
