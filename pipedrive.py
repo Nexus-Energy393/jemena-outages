@@ -3,7 +3,8 @@ Pipedrive integration for the Jemena outage map.
 
 Creates/updates leads for affected clients that meet the duration threshold,
 deduplicates by exact title match, and applies a 'Cancelled' label + activity
-note when an outage is cancelled rather than deleting the lead.
+note when an outage is cancelled rather than deleting the lead. Archives
+leads automatically once the outage has passed (with grace period).
 
 Configuration reads from environment variables, set via GitHub repo secrets:
 
@@ -15,10 +16,12 @@ Configuration reads from environment variables, set via GitHub repo secrets:
     PIPEDRIVE_OWNER_ID      optional - user ID to own created leads
     PIPEDRIVE_LABEL_NAME    optional - lead label name (default 'PLANNED POWER OUTAGE')
     PIPEDRIVE_CANCELLED_LABEL_NAME  optional - default 'CANCELLED'
+    PIPEDRIVE_ARCHIVED_LABEL_NAME   optional - default 'AUTO-ARCHIVED'
+    PIPEDRIVE_ARCHIVE_AFTER_DAYS    optional - days after outage to archive (default 2)
     PIPEDRIVE_FIELD_MAP_JSON  required - JSON {"site_address": "abc123...", ...}
 
 Field map keys we support:
-    site_address, locations, planned_outage_date, time_off, time_on,
+    site_address, locations, planned_outage_date, time_off_on,
     type, incident_id
 
 Run with PIPEDRIVE_DRY_RUN=true (default) to log what WOULD happen without
@@ -38,6 +41,7 @@ import requests
 PIPEDRIVE_BASE = "https://{domain}.pipedrive.com/api/v1"
 DEFAULT_LABEL = "PLANNED POWER OUTAGE"
 DEFAULT_CANCELLED_LABEL = "CANCELLED"
+DEFAULT_ARCHIVED_LABEL = "AUTO-ARCHIVED"
 DEFAULT_DOMAIN = "nexusenergy"
 MELBOURNE_TZ = timezone(timedelta(hours=10))
 
@@ -52,6 +56,9 @@ class PipedriveClient:
         self.label_name = os.environ.get("PIPEDRIVE_LABEL_NAME", DEFAULT_LABEL).strip()
         self.cancelled_label_name = os.environ.get(
             "PIPEDRIVE_CANCELLED_LABEL_NAME", DEFAULT_CANCELLED_LABEL).strip()
+        self.archived_label_name = os.environ.get(
+            "PIPEDRIVE_ARCHIVED_LABEL_NAME", DEFAULT_ARCHIVED_LABEL).strip()
+        self.archive_after_days = int(os.environ.get("PIPEDRIVE_ARCHIVE_AFTER_DAYS", "2"))
         try:
             self.field_map = json.loads(os.environ.get("PIPEDRIVE_FIELD_MAP_JSON", "{}"))
         except json.JSONDecodeError:
@@ -61,6 +68,7 @@ class PipedriveClient:
         self.base = PIPEDRIVE_BASE.format(domain=self.domain)
         self.label_id = None
         self.cancelled_label_id = None
+        self.archived_label_id = None
         self._session = requests.Session()
 
     @property
@@ -112,6 +120,7 @@ class PipedriveClient:
         for needed_attr, needed_name, color in [
             ("label_id", self.label_name, "red"),
             ("cancelled_label_id", self.cancelled_label_name, "gray"),
+            ("archived_label_id", self.archived_label_name, "blue"),
         ]:
             match = next((l for l in existing if l.get("name") == needed_name), None)
             if match:
@@ -130,11 +139,19 @@ class PipedriveClient:
     # Person / Organisation upsert
     # ------------------------------------------------------------------
     def upsert_person(self, client: dict) -> int | None:
-        """Look up by email/phone; create if missing. Returns Pipedrive person ID."""
-        name = client.get("name") or "Unknown"
+        """Look up by email/phone; create if missing. Returns Pipedrive person ID.
+
+        Returns None (no person attached to lead) if the client has no real
+        contact info — we don't want placeholder People named after their
+        organisation cluttering up Pipedrive's contact list.
+        """
+        contact_name = (client.get("contact_name") or "").strip()
         email = (client.get("contact_email") or "").strip()
         phone = (client.get("contact_phone") or "").strip()
-        contact_name = (client.get("contact_name") or "").strip() or name
+
+        # No real contact info? Skip person creation entirely.
+        if not contact_name and not email and not phone:
+            return None
 
         # Try to find by email first, then phone
         for term, field in [(email, "email"), (phone, "phone")]:
@@ -148,8 +165,8 @@ class PipedriveClient:
             except Exception:
                 pass
 
-        # Create
-        body = {"name": contact_name}
+        # Create with the contact name (or fall back to org name only as a last resort)
+        body = {"name": contact_name or client.get("name") or "Contact"}
         if email:
             body["email"] = [{"value": email, "primary": True}]
         if phone:
@@ -158,13 +175,13 @@ class PipedriveClient:
             body["owner_id"] = int(self.owner_id)
 
         if self.dry_run:
-            print(f"[pipedrive] DRY: would create Person {contact_name!r} for {name!r}", flush=True)
+            print(f"[pipedrive] DRY: would create Person {body['name']!r} for {client.get('name')!r}", flush=True)
             return None
         try:
             created = self._post("/persons", body)
             return created["data"]["id"]
         except Exception as e:
-            print(f"[pipedrive] failed to create person {contact_name!r}: {e}", flush=True)
+            print(f"[pipedrive] failed to create person {body['name']!r}: {e}", flush=True)
             return None
 
     def upsert_organisation(self, client: dict) -> int | None:
@@ -295,6 +312,90 @@ class PipedriveClient:
         except Exception as e:
             print(f"[pipedrive] failed to add cancellation note: {e}", flush=True)
 
+    def archive_stale_leads(self) -> int:
+        """Archive leads where the outage has passed.
+
+        Selection criteria:
+            - Lead carries our PLANNED POWER OUTAGE label (created by us)
+            - Planned Outage Date custom field is more than `archive_after_days` ago
+            - Lead is not already archived
+            - Lead has not been converted to a deal (still in the inbox)
+
+        Applies AUTO-ARCHIVED label and flips is_archived=true.
+        Returns the number archived.
+        """
+        outage_date_field = self.field_map.get("planned_outage_date")
+        if not outage_date_field:
+            print("[pipedrive] no planned_outage_date field mapped; cannot archive", flush=True)
+            return 0
+
+        cutoff = (datetime.now(MELBOURNE_TZ) - timedelta(days=self.archive_after_days)).date()
+        cutoff_str = cutoff.strftime("%Y-%m-%d")
+
+        # Pipedrive's /leads endpoint supports filtering by label
+        if not self.label_id:
+            print("[pipedrive] no PLANNED POWER OUTAGE label resolved; cannot archive", flush=True)
+            return 0
+
+        archived_count = 0
+        skipped_active = 0
+        try:
+            # Paginate through leads with our label
+            start = 0
+            limit = 100
+            while True:
+                res = self._get("/leads", {
+                    "label_ids[]": self.label_id,
+                    "archived_status": "not_archived",
+                    "limit": limit,
+                    "start": start,
+                })
+                leads = res.get("data") or []
+                for lead in leads:
+                    outage_date = lead.get(outage_date_field) or ""
+                    if not outage_date:
+                        continue
+                    # Pipedrive returns date fields as 'YYYY-MM-DD'
+                    if outage_date >= cutoff_str:
+                        continue  # outage is in the future or within grace period
+
+                    # Check it's not already auto-archived (idempotent)
+                    labels = lead.get("label_ids") or []
+                    if self.archived_label_id and self.archived_label_id in labels:
+                        continue
+
+                    title = lead.get("title", "")
+                    lead_id = lead.get("id")
+
+                    if self.dry_run:
+                        print(f"[pipedrive] DRY: would archive {title!r} (outage was {outage_date})", flush=True)
+                        archived_count += 1
+                        continue
+
+                    new_labels = list(labels)
+                    if self.archived_label_id and self.archived_label_id not in new_labels:
+                        new_labels.append(self.archived_label_id)
+
+                    try:
+                        self._patch(f"/leads/{lead_id}", {
+                            "label_ids": new_labels,
+                            "is_archived": True,
+                        })
+                        print(f"[pipedrive] archived {title!r} (outage was {outage_date})", flush=True)
+                        archived_count += 1
+                    except Exception as e:
+                        print(f"[pipedrive] failed to archive {title!r}: {e}", flush=True)
+
+                # Pagination
+                pagination = (res.get("additional_data") or {}).get("pagination") or {}
+                if not pagination.get("more_items_in_collection"):
+                    break
+                start += limit
+        except Exception as e:
+            print(f"[pipedrive] archive sweep failed: {e}", flush=True)
+
+        return archived_count
+
 
 # ---------------------------------------------------------------------------
 # Opportunity preparation (run before any API calls)
@@ -421,7 +522,7 @@ def sync_to_pipedrive(affected):
     pd = PipedriveClient()
     if not pd.configured:
         print("[pipedrive] not configured (no PIPEDRIVE_API_TOKEN set); skipping", flush=True)
-        return {"created": 0, "updated": 0, "cancelled": 0, "skipped": 0, "configured": False}
+        return {"created": 0, "updated": 0, "cancelled": 0, "skipped": 0, "archived": 0, "configured": False}
 
     print(f"[pipedrive] domain={pd.domain} dry_run={pd.dry_run} "
           f"min_hours={pd.min_hours}", flush=True)
@@ -431,7 +532,8 @@ def sync_to_pipedrive(affected):
     opps = prepare_opportunities(affected, pd.min_hours)
     print(f"[pipedrive] {len(opps)} opportunities prepared", flush=True)
 
-    counters = {"created": 0, "updated": 0, "cancelled": 0, "skipped": 0, "configured": True}
+    counters = {"created": 0, "updated": 0, "cancelled": 0, "skipped": 0,
+                "archived": 0, "configured": True}
     for opp in opps:
         existing = pd.find_lead_by_title(opp["title"])
         if existing:
@@ -449,6 +551,9 @@ def sync_to_pipedrive(affected):
         else:
             pd.create_lead(opp)
             counters["created"] += 1
+
+    # Archive stale leads (outage has passed)
+    counters["archived"] = pd.archive_stale_leads()
 
     print(f"[pipedrive] summary: {counters}", flush=True)
     return counters
