@@ -959,6 +959,15 @@ def main() -> int:
     n_pos = sum(1 for a in affected if a["possible"] and not a["definite"])
     print(f"[affected] {n_def} definite, {n_pos} possible-only", flush=True)
 
+    # Push to Pipedrive (no-op if PIPEDRIVE_API_TOKEN env var not set)
+    try:
+        from pipedrive import sync_to_pipedrive
+        pipedrive_summary = sync_to_pipedrive(affected)
+    except Exception as e:
+        print(f"[pipedrive] sync failed but continuing: {e}", flush=True)
+        traceback.print_exc()
+        pipedrive_summary = {"created": 0, "updated": 0, "cancelled": 0, "skipped": 0, "configured": False}
+
     # Outage-suburb fallback: if an affected client's name still has no suburb
     # or mall, append the outage's suburb. (User CSV rows always have suburb,
     # so this mostly applies to OSM chains in OSM-without-addr:suburb regions.)
