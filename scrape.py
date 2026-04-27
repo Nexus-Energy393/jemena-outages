@@ -637,16 +637,20 @@ def dedupe_clients(clients, location_tolerance_m=50):
         if clat is None or clng is None:
             continue
         cname = (c.get("name") or "").lower()
+        cbrand = (c.get("brand") or c.get("name") or "").lower()
         ccat = (c.get("category") or "").lower()
         is_dup = False
         for k in kept:
             d = haversine_m(clat, clng, k["lat"], k["lng"])
             if d <= location_tolerance_m:
                 kname = (k.get("name") or "").lower()
+                kbrand = (k.get("brand") or k.get("name") or "").lower()
                 kcat = (k.get("category") or "").lower()
-                # Same site if names overlap or categories match
-                if (cname and kname and (cname in kname or kname in cname)) \
-                        or (ccat and ccat == kcat):
+                # Same site if brands match, or names overlap, or categories match
+                same_brand = cbrand and kbrand and cbrand == kbrand
+                names_overlap = cname and kname and (cname in kname or kname in cname)
+                same_cat = ccat and ccat == kcat
+                if same_brand or names_overlap or same_cat:
                     is_dup = True
                     # Merge any contact info from the duplicate into the kept one
                     for field in ("contact_name", "contact_phone", "contact_email", "address"):
@@ -656,6 +660,75 @@ def dedupe_clients(clients, location_tolerance_m=50):
         if not is_dup:
             kept.append(c)
     return kept
+
+
+def _name_already_includes(name, suburb):
+    """Return True if `name` already mentions `suburb` (case-insensitive)."""
+    if not name or not suburb:
+        return False
+    return suburb.lower() in name.lower()
+
+
+def _format_client_name(base_name, suburb=None, mall=None):
+    """Build display name like 'McDonald's Hillside' or
+    'McDonald's Highpoint Shopping Centre'."""
+    if not base_name:
+        return base_name
+    # Strip excess spaces
+    base = re.sub(r"\s+", " ", base_name).strip()
+    # If a mall is known and we're inside it, prefer that
+    if mall and not _name_already_includes(base, mall):
+        return f"{base} {mall}"
+    if suburb and not _name_already_includes(base, suburb):
+        # Title-case the suburb if it's all-caps
+        sub = suburb if not suburb.isupper() else suburb.title()
+        return f"{base} {sub}"
+    return base
+
+
+def find_containing_mall(lat, lng, malls, max_distance_m=150):
+    """Return the mall name if `lat`,`lng` is within `max_distance_m` of one."""
+    best = None
+    best_d = max_distance_m
+    for m in malls:
+        d = haversine_m(lat, lng, m["lat"], m["lng"])
+        if d <= best_d:
+            best_d = d
+            best = m["name"]
+    return best
+
+
+def enrich_client_names(clients):
+    """Apply 'NAME Suburb' / 'NAME Shopping Centre' formatting to all clients.
+
+    Stores the original brand name in 'brand' for later (so we don't double-up
+    when matching by brand for chain-level fallbacks).
+    """
+    # Identify shopping centres in the list to use as containers
+    malls = [
+        {"name": c.get("name"), "lat": c.get("lat"), "lng": c.get("lng")}
+        for c in clients
+        if (c.get("category") == "Shopping centre"
+            and c.get("name")
+            and c.get("lat") is not None and c.get("lng") is not None)
+    ]
+    print(f"[enrich] {len(malls)} shopping centres identified for fallback", flush=True)
+
+    for c in clients:
+        # Don't reformat shopping-centre rows themselves
+        if c.get("category") == "Shopping centre":
+            c["brand"] = c.get("name")
+            continue
+        brand = c.get("name", "")
+        c["brand"] = brand
+        suburb = c.get("suburb") or ""
+        mall = None
+        if c.get("lat") is not None and c.get("lng") is not None:
+            mall = find_containing_mall(c["lat"], c["lng"], malls)
+        c["name"] = _format_client_name(brand, suburb=suburb, mall=mall)
+        if mall:
+            c["mall"] = mall  # remember for later in case we want to expose it
+    return clients
 
 
 def assemble_clients():
@@ -672,6 +745,10 @@ def assemble_clients():
             geocoded.append(gc)
     # Chain clients are already geocoded
     geocoded.extend(chain_clients)
+
+    # Apply name decoration BEFORE dedupe so similarly named sites in different
+    # suburbs don't get collapsed.
+    geocoded = enrich_client_names(geocoded)
 
     deduped = dedupe_clients(geocoded)
     if len(deduped) < len(geocoded):
@@ -881,6 +958,36 @@ def main() -> int:
     n_def = sum(1 for a in affected if a["definite"])
     n_pos = sum(1 for a in affected if a["possible"] and not a["definite"])
     print(f"[affected] {n_def} definite, {n_pos} possible-only", flush=True)
+
+    # Outage-suburb fallback: if an affected client's name still has no suburb
+    # or mall, append the outage's suburb. (User CSV rows always have suburb,
+    # so this mostly applies to OSM chains in OSM-without-addr:suburb regions.)
+    for a in affected:
+        client = a["client"]
+        if client.get("category") == "Shopping centre":
+            continue
+        # Determine if name already has location info
+        brand = client.get("brand") or client.get("name", "")
+        current = client.get("name", "")
+        if current.lower() != brand.lower():
+            # Already enriched (suburb or mall present)
+            continue
+        # Pick the outage suburb from the closest outage
+        candidates = a.get("definite", []) + a.get("possible", [])
+        if not candidates:
+            continue
+        # Prefer definite; otherwise use closest possible
+        if a.get("definite"):
+            outage_suburb = a["definite"][0]["suburb"]
+        else:
+            sorted_possible = sorted(
+                a["possible"],
+                key=lambda o: o.get("_distance_m") if o.get("_distance_m") is not None else float("inf"),
+            )
+            outage_suburb = sorted_possible[0]["suburb"]
+        if outage_suburb and not _name_already_includes(current, outage_suburb):
+            sub = outage_suburb if not outage_suburb.isupper() else outage_suburb.title()
+            client["name"] = f"{brand} {sub}"
 
     # Suburb summaries
     by_suburb = {}
