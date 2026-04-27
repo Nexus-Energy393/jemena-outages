@@ -83,6 +83,11 @@ JEMENA_BBOX = (-37.95, 144.55, -37.40, 145.20)  # south, west, north, east
 CHAINS_REFRESH_DAYS = 7
 BUFFER_METRES = 200  # "possibly affected" radius around shaded streets
 
+# Default minimum outage duration (hours) to consider a client a generator-hire
+# opportunity. Per-client values in clients.csv override this. Set to 0 to
+# include every affected client regardless of outage length.
+DEFAULT_MIN_HOURS = 4.0
+
 
 # ---------------------------------------------------------------------------
 # Street-name normalisation
@@ -721,32 +726,49 @@ def render_affected_html(payload):
     return template.replace("__DATA__", json.dumps(payload, separators=(",", ":")))
 
 
-def write_affected_csv(affected, path):
+def write_affected_csv(affected, path, default_min_hours):
     with open(path, "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow([
             "Match", "Client", "Category", "Source", "Address", "Suburb",
             "Postcode", "Contact Name", "Contact Phone", "Contact Email",
-            "Outage Suburb", "Outage Street", "Start", "End", "Status",
-            "Distance (m)", "Notes",
+            "Outage Suburb", "Outage Street", "Start", "End", "Duration (hrs)",
+            "Status", "Distance (m)",
+            "Client Total Hours", "Client Longest Outage (hrs)",
+            "Min Hours Threshold", "Generator Opportunity", "Notes",
         ])
         for a in affected:
             c = a["client"]
-            for o in a["definite"]:
-                w.writerow([
-                    "Definite", c.get("name", ""), c.get("category", ""), c.get("source", ""),
-                    c.get("address", ""), c.get("suburb", ""), c.get("postcode", ""),
-                    c.get("contact_name", ""), c.get("contact_phone", ""), c.get("contact_email", ""),
-                    o["suburb"], o["street"], o["start"], o["end"], o["status"], "", c.get("notes", ""),
-                ])
-            for o in a["possible"]:
-                w.writerow([
-                    "Possible", c.get("name", ""), c.get("category", ""), c.get("source", ""),
-                    c.get("address", ""), c.get("suburb", ""), c.get("postcode", ""),
-                    c.get("contact_name", ""), c.get("contact_phone", ""), c.get("contact_email", ""),
-                    o["suburb"], o["street"], o["start"], o["end"], o["status"],
-                    o.get("_distance_m", ""), c.get("notes", ""),
-                ])
+            client_min = c.get("min_outage_hours")
+            try:
+                threshold = float(client_min) if client_min not in (None, "") else default_min_hours
+            except (ValueError, TypeError):
+                threshold = default_min_hours
+            longest = 0.0
+            total = 0.0
+            for o in a.get("definite", []) + a.get("possible", []):
+                if o.get("status", "").lower() == "cancelled":
+                    continue
+                d = float(o.get("duration_hours") or 0)
+                longest = max(longest, d)
+                total += d
+            opportunity = "Yes" if longest >= threshold else "No"
+
+            for outages, label in (
+                (a.get("definite", []), "Definite"),
+                (a.get("possible", []), "Possible"),
+            ):
+                for o in outages:
+                    w.writerow([
+                        label, c.get("name", ""), c.get("category", ""), c.get("source", ""),
+                        c.get("address", ""), c.get("suburb", ""), c.get("postcode", ""),
+                        c.get("contact_name", ""), c.get("contact_phone", ""), c.get("contact_email", ""),
+                        o["suburb"], o["street"], o["start"], o["end"],
+                        o.get("duration_hours", ""), o["status"],
+                        o.get("_distance_m", "") if label == "Possible" else "",
+                        round(total, 2), round(longest, 2),
+                        threshold, opportunity, c.get("notes", ""),
+                    ])
 
 
 # ---------------------------------------------------------------------------
@@ -785,12 +807,14 @@ def main() -> int:
 
     outages_by_pair = {}
     for o in raw_outages:
+        duration_h = (o["end_dt"] - o["start_dt"]).total_seconds() / 3600.0
         outages_by_pair.setdefault((o["suburb"].lower(), norm_key(o["street"])), []).append({
             "suburb": o["suburb"].title(),
             "street": o["street"],
             "start": o["start_display"],
             "end": o["end_display"],
             "status": o["status"],
+            "duration_hours": round(duration_h, 2),
         })
 
     pairs_by_street = {}
@@ -841,20 +865,40 @@ def main() -> int:
 
     # Slim down clients for embedding (drop heavy/unused fields)
     def slim_client(c):
-        return {k: c.get(k) for k in (
-            "name", "category", "source", "address", "suburb", "postcode",
-            "contact_name", "contact_phone", "contact_email", "notes",
-            "lat", "lng",
-        ) if c.get(k) not in (None, "")}
+        out = {}
+        for k in ("name", "category", "source", "address", "suburb", "postcode",
+                  "contact_name", "contact_phone", "contact_email", "notes",
+                  "lat", "lng"):
+            if c.get(k) not in (None, ""):
+                out[k] = c.get(k)
+        # Carry per-client minimum-hours threshold if set
+        mh = c.get("min_outage_hours")
+        if mh:
+            try:
+                out["min_outage_hours"] = float(mh)
+            except (ValueError, TypeError):
+                pass
+        return out
+
+    def opportunity_summary(definite, possible):
+        """Return (longest_hours, total_hours) for non-cancelled outages only."""
+        active = [o for o in (definite + possible) if o.get("status", "").lower() != "cancelled"]
+        if not active:
+            return 0.0, 0.0
+        durations = [float(o.get("duration_hours") or 0) for o in active]
+        return max(durations) if durations else 0.0, sum(durations)
 
     affected_payload = []
     for a in affected:
+        longest, total = opportunity_summary(a["definite"], a["possible"])
         affected_payload.append({
             "client": slim_client(a["client"]),
             "definite": a["definite"],
             "possible": a["possible"],
             "nearest_street": a["nearest_street"],
             "nearest_distance_m": a["nearest_distance_m"],
+            "longest_hours": round(longest, 2),
+            "total_hours": round(total, 2),
         })
 
     # All clients for "show all clients" toggle on the map
@@ -875,6 +919,7 @@ def main() -> int:
             "definiteCount": n_def,
             "possibleCount": n_pos,
             "bufferMetres": BUFFER_METRES,
+            "defaultMinHours": DEFAULT_MIN_HOURS,
         },
     }
 
@@ -886,7 +931,7 @@ def main() -> int:
     (DOCS / "index.html").write_text(render_main_html(main_payload), encoding="utf-8")
     (DOCS / "affected.html").write_text(render_affected_html(affected_payload_full), encoding="utf-8")
     (DOCS / "data.json").write_text(json.dumps(main_payload, separators=(",", ":")), encoding="utf-8")
-    write_affected_csv(affected, DOCS / "affected.csv")
+    write_affected_csv(affected, DOCS / "affected.csv", DEFAULT_MIN_HOURS)
 
     size = (DOCS / "index.html").stat().st_size
     print(f"[done] wrote docs/index.html ({size:,}B), affected.html, affected.csv", flush=True)

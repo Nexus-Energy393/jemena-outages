@@ -64,6 +64,18 @@
     <option value="active">Active only (hide cancelled)</option>
     <option value="all">Show cancelled too</option>
   </select>
+  <select id="min-hours">
+    <option value="0">Any duration</option>
+    <option value="2">2+ hrs</option>
+    <option value="3">3+ hrs</option>
+    <option value="4" selected>4+ hrs (generator opportunity)</option>
+    <option value="6">6+ hrs</option>
+    <option value="8">8+ hrs</option>
+  </select>
+  <select id="duration-mode">
+    <option value="longest" selected>By longest single outage</option>
+    <option value="total">By total exposure</option>
+  </select>
   <div class="summary" id="summary"></div>
 </div>
 <div id="table-wrap">
@@ -77,8 +89,11 @@
         <th data-sort="address">Address</th>
         <th data-sort="contact">Contact</th>
         <th data-sort="outage_when">When</th>
+        <th data-sort="duration">Duration</th>
         <th data-sort="outage_where">Outage location</th>
         <th data-sort="distance">Distance</th>
+        <th data-sort="total_hours">Total hrs</th>
+        <th data-sort="longest_hours">Longest hrs</th>
       </tr>
     </thead>
     <tbody id="tbody"></tbody>
@@ -89,7 +104,7 @@
 const DATA = __DATA__;
 document.getElementById('meta').textContent =
   `Last updated ${DATA.meta.extracted}. ${DATA.meta.definiteCount} definite, ${DATA.meta.possibleCount} possible. ` +
-  `${DATA.meta.totalClients} total clients tracked.`;
+  `${DATA.meta.totalClients} total clients tracked. Default minimum duration: ${DATA.meta.defaultMinHours||4}h.`;
 
 function esc(s) { return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
@@ -97,11 +112,17 @@ function esc(s) { return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<
 const rows = [];
 for (const a of DATA.affected) {
   const c = a.client;
+  const total = a.total_hours || 0;
+  const longest = a.longest_hours || 0;
   for (const o of a.definite) {
     rows.push({
       match: 'Definite', sortMatch: 0,
       client: c, outage: o,
       distance: null,
+      duration: o.duration_hours || 0,
+      total_hours: total,
+      longest_hours: longest,
+      client_min: c.min_outage_hours,
     });
   }
   for (const o of a.possible) {
@@ -109,6 +130,10 @@ for (const a of DATA.affected) {
       match: 'Possible', sortMatch: 1,
       client: c, outage: o,
       distance: o._distance_m,
+      duration: o.duration_hours || 0,
+      total_hours: total,
+      longest_hours: longest,
+      client_min: c.min_outage_hours,
     });
   }
 }
@@ -121,23 +146,43 @@ for (const c of categories) {
   catFilter.appendChild(opt);
 }
 
-let sortKey = 'match', sortDir = 1;
+let sortKey = 'longest_hours', sortDir = -1;
 const search = document.getElementById('search');
 const matchFilter = document.getElementById('match-filter');
 const statusFilter = document.getElementById('status-filter');
+const minHours = document.getElementById('min-hours');
+const durationMode = document.getElementById('duration-mode');
 const tbody = document.getElementById('tbody');
 const summary = document.getElementById('summary');
+
+// Read ?min= from URL if main map passed it through
+const urlMin = new URLSearchParams(location.search).get('min');
+if (urlMin && [...minHours.options].some(o => o.value === urlMin)) {
+  minHours.value = urlMin;
+}
+
+function effectiveThreshold(r) {
+  // Per-client override beats page-level filter
+  if (r.client_min != null) return parseFloat(r.client_min);
+  return parseFloat(minHours.value);
+}
 
 function sortAndFilter() {
   const q = search.value.trim().toLowerCase();
   const mf = matchFilter.value;
   const cf = catFilter.value;
   const sf = statusFilter.value;
+  const mode = durationMode.value;
 
   let filtered = rows.filter(r => {
     if (mf !== 'all' && r.match.toLowerCase() !== mf) return false;
     if (cf !== 'all' && r.client.category !== cf) return false;
     if (sf === 'active' && r.outage.status === 'Cancelled') return false;
+    const th = effectiveThreshold(r);
+    if (th > 0) {
+      const measure = mode === 'total' ? r.total_hours : r.longest_hours;
+      if (measure < th) return false;
+    }
     if (q) {
       const hay = [
         r.client.name, r.client.address, r.client.suburb, r.client.category,
@@ -158,8 +203,11 @@ function sortAndFilter() {
       case 'address': av = a.client.address||''; bv = b.client.address||''; break;
       case 'contact': av = a.client.contact_name||a.client.contact_phone||''; bv = b.client.contact_name||b.client.contact_phone||''; break;
       case 'outage_when': av = a.outage.start||''; bv = b.outage.start||''; break;
+      case 'duration': av = a.duration; bv = b.duration; break;
       case 'outage_where': av = `${a.outage.suburb} ${a.outage.street}`; bv = `${b.outage.suburb} ${b.outage.street}`; break;
       case 'distance': av = a.distance===null ? -1 : a.distance; bv = b.distance===null ? -1 : b.distance; break;
+      case 'total_hours': av = a.total_hours; bv = b.total_hours; break;
+      case 'longest_hours': av = a.longest_hours; bv = b.longest_hours; break;
       default: av=''; bv='';
     }
     if (av < bv) return -sortDir;
@@ -168,7 +216,7 @@ function sortAndFilter() {
   });
 
   if (filtered.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="9" class="empty">No matching rows. Try clearing filters.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="12" class="empty">No matching rows. Try clearing filters or lowering the minimum duration.</td></tr>`;
   } else {
     tbody.innerHTML = filtered.map(r => {
       const c = r.client, o = r.outage;
@@ -178,6 +226,8 @@ function sortAndFilter() {
       if (c.contact_name) contactBits.push(esc(c.contact_name));
       if (c.contact_phone) contactBits.push(`<a href="tel:${esc(c.contact_phone)}">${esc(c.contact_phone)}</a>`);
       if (c.contact_email) contactBits.push(`<a href="mailto:${esc(c.contact_email)}">${esc(c.contact_email)}</a>`);
+      const overrideTag = c.min_outage_hours != null
+        ? `<span class="small">(client threshold ${c.min_outage_hours}h)</span>` : '';
       return `<tr>
         <td data-label="Match">${matchChip}</td>
         <td data-label="Client"><strong>${esc(c.name)}</strong>${c.notes?`<div class="small">${esc(c.notes)}</div>`:''}</td>
@@ -186,12 +236,17 @@ function sortAndFilter() {
         <td data-label="Address">${esc(c.address||'')}</td>
         <td data-label="Contact">${contactBits.join('<br>')||'<span class="small">—</span>'}</td>
         <td data-label="When">${esc(o.start)} – ${esc(o.end)} ${cancelledChip}</td>
+        <td data-label="Duration">${r.duration.toFixed(1)}h</td>
         <td data-label="Outage location">${esc(o.street)}<div class="small">${esc(o.suburb)}</div></td>
         <td data-label="Distance">${r.distance!==null?`${r.distance}m`:'<span class="small">on street</span>'}</td>
+        <td data-label="Total hrs">${r.total_hours.toFixed(1)}h ${overrideTag}</td>
+        <td data-label="Longest hrs">${r.longest_hours.toFixed(1)}h</td>
       </tr>`;
     }).join('');
   }
-  summary.textContent = `${filtered.length} row${filtered.length===1?'':'s'}`;
+  // Distinct affected clients in current view (for opportunity count)
+  const distinctClients = new Set(filtered.map(r => r.client.name + '|' + (r.client.address||'')));
+  summary.textContent = `${filtered.length} row${filtered.length===1?'':'s'} · ${distinctClients.size} client${distinctClients.size===1?'':'s'}`;
 }
 
 document.querySelectorAll('th[data-sort]').forEach(th => {
@@ -205,7 +260,7 @@ document.querySelectorAll('th[data-sort]').forEach(th => {
   });
 });
 
-[search, matchFilter, catFilter, statusFilter].forEach(el =>
+[search, matchFilter, catFilter, statusFilter, minHours, durationMode].forEach(el =>
   el.addEventListener('input', sortAndFilter)
 );
 

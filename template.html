@@ -29,15 +29,17 @@
   .chip.possible { background:#fb8c00; color:#fff; }
   .chip.cat { background:#e3f2fd; color:#0d47a1; }
   .leaflet-container a { color:#0b57d0; }
-  #header-bar { position:absolute; top:12px; left:12px; right:12px; z-index:1000; pointer-events:none; display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
+  #header-bar { position:absolute; top:12px; left:12px; right:12px; z-index:1000; pointer-events:none; display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap; }
   #header-bar > * { pointer-events:auto; }
   #updated { background:#fff; padding:6px 10px; border-radius:6px; box-shadow:0 1px 4px rgba(0,0,0,.15); font-size:11px; color:#555; }
   #updated strong { color:#222; }
-  .top-buttons { display:flex; gap:8px; }
-  .top-buttons a { background:#fff; padding:8px 14px; border-radius:6px; box-shadow:0 1px 4px rgba(0,0,0,.15); font-size:13px; color:#0b57d0; text-decoration:none; font-weight:500; }
-  .top-buttons a:hover { background:#f5f5f5; }
+  .top-buttons { display:flex; gap:8px; flex-wrap:wrap; }
+  .top-buttons a, .top-buttons label { background:#fff; padding:8px 14px; border-radius:6px; box-shadow:0 1px 4px rgba(0,0,0,.15); font-size:13px; color:#0b57d0; text-decoration:none; font-weight:500; display:inline-flex; align-items:center; gap:6px; }
+  .top-buttons a:hover, .top-buttons label:hover { background:#f5f5f5; }
   .top-buttons a.alert { background:#b71c1c; color:#fff; }
   .top-buttons a.alert:hover { background:#8b0000; }
+  .top-buttons select { border:none; background:transparent; font-size:13px; font-weight:500; color:#0b57d0; cursor:pointer; }
+  .top-buttons label { color:#333; }
 </style>
 </head>
 <body>
@@ -45,6 +47,16 @@
 <div id="header-bar">
   <div id="updated">Updated: <strong id="updated-value">…</strong></div>
   <div class="top-buttons">
+    <label>Min duration:
+      <select id="min-hours-select">
+        <option value="0">Any</option>
+        <option value="2">2+ hrs</option>
+        <option value="3">3+ hrs</option>
+        <option value="4" selected>4+ hrs (default)</option>
+        <option value="6">6+ hrs</option>
+        <option value="8">8+ hrs</option>
+      </select>
+    </label>
     <a id="affected-link" class="alert" href="affected.html">Affected clients</a>
     <a href="affected.csv" download>CSV</a>
   </div>
@@ -57,10 +69,6 @@ const DATA = __DATA__;
 const MATCHED = new Set(DATA.matchedPairs);
 
 document.getElementById('updated-value').textContent = DATA.meta.extracted;
-const totalAffected = (DATA.meta.definiteCount || 0) + (DATA.meta.possibleCount || 0);
-document.getElementById('affected-link').textContent = totalAffected
-  ? `${totalAffected} affected clients`
-  : 'Affected clients (0)';
 
 const map = L.map('map', { preferCanvas: true }).setView([-37.74, 144.88], 11);
 L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
@@ -112,16 +120,20 @@ function buildClientPopup(client, affected) {
   }
   if (client.notes) body += `<div style="margin-top:6px;font-size:12px">${esc(client.notes)}</div>`;
   if (affected) {
+    const tH = (affected.total_hours||0).toFixed(1);
+    const lH = (affected.longest_hours||0).toFixed(1);
+    body += `<h4>Outage exposure</h4>
+      <div style="font-size:12px">Longest single: <strong>${lH}h</strong> · Total across all: <strong>${tH}h</strong></div>`;
     if (affected.definite.length) {
       body += `<h4><span class="chip definite">Definitely affected</span></h4>`;
       body += affected.definite.map(o =>
-        `<div class="outage">${esc(o.start)} – ${esc(o.end)} · ${esc(o.street)} ${esc(o.suburb)}${o.status==='Cancelled'?' <span class="chip cancelled">cancelled</span>':''}</div>`
+        `<div class="outage">${esc(o.start)} – ${esc(o.end)} (${(o.duration_hours||0).toFixed(1)}h) · ${esc(o.street)} ${esc(o.suburb)}${o.status==='Cancelled'?' <span class="chip cancelled">cancelled</span>':''}</div>`
       ).join('');
     }
     if (affected.possible.length) {
       body += `<h4><span class="chip possible">Possibly affected</span> <span style="font-weight:normal;color:#666">(within ${DATA.meta.bufferMetres}m)</span></h4>`;
       body += affected.possible.map(o =>
-        `<div class="outage">${esc(o.start)} – ${esc(o.end)} · ${esc(o.street)} ${esc(o.suburb)} <span style="color:#999">(${o._distance_m||'?'}m)</span></div>`
+        `<div class="outage">${esc(o.start)} – ${esc(o.end)} (${(o.duration_hours||0).toFixed(1)}h) · ${esc(o.street)} ${esc(o.suburb)} <span style="color:#999">(${o._distance_m||'?'}m)</span></div>`
       ).join('');
     }
   }
@@ -165,19 +177,59 @@ for (const a of (DATA.affected || [])) {
 const affectedLayer = L.layerGroup();
 const clientLayer = L.layerGroup();
 
-for (const c of (DATA.clients || [])) {
-  const key = c.name + '|' + (c.address||'') + '|' + (c.lat||'') + ',' + (c.lng||'');
-  const a = affectedByName.get(key);
-  let state = 'unaffected', layer = clientLayer;
-  if (a) {
-    state = a.definite.length ? 'definite' : 'possible';
-    layer = affectedLayer;
-  }
-  L.marker([c.lat, c.lng], { icon: clientIcon(state), title: c.name })
-   .bindPopup(buildClientPopup(c, a), { maxHeight: 380 })
-   .addTo(layer);
+function clientMeetsThreshold(a, defaultMin) {
+  if (!a) return false;
+  const min = (a.client && a.client.min_outage_hours != null) ? a.client.min_outage_hours : defaultMin;
+  return (a.longest_hours || 0) >= min;
 }
+
+function redrawClientLayers() {
+  affectedLayer.clearLayers();
+  clientLayer.clearLayers();
+  const minSel = parseFloat(document.getElementById('min-hours-select').value);
+  let visibleAffected = 0, visibleDefinite = 0, visiblePossible = 0;
+
+  for (const c of (DATA.clients || [])) {
+    const key = c.name + '|' + (c.address||'') + '|' + (c.lat||'') + ',' + (c.lng||'');
+    const a = affectedByName.get(key);
+    let state = 'unaffected', layer = clientLayer;
+    if (a) {
+      // Apply per-client override or page-level filter
+      const clientMin = (c.min_outage_hours != null) ? c.min_outage_hours : minSel;
+      if ((a.longest_hours || 0) < clientMin) {
+        // Doesn't meet threshold — render as unaffected (small grey)
+        state = 'unaffected';
+        layer = clientLayer;
+      } else {
+        state = a.definite.length ? 'definite' : 'possible';
+        layer = affectedLayer;
+        visibleAffected++;
+        if (state === 'definite') visibleDefinite++; else visiblePossible++;
+      }
+    }
+    L.marker([c.lat, c.lng], { icon: clientIcon(state), title: c.name })
+     .bindPopup(buildClientPopup(c, a), { maxHeight: 380 })
+     .addTo(layer);
+  }
+  document.getElementById('affected-link').textContent = visibleAffected
+    ? `${visibleAffected} affected clients`
+    : 'Affected clients (0)';
+  return { visibleAffected, visibleDefinite, visiblePossible };
+}
+
+// Initial selection from default
+const defaultMin = (DATA.meta && DATA.meta.defaultMinHours) || 4;
+document.getElementById('min-hours-select').value = String(defaultMin);
+
+redrawClientLayers();
 affectedLayer.addTo(map);  // affected on by default
+
+// Update on threshold change; also pass through to affected.html via querystring
+document.getElementById('min-hours-select').addEventListener('change', e => {
+  redrawClientLayers();
+  const link = document.getElementById('affected-link');
+  link.href = `affected.html?min=${encodeURIComponent(e.target.value)}`;
+});
 
 if (DATA.suburbs.length) map.fitBounds(L.latLngBounds(DATA.suburbs.map(s => [s.lat, s.lng])).pad(0.15));
 
