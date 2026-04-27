@@ -78,11 +78,29 @@ class PipedriveClient:
     # ------------------------------------------------------------------
     # Low-level HTTP
     # ------------------------------------------------------------------
+    @staticmethod
+    def _err_body(response) -> str:
+        """Extract a readable error body from a failed Pipedrive response."""
+        try:
+            j = response.json()
+            # Pipedrive returns errors like {"success": false, "error": "...", "error_info": "..."}
+            parts = []
+            if j.get("error"):
+                parts.append(j["error"])
+            if j.get("error_info"):
+                parts.append(j["error_info"])
+            if j.get("data") and isinstance(j["data"], dict) and j["data"].get("errors"):
+                parts.append(json.dumps(j["data"]["errors"]))
+            return " · ".join(parts) or json.dumps(j)[:500]
+        except Exception:
+            return (response.text or "")[:500]
+
     def _get(self, path: str, params: dict = None) -> dict:
         params = dict(params or {})
         params["api_token"] = self.token
         r = self._session.get(f"{self.base}{path}", params=params, timeout=30)
-        r.raise_for_status()
+        if not r.ok:
+            raise requests.HTTPError(f"{r.status_code} {self._err_body(r)}", response=r)
         return r.json()
 
     def _post(self, path: str, body: dict) -> dict:
@@ -92,7 +110,8 @@ class PipedriveClient:
             json=body,
             timeout=30,
         )
-        r.raise_for_status()
+        if not r.ok:
+            raise requests.HTTPError(f"{r.status_code} {self._err_body(r)}", response=r)
         return r.json()
 
     def _patch(self, path: str, body: dict) -> dict:
@@ -102,7 +121,8 @@ class PipedriveClient:
             json=body,
             timeout=30,
         )
-        r.raise_for_status()
+        if not r.ok:
+            raise requests.HTTPError(f"{r.status_code} {self._err_body(r)}", response=r)
         return r.json()
 
     # ------------------------------------------------------------------
@@ -229,6 +249,8 @@ class PipedriveClient:
         """opp is the OpportunityRecord dict (see prepare_opportunities)."""
         cf = {}
         fmap = self.field_map
+        # Only set fields with non-empty values; Pipedrive rejects some
+        # field types when given empty strings.
         if "site_address" in fmap and opp.get("site_address"):
             cf[fmap["site_address"]] = opp["site_address"]
         if "locations" in fmap and opp.get("locations"):
@@ -239,6 +261,8 @@ class PipedriveClient:
             cf[fmap["time_off_on"]] = opp["time_off_on"]
         if "type" in fmap and opp.get("type"):
             cf[fmap["type"]] = opp["type"]
+        # Skip incident_id when it's empty — Pipedrive may reject empty values
+        # on certain field types (e.g. numeric).
         if "incident_id" in fmap and opp.get("incident_id"):
             cf[fmap["incident_id"]] = opp["incident_id"]
         return cf
@@ -253,6 +277,13 @@ class PipedriveClient:
             body["person_id"] = person_id
         if org_id:
             body["organization_id"] = org_id
+
+        # Pipedrive requires at least one of person_id or organization_id.
+        # If both creation attempts failed, skip rather than fail.
+        if not person_id and not org_id:
+            print(f"[pipedrive] skipping {title!r}: could not create person or organisation", flush=True)
+            return None
+
         if self.owner_id:
             body["owner_id"] = int(self.owner_id)
         if self.label_id:
@@ -272,6 +303,7 @@ class PipedriveClient:
             return created.get("data")
         except Exception as e:
             print(f"[pipedrive] failed to create lead {title!r}: {e}", flush=True)
+            print(f"            body keys: {list(body.keys())}", flush=True)
             return None
 
     def mark_lead_cancelled(self, lead: dict, opp: dict) -> None:
