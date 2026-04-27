@@ -77,6 +77,11 @@
     <option value="longest">Client's longest outage</option>
     <option value="total">Client's total exposure</option>
   </select>
+  <select id="group-mode">
+    <option value="ungrouped">Ungrouped (one row per outage)</option>
+    <option value="client-street" selected>Group: client × street</option>
+    <option value="client">Group: client (collapse all)</option>
+  </select>
   <div class="summary" id="summary"></div>
 </div>
 <div id="table-wrap">
@@ -219,19 +224,87 @@ function sortAndFilter() {
     return 0;
   });
 
-  if (filtered.length === 0) {
+  // Group rows if requested
+  const groupMode = document.getElementById('group-mode').value;
+  let displayRows = filtered;
+  if (groupMode !== 'ungrouped' && filtered.length > 0) {
+    const groups = new Map();
+    for (const r of filtered) {
+      const key = groupMode === 'client'
+        ? `${r.client.name}|${r.client.address||''}|${r.client.lat||''},${r.client.lng||''}`
+        : `${r.client.name}|${r.client.address||''}|${r.outage.street}|${r.outage.suburb}`;
+      if (!groups.has(key)) groups.set(key, { rep: r, items: [], minDistance: r.distance });
+      const g = groups.get(key);
+      g.items.push(r);
+      if (r.distance !== null && (g.minDistance === null || r.distance < g.minDistance)) {
+        g.minDistance = r.distance;
+        g.rep = r;  // promote closer match as representative
+      }
+    }
+    displayRows = [...groups.values()].map(g => ({ ...g.rep, _group: g.items, _minDistance: g.minDistance }));
+    // Re-sort grouped rows
+    displayRows.sort((a, b) => {
+      const av = sortKey === 'duration' ? Math.max(...a._group.map(x => x.duration))
+              : sortKey === 'longest_hours' ? a.longest_hours
+              : sortKey === 'total_hours' ? a.total_hours
+              : sortKey === 'distance' ? (a._minDistance===null ? -1 : a._minDistance)
+              : a[sortKey] || a.client[sortKey] || '';
+      const bv = sortKey === 'duration' ? Math.max(...b._group.map(x => x.duration))
+              : sortKey === 'longest_hours' ? b.longest_hours
+              : sortKey === 'total_hours' ? b.total_hours
+              : sortKey === 'distance' ? (b._minDistance===null ? -1 : b._minDistance)
+              : b[sortKey] || b.client[sortKey] || '';
+      if (av < bv) return -sortDir;
+      if (av > bv) return sortDir;
+      return 0;
+    });
+  }
+
+  if (displayRows.length === 0) {
     tbody.innerHTML = `<tr><td colspan="12" class="empty">No matching rows. Try clearing filters or lowering the minimum duration.</td></tr>`;
   } else {
-    tbody.innerHTML = filtered.map(r => {
+    tbody.innerHTML = displayRows.map(r => {
       const c = r.client, o = r.outage;
       const matchChip = `<span class="chip ${r.match.toLowerCase()}">${r.match}</span>`;
-      const cancelledChip = o.status === 'Cancelled' ? '<span class="chip cancelled">cancelled</span>' : '';
       const contactBits = [];
       if (c.contact_name) contactBits.push(esc(c.contact_name));
       if (c.contact_phone) contactBits.push(`<a href="tel:${esc(c.contact_phone)}">${esc(c.contact_phone)}</a>`);
       if (c.contact_email) contactBits.push(`<a href="mailto:${esc(c.contact_email)}">${esc(c.contact_email)}</a>`);
       const overrideTag = c.min_outage_hours != null
         ? `<span class="small">(client threshold ${c.min_outage_hours}h)</span>` : '';
+
+      let whenCell, durCell, locCell, distCell;
+      if (r._group) {
+        const items = r._group;
+        const distinctLocations = [...new Set(items.map(x => `${x.outage.street}|${x.outage.suburb}`))];
+        // When: stack each window
+        whenCell = items.map(x => {
+          const cancelled = x.outage.status === 'Cancelled' ? ' <span class="chip cancelled">cancelled</span>' : '';
+          return `<div>${esc(x.outage.start)} – ${esc(x.outage.end)} <span class="small">(${x.duration.toFixed(1)}h)</span>${cancelled}</div>`;
+        }).join('');
+        const totalGroupHours = items.reduce((acc, x) => acc + (x.outage.status === 'Cancelled' ? 0 : x.duration), 0);
+        const longestGroupHours = Math.max(...items.map(x => x.duration));
+        durCell = `<div><strong>${longestGroupHours.toFixed(1)}h</strong> longest</div><div class="small">${totalGroupHours.toFixed(1)}h across ${items.length}</div>`;
+        // Location: prefer single shared location, else list
+        if (distinctLocations.length === 1) {
+          locCell = `${esc(o.street)}<div class="small">${esc(o.suburb)}</div>`;
+        } else {
+          locCell = distinctLocations.map(loc => {
+            const [st, sub] = loc.split('|');
+            return `<div>${esc(st)} <span class="small">${esc(sub)}</span></div>`;
+          }).join('');
+        }
+        distCell = r._minDistance !== null
+          ? `${r._minDistance}m <span class="small">closest</span>`
+          : '<span class="small">on street</span>';
+      } else {
+        const cancelledChip = o.status === 'Cancelled' ? '<span class="chip cancelled">cancelled</span>' : '';
+        whenCell = `${esc(o.start)} – ${esc(o.end)} ${cancelledChip}`;
+        durCell = `${r.duration.toFixed(1)}h`;
+        locCell = `${esc(o.street)}<div class="small">${esc(o.suburb)}</div>`;
+        distCell = r.distance !== null ? `${r.distance}m` : '<span class="small">on street</span>';
+      }
+
       return `<tr>
         <td data-label="Match">${matchChip}</td>
         <td data-label="Client"><strong>${esc(c.name)}</strong>${c.notes?`<div class="small">${esc(c.notes)}</div>`:''}</td>
@@ -239,18 +312,21 @@ function sortAndFilter() {
         <td data-label="Suburb">${esc(c.suburb||'')}<div class="small">${esc(c.postcode||'')}</div></td>
         <td data-label="Address">${esc(c.address||'')}</td>
         <td data-label="Contact">${contactBits.join('<br>')||'<span class="small">—</span>'}</td>
-        <td data-label="When">${esc(o.start)} – ${esc(o.end)} ${cancelledChip}</td>
-        <td data-label="Duration">${r.duration.toFixed(1)}h</td>
-        <td data-label="Outage location">${esc(o.street)}<div class="small">${esc(o.suburb)}</div></td>
-        <td data-label="Distance">${r.distance!==null?`${r.distance}m`:'<span class="small">on street</span>'}</td>
+        <td data-label="When">${whenCell}</td>
+        <td data-label="Duration">${durCell}</td>
+        <td data-label="Outage location">${locCell}</td>
+        <td data-label="Distance">${distCell}</td>
         <td data-label="Total hrs">${r.total_hours.toFixed(1)}h ${overrideTag}</td>
         <td data-label="Longest hrs">${r.longest_hours.toFixed(1)}h</td>
       </tr>`;
     }).join('');
   }
-  // Distinct affected clients in current view (for opportunity count)
+  // Distinct affected clients in current view
   const distinctClients = new Set(filtered.map(r => r.client.name + '|' + (r.client.address||'')));
-  summary.textContent = `${filtered.length} row${filtered.length===1?'':'s'} · ${distinctClients.size} client${distinctClients.size===1?'':'s'}`;
+  const rowLabel = displayRows.length === 1 ? 'row' : 'rows';
+  summary.textContent = `${displayRows.length} ${rowLabel}` +
+    (groupMode !== 'ungrouped' ? ` (from ${filtered.length} outages)` : '') +
+    ` · ${distinctClients.size} client${distinctClients.size===1?'':'s'}`;
 }
 
 document.querySelectorAll('th[data-sort]').forEach(th => {
@@ -264,7 +340,8 @@ document.querySelectorAll('th[data-sort]').forEach(th => {
   });
 });
 
-[search, matchFilter, catFilter, statusFilter, minHours, durationMode].forEach(el =>
+[search, matchFilter, catFilter, statusFilter, minHours, durationMode,
+ document.getElementById('group-mode')].forEach(el =>
   el.addEventListener('input', sortAndFilter)
 );
 

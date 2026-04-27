@@ -620,6 +620,44 @@ def load_user_clients():
     return out
 
 
+def dedupe_clients(clients, location_tolerance_m=50):
+    """Collapse duplicates that refer to the same physical site.
+
+    Two entries are considered duplicates if they're within
+    `location_tolerance_m` of each other AND share the same brand or name
+    (case-insensitive). User-provided rows always win over OSM-pulled chains
+    because they typically have richer contact info.
+    """
+    # Sort so user clients are considered first
+    sorted_clients = sorted(clients, key=lambda c: (c.get("source") != "user",))
+
+    kept = []
+    for c in sorted_clients:
+        clat, clng = c.get("lat"), c.get("lng")
+        if clat is None or clng is None:
+            continue
+        cname = (c.get("name") or "").lower()
+        ccat = (c.get("category") or "").lower()
+        is_dup = False
+        for k in kept:
+            d = haversine_m(clat, clng, k["lat"], k["lng"])
+            if d <= location_tolerance_m:
+                kname = (k.get("name") or "").lower()
+                kcat = (k.get("category") or "").lower()
+                # Same site if names overlap or categories match
+                if (cname and kname and (cname in kname or kname in cname)) \
+                        or (ccat and ccat == kcat):
+                    is_dup = True
+                    # Merge any contact info from the duplicate into the kept one
+                    for field in ("contact_name", "contact_phone", "contact_email", "address"):
+                        if not k.get(field) and c.get(field):
+                            k[field] = c[field]
+                    break
+        if not is_dup:
+            kept.append(c)
+    return kept
+
+
 def assemble_clients():
     user_clients = load_user_clients()
     print(f"[clients] {len(user_clients)} from clients.csv", flush=True)
@@ -634,7 +672,12 @@ def assemble_clients():
             geocoded.append(gc)
     # Chain clients are already geocoded
     geocoded.extend(chain_clients)
-    return geocoded
+
+    deduped = dedupe_clients(geocoded)
+    if len(deduped) < len(geocoded):
+        print(f"[clients] deduped {len(geocoded) - len(deduped)} duplicate sites "
+              f"({len(deduped)} unique remaining)", flush=True)
+    return deduped
 
 
 # ---------------------------------------------------------------------------
