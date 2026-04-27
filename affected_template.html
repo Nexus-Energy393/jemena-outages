@@ -73,8 +73,9 @@
     <option value="8">8+ hrs</option>
   </select>
   <select id="duration-mode">
-    <option value="longest" selected>By longest single outage</option>
-    <option value="total">By total exposure</option>
+    <option value="row" selected>Each outage row</option>
+    <option value="longest">Client's longest outage</option>
+    <option value="total">Client's total exposure</option>
   </select>
   <div class="summary" id="summary"></div>
 </div>
@@ -146,7 +147,7 @@ for (const c of categories) {
   catFilter.appendChild(opt);
 }
 
-let sortKey = 'longest_hours', sortDir = -1;
+let sortKey = 'duration', sortDir = -1;
 const search = document.getElementById('search');
 const matchFilter = document.getElementById('match-filter');
 const statusFilter = document.getElementById('status-filter');
@@ -180,7 +181,10 @@ function sortAndFilter() {
     if (sf === 'active' && r.outage.status === 'Cancelled') return false;
     const th = effectiveThreshold(r);
     if (th > 0) {
-      const measure = mode === 'total' ? r.total_hours : r.longest_hours;
+      let measure;
+      if (mode === 'row') measure = r.duration;
+      else if (mode === 'total') measure = r.total_hours;
+      else measure = r.longest_hours;
       if (measure < th) return false;
     }
     if (q) {
