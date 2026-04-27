@@ -2,8 +2,6 @@ name: Update Jemena outages map
 
 on:
   schedule:
-    # 20:00 UTC = 06:00 AEST / 07:00 AEDT. Change to '0 19 * * *' if you'd
-    # rather get 06:00 AEDT / 05:00 AEST.
     - cron: '0 20 * * *'
   workflow_dispatch: {}
 
@@ -40,6 +38,15 @@ jobs:
       - name: Run scraper and rebuild map
         id: scrape
         continue-on-error: true
+        env:
+          PIPEDRIVE_API_TOKEN: ${{ secrets.PIPEDRIVE_API_TOKEN }}
+          PIPEDRIVE_DOMAIN: ${{ secrets.PIPEDRIVE_DOMAIN }}
+          PIPEDRIVE_DRY_RUN: ${{ vars.PIPEDRIVE_DRY_RUN || 'true' }}
+          PIPEDRIVE_MIN_HOURS: ${{ vars.PIPEDRIVE_MIN_HOURS || '6' }}
+          PIPEDRIVE_OWNER_ID: ${{ secrets.PIPEDRIVE_OWNER_ID }}
+          PIPEDRIVE_LABEL_NAME: ${{ vars.PIPEDRIVE_LABEL_NAME || 'PLANNED POWER OUTAGE' }}
+          PIPEDRIVE_CANCELLED_LABEL_NAME: ${{ vars.PIPEDRIVE_CANCELLED_LABEL_NAME || 'CANCELLED' }}
+          PIPEDRIVE_FIELD_MAP_JSON: ${{ secrets.PIPEDRIVE_FIELD_MAP_JSON }}
         run: python scrape.py
 
       - name: Commit updated docs and cache
