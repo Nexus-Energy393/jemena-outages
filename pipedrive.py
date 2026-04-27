@@ -257,17 +257,25 @@ class PipedriveClient:
             cf[fmap["locations"]] = opp["locations"]
         if "planned_outage_date" in fmap and opp.get("planned_outage_date"):
             cf[fmap["planned_outage_date"]] = opp["planned_outage_date"]
-        # Pipedrive 'timeRange' field expects a structured object with
-        # 'from', 'until' (both HH:MM 24h) and 'timezone_id'.
-        if "time_off_on" in fmap:
+        # Pipedrive's "Time Off - Time On" timeRange field has a strict
+        # format we can't reliably populate via the v1 API. Set
+        # PIPEDRIVE_TIME_FORMAT in env to override:
+        #   "skip"   - don't send the field (default; safe)
+        #   "string" - send "07:00 - 17:30"
+        #   "object" - send {"from","until","timezone_id"} (only works on some accounts)
+        time_format = os.environ.get("PIPEDRIVE_TIME_FORMAT", "skip").lower().strip()
+        if "time_off_on" in fmap and time_format != "skip":
             t_off = opp.get("time_off") or ""
             t_on = opp.get("time_on") or ""
             if t_off and t_on:
-                cf[fmap["time_off_on"]] = {
-                    "from": t_off,
-                    "until": t_on,
-                    "timezone_id": "Australia/Melbourne",
-                }
+                if time_format == "object":
+                    cf[fmap["time_off_on"]] = {
+                        "from": t_off,
+                        "until": t_on,
+                        "timezone_id": "Australia/Melbourne",
+                    }
+                else:  # 'string'
+                    cf[fmap["time_off_on"]] = f"{t_off} - {t_on}"
         # Type is a Pipedrive dropdown (single-option) field — needs numeric
         # option ID, not text. Set PIPEDRIVE_TYPE_OPTION_ID in env to populate.
         type_option_id = os.environ.get("PIPEDRIVE_TYPE_OPTION_ID", "").strip()
