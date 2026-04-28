@@ -191,12 +191,35 @@ class AusnetClient:
             return payload["data"]
         # Next.js: { pageProps: { ... } }
         page_props = (payload or {}).get("pageProps") or {}
-        for key in ("outages", "data", "incidents", "combinedOutages", "items"):
+        for key in ("outages", "data", "incidents", "combinedOutages",
+                    "items", "combinedoutage", "list", "rows", "results"):
             v = page_props.get(key)
             if isinstance(v, list):
                 return v
         # Search recursively as a last resort
-        return _find_first_list_of_dicts_with_field(payload, "incident")
+        result = _find_first_list_of_dicts_with_field(payload, "incident")
+        if result:
+            return result
+        # Try other plausible field names
+        for field in ("id", "incidentId", "incidentNumber", "outageId"):
+            result = _find_first_list_of_dicts_with_field(payload, field)
+            if result:
+                return result
+        # Debug: log what we DID find
+        print("[ausnet] could not find outage array. Top-level keys: "
+              f"{list(payload.keys()) if isinstance(payload, dict) else type(payload).__name__}",
+              flush=True)
+        if isinstance(payload, dict):
+            for k, v in payload.items():
+                if isinstance(v, dict):
+                    print(f"[ausnet]   {k}: dict with keys {list(v.keys())[:20]}", flush=True)
+                elif isinstance(v, list):
+                    sample = v[0] if v else None
+                    sample_keys = list(sample.keys())[:10] if isinstance(sample, dict) else type(sample).__name__
+                    print(f"[ausnet]   {k}: list of {len(v)} (sample keys: {sample_keys})", flush=True)
+                else:
+                    print(f"[ausnet]   {k}: {type(v).__name__}", flush=True)
+        return None
 
     def fetch_polygon(self, incident_id: str) -> list[list[float]] | None:
         """Fetch the polygon points for one incident.
