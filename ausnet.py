@@ -229,23 +229,18 @@ class AusnetClient:
 
         Returns [[lat, lng], ...] or None if not found.
         """
-        # The polygon endpoint pattern is at the API host. The exact path
-        # isn't documented but a few obvious ones to try.
+        # Confirmed endpoint: /api/v1/outages/outageboundary/<incident-id>
         candidates = [
-            f"{AUSNET_API_BASE}/api/v1/outages/{incident_id}",
+            f"{AUSNET_API_BASE}/api/v1/outages/outageboundary/{incident_id}",
+            # Older guesses, kept as fallbacks in case Ausnet ever renames
             f"{AUSNET_API_BASE}/api/v1/outages/{incident_id}/polygon",
             f"{AUSNET_API_BASE}/api/v1/outages/{incident_id}/boundary",
-            f"{AUSNET_API_BASE}/api/{incident_id}",
+            f"{AUSNET_API_BASE}/api/v1/outages/{incident_id}",
         ]
-        build_id = self._discover_build_id()
-        if build_id:
-            candidates += [
-                f"{AUSNET_BASE}/_next/data/{build_id}/en.json?incident={incident_id}",
-            ]
         result = self._try_endpoints(candidates)
         if not result:
             return None
-        # Shape: { data: [{latitude, longitude}, ...] }
+        # Shape: { data: [{latitude, longitude}, ...], success: true }
         items = None
         if isinstance(result.get("data"), list):
             items = result["data"]
