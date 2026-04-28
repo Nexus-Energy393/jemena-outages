@@ -40,6 +40,29 @@
     0% { background-color: #fff59d; }
     100% { background-color: transparent; }
   }
+  /* Upload modal */
+  .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:100; display:none; align-items:center; justify-content:center; }
+  .modal-overlay.show { display:flex; }
+  .modal { background:#fff; padding:24px; border-radius:8px; max-width:560px; width:90%; max-height:85vh; overflow-y:auto; box-shadow:0 8px 32px rgba(0,0,0,0.3); }
+  .modal h2 { margin:0 0 12px; font-size:18px; }
+  .modal p { margin:8px 0; font-size:13px; line-height:1.5; color:#333; }
+  .modal .small { font-size:11px; color:#777; }
+  .modal label { display:block; font-size:12px; font-weight:600; margin:12px 0 4px; }
+  .modal input[type="text"], .modal input[type="password"], .modal input[type="file"] {
+    width:100%; padding:8px 10px; font-size:13px; border:1px solid var(--border); border-radius:4px; box-sizing:border-box;
+  }
+  .modal-buttons { display:flex; gap:8px; margin-top:16px; justify-content:flex-end; }
+  .modal-buttons button { padding:8px 16px; font-size:13px; font-weight:500; border-radius:4px; border:none; cursor:pointer; }
+  .modal-buttons .primary { background:#0b57d0; color:#fff; }
+  .modal-buttons .primary:disabled { background:#888; cursor:not-allowed; }
+  .modal-buttons .secondary { background:#f1f3f4; color:#333; }
+  .diff-preview { background:#fafbfc; border:1px solid var(--border); border-radius:4px; padding:10px; margin-top:8px; max-height:200px; overflow-y:auto; font-family:ui-monospace,Menlo,Monaco,monospace; font-size:11px; line-height:1.5; }
+  .diff-preview .added { background:#e6f4ea; color:#137333; }
+  .diff-preview .removed { background:#fce8e6; color:#c5221f; text-decoration:line-through; }
+  .modal .status-line { padding:8px 10px; border-radius:4px; margin-top:8px; font-size:13px; display:none; }
+  .modal .status-line.error { background:#fce8e6; color:#c5221f; display:block; }
+  .modal .status-line.success { background:#e6f4ea; color:#137333; display:block; }
+  .modal .status-line.working { background:#fff8e1; color:#a17900; display:block; }
   @media (max-width: 700px) {
     table, thead, tbody, th, td, tr { display:block; }
     thead { display:none; }
@@ -58,6 +81,7 @@
   <div class="actions">
     <a href="index.html">← Back to map</a>
     <a href="affected.csv" download>Download CSV</a>
+    <a href="#" id="upload-clients-btn">Upload clients.csv</a>
   </div>
 </header>
 <div class="toolbar">
@@ -161,7 +185,7 @@ for (const c of categories) {
   catFilter.appendChild(opt);
 }
 
-let sortKey = 'duration', sortDir = -1;
+let sortKey = 'outage_when', sortDir = 1;
 const search = document.getElementById('search');
 const matchFilter = document.getElementById('match-filter');
 const statusFilter = document.getElementById('status-filter');
@@ -220,7 +244,7 @@ function sortAndFilter() {
       case 'suburb': av = a.client.suburb||''; bv = b.client.suburb||''; break;
       case 'address': av = a.client.address||''; bv = b.client.address||''; break;
       case 'contact': av = a.client.contact_name||a.client.contact_phone||''; bv = b.client.contact_name||b.client.contact_phone||''; break;
-      case 'outage_when': av = a.outage.start||''; bv = b.outage.start||''; break;
+      case 'outage_when': av = a.outage.start_iso || a.outage.start || ''; bv = b.outage.start_iso || b.outage.start || ''; break;
       case 'duration': av = a.duration; bv = b.duration; break;
       case 'outage_where': av = `${a.outage.suburb} ${a.outage.street}`; bv = `${b.outage.suburb} ${b.outage.street}`; break;
       case 'distance': av = a.distance===null ? -1 : a.distance; bv = b.distance===null ? -1 : b.distance; break;
@@ -254,11 +278,13 @@ function sortAndFilter() {
     // Re-sort grouped rows
     displayRows.sort((a, b) => {
       const av = sortKey === 'duration' ? Math.max(...a._group.map(x => x.duration))
+              : sortKey === 'outage_when' ? (a._group.map(x => x.outage.start_iso || x.outage.start || '').sort()[0] || '')
               : sortKey === 'longest_hours' ? a.longest_hours
               : sortKey === 'total_hours' ? a.total_hours
               : sortKey === 'distance' ? (a._minDistance===null ? -1 : a._minDistance)
               : a[sortKey] || a.client[sortKey] || '';
       const bv = sortKey === 'duration' ? Math.max(...b._group.map(x => x.duration))
+              : sortKey === 'outage_when' ? (b._group.map(x => x.outage.start_iso || x.outage.start || '').sort()[0] || '')
               : sortKey === 'longest_hours' ? b.longest_hours
               : sortKey === 'total_hours' ? b.total_hours
               : sortKey === 'distance' ? (b._minDistance===null ? -1 : b._minDistance)
@@ -284,7 +310,10 @@ function sortAndFilter() {
 
       let whenCell, durCell, locCell, distCell;
       if (r._group) {
-        const items = r._group;
+        // Sort group items chronologically so 'When' lists soonest first
+        const items = [...r._group].sort((x, y) =>
+          (x.outage.start_iso || x.outage.start || '').localeCompare(y.outage.start_iso || y.outage.start || '')
+        );
         const distinctLocations = [...new Set(items.map(x => `${x.outage.street}|${x.outage.suburb}`))];
         // When: stack each window
         whenCell = items.map(x => {
@@ -316,10 +345,13 @@ function sortAndFilter() {
 
       const cid = c.client_id || '';
       const pdDomain = (DATA.meta && DATA.meta.pipedriveDomain) || 'nexusenergy';
-      const titleSearch = encodeURIComponent(c.name + ' Planned Power Outage');
+      const leadId = c.pipedrive_lead_id || '';
+      const pipedriveUrl = leadId
+        ? `https://${pdDomain}.pipedrive.com/leads/inbox/${leadId}`
+        : null;
       const actionsCell = `
         ${cid ? `<a class="btn-sm" href="index.html?focus=${esc(cid)}">Map</a>` : ''}
-        <a class="btn-sm" href="https://${esc(pdDomain)}.pipedrive.com/leads/list?search=${titleSearch}" target="_blank" rel="noopener">Pipedrive</a>
+        ${pipedriveUrl ? `<a class="btn-sm" href="${pipedriveUrl}" target="_blank" rel="noopener">Pipedrive</a>` : ''}
       `;
 
       return `<tr${cid ? ` id="client-${esc(cid)}"` : ''}>
@@ -378,6 +410,222 @@ function focusFromHash() {
 }
 focusFromHash();
 window.addEventListener('hashchange', focusFromHash);
+
+// ---------------------------------------------------------------------------
+// Upload clients.csv → push to GitHub via API
+// ---------------------------------------------------------------------------
+const REPO_OWNER = (DATA.meta && DATA.meta.repoOwner) || 'Nexus-Energy393';
+const REPO_NAME  = (DATA.meta && DATA.meta.repoName)  || 'jemena-outages';
+const CSV_PATH = 'clients.csv';
+const TOKEN_KEY = 'jemena-outages-gh-token';
+
+const REQUIRED_HEADERS = [
+  'name','address','suburb','postcode','category',
+  'contact_name','contact_phone','contact_email','min_outage_hours','notes'
+];
+
+const uploadModal = document.createElement('div');
+uploadModal.className = 'modal-overlay';
+uploadModal.innerHTML = `
+<div class="modal">
+  <h2>Upload <code>clients.csv</code></h2>
+  <p>This will replace the file in the GitHub repo. The next workflow run (within 24 hours, or trigger manually) will use the new list.</p>
+
+  <label for="upload-token">GitHub Personal Access Token</label>
+  <input id="upload-token" type="password" placeholder="github_pat_... or ghp_..." autocomplete="off">
+  <p class="small">
+    Stored locally in your browser only. Needs repo write access.
+    <a href="https://github.com/settings/tokens/new?description=Jemena%20outage%20map&scopes=repo" target="_blank" rel="noopener">Create one</a>
+    (tick "repo" scope, give it a sensible expiry).
+  </p>
+
+  <label for="upload-file">New <code>clients.csv</code></label>
+  <input id="upload-file" type="file" accept=".csv,text/csv">
+
+  <div id="upload-preview"></div>
+  <div id="upload-status" class="status-line"></div>
+
+  <div class="modal-buttons">
+    <button class="secondary" id="upload-cancel">Cancel</button>
+    <button class="primary" id="upload-confirm" disabled>Push to GitHub</button>
+  </div>
+</div>`;
+document.body.appendChild(uploadModal);
+
+const $token = uploadModal.querySelector('#upload-token');
+const $file = uploadModal.querySelector('#upload-file');
+const $preview = uploadModal.querySelector('#upload-preview');
+const $status = uploadModal.querySelector('#upload-status');
+const $confirm = uploadModal.querySelector('#upload-confirm');
+const $cancel = uploadModal.querySelector('#upload-cancel');
+
+// Restore saved token
+$token.value = localStorage.getItem(TOKEN_KEY) || '';
+
+let pendingCsvText = null;
+
+function setStatus(kind, text) {
+  $status.className = 'status-line ' + (kind || '');
+  $status.textContent = text;
+  if (!text) $status.style.display = 'none';
+}
+
+function openModal() {
+  uploadModal.classList.add('show');
+  $token.value = localStorage.getItem(TOKEN_KEY) || '';
+  $file.value = '';
+  $preview.innerHTML = '';
+  setStatus('', '');
+  pendingCsvText = null;
+  $confirm.disabled = true;
+}
+function closeModal() { uploadModal.classList.remove('show'); }
+
+document.getElementById('upload-clients-btn').addEventListener('click', e => {
+  e.preventDefault();
+  openModal();
+});
+$cancel.addEventListener('click', closeModal);
+uploadModal.addEventListener('click', e => { if (e.target === uploadModal) closeModal(); });
+
+function parseCsvHeaders(text) {
+  const firstLine = (text.split(/\r?\n/)[0] || '').trim();
+  // Simple CSV split that respects double-quoted fields
+  const headers = [];
+  let cur = '', inQ = false;
+  for (const ch of firstLine) {
+    if (ch === '"') { inQ = !inQ; continue; }
+    if (ch === ',' && !inQ) { headers.push(cur.trim()); cur = ''; continue; }
+    cur += ch;
+  }
+  headers.push(cur.trim());
+  return headers;
+}
+
+function showDiff(oldText, newText) {
+  const oldLines = oldText.split(/\r?\n/);
+  const newLines = newText.split(/\r?\n/);
+  const oldSet = new Set(oldLines);
+  const newSet = new Set(newLines);
+
+  let html = '<div class="small" style="margin-top:8px;font-weight:600">Changes:</div><div class="diff-preview">';
+  let added = 0, removed = 0;
+
+  for (const line of newLines) {
+    if (line && !oldSet.has(line)) {
+      html += `<div class="added">+ ${escapeHtml(line)}</div>`;
+      added++;
+    }
+  }
+  for (const line of oldLines) {
+    if (line && !newSet.has(line)) {
+      html += `<div class="removed">- ${escapeHtml(line)}</div>`;
+      removed++;
+    }
+  }
+  if (added === 0 && removed === 0) {
+    html += '<div class="small">(no changes detected)</div>';
+  }
+  html += '</div>';
+  html = `<div class="small" style="margin-top:8px;font-weight:600">${added} line(s) added, ${removed} removed</div>` + html;
+  $preview.innerHTML = html;
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+async function fetchCurrentCsv() {
+  const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${CSV_PATH}`;
+  const res = await fetch(url, { headers: { 'Accept': 'application/vnd.github.v3+json' }});
+  if (!res.ok) throw new Error(`GitHub fetch failed: ${res.status}`);
+  const j = await res.json();
+  // content is base64 with line breaks; decode
+  const text = atob(j.content.replace(/\n/g, ''));
+  return { text, sha: j.sha };
+}
+
+$file.addEventListener('change', async () => {
+  if (!$file.files.length) return;
+  setStatus('', '');
+  $confirm.disabled = true;
+  try {
+    const text = await $file.files[0].text();
+    const headers = parseCsvHeaders(text);
+    const missing = REQUIRED_HEADERS.filter(h => !headers.includes(h));
+    if (missing.length) {
+      setStatus('error', `CSV is missing required columns: ${missing.join(', ')}. Header row must include all of: ${REQUIRED_HEADERS.join(', ')}.`);
+      return;
+    }
+    pendingCsvText = text;
+    setStatus('working', 'Loading current file from GitHub for diff…');
+    try {
+      const current = await fetchCurrentCsv();
+      showDiff(current.text, text);
+      setStatus('', '');
+    } catch (e) {
+      $preview.innerHTML = `<div class="small" style="margin-top:8px">Could not load current file for diff: ${escapeHtml(e.message)}. You can still upload.</div>`;
+      setStatus('', '');
+    }
+    $confirm.disabled = false;
+  } catch (e) {
+    setStatus('error', `Could not read file: ${e.message}`);
+  }
+});
+
+$confirm.addEventListener('click', async () => {
+  const token = $token.value.trim();
+  if (!token) { setStatus('error', 'Token is required.'); return; }
+  if (!pendingCsvText) { setStatus('error', 'Pick a CSV file first.'); return; }
+
+  // Save token for next time
+  localStorage.setItem(TOKEN_KEY, token);
+
+  $confirm.disabled = true;
+  setStatus('working', 'Fetching current file SHA…');
+  let sha;
+  try {
+    const cur = await fetchCurrentCsv();
+    sha = cur.sha;
+  } catch (e) {
+    setStatus('error', `Could not fetch current file: ${e.message}`);
+    $confirm.disabled = false;
+    return;
+  }
+
+  setStatus('working', 'Pushing to GitHub…');
+  // Encode CSV as base64
+  const utf8 = new TextEncoder().encode(pendingCsvText);
+  let binary = '';
+  for (const b of utf8) binary += String.fromCharCode(b);
+  const b64 = btoa(binary);
+
+  const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${CSV_PATH}`;
+  try {
+    const res = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: `Update clients.csv via map UI (${new Date().toISOString()})`,
+        content: b64,
+        sha,
+      }),
+    });
+    if (!res.ok) {
+      const j = await res.json().catch(() => ({}));
+      throw new Error(j.message || `${res.status} ${res.statusText}`);
+    }
+    setStatus('success', '✓ Pushed. Now trigger the workflow on GitHub Actions, or wait for tomorrow morning.');
+    $confirm.textContent = 'Done';
+  } catch (e) {
+    setStatus('error', `Push failed: ${e.message}`);
+    $confirm.disabled = false;
+  }
+});
 </script>
 </body>
 </html>

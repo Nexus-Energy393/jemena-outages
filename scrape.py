@@ -933,6 +933,8 @@ def main() -> int:
             "street": o["street"],
             "start": o["start_display"],
             "end": o["end_display"],
+            "start_iso": o["start_dt"].isoformat(),
+            "end_iso": o["end_dt"].isoformat(),
             "status": o["status"],
             "duration_hours": round(duration_h, 2),
         })
@@ -1026,6 +1028,15 @@ def main() -> int:
         n_def = sum(1 for a in affected if a["definite"])
         n_pos = sum(1 for a in affected if a["possible"] and not a["definite"])
 
+    # Attach Pipedrive lead IDs to clients so the map and table can deep-link
+    client_lead_ids = pipedrive_summary.get("client_lead_ids") or {}
+    if client_lead_ids:
+        for a in affected:
+            cid = a["client"].get("client_id")
+            if cid and cid in client_lead_ids:
+                a["client"]["pipedrive_lead_id"] = client_lead_ids[cid]
+        print(f"[map] attached {len(client_lead_ids)} lead IDs to affected clients", flush=True)
+
     # Suburb summaries
     by_suburb = {}
     for o in raw_outages:
@@ -1055,7 +1066,7 @@ def main() -> int:
         out = {}
         for k in ("client_id", "name", "category", "source", "address", "suburb", "postcode",
                   "contact_name", "contact_phone", "contact_email", "notes",
-                  "lat", "lng"):
+                  "lat", "lng", "pipedrive_lead_id"):
             if c.get(k) not in (None, ""):
                 out[k] = c.get(k)
         # Carry per-client minimum-hours threshold if set
@@ -1108,6 +1119,8 @@ def main() -> int:
             "bufferMetres": BUFFER_METRES,
             "defaultMinHours": DEFAULT_MIN_HOURS,
             "pipedriveDomain": os.environ.get("PIPEDRIVE_DOMAIN", "nexusenergy"),
+            "repoOwner": os.environ.get("GITHUB_REPOSITORY_OWNER", "Nexus-Energy393"),
+            "repoName": (os.environ.get("GITHUB_REPOSITORY", "").split("/")[-1] or "jemena-outages"),
         },
     }
 
