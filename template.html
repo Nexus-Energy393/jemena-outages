@@ -181,24 +181,51 @@ streetLayer.addTo(map);
 // Ausnet outage zones — drawn as filled polygons in a different colour
 const ausnetLayer = L.layerGroup();
 function buildAusnetPopup(ao) {
-  const cust = ao.customers ? `<div style="font-size:12px;color:#666">${esc(String(ao.customers))} customers</div>` : '';
+  const cust = ao.customers ? `<div style="font-size:12px;color:#666">${esc(String(ao.customers))} customers impacted</div>` : '';
   const cancelled = ao.status === 'Cancelled' ? ' <span class="chip cancelled">cancelled</span>' : '';
-  return `<div>
+  let body = `<div>
     <h3>Ausnet outage zone</h3>
     <div style="font-size:11px;color:#888;margin-bottom:4px">${esc(ao.incident_id)}</div>
     ${cust}
     <h4>Window</h4>
-    <div class="outage">${esc(ao.start)} – ${esc(ao.end)} <span style="color:#999">(${(ao.duration_hours||0).toFixed(1)}h)</span>${cancelled}</div>
-  </div>`;
+    <div class="outage">${esc(ao.start)} – ${esc(ao.end)} <span style="color:#999">(${(ao.duration_hours||0).toFixed(1)}h)</span>${cancelled}</div>`;
+
+  const matched = ao.affected_clients || [];
+  if (matched.length > 0) {
+    body += `<h4>${matched.length} client${matched.length===1?'':'s'} affected</h4>`;
+    // Sort: definite first, then by distance
+    const sorted = [...matched].sort((a, b) => {
+      if (a.match !== b.match) return a.match === 'definite' ? -1 : 1;
+      return (a.distance_m || 0) - (b.distance_m || 0);
+    });
+    body += sorted.slice(0, 12).map(c => {
+      const chip = c.match === 'definite'
+        ? '<span class="chip definite">in zone</span>'
+        : `<span class="chip possible">${c.distance_m}m</span>`;
+      const link = c.client_id
+        ? `<a href="?focus=${esc(c.client_id)}" style="color:#0b57d0">${esc(c.name)}</a>`
+        : esc(c.name);
+      return `<div class="outage">${chip} ${link}${c.suburb ? ' <span style="color:#999">· '+esc(c.suburb)+'</span>' : ''}</div>`;
+    }).join('');
+    if (sorted.length > 12) {
+      body += `<div class="outage" style="color:#999">… and ${sorted.length - 12} more</div>`;
+    }
+  } else {
+    body += `<h4>No clients matched</h4>
+      <div style="font-size:12px;color:#999">No tracked clients sit inside this polygon or within ${DATA.meta.bufferMetres}m of its edge.</div>`;
+  }
+
+  body += `</div>`;
+  return body;
 }
 for (const ao of (DATA.ausnet || [])) {
   L.polygon(ao.polygon, {
-    color: '#5e35b1',         // deep purple - distinct from Jemena red
+    color: '#5e35b1',
     weight: 2,
     opacity: 0.9,
     fillColor: '#9575cd',
     fillOpacity: 0.25,
-  }).bindPopup(buildAusnetPopup(ao))
+  }).bindPopup(buildAusnetPopup(ao), { maxHeight: 380 })
     .addTo(ausnetLayer);
 }
 ausnetLayer.addTo(map);

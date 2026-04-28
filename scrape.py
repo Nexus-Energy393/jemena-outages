@@ -1019,6 +1019,60 @@ def main() -> int:
     n_pos = sum(1 for a in affected if a["possible"] and not a["definite"])
     print(f"[affected] {n_def} definite, {n_pos} possible-only", flush=True)
 
+    # Reverse-geocode any affected client without a suburb. This catches
+    # OSM-pulled chains that lack addr:suburb tags but are inside an Ausnet
+    # polygon. Result is cached to avoid hammering Nominatim across runs.
+    reverse_cache = load_cache("reverse_geo.json")
+    rg_lookups = 0
+    for a in affected:
+        client = a["client"]
+        if client.get("suburb"):
+            continue
+        lat, lng = client.get("lat"), client.get("lng")
+        if lat is None or lng is None:
+            continue
+        cache_key = f"{round(lat,4)},{round(lng,4)}"
+        cached = reverse_cache.get(cache_key)
+        if cached is not None:
+            client["suburb"] = cached.get("suburb", "")
+            client["postcode"] = client.get("postcode") or cached.get("postcode", "")
+            client["address"] = client.get("address") or cached.get("street", "")
+            continue
+        # Hit Nominatim
+        try:
+            r = requests.get(
+                NOMINATIM_URL,
+                params={
+                    "format": "json", "lat": lat, "lon": lng, "zoom": 18,
+                    "addressdetails": 1,
+                },
+                headers={"User-Agent": USER_AGENT, "Accept-Language": "en-AU"},
+                timeout=20,
+            )
+            r.raise_for_status()
+            j = r.json() or {}
+            addr = j.get("address") or {}
+            suburb = (addr.get("suburb") or addr.get("town")
+                      or addr.get("city") or addr.get("village") or "").upper()
+            postcode = addr.get("postcode") or ""
+            # Build a street string from house number + road if available
+            street = " ".join(filter(None, [addr.get("house_number"), addr.get("road")])).strip()
+            reverse_cache[cache_key] = {
+                "suburb": suburb, "postcode": postcode, "street": street,
+            }
+            client["suburb"] = suburb
+            client["postcode"] = client.get("postcode") or postcode
+            client["address"] = client.get("address") or street
+            rg_lookups += 1
+            time.sleep(1.1)  # respect Nominatim rate limit
+        except Exception as e:
+            print(f"[reverse-geo] failed for {client.get('name')}: {e}", flush=True)
+            reverse_cache[cache_key] = {"suburb": "", "postcode": "", "street": ""}
+    if rg_lookups > 0:
+        save_cache("reverse_geo.json", reverse_cache)
+        print(f"[reverse-geo] resolved {rg_lookups} new client locations "
+              f"({len(reverse_cache)} cached total)", flush=True)
+
     # Outage-suburb fallback: if an affected client's name still has no suburb
     # or mall, append the outage's suburb. (User CSV rows always have suburb,
     # so this mostly applies to OSM chains in OSM-without-addr:suburb regions.)
@@ -1161,9 +1215,50 @@ def main() -> int:
     clients_payload = [slim_client(c) for c in clients]
 
     # Slim Ausnet outages for embedding (drop the start_dt/end_dt datetime objects;
-    # keep displayable strings + polygon)
+    # keep displayable strings + polygon). Also: attach the list of clients
+    # matched within or near each polygon for popup display.
+    # Polygons with NO matched clients are dropped — they're noise for our
+    # generator-hire use case.
+    from ausnet import point_in_polygon as _pip, polygon_distance_m as _pdist
+
     ausnet_payload = []
+    ausnet_skipped_no_clients = 0
     for ao in ausnet_outages:
+        # Find affected clients sitting in or near THIS specific polygon
+        matched_clients = []
+        for a in affected:
+            c = a["client"]
+            clat, clng = c.get("lat"), c.get("lng")
+            if clat is None or clng is None:
+                continue
+            if _pip(clat, clng, ao["polygon"]):
+                matched_clients.append({
+                    "client_id": c.get("client_id"),
+                    "name": c.get("name"),
+                    "category": c.get("category"),
+                    "address": c.get("address", ""),
+                    "suburb": c.get("suburb", ""),
+                    "match": "definite",
+                    "distance_m": 0,
+                })
+            else:
+                d = _pdist(clat, clng, ao["polygon"])
+                if d <= BUFFER_METRES:
+                    matched_clients.append({
+                        "client_id": c.get("client_id"),
+                        "name": c.get("name"),
+                        "category": c.get("category"),
+                        "address": c.get("address", ""),
+                        "suburb": c.get("suburb", ""),
+                        "match": "possible",
+                        "distance_m": int(d),
+                    })
+
+        # Skip the polygon entirely if no tracked clients are affected
+        if not matched_clients:
+            ausnet_skipped_no_clients += 1
+            continue
+
         ausnet_payload.append({
             "incident_id": ao["incident_id"],
             "start": _format_outage_display(ao["start_dt"]),
@@ -1175,7 +1270,10 @@ def main() -> int:
             "customers": ao["customers"],
             "polygon": ao["polygon"],
             "centroid": list(ao["polygon_centroid"]),
+            "affected_clients": matched_clients,
         })
+    if ausnet_skipped_no_clients:
+        print(f"[ausnet] hidden {ausnet_skipped_no_clients} polygons with no tracked clients", flush=True)
 
     main_payload = {
         "suburbs": suburbs,
