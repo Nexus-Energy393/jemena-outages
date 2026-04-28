@@ -580,6 +580,15 @@ def prepare_opportunities(affected, min_hours):
             # Parse to 24h HH:MM for Pipedrive's timeRange field
             time_off_24 = _to_24h(time_off)
             time_on_24 = _to_24h(time_on)
+            # Locations: for Jemena outages this is the suburb of the affected
+            # street. For Ausnet outages there's no suburb — fall back to client.
+            locations_set = {o.get("suburb", "") for o in outages if o.get("suburb")}
+            if not locations_set:
+                # Ausnet-only opportunities: show client's suburb instead
+                locations_set = {client.get("suburb", "")}
+            # Pull incident_id from any Ausnet outage in this group (Jemena
+            # outages don't have one). If multiple, pick the first.
+            ausnet_incidents = [o.get("incident_id") for o in outages if o.get("incident_id")]
             opp = {
                 "client": client,
                 "title": title,
@@ -590,13 +599,13 @@ def prepare_opportunities(affected, min_hours):
                 "longest_hours": longest,
                 # Custom-field-ready values
                 "site_address": _format_site_address(client),
-                "locations": ", ".join(sorted({o.get("suburb", "") for o in outages})),
+                "locations": ", ".join(sorted(s for s in locations_set if s)),
                 "planned_outage_date": iso_date,
                 # Pipedrive timeRange expects {"from", "until", "timezone_id"} structure
                 "time_off": time_off_24,
                 "time_on": time_on_24,
                 "type": "Planned",
-                "incident_id": "",
+                "incident_id": ausnet_incidents[0] if ausnet_incidents else "",
             }
             opportunities.append(opp)
     return opportunities

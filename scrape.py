@@ -129,6 +129,14 @@ def extract_street_from_address(address: str) -> str:
     return normalise_street(s)
 
 
+def _format_outage_display(dt) -> str:
+    return dt.strftime("%a %d %b, %I:%M %p").replace(" 0", " ")
+
+
+def _format_outage_end_display(dt) -> str:
+    return dt.strftime("%I:%M %p").lstrip("0")
+
+
 # ---------------------------------------------------------------------------
 # Date / time
 # ---------------------------------------------------------------------------
@@ -763,21 +771,34 @@ def assemble_clients():
 # ---------------------------------------------------------------------------
 # Affected-clients matching
 # ---------------------------------------------------------------------------
-def match_clients_to_outages(clients, streets, raw_outages):
+def match_clients_to_outages(clients, streets, raw_outages, ausnet_outages=None):
     """For each client, return:
-       definite: outage matched by exact (suburb, street) overlap with their address
-       possible: client lies within BUFFER_METRES of a shaded street geometry
+       definite: outage that matches the client by exact (suburb,street)
+                 OR contains the client's lat/lng inside an Ausnet polygon.
+       possible: client lies within BUFFER_METRES of a Jemena shaded street
+                 OR within BUFFER_METRES of an Ausnet polygon edge.
+
+    Jemena outages are matched by street geometry (the existing logic).
+    Ausnet outages are matched by polygon containment / proximity.
     """
-    # Index outages by (suburb_l, street_n) for definite-check
+    ausnet_outages = ausnet_outages or []
+    # Index Jemena outages by (suburb_l, street_n)
     outages_by_pair = {}
     for o in raw_outages:
         outages_by_pair.setdefault((o["suburb"].lower(), norm_key(o["street"])), []).append(o)
 
-    # Pre-compute bboxes for each street (with buffer expansion)
+    # Pre-compute bboxes for each Jemena street (with buffer expansion)
     bboxes = []
     for s in streets:
         bbox = polyline_bbox(s["coords"])
         bboxes.append(bbox_expand(bbox, BUFFER_METRES))
+
+    # Pre-compute bboxes for each Ausnet polygon (with buffer)
+    from ausnet import polygon_bbox as _ausnet_polygon_bbox, point_in_polygon, polygon_distance_m
+    ausnet_bboxes = []
+    for ao in ausnet_outages:
+        ab = _ausnet_polygon_bbox(ao["polygon"])
+        ausnet_bboxes.append(bbox_expand(ab, BUFFER_METRES))
 
     affected = []
     for c in clients:
@@ -791,13 +812,13 @@ def match_clients_to_outages(clients, streets, raw_outages):
         nearest_street_name = None
         nearest_street_suburb = None
 
-        # Definite via address match
+        # Jemena: definite via street + suburb match
         if client_street and client_suburb_l:
             key = (client_suburb_l, norm_key(client_street))
             if key in outages_by_pair:
                 definite_outages.extend(outages_by_pair[key])
 
-        # Possible via geometry proximity
+        # Jemena: possible via geometry proximity
         for bbox, s in zip(bboxes, streets):
             if not point_in_bbox(plat, plng, bbox):
                 continue
@@ -807,11 +828,34 @@ def match_clients_to_outages(clients, streets, raw_outages):
                 nearest_street_name = s["name"]
                 nearest_street_suburb = s["suburb"]
             if d <= BUFFER_METRES:
-                # Avoid double-counting if already in definite
                 for o in s["outages"]:
                     sig = (o["suburb"], o["street"], o["start"], o["end"])
-                    if sig not in {(d2["suburb"], d2["street"], d2["start"], d2["end"]) for d2 in definite_outages}:
+                    if sig not in {(d2.get("suburb"), d2.get("street"), d2.get("start"), d2.get("end")) for d2 in definite_outages}:
                         possible_outages.append({**o, "_distance_m": int(d)})
+
+        # Ausnet: definite if client lat/lng is INSIDE the polygon, possible if within buffer.
+        for bbox, ao in zip(ausnet_bboxes, ausnet_outages):
+            if not point_in_bbox(plat, plng, bbox):
+                continue
+            d = polygon_distance_m(plat, plng, ao["polygon"])
+            ao_record = {
+                "suburb": "",
+                "street": f"Outage zone (Ausnet)",
+                "start": _format_outage_display(ao["start_dt"]),
+                "end": _format_outage_end_display(ao["end_dt"]),
+                "start_iso": ao["start_dt"].isoformat(),
+                "end_iso": ao["end_dt"].isoformat(),
+                "status": ao["status"],
+                "duration_hours": ao["duration_hours"],
+                "network": "Ausnet",
+                "incident_id": ao["incident_id"],
+                "customers": ao["customers"],
+            }
+            if d == 0.0:
+                # Inside the polygon — definite match
+                definite_outages.append(ao_record)
+            elif d <= BUFFER_METRES:
+                possible_outages.append({**ao_record, "_distance_m": int(d)})
 
         if not definite_outages and not possible_outages:
             continue
@@ -819,7 +863,8 @@ def match_clients_to_outages(clients, streets, raw_outages):
         # Dedupe possible outages by signature; keep min distance
         unique_possible = {}
         for o in possible_outages:
-            sig = (o["suburb"], o["street"], o["start"], o["end"])
+            sig = (o.get("suburb"), o.get("street"), o.get("start"), o.get("end"),
+                   o.get("incident_id", ""))
             if sig not in unique_possible or o["_distance_m"] < unique_possible[sig]["_distance_m"]:
                 unique_possible[sig] = o
 
@@ -951,6 +996,16 @@ def main() -> int:
     streets = match_streets(overpass, outages_by_pair, pairs_by_street)
     print(f"[match] {len(streets)} street segments matched", flush=True)
 
+    # Scrape Ausnet (parallel network). Failures here are non-fatal — we still
+    # produce a Jemena-only map.
+    ausnet_outages = []
+    try:
+        from ausnet import scrape_ausnet
+        ausnet_outages = scrape_ausnet()
+    except Exception as e:
+        print(f"[ausnet] scrape failed (continuing without Ausnet): {e}", flush=True)
+        traceback.print_exc()
+
     # Clients
     try:
         clients = assemble_clients()
@@ -959,7 +1014,7 @@ def main() -> int:
         clients = []
     print(f"[clients] {len(clients)} total geocoded", flush=True)
 
-    affected = match_clients_to_outages(clients, streets, raw_outages)
+    affected = match_clients_to_outages(clients, streets, raw_outages, ausnet_outages)
     n_def = sum(1 for a in affected if a["definite"])
     n_pos = sum(1 for a in affected if a["possible"] and not a["definite"])
     print(f"[affected] {n_def} definite, {n_pos} possible-only", flush=True)
@@ -1105,6 +1160,23 @@ def main() -> int:
     # All clients for "show all clients" toggle on the map
     clients_payload = [slim_client(c) for c in clients]
 
+    # Slim Ausnet outages for embedding (drop the start_dt/end_dt datetime objects;
+    # keep displayable strings + polygon)
+    ausnet_payload = []
+    for ao in ausnet_outages:
+        ausnet_payload.append({
+            "incident_id": ao["incident_id"],
+            "start": _format_outage_display(ao["start_dt"]),
+            "end": _format_outage_end_display(ao["end_dt"]),
+            "start_iso": ao["start_dt"].isoformat(),
+            "end_iso": ao["end_dt"].isoformat(),
+            "duration_hours": ao["duration_hours"],
+            "status": ao["status"],
+            "customers": ao["customers"],
+            "polygon": ao["polygon"],
+            "centroid": list(ao["polygon_centroid"]),
+        })
+
     main_payload = {
         "suburbs": suburbs,
         "outages": [o for outs in outages_by_pair.values() for o in outs],
@@ -1112,10 +1184,12 @@ def main() -> int:
         "matchedPairs": [f"{sub}||{st}" for sub, st in matched_pairs],
         "clients": clients_payload,
         "affected": affected_payload,
+        "ausnet": ausnet_payload,
         "meta": {
-            "source": "Jemena planned outages (jemena.com.au) · auto-updated",
+            "source": "Jemena + Ausnet planned outages · auto-updated",
             "extracted": now,
             "totalOutages": len(raw_outages),
+            "totalAusnet": len(ausnet_outages),
             "totalClients": len(clients),
             "definiteCount": n_def,
             "possibleCount": n_pos,

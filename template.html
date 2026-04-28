@@ -178,6 +178,31 @@ for (const s of DATA.streets) {
 }
 streetLayer.addTo(map);
 
+// Ausnet outage zones — drawn as filled polygons in a different colour
+const ausnetLayer = L.layerGroup();
+function buildAusnetPopup(ao) {
+  const cust = ao.customers ? `<div style="font-size:12px;color:#666">${esc(String(ao.customers))} customers</div>` : '';
+  const cancelled = ao.status === 'Cancelled' ? ' <span class="chip cancelled">cancelled</span>' : '';
+  return `<div>
+    <h3>Ausnet outage zone</h3>
+    <div style="font-size:11px;color:#888;margin-bottom:4px">${esc(ao.incident_id)}</div>
+    ${cust}
+    <h4>Window</h4>
+    <div class="outage">${esc(ao.start)} – ${esc(ao.end)} <span style="color:#999">(${(ao.duration_hours||0).toFixed(1)}h)</span>${cancelled}</div>
+  </div>`;
+}
+for (const ao of (DATA.ausnet || [])) {
+  L.polygon(ao.polygon, {
+    color: '#5e35b1',         // deep purple - distinct from Jemena red
+    weight: 2,
+    opacity: 0.9,
+    fillColor: '#9575cd',
+    fillOpacity: 0.25,
+  }).bindPopup(buildAusnetPopup(ao))
+    .addTo(ausnetLayer);
+}
+ausnetLayer.addTo(map);
+
 const suburbLayer = L.layerGroup();
 DATA.suburbs.forEach(s => {
   L.marker([s.lat, s.lng], { icon: s.cancelled>0 ? suburbIconCancelled : suburbIcon, title: s.name })
@@ -268,10 +293,19 @@ document.getElementById('min-hours-select').addEventListener('change', e => {
   link.href = `affected.html?min=${encodeURIComponent(e.target.value)}`;
 });
 
-if (DATA.suburbs.length) map.fitBounds(L.latLngBounds(DATA.suburbs.map(s => [s.lat, s.lng])).pad(0.15));
+// Initial map bounds — fit to whatever's interesting today (suburbs + Ausnet polygons)
+const allBoundsPoints = [];
+DATA.suburbs.forEach(s => allBoundsPoints.push([s.lat, s.lng]));
+for (const ao of (DATA.ausnet || [])) {
+  if (ao.centroid) allBoundsPoints.push(ao.centroid);
+}
+if (allBoundsPoints.length) {
+  map.fitBounds(L.latLngBounds(allBoundsPoints).pad(0.1));
+}
 
 L.control.layers(null, {
-  'Affected streets': streetLayer,
+  'Affected streets (Jemena)': streetLayer,
+  'Outage zones (Ausnet)': ausnetLayer,
   'Suburb markers': suburbLayer,
   'Affected clients': affectedLayer,
   'All clients (incl. unaffected)': clientLayer,
@@ -282,14 +316,15 @@ legend.onAdd = () => {
   const div = L.DomUtil.create('div', 'info-box');
   const unmapped = DATA.suburbs.reduce((a, s) => a + s.streets.filter(st => !MATCHED.has(s.name.toLowerCase() + '||' + norm(st))).length, 0);
   div.innerHTML = `<h4>Legend</h4>
-    <div class="legend-item"><span class="legend-swatch" style="background:#e53935"></span>Street with planned outage</div>
-    <div class="legend-item"><span class="legend-swatch" style="background:#9e9e9e"></span>Only cancelled outages</div>
+    <div class="legend-item"><span class="legend-swatch" style="background:#e53935"></span>Jemena: street with planned outage</div>
+    <div class="legend-item"><span class="legend-swatch" style="background:#9e9e9e"></span>Jemena: only cancelled outages</div>
+    <div class="legend-item"><span style="display:inline-block;width:18px;height:14px;background:#9575cd;border:2px solid #5e35b1"></span> Ausnet: outage zone polygon</div>
     <div class="legend-item"><span class="legend-dot" style="background:#1565c0"></span>Suburb (click for details)</div>
     <div class="legend-item"><span class="legend-dot" style="background:#f9a825"></span>Suburb with cancellations</div>
     <div class="legend-item"><span style="display:inline-block;width:12px;height:12px;background:#b71c1c;transform:rotate(45deg);border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.4)"></span>Client — definitely affected</div>
     <div class="legend-item"><span style="display:inline-block;width:12px;height:12px;background:#fb8c00;transform:rotate(45deg);border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.4)"></span>Client — possibly affected (within ${DATA.meta.bufferMetres}m)</div>
     <div class="legend-item"><span style="display:inline-block;width:8px;height:8px;background:#546e7a;transform:rotate(45deg);border:2px solid #fff"></span>Other client (toggle on)</div>
-    <div style="font-size:11px;color:#666;margin-top:6px">${esc(DATA.streets.length)} street segments shaded · ${unmapped} streets in popup only</div>
+    <div style="font-size:11px;color:#666;margin-top:6px">${esc(DATA.streets.length)} Jemena segments · ${esc(DATA.meta.totalAusnet||0)} Ausnet zones · ${unmapped} streets in popup only</div>
     <div style="font-size:11px;color:#666;margin-top:2px">${esc(DATA.meta.totalClients)} clients tracked · ${esc(DATA.meta.definiteCount)} definite · ${esc(DATA.meta.possibleCount)} possible</div>`;
   return div;
 };
