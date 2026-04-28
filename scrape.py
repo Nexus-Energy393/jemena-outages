@@ -53,6 +53,7 @@ OVERPASS_ENDPOINTS = [
 ]
 
 NOMINATIM_URL = "https://nominatim.openstreetmap.org/search"
+NOMINATIM_REVERSE_URL = "https://nominatim.openstreetmap.org/reverse"
 REPO_URL = os.environ.get("REPO_URL", "https://github.com/Nexus-Energy393/jemena-outages")
 USER_AGENT = f"jemena-outage-map/2.0 (+{REPO_URL})"
 MELBOURNE_TZ = timezone(timedelta(hours=10))
@@ -78,7 +79,10 @@ CHAINS = [
 # Bounding box covering Jemena's electricity service area
 # (Melbourne north and west). Tightened a bit beyond the suburb spread
 # we've seen, so a new outlier suburb still falls inside.
-JEMENA_BBOX = (-37.95, 144.55, -37.40, 145.20)  # south, west, north, east
+# Bounding box for the OSM chain pull. Sized to cover roughly 200km from
+# Carrum Downs — matches Ausnet's MAX_DISTANCE_KM filter so chain stores
+# in eastern/northern Victoria are also captured.
+JEMENA_BBOX = (-39.9, 142.6, -36.3, 147.8)  # south, west, north, east
 
 CHAINS_REFRESH_DAYS = 7
 BUFFER_METRES = 200  # "possibly affected" radius around shaded streets
@@ -1038,10 +1042,10 @@ def main() -> int:
             client["postcode"] = client.get("postcode") or cached.get("postcode", "")
             client["address"] = client.get("address") or cached.get("street", "")
             continue
-        # Hit Nominatim
+        # Hit Nominatim reverse-geocode endpoint
         try:
             r = requests.get(
-                NOMINATIM_URL,
+                NOMINATIM_REVERSE_URL,
                 params={
                     "format": "json", "lat": lat, "lon": lng, "zoom": 18,
                     "addressdetails": 1,

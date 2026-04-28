@@ -60,7 +60,7 @@ OPERATOR_BASE_LNG = 145.1833
 MAX_DISTANCE_KM = 200.0
 
 # Filters
-MIN_CUSTOMERS = 50
+MIN_CUSTOMERS = 10
 MIN_HOURS = 6.0
 
 # Network identity attached to each outage
