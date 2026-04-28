@@ -32,6 +32,14 @@
   .small { font-size:11px; color:#777; }
   a { color:#0b57d0; }
   .empty { padding:60px 20px; text-align:center; color:#666; }
+  .actions { white-space:nowrap; }
+  .btn-sm { display:inline-block; padding:4px 10px; margin-right:4px; border-radius:4px; font-size:11px; font-weight:500; text-decoration:none; background:#f1f3f4; color:#0b57d0; }
+  .btn-sm:hover { background:#e8eaed; }
+  tr.highlight-flash { animation: flash 1.5s ease-out; }
+  @keyframes flash {
+    0% { background-color: #fff59d; }
+    100% { background-color: transparent; }
+  }
   @media (max-width: 700px) {
     table, thead, tbody, th, td, tr { display:block; }
     thead { display:none; }
@@ -100,6 +108,7 @@
         <th data-sort="distance">Distance</th>
         <th data-sort="total_hours">Total hrs</th>
         <th data-sort="longest_hours">Longest hrs</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody id="tbody"></tbody>
@@ -305,7 +314,15 @@ function sortAndFilter() {
         distCell = r.distance !== null ? `${r.distance}m` : '<span class="small">on street</span>';
       }
 
-      return `<tr>
+      const cid = c.client_id || '';
+      const pdDomain = (DATA.meta && DATA.meta.pipedriveDomain) || 'nexusenergy';
+      const titleSearch = encodeURIComponent(c.name + ' Planned Power Outage');
+      const actionsCell = `
+        ${cid ? `<a class="btn-sm" href="index.html?focus=${esc(cid)}">Map</a>` : ''}
+        <a class="btn-sm" href="https://${esc(pdDomain)}.pipedrive.com/leads/list?search=${titleSearch}" target="_blank" rel="noopener">Pipedrive</a>
+      `;
+
+      return `<tr${cid ? ` id="client-${esc(cid)}"` : ''}>
         <td data-label="Match">${matchChip}</td>
         <td data-label="Client"><strong>${esc(c.name)}</strong>${c.notes?`<div class="small">${esc(c.notes)}</div>`:''}</td>
         <td data-label="Category">${c.category?`<span class="chip cat">${esc(c.category)}</span>`:''}<div class="small">${esc(c.source||'')}</div></td>
@@ -318,6 +335,7 @@ function sortAndFilter() {
         <td data-label="Distance">${distCell}</td>
         <td data-label="Total hrs">${r.total_hours.toFixed(1)}h ${overrideTag}</td>
         <td data-label="Longest hrs">${r.longest_hours.toFixed(1)}h</td>
+        <td data-label="Actions" class="actions">${actionsCell}</td>
       </tr>`;
     }).join('');
   }
@@ -346,6 +364,20 @@ document.querySelectorAll('th[data-sort]').forEach(th => {
 );
 
 sortAndFilter();
+
+// Honour #client-<id> hash by scrolling to and flashing the matching row.
+function focusFromHash() {
+  if (!location.hash || !location.hash.startsWith('#client-')) return;
+  // Wait one tick to ensure the table is rendered
+  setTimeout(() => {
+    const target = document.querySelector(location.hash);
+    if (!target) return;
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    target.classList.add('highlight-flash');
+  }, 50);
+}
+focusFromHash();
+window.addEventListener('hashchange', focusFromHash);
 </script>
 </body>
 </html>

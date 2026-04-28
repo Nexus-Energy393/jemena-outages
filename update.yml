@@ -44,10 +44,12 @@ jobs:
           PIPEDRIVE_DRY_RUN: ${{ vars.PIPEDRIVE_DRY_RUN || 'true' }}
           PIPEDRIVE_MIN_HOURS: ${{ vars.PIPEDRIVE_MIN_HOURS || '6' }}
           PIPEDRIVE_OWNER_ID: ${{ secrets.PIPEDRIVE_OWNER_ID }}
-          PIPEDRIVE_LABEL_NAME: ${{ vars.PIPEDRIVE_LABEL_NAME || 'PLANNED POWER OUTAGE' }}
+          PIPEDRIVE_LABEL_NAME: ${{ vars.PIPEDRIVE_LABEL_NAME || 'Jemena Planned Outage' }}
           PIPEDRIVE_CANCELLED_LABEL_NAME: ${{ vars.PIPEDRIVE_CANCELLED_LABEL_NAME || 'CANCELLED' }}
+          PIPEDRIVE_NOT_AFFECTED_LABEL_NAME: ${{ vars.PIPEDRIVE_NOT_AFFECTED_LABEL_NAME || 'Not Affected' }}
           PIPEDRIVE_TYPE_OPTION_ID: ${{ vars.PIPEDRIVE_TYPE_OPTION_ID }}
           PIPEDRIVE_FIELD_MAP_JSON: ${{ secrets.PIPEDRIVE_FIELD_MAP_JSON }}
+          MAP_BASE_URL: ${{ vars.MAP_BASE_URL || 'https://nexus-energy393.github.io/jemena-outages' }}
         run: python scrape.py
 
       - name: Commit updated docs and cache

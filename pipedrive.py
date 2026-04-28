@@ -31,6 +31,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import time
 from datetime import datetime, timezone, timedelta
 from typing import Any
@@ -39,9 +40,10 @@ import requests
 
 
 PIPEDRIVE_BASE = "https://{domain}.pipedrive.com/api/v1"
-DEFAULT_LABEL = "PLANNED POWER OUTAGE"
+DEFAULT_LABEL = "Jemena Planned Outage"
 DEFAULT_CANCELLED_LABEL = "CANCELLED"
 DEFAULT_ARCHIVED_LABEL = "AUTO-ARCHIVED"
+DEFAULT_NOT_AFFECTED_LABEL = "Not Affected"
 DEFAULT_DOMAIN = "nexusenergy"
 MELBOURNE_TZ = timezone(timedelta(hours=10))
 
@@ -58,7 +60,11 @@ class PipedriveClient:
             "PIPEDRIVE_CANCELLED_LABEL_NAME", DEFAULT_CANCELLED_LABEL).strip()
         self.archived_label_name = os.environ.get(
             "PIPEDRIVE_ARCHIVED_LABEL_NAME", DEFAULT_ARCHIVED_LABEL).strip()
+        self.not_affected_label_name = os.environ.get(
+            "PIPEDRIVE_NOT_AFFECTED_LABEL_NAME", DEFAULT_NOT_AFFECTED_LABEL).strip()
         self.archive_after_days = int(os.environ.get("PIPEDRIVE_ARCHIVE_AFTER_DAYS", "2"))
+        self.map_base_url = os.environ.get("MAP_BASE_URL",
+            "https://nexus-energy393.github.io/jemena-outages").rstrip("/")
         try:
             self.field_map = json.loads(os.environ.get("PIPEDRIVE_FIELD_MAP_JSON", "{}"))
         except json.JSONDecodeError:
@@ -69,6 +75,7 @@ class PipedriveClient:
         self.label_id = None
         self.cancelled_label_id = None
         self.archived_label_id = None
+        self.not_affected_label_id = None
         self._session = requests.Session()
 
     @property
@@ -141,6 +148,7 @@ class PipedriveClient:
             ("label_id", self.label_name, "red"),
             ("cancelled_label_id", self.cancelled_label_name, "gray"),
             ("archived_label_id", self.archived_label_name, "blue"),
+            ("not_affected_label_id", self.not_affected_label_name, "green"),
         ]:
             match = next((l for l in existing if l.get("name") == needed_name), None)
             if match:
@@ -257,6 +265,9 @@ class PipedriveClient:
             cf[fmap["locations"]] = opp["locations"]
         if "planned_outage_date" in fmap and opp.get("planned_outage_date"):
             cf[fmap["planned_outage_date"]] = opp["planned_outage_date"]
+        # Map Link: deep-link back to the relevant marker on the live map
+        if "map_link" in fmap and opp.get("client", {}).get("client_id"):
+            cf[fmap["map_link"]] = f"{self.map_base_url}/?focus={opp['client']['client_id']}"
         # Pipedrive's "Time Off - Time On" timeRange field has a strict
         # format we can't reliably populate via the v1 API. Set
         # PIPEDRIVE_TIME_FORMAT in env to override:
@@ -366,6 +377,52 @@ class PipedriveClient:
             print(f"[pipedrive] marked {title!r} cancelled", flush=True)
         except Exception as e:
             print(f"[pipedrive] failed to add cancellation note: {e}", flush=True)
+
+    def fetch_not_affected_client_ids(self) -> set[str]:
+        """Return the set of client_ids the rep has marked as 'Not Affected'.
+
+        We extract the client_id from the Map Link URL custom field value.
+        That URL looks like .../?focus=<client-id>, set when the lead was
+        created. So if the rep applies the 'Not Affected' label, we know
+        which client to exclude from tomorrow's affected list.
+        """
+        if not self.not_affected_label_id:
+            return set()
+        map_link_field = self.field_map.get("map_link")
+        if not map_link_field:
+            print("[pipedrive] map_link field not mapped; cannot read Not Affected exclusions", flush=True)
+            return set()
+
+        excluded: set[str] = set()
+        try:
+            start = 0
+            limit = 100
+            while True:
+                res = self._get("/leads", {
+                    "label_ids[]": self.not_affected_label_id,
+                    "archived_status": "all",
+                    "limit": limit,
+                    "start": start,
+                })
+                leads = res.get("data") or []
+                for lead in leads:
+                    map_url = lead.get(map_link_field) or ""
+                    # Extract ?focus=<id> from the URL
+                    m = re.search(r"[?&]focus=([^&\s]+)", map_url)
+                    if m:
+                        excluded.add(m.group(1))
+                pagination = (res.get("additional_data") or {}).get("pagination") or {}
+                if not pagination.get("more_items_in_collection"):
+                    break
+                start += limit
+        except Exception as e:
+            print(f"[pipedrive] failed to fetch Not Affected leads: {e}", flush=True)
+            return set()
+
+        if excluded:
+            print(f"[pipedrive] excluding {len(excluded)} client(s) marked Not Affected: "
+                  f"{sorted(excluded)[:5]}{'...' if len(excluded) > 5 else ''}", flush=True)
+        return excluded
 
     def archive_stale_leads(self) -> int:
         """Archive leads where the outage has passed.
@@ -615,11 +672,20 @@ def sync_to_pipedrive(affected):
 
     pd.resolve_labels()
 
+    # Fetch client_ids the rep has marked Not Affected. Skip those everywhere.
+    not_affected = pd.fetch_not_affected_client_ids()
+
     opps = prepare_opportunities(affected, pd.min_hours)
+    # Filter out opportunities for not-affected clients
+    pre_count = len(opps)
+    opps = [o for o in opps if o["client"].get("client_id") not in not_affected]
+    if len(opps) < pre_count:
+        print(f"[pipedrive] {pre_count - len(opps)} opportunities skipped due to Not Affected label", flush=True)
     print(f"[pipedrive] {len(opps)} opportunities prepared", flush=True)
 
     counters = {"created": 0, "updated": 0, "cancelled": 0, "skipped": 0,
-                "archived": 0, "configured": True}
+                "archived": 0, "not_affected_excluded": pre_count - len(opps),
+                "configured": True}
     for opp in opps:
         existing = pd.find_lead_by_title(opp["title"])
         if existing:
@@ -640,6 +706,10 @@ def sync_to_pipedrive(affected):
 
     # Archive stale leads (outage has passed)
     counters["archived"] = pd.archive_stale_leads()
+
+    # Make the not-affected client list available to the caller so the map
+    # can also exclude those clients from the affected layer.
+    counters["not_affected_client_ids"] = sorted(not_affected)
 
     print(f"[pipedrive] summary: {counters}", flush=True)
     return counters

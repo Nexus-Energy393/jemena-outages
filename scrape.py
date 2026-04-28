@@ -959,18 +959,10 @@ def main() -> int:
     n_pos = sum(1 for a in affected if a["possible"] and not a["definite"])
     print(f"[affected] {n_def} definite, {n_pos} possible-only", flush=True)
 
-    # Push to Pipedrive (no-op if PIPEDRIVE_API_TOKEN env var not set)
-    try:
-        from pipedrive import sync_to_pipedrive
-        pipedrive_summary = sync_to_pipedrive(affected)
-    except Exception as e:
-        print(f"[pipedrive] sync failed but continuing: {e}", flush=True)
-        traceback.print_exc()
-        pipedrive_summary = {"created": 0, "updated": 0, "cancelled": 0, "skipped": 0, "configured": False}
-
     # Outage-suburb fallback: if an affected client's name still has no suburb
     # or mall, append the outage's suburb. (User CSV rows always have suburb,
     # so this mostly applies to OSM chains in OSM-without-addr:suburb regions.)
+    # Done BEFORE Pipedrive sync so leads carry the decorated names.
     for a in affected:
         client = a["client"]
         if client.get("category") == "Shopping centre":
@@ -997,6 +989,42 @@ def main() -> int:
         if outage_suburb and not _name_already_includes(current, outage_suburb):
             sub = outage_suburb if not outage_suburb.isupper() else outage_suburb.title()
             client["name"] = f"{brand} {sub}"
+
+    # Generate stable client_id slugs for cross-page linking and Map Link URLs
+    def make_client_id(client):
+        name = (client.get("name") or "client").lower()
+        # Replace anything non-alphanumeric with hyphen, collapse repeats
+        slug = re.sub(r"[^a-z0-9]+", "-", name).strip("-")
+        return slug[:80]  # cap length
+
+    seen_ids = {}
+    for a in affected:
+        cid = make_client_id(a["client"])
+        # Disambiguate collisions
+        n = seen_ids.get(cid, 0) + 1
+        seen_ids[cid] = n
+        a["client"]["client_id"] = cid if n == 1 else f"{cid}-{n}"
+
+    # Push to Pipedrive (no-op if PIPEDRIVE_API_TOKEN env var not set)
+    try:
+        from pipedrive import sync_to_pipedrive
+        pipedrive_summary = sync_to_pipedrive(affected)
+    except Exception as e:
+        print(f"[pipedrive] sync failed but continuing: {e}", flush=True)
+        traceback.print_exc()
+        pipedrive_summary = {"created": 0, "updated": 0, "cancelled": 0, "skipped": 0, "configured": False}
+
+    # Apply Not Affected exclusions to the affected list shown on the map
+    not_affected_ids = set(pipedrive_summary.get("not_affected_client_ids", []) or [])
+    if not_affected_ids:
+        before = len(affected)
+        affected = [a for a in affected if a["client"].get("client_id") not in not_affected_ids]
+        excluded = before - len(affected)
+        if excluded:
+            print(f"[map] excluded {excluded} client(s) marked Not Affected in Pipedrive", flush=True)
+        # Recompute counts
+        n_def = sum(1 for a in affected if a["definite"])
+        n_pos = sum(1 for a in affected if a["possible"] and not a["definite"])
 
     # Suburb summaries
     by_suburb = {}
@@ -1025,7 +1053,7 @@ def main() -> int:
     # Slim down clients for embedding (drop heavy/unused fields)
     def slim_client(c):
         out = {}
-        for k in ("name", "category", "source", "address", "suburb", "postcode",
+        for k in ("client_id", "name", "category", "source", "address", "suburb", "postcode",
                   "contact_name", "contact_phone", "contact_email", "notes",
                   "lat", "lng"):
             if c.get(k) not in (None, ""):
@@ -1079,6 +1107,7 @@ def main() -> int:
             "possibleCount": n_pos,
             "bufferMetres": BUFFER_METRES,
             "defaultMinHours": DEFAULT_MIN_HOURS,
+            "pipedriveDomain": os.environ.get("PIPEDRIVE_DOMAIN", "nexusenergy"),
         },
     }
 

@@ -29,6 +29,11 @@
   .chip.possible { background:#fb8c00; color:#fff; }
   .chip.cat { background:#e3f2fd; color:#0d47a1; }
   .leaflet-container a { color:#0b57d0; }
+  .popup-actions { display:flex; gap:6px; margin-top:10px; padding-top:8px; border-top:1px solid #eee; }
+  .popup-actions a { flex:1; text-align:center; padding:6px 8px; border-radius:4px; font-size:12px; font-weight:500; text-decoration:none; }
+  .popup-actions a.btn-primary { background:#0b57d0; color:#fff; }
+  .popup-actions a.btn-secondary { background:#f1f3f4; color:#0b57d0; }
+  .popup-actions a:hover { opacity:0.85; }
   #header-bar { position:absolute; top:12px; left:12px; right:12px; z-index:1000; pointer-events:none; display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap; }
   #header-bar > * { pointer-events:auto; }
   #updated { background:#fff; padding:6px 10px; border-radius:6px; box-shadow:0 1px 4px rgba(0,0,0,.15); font-size:11px; color:#555; }
@@ -136,6 +141,16 @@ function buildClientPopup(client, affected) {
         `<div class="outage">${esc(o.start)} – ${esc(o.end)} (${(o.duration_hours||0).toFixed(1)}h) · ${esc(o.street)} ${esc(o.suburb)} <span style="color:#999">(${o._distance_m||'?'}m)</span></div>`
       ).join('');
     }
+    // Action buttons
+    const cid = client.client_id || '';
+    const pdDomain = (DATA.meta && DATA.meta.pipedriveDomain) || 'nexusenergy';
+    const titleSearch = encodeURIComponent(client.name + ' Planned Power Outage');
+    body += `<div class="popup-actions">`;
+    if (cid) {
+      body += `<a class="btn-secondary" href="affected.html#client-${esc(cid)}">View on list</a>`;
+    }
+    body += `<a class="btn-primary" href="https://${esc(pdDomain)}.pipedrive.com/leads/list?search=${titleSearch}" target="_blank" rel="noopener">Open in Pipedrive</a>`;
+    body += `</div>`;
   }
   return `<div>${header}${body}</div>`;
 }
@@ -176,6 +191,7 @@ for (const a of (DATA.affected || [])) {
 
 const affectedLayer = L.layerGroup();
 const clientLayer = L.layerGroup();
+const markersByClientId = new Map();
 
 function clientMeetsThreshold(a, defaultMin) {
   if (!a) return false;
@@ -186,6 +202,7 @@ function clientMeetsThreshold(a, defaultMin) {
 function redrawClientLayers() {
   affectedLayer.clearLayers();
   clientLayer.clearLayers();
+  markersByClientId.clear();
   const minSel = parseFloat(document.getElementById('min-hours-select').value);
   let visibleAffected = 0, visibleDefinite = 0, visiblePossible = 0;
 
@@ -197,7 +214,6 @@ function redrawClientLayers() {
       // Apply per-client override or page-level filter
       const clientMin = (c.min_outage_hours != null) ? c.min_outage_hours : minSel;
       if ((a.longest_hours || 0) < clientMin) {
-        // Doesn't meet threshold — render as unaffected (small grey)
         state = 'unaffected';
         layer = clientLayer;
       } else {
@@ -207,9 +223,10 @@ function redrawClientLayers() {
         if (state === 'definite') visibleDefinite++; else visiblePossible++;
       }
     }
-    L.marker([c.lat, c.lng], { icon: clientIcon(state), title: c.name })
-     .bindPopup(buildClientPopup(c, a), { maxHeight: 380 })
-     .addTo(layer);
+    const m = L.marker([c.lat, c.lng], { icon: clientIcon(state), title: c.name })
+                .bindPopup(buildClientPopup(c, a), { maxHeight: 380 })
+                .addTo(layer);
+    if (c.client_id) markersByClientId.set(c.client_id, { marker: m, layer });
   }
   document.getElementById('affected-link').textContent = visibleAffected
     ? `${visibleAffected} affected clients`
@@ -223,6 +240,23 @@ document.getElementById('min-hours-select').value = String(defaultMin);
 
 redrawClientLayers();
 affectedLayer.addTo(map);  // affected on by default
+
+// Honour ?focus=<client-id> in URL - centre map on that pin and open popup
+function focusClientFromUrl() {
+  const params = new URLSearchParams(location.search);
+  const focusId = params.get('focus');
+  if (!focusId) return;
+  const entry = markersByClientId.get(focusId);
+  if (!entry) {
+    console.warn('Could not find client', focusId, '- it may not be affected today');
+    return;
+  }
+  // Make sure the layer is on the map so the marker is visible
+  if (!map.hasLayer(entry.layer)) entry.layer.addTo(map);
+  map.setView(entry.marker.getLatLng(), 16, { animate: true });
+  setTimeout(() => entry.marker.openPopup(), 400);
+}
+focusClientFromUrl();
 
 // Update on threshold change; also pass through to affected.html via querystring
 document.getElementById('min-hours-select').addEventListener('change', e => {
