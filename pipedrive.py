@@ -253,6 +253,29 @@ class PipedriveClient:
             print(f"[pipedrive] lead search failed for {title!r}: {e}", flush=True)
         return None
 
+    def find_lead_by_title_with_fallback(self, title: str, brand: str | None = None,
+                                          date_str: str | None = None) -> dict | None:
+        """Try the decorated title first, then a less-specific fallback.
+
+        Decoration was added in v5 — older leads created in v4 have titles
+        like 'KFC Planned Power Outage - 2026-05-03' instead of
+        'KFC Flemington Planned Power Outage - 2026-05-03'.
+
+        The fallback rebuilds the un-decorated title from `brand` + `date_str`
+        if both are provided, and tries that.
+        """
+        match = self.find_lead_by_title(title)
+        if match:
+            return match
+        # Fallback: try un-decorated brand title (v4-era format)
+        if brand and date_str:
+            fallback = f"{brand} Planned Power Outage - {date_str}"
+            if fallback != title:
+                match = self.find_lead_by_title(fallback)
+                if match:
+                    return match
+        return None
+
     def build_custom_fields(self, opp: dict) -> dict:
         """opp is the OpportunityRecord dict (see prepare_opportunities)."""
         cf = {}
@@ -686,22 +709,33 @@ def sync_to_pipedrive(affected):
     counters = {"created": 0, "updated": 0, "cancelled": 0, "skipped": 0,
                 "archived": 0, "not_affected_excluded": pre_count - len(opps),
                 "configured": True}
+    # Track client_id -> lead_id (UUID) for the map to deep-link
+    client_to_lead = {}
     for opp in opps:
-        existing = pd.find_lead_by_title(opp["title"])
+        cid = opp["client"].get("client_id") or ""
+        # Try fallback to un-decorated brand title for legacy v4 leads
+        brand = opp["client"].get("brand") or ""
+        existing = pd.find_lead_by_title_with_fallback(
+            opp["title"], brand=brand, date_str=opp.get("planned_outage_date")
+        )
         if existing:
+            # Capture the UUID for the map link
+            existing_id = existing.get("id")
+            if cid and existing_id:
+                client_to_lead[cid] = existing_id
             if opp["cancelled_only"]:
                 pd.mark_lead_cancelled(existing, opp)
                 counters["cancelled"] += 1
             else:
                 # Lead already exists for an active outage — leave it alone.
-                # (Could PATCH custom fields if Jemena rescheduled times, but
-                # that risks overwriting rep edits. Leave it.)
                 counters["skipped"] += 1
         elif opp["cancelled_only"]:
             # No existing lead and the outage was cancelled — don't create.
             counters["skipped"] += 1
         else:
-            pd.create_lead(opp)
+            created = pd.create_lead(opp)
+            if cid and created and created.get("id"):
+                client_to_lead[cid] = created["id"]
             counters["created"] += 1
 
     # Archive stale leads (outage has passed)
@@ -710,6 +744,10 @@ def sync_to_pipedrive(affected):
     # Make the not-affected client list available to the caller so the map
     # can also exclude those clients from the affected layer.
     counters["not_affected_client_ids"] = sorted(not_affected)
+    counters["client_lead_ids"] = client_to_lead
 
-    print(f"[pipedrive] summary: {counters}", flush=True)
+    # Print summary without the (potentially long) client_lead_ids dict
+    summary_view = {k: v for k, v in counters.items() if k != "client_lead_ids"}
+    print(f"[pipedrive] summary: {summary_view}", flush=True)
+    print(f"[pipedrive] client_lead_ids resolved: {len(client_to_lead)}", flush=True)
     return counters

@@ -609,12 +609,15 @@ def load_user_clients():
     if not CLIENTS_CSV.exists():
         return []
     out = []
-    with CLIENTS_CSV.open(encoding="utf-8") as f:
+    with CLIENTS_CSV.open(encoding="utf-8-sig") as f:  # utf-8-sig strips BOM if present
         reader = csv.DictReader(f)
+        # Normalise headers to lowercase so "Name" matches "name", etc.
+        if reader.fieldnames:
+            reader.fieldnames = [(h or "").strip().lower() for h in reader.fieldnames]
         for row in reader:
-            row = {k: (v or "").strip() for k, v in row.items()}
-            if not row.get("name") or not row.get("suburb"):
-                continue
+            row = {(k or "").strip().lower(): (v or "").strip() for k, v in row.items()}
+            if not row.get("name"):
+                continue  # need a name at minimum; suburb is helpful but not strictly required
             row["source"] = "user"
             out.append(row)
     return out
