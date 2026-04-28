@@ -46,6 +46,13 @@ import requests
 AUSNET_BASE = "https://www.outagetracker.com.au"
 AUSNET_LIST_PAGE = f"{AUSNET_BASE}/outage-list"
 AUSNET_HOME_PAGE = AUSNET_BASE
+# The actual API lives on a separate host (discovered via Claude in Chrome).
+# Configurable via env var in case the structure changes.
+import os as _os
+AUSNET_API_BASE = _os.environ.get(
+    "AUSNET_API_BASE",
+    "https://outagetrackerservice.ausnetservices.com.au"
+).rstrip("/")
 
 # Operator base (Carrum Downs, VIC)
 OPERATOR_BASE_LAT = -38.0833
@@ -157,16 +164,16 @@ class AusnetClient:
 
     def fetch_list(self) -> list[dict]:
         """Fetch the combined-outage list. Returns a list of raw outage dicts."""
-        # Candidate endpoints in order of preference
+        # The real API lives on outagetrackerservice.ausnetservices.com.au
         candidates = [
-            f"{AUSNET_BASE}/api/combinedoutage",
+            f"{AUSNET_API_BASE}/api/v1/outages/combinedoutage",
+            f"{AUSNET_API_BASE}/api/combinedoutage",  # fallback
         ]
+        # Also try Next.js data fallbacks (in case the API host changes someday)
         build_id = self._discover_build_id()
         if build_id:
-            # Next.js data endpoint variants
             candidates += [
                 f"{AUSNET_BASE}/_next/data/{build_id}/en.json",
-                f"{AUSNET_BASE}/_next/data/{build_id}/en/outage-list.json",
             ]
 
         print(f"[ausnet] fetching outage list ({len(candidates)} candidate endpoints)", flush=True)
@@ -174,10 +181,6 @@ class AusnetClient:
         if not result:
             raise RuntimeError("Could not fetch Ausnet outage list from any endpoint")
 
-        # The response shape may be either:
-        #   { data: [...], errors: [], success: true }     (combinedoutage)
-        # or:
-        #   { pageProps: { ... data: [...] ... } }         (Next.js data)
         outages = self._extract_outage_list(result)
         if outages is None:
             raise RuntimeError("Got Ausnet response but could not find the outage array")
@@ -226,8 +229,13 @@ class AusnetClient:
 
         Returns [[lat, lng], ...] or None if not found.
         """
+        # The polygon endpoint pattern is at the API host. The exact path
+        # isn't documented but a few obvious ones to try.
         candidates = [
-            f"{AUSNET_BASE}/api/{incident_id}",
+            f"{AUSNET_API_BASE}/api/v1/outages/{incident_id}",
+            f"{AUSNET_API_BASE}/api/v1/outages/{incident_id}/polygon",
+            f"{AUSNET_API_BASE}/api/v1/outages/{incident_id}/boundary",
+            f"{AUSNET_API_BASE}/api/{incident_id}",
         ]
         build_id = self._discover_build_id()
         if build_id:
