@@ -57,10 +57,10 @@ AUSNET_API_BASE = _os.environ.get(
 # Operator base (Carrum Downs, VIC)
 OPERATOR_BASE_LAT = -38.0833
 OPERATOR_BASE_LNG = 145.1833
-MAX_DISTANCE_KM = 300.0
+MAX_DISTANCE_KM = 200.0
 
 # Filters
-MIN_CUSTOMERS = 100
+MIN_CUSTOMERS = 50
 MIN_HOURS = 6.0
 
 # Network identity attached to each outage

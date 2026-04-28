@@ -86,7 +86,7 @@ BUFFER_METRES = 200  # "possibly affected" radius around shaded streets
 # Default minimum outage duration (hours) to consider a client a generator-hire
 # opportunity. Per-client values in clients.csv override this. Set to 0 to
 # include every affected client regardless of outage length.
-DEFAULT_MIN_HOURS = 4.0
+DEFAULT_MIN_HOURS = 6.0
 
 
 # ---------------------------------------------------------------------------

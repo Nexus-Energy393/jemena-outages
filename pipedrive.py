@@ -204,7 +204,7 @@ class PipedriveClient:
 
         if self.dry_run:
             print(f"[pipedrive] DRY: would create Person {body['name']!r} for {client.get('name')!r}", flush=True)
-            return None
+            return -1  # sentinel — let the lead-create path proceed in dry-run logs
         try:
             created = self._post("/persons", body)
             return created["data"]["id"]
@@ -228,7 +228,7 @@ class PipedriveClient:
             body["owner_id"] = int(self.owner_id)
         if self.dry_run:
             print(f"[pipedrive] DRY: would create Organisation {org_name!r}", flush=True)
-            return None
+            return -1  # sentinel — let the lead-create path proceed in dry-run logs
         try:
             created = self._post("/organizations", body)
             return created["data"]["id"]
