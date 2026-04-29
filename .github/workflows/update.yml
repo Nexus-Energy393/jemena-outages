@@ -1,6 +1,5 @@
 name: Update Jemena outages map
 
-
 on:
   schedule:
     - cron: '0 20 * * *'
@@ -60,14 +59,25 @@ jobs:
           git add docs/ .cache/ || true
           if git diff --staged --quiet; then
             echo "No changes to commit."
-          else
-            if [ "${{ steps.scrape.outcome }}" = "success" ]; then
-              git commit -m "Update outage data ($(date -u +%Y-%m-%dT%H:%M:%SZ))"
-            else
-              git commit -m "Scrape failed, saving debug files ($(date -u +%Y-%m-%dT%H:%M:%SZ))"
-            fi
-            git push
+            exit 0
           fi
+          if [ "${{ steps.scrape.outcome }}" = "success" ]; then
+            COMMIT_MSG="Update outage data ($(date -u +%Y-%m-%dT%H:%M:%SZ))"
+          else
+            COMMIT_MSG="Scrape failed, saving debug files ($(date -u +%Y-%m-%dT%H:%M:%SZ))"
+          fi
+          git commit -m "$COMMIT_MSG"
+          # Push with retries — if remote moved during the run, rebase and try again
+          for i in 1 2 3; do
+            if git push; then
+              echo "Pushed successfully on attempt $i"
+              exit 0
+            fi
+            echo "Push attempt $i failed; pulling and retrying..."
+            git pull --rebase --autostash origin main
+          done
+          echo "::error::Could not push after 3 attempts"
+          exit 1
 
       - name: Fail the run if the scrape itself failed
         if: steps.scrape.outcome == 'failure'
