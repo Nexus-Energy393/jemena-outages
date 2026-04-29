@@ -54,6 +54,13 @@ class PipedriveClient:
         self.domain = os.environ.get("PIPEDRIVE_DOMAIN", DEFAULT_DOMAIN).strip()
         self.dry_run = os.environ.get("PIPEDRIVE_DRY_RUN", "true").lower() != "false"
         self.min_hours = float(os.environ.get("PIPEDRIVE_MIN_HOURS", "6.0"))
+        # Maximum days ahead to create leads. Outages further than this
+        # aren't created as leads (so we don't reach out before the customer
+        # gets notified by their utility). Set to a very large number to disable.
+        try:
+            self.max_days_ahead = int(os.environ.get("PIPEDRIVE_MAX_DAYS_AHEAD", "21"))
+        except ValueError:
+            self.max_days_ahead = 21
         self.owner_id = os.environ.get("PIPEDRIVE_OWNER_ID", "").strip() or None
         self.label_name = os.environ.get("PIPEDRIVE_LABEL_NAME", DEFAULT_LABEL).strip()
         self.cancelled_label_name = os.environ.get(
@@ -527,14 +534,20 @@ class PipedriveClient:
 # ---------------------------------------------------------------------------
 # Opportunity preparation (run before any API calls)
 # ---------------------------------------------------------------------------
-def prepare_opportunities(affected, min_hours):
+def prepare_opportunities(affected, min_hours, max_days_ahead=None):
     """Walk the affected list, output one opportunity per (client, distinct outage day).
 
     A client with multiple outages on different days produces multiple
     opportunities (so the title carries the date, matching the existing
     workflow in your screenshot). Cancelled-only clients still get
     opportunities so the cancellation can be reflected on existing leads.
+
+    `max_days_ahead`: if set, only emit opportunities whose outage date is
+    within this many days from today. Cancelled-only opportunities are
+    always emitted regardless of date (so cancellations get marked).
     """
+    today = datetime.now(MELBOURNE_TZ).date()
+    skipped_too_far = 0
     opportunities = []
     for a in affected:
         client = a["client"]
@@ -564,6 +577,20 @@ def prepare_opportunities(affected, min_hours):
             client_name = client.get("name") or "Unknown"
             iso_date = _format_date_for_title(date_part, outages[0])
             title = f"{client_name} Planned Power Outage - {iso_date}"
+
+            # Days-ahead filter — skip leads too far in the future so we
+            # don't reach out before customers have been notified.
+            # Cancelled-only opportunities still pass (so existing leads
+            # can be marked as cancelled).
+            if max_days_ahead is not None and not cancelled_only:
+                try:
+                    outage_date_obj = datetime.strptime(iso_date, "%Y-%m-%d").date()
+                    days_ahead = (outage_date_obj - today).days
+                    if days_ahead > max_days_ahead:
+                        skipped_too_far += 1
+                        continue
+                except ValueError:
+                    pass  # Date couldn't be parsed; let it through
 
             # Build a single representative summary
             primary = sorted(outages, key=lambda o: o.get("_distance_m") or 99999)[0]
@@ -600,6 +627,8 @@ def prepare_opportunities(affected, min_hours):
                 "incident_id": ausnet_incidents[0] if ausnet_incidents else "",
             }
             opportunities.append(opp)
+    if skipped_too_far:
+        print(f"[pipedrive] {skipped_too_far} opportunities skipped (outage > {max_days_ahead} days away)", flush=True)
     return opportunities
 
 
@@ -692,14 +721,14 @@ def sync_to_pipedrive(affected):
         return {"created": 0, "updated": 0, "cancelled": 0, "skipped": 0, "archived": 0, "configured": False}
 
     print(f"[pipedrive] domain={pd.domain} dry_run={pd.dry_run} "
-          f"min_hours={pd.min_hours}", flush=True)
+          f"min_hours={pd.min_hours} max_days_ahead={pd.max_days_ahead}", flush=True)
 
     pd.resolve_labels()
 
     # Fetch client_ids the rep has marked Not Affected. Skip those everywhere.
     not_affected = pd.fetch_not_affected_client_ids()
 
-    opps = prepare_opportunities(affected, pd.min_hours)
+    opps = prepare_opportunities(affected, pd.min_hours, max_days_ahead=pd.max_days_ahead)
     # Filter out opportunities for not-affected clients
     pre_count = len(opps)
     opps = [o for o in opps if o["client"].get("client_id") not in not_affected]

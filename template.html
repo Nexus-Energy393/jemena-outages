@@ -62,6 +62,14 @@
         <option value="8">8+ hrs</option>
       </select>
     </label>
+    <label>Show:
+      <select id="max-days-select">
+        <option value="21" selected>Next 21 days</option>
+        <option value="14">Next 14 days</option>
+        <option value="7">Next 7 days</option>
+        <option value="9999">All upcoming</option>
+      </select>
+    </label>
     <a id="affected-link" class="alert" href="affected.html">Affected clients</a>
     <a href="affected.csv" download>CSV</a>
   </div>
@@ -218,16 +226,22 @@ function buildAusnetPopup(ao) {
   body += `</div>`;
   return body;
 }
-for (const ao of (DATA.ausnet || [])) {
-  L.polygon(ao.polygon, {
-    color: '#5e35b1',
-    weight: 2,
-    opacity: 0.9,
-    fillColor: '#9575cd',
-    fillOpacity: 0.25,
-  }).bindPopup(buildAusnetPopup(ao), { maxHeight: 380 })
-    .addTo(ausnetLayer);
+function redrawAusnetLayer() {
+  ausnetLayer.clearLayers();
+  const maxDays = parseFloat(document.getElementById('max-days-select').value || '21');
+  for (const ao of (DATA.ausnet || [])) {
+    if (daysAhead(ao.start_iso) > maxDays) continue;
+    L.polygon(ao.polygon, {
+      color: '#5e35b1',
+      weight: 2,
+      opacity: 0.9,
+      fillColor: '#9575cd',
+      fillOpacity: 0.25,
+    }).bindPopup(buildAusnetPopup(ao), { maxHeight: 380 })
+      .addTo(ausnetLayer);
+  }
 }
+// Initial render happens after the daysAhead helper is defined below.
 ausnetLayer.addTo(map);
 
 const suburbLayer = L.layerGroup();
@@ -254,11 +268,32 @@ function clientMeetsThreshold(a, defaultMin) {
   return (a.longest_hours || 0) >= min;
 }
 
+function daysAhead(isoString) {
+  if (!isoString) return Infinity;
+  const dt = new Date(isoString);
+  if (isNaN(dt)) return Infinity;
+  const now = new Date();
+  return (dt - now) / (1000 * 60 * 60 * 24);
+}
+
+function affectedSoonestDays(a) {
+  // Smallest days_ahead across all (active) outages on this client
+  if (!a) return Infinity;
+  let best = Infinity;
+  for (const o of (a.definite || []).concat(a.possible || [])) {
+    if (o.status === 'Cancelled') continue;
+    const d = daysAhead(o.start_iso);
+    if (d < best) best = d;
+  }
+  return best;
+}
+
 function redrawClientLayers() {
   affectedLayer.clearLayers();
   clientLayer.clearLayers();
   markersByClientId.clear();
   const minSel = parseFloat(document.getElementById('min-hours-select').value);
+  const maxDays = parseFloat(document.getElementById('max-days-select').value);
   let visibleAffected = 0, visibleDefinite = 0, visiblePossible = 0;
 
   for (const c of (DATA.clients || [])) {
@@ -268,7 +303,8 @@ function redrawClientLayers() {
     if (a) {
       // Apply per-client override or page-level filter
       const clientMin = (c.min_outage_hours != null) ? c.min_outage_hours : minSel;
-      if ((a.longest_hours || 0) < clientMin) {
+      const soonest = affectedSoonestDays(a);
+      if ((a.longest_hours || 0) < clientMin || soonest > maxDays) {
         state = 'unaffected';
         layer = clientLayer;
       } else {
@@ -294,6 +330,7 @@ const defaultMin = (DATA.meta && DATA.meta.defaultMinHours) || 4;
 document.getElementById('min-hours-select').value = String(defaultMin);
 
 redrawClientLayers();
+redrawAusnetLayer();
 affectedLayer.addTo(map);  // affected on by default
 
 // Honour ?focus=<client-id> in URL - centre map on that pin and open popup
@@ -316,8 +353,15 @@ focusClientFromUrl();
 // Update on threshold change; also pass through to affected.html via querystring
 document.getElementById('min-hours-select').addEventListener('change', e => {
   redrawClientLayers();
+  redrawAusnetLayer();
   const link = document.getElementById('affected-link');
   link.href = `affected.html?min=${encodeURIComponent(e.target.value)}`;
+});
+
+// Update on days-ahead window change
+document.getElementById('max-days-select').addEventListener('change', () => {
+  redrawClientLayers();
+  redrawAusnetLayer();
 });
 
 // Initial map bounds — fit to whatever's interesting today (suburbs + Ausnet polygons)
