@@ -43,6 +43,7 @@ jobs:
           PIPEDRIVE_DOMAIN: ${{ secrets.PIPEDRIVE_DOMAIN }}
           PIPEDRIVE_DRY_RUN: ${{ vars.PIPEDRIVE_DRY_RUN || 'true' }}
           PIPEDRIVE_MIN_HOURS: ${{ vars.PIPEDRIVE_MIN_HOURS || '6' }}
+          PIPEDRIVE_MAX_DAYS_AHEAD: ${{ vars.PIPEDRIVE_MAX_DAYS_AHEAD || '21' }}
           PIPEDRIVE_OWNER_ID: ${{ secrets.PIPEDRIVE_OWNER_ID }}
           PIPEDRIVE_LABEL_NAME: ${{ vars.PIPEDRIVE_LABEL_NAME || 'Jemena Planned Outage' }}
           PIPEDRIVE_CANCELLED_LABEL_NAME: ${{ vars.PIPEDRIVE_CANCELLED_LABEL_NAME || 'CANCELLED' }}
