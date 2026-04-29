@@ -786,10 +786,28 @@ def match_clients_to_outages(clients, streets, raw_outages, ausnet_outages=None)
     Ausnet outages are matched by polygon containment / proximity.
     """
     ausnet_outages = ausnet_outages or []
-    # Index Jemena outages by (suburb_l, street_n)
+    # Index Jemena outages by (suburb_l, street_n). Convert to display shape
+    # (start/end as strings, etc.) so the same outage objects can be used
+    # for both the definite-match path and the possible-match dedupe.
     outages_by_pair = {}
     for o in raw_outages:
-        outages_by_pair.setdefault((o["suburb"].lower(), norm_key(o["street"])), []).append(o)
+        # If the outage is already display-shaped (has 'start' string), use as-is.
+        # Otherwise, derive the display fields from start_dt/end_dt.
+        if "start" in o and "end" in o:
+            disp = o
+        else:
+            duration_h = (o["end_dt"] - o["start_dt"]).total_seconds() / 3600.0
+            disp = {
+                "suburb": o["suburb"].title(),
+                "street": o["street"],
+                "start": o.get("start_display") or o["start_dt"].strftime("%a %d %b, %I:%M %p").replace(" 0", " "),
+                "end": o.get("end_display") or o["end_dt"].strftime("%I:%M %p").lstrip("0"),
+                "start_iso": o["start_dt"].isoformat(),
+                "end_iso": o["end_dt"].isoformat(),
+                "status": o.get("status", "Scheduled"),
+                "duration_hours": round(duration_h, 2),
+            }
+        outages_by_pair.setdefault((o["suburb"].lower(), norm_key(o["street"])), []).append(disp)
 
     # Pre-compute bboxes for each Jemena street (with buffer expansion)
     bboxes = []
