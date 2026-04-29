@@ -291,25 +291,17 @@ class PipedriveClient:
         # Map Link: deep-link back to the relevant marker on the live map
         if "map_link" in fmap and opp.get("client", {}).get("client_id"):
             cf[fmap["map_link"]] = f"{self.map_base_url}/?focus={opp['client']['client_id']}"
-        # Pipedrive's "Time Off - Time On" timeRange field has a strict
-        # format we can't reliably populate via the v1 API. Set
-        # PIPEDRIVE_TIME_FORMAT in env to override:
-        #   "skip"   - don't send the field (default; safe)
-        #   "string" - send "07:00 - 17:30"
-        #   "object" - send {"from","until","timezone_id"} (only works on some accounts)
-        time_format = os.environ.get("PIPEDRIVE_TIME_FORMAT", "skip").lower().strip()
-        if "time_off_on" in fmap and time_format != "skip":
-            t_off = opp.get("time_off") or ""
-            t_on = opp.get("time_on") or ""
-            if t_off and t_on:
-                if time_format == "object":
-                    cf[fmap["time_off_on"]] = {
-                        "from": t_off,
-                        "until": t_on,
-                        "timezone_id": "Australia/Melbourne",
-                    }
-                else:  # 'string'
-                    cf[fmap["time_off_on"]] = f"{t_off} - {t_on}"
+        # Pipedrive's "Time Off - Time On" timeRange field uses TWO keys:
+        #   <field-key>          for the "from" time as "HH:MM:SS"
+        #   <field-key>_until    for the "until" time as "HH:MM:SS"
+        # (Confirmed by inspecting an API response from a manually-filled lead.)
+        if "time_off_on" in fmap:
+            t_off_24 = opp.get("time_off") or ""
+            t_on_24 = opp.get("time_on") or ""
+            if t_off_24:
+                cf[fmap["time_off_on"]] = f"{t_off_24}:00" if t_off_24.count(":") == 1 else t_off_24
+            if t_on_24:
+                cf[f"{fmap['time_off_on']}_until"] = f"{t_on_24}:00" if t_on_24.count(":") == 1 else t_on_24
         # Type is a Pipedrive dropdown (single-option) field — needs numeric
         # option ID, not text. Set PIPEDRIVE_TYPE_OPTION_ID in env to populate.
         type_option_id = os.environ.get("PIPEDRIVE_TYPE_OPTION_ID", "").strip()
