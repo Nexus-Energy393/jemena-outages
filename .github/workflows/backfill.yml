@@ -1,0 +1,48 @@
+name: Backfill Pipedrive lead times (one-off)
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (true = log only, no API writes)'
+        required: true
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+
+permissions:
+  contents: read
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Install Playwright browser
+        run: python -m playwright install --with-deps chromium
+
+      - name: Run backfill
+        env:
+          PIPEDRIVE_API_TOKEN: ${{ secrets.PIPEDRIVE_API_TOKEN }}
+          PIPEDRIVE_DOMAIN: ${{ secrets.PIPEDRIVE_DOMAIN }}
+          PIPEDRIVE_DRY_RUN: ${{ inputs.dry_run }}
+          PIPEDRIVE_LABEL_NAME: ${{ vars.PIPEDRIVE_LABEL_NAME || 'Jemena Planned Outage' }}
+          PIPEDRIVE_FIELD_MAP_JSON: ${{ secrets.PIPEDRIVE_FIELD_MAP_JSON }}
+        run: python backfill_times.py
