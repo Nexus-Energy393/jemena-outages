@@ -850,7 +850,22 @@ def match_clients_to_outages(clients, streets, raw_outages, ausnet_outages=None)
                 nearest_street_name = s["name"]
                 nearest_street_suburb = s["suburb"]
             if d <= BUFFER_METRES:
-                for o in s["outages"]:
+                for raw_o in s["outages"]:
+                    # Display-format if needed (mirrors the conversion above)
+                    if "start" in raw_o and "end" in raw_o:
+                        o = raw_o
+                    else:
+                        duration_h = (raw_o["end_dt"] - raw_o["start_dt"]).total_seconds() / 3600.0
+                        o = {
+                            "suburb": raw_o["suburb"].title(),
+                            "street": raw_o["street"],
+                            "start": raw_o.get("start_display") or raw_o["start_dt"].strftime("%a %d %b, %I:%M %p").replace(" 0", " "),
+                            "end": raw_o.get("end_display") or raw_o["end_dt"].strftime("%I:%M %p").lstrip("0"),
+                            "start_iso": raw_o["start_dt"].isoformat(),
+                            "end_iso": raw_o["end_dt"].isoformat(),
+                            "status": raw_o.get("status", "Scheduled"),
+                            "duration_hours": round(duration_h, 2),
+                        }
                     sig = (o["suburb"], o["street"], o["start"], o["end"])
                     if sig not in {(d2.get("suburb"), d2.get("street"), d2.get("start"), d2.get("end")) for d2 in definite_outages}:
                         possible_outages.append({**o, "_distance_m": int(d)})
