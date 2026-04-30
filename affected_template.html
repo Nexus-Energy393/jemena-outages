@@ -16,6 +16,19 @@
   .toolbar input, .toolbar select { padding:6px 10px; font-size:13px; border:1px solid var(--border); border-radius:4px; background:#fff; }
   .toolbar input { min-width:240px; }
   .toolbar .summary { margin-left:auto; font-size:12px; color:#666; }
+  /* Multi-select dropdown */
+  .multi-select { position:relative; display:inline-block; }
+  .ms-button { padding:6px 24px 6px 10px; font-size:13px; border:1px solid var(--border); border-radius:4px; background:#fff; cursor:pointer; min-width:140px; text-align:left; position:relative; }
+  .ms-button::after { content: '▾'; position:absolute; right:8px; top:6px; color:#888; font-size:10px; }
+  .ms-button.has-selection { background:#e8f0fe; color:#0b57d0; font-weight:500; }
+  .ms-popover { display:none; position:absolute; top:calc(100% + 4px); left:0; min-width:240px; max-height:300px; overflow-y:auto; background:#fff; border:1px solid var(--border); border-radius:4px; box-shadow:0 4px 12px rgba(0,0,0,0.12); z-index:50; padding:8px; }
+  .ms-popover.show { display:block; }
+  .ms-controls { display:flex; gap:8px; padding-bottom:6px; border-bottom:1px solid var(--border); margin-bottom:6px; }
+  .ms-link { background:none; border:none; color:#0b57d0; font-size:12px; cursor:pointer; padding:2px 4px; }
+  .ms-link:hover { text-decoration:underline; }
+  .ms-options label { display:flex; align-items:center; gap:8px; padding:4px 6px; font-size:13px; cursor:pointer; border-radius:3px; }
+  .ms-options label:hover { background:#f5f5f5; }
+  .ms-options input[type="checkbox"] { margin:0; }
   table { width:100%; border-collapse:collapse; background:#fff; }
   thead { position:sticky; top:0; background:#fff; z-index:10; box-shadow:0 1px 0 var(--border); }
   th { text-align:left; padding:10px 14px; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.05em; color:#666; cursor:pointer; user-select:none; white-space:nowrap; }
@@ -33,8 +46,16 @@
   a { color:#0b57d0; }
   .empty { padding:60px 20px; text-align:center; color:#666; }
   .actions { white-space:nowrap; }
-  .btn-sm { display:inline-block; padding:4px 10px; margin-right:4px; border-radius:4px; font-size:11px; font-weight:500; text-decoration:none; background:#f1f3f4; color:#0b57d0; }
+  .btn-sm { display:inline-block; padding:4px 10px; margin-right:4px; border-radius:4px; font-size:11px; font-weight:500; text-decoration:none; background:#f1f3f4; color:#0b57d0; border:none; cursor:pointer; font-family:inherit; }
   .btn-sm:hover { background:#e8eaed; }
+  .btn-hide { background:#fff3e0; color:#b26a00; }
+  .btn-hide:hover { background:#ffe0b2; }
+  .btn-hide.busy { opacity:0.6; cursor:wait; }
+  .btn-hide.done { background:#e6f4ea; color:#137333; }
+  tr.row-hidden { animation: fade-out 0.5s ease forwards; }
+  @keyframes fade-out {
+    to { opacity: 0; transform: translateX(20px); height: 0; }
+  }
   tr.highlight-flash { animation: flash 1.5s ease-out; }
   @keyframes flash {
     0% { background-color: #fff59d; }
@@ -91,7 +112,16 @@
     <option value="definite">Definite only</option>
     <option value="possible">Possible only</option>
   </select>
-  <select id="category-filter"><option value="all">All categories</option></select>
+  <div class="multi-select" id="category-multi">
+    <button type="button" class="ms-button" id="ms-category-button">All categories</button>
+    <div class="ms-popover" id="ms-category-popover">
+      <div class="ms-controls">
+        <button type="button" class="ms-link" data-action="all">Select all</button>
+        <button type="button" class="ms-link" data-action="none">Clear</button>
+      </div>
+      <div class="ms-options" id="ms-category-options"></div>
+    </div>
+  </div>
   <select id="status-filter">
     <option value="active">Active only (hide cancelled)</option>
     <option value="all">Show cancelled too</option>
@@ -178,26 +208,131 @@ for (const a of DATA.affected) {
 }
 
 const categories = [...new Set(rows.map(r => r.client.category).filter(Boolean))].sort();
-const catFilter = document.getElementById('category-filter');
-for (const c of categories) {
-  const opt = document.createElement('option');
-  opt.value = c; opt.textContent = c;
-  catFilter.appendChild(opt);
+
+// ---------------------------------------------------------------------------
+// Filter persistence (localStorage) + multi-select category widget
+// ---------------------------------------------------------------------------
+const FILTER_STORAGE_KEY = 'jemena-affected-filters-v1';
+function loadStoredFilters() {
+  try {
+    return JSON.parse(localStorage.getItem(FILTER_STORAGE_KEY) || '{}');
+  } catch (_e) { return {}; }
+}
+function saveStoredFilters(f) {
+  try { localStorage.setItem(FILTER_STORAGE_KEY, JSON.stringify(f)); } catch (_e) {}
+}
+const stored = loadStoredFilters();
+
+// Build multi-select category options
+const msOptionsBox = document.getElementById('ms-category-options');
+const msButton = document.getElementById('ms-category-button');
+const msPopover = document.getElementById('ms-category-popover');
+let selectedCategories = new Set(
+  Array.isArray(stored.categories) ? stored.categories.filter(c => categories.includes(c)) : []
+);
+
+function rebuildCategoryOptions() {
+  msOptionsBox.innerHTML = '';
+  for (const c of categories) {
+    const id = 'ms-cat-' + c.replace(/[^a-z0-9]/gi, '_');
+    const wrap = document.createElement('label');
+    wrap.htmlFor = id;
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.id = id;
+    cb.value = c;
+    cb.checked = selectedCategories.has(c);
+    cb.addEventListener('change', () => {
+      if (cb.checked) selectedCategories.add(c);
+      else selectedCategories.delete(c);
+      updateCategoryButton();
+      persistFilters();
+      sortAndFilter();
+    });
+    const txt = document.createElement('span');
+    txt.textContent = c;
+    wrap.appendChild(cb);
+    wrap.appendChild(txt);
+    msOptionsBox.appendChild(wrap);
+  }
 }
 
-let sortKey = 'outage_when', sortDir = 1;
+function updateCategoryButton() {
+  if (selectedCategories.size === 0) {
+    msButton.textContent = 'All categories';
+    msButton.classList.remove('has-selection');
+  } else if (selectedCategories.size === 1) {
+    msButton.textContent = [...selectedCategories][0];
+    msButton.classList.add('has-selection');
+  } else {
+    msButton.textContent = `${selectedCategories.size} categories`;
+    msButton.classList.add('has-selection');
+  }
+}
+
+msButton.addEventListener('click', e => {
+  e.stopPropagation();
+  msPopover.classList.toggle('show');
+});
+document.addEventListener('click', e => {
+  if (!msPopover.contains(e.target) && e.target !== msButton) {
+    msPopover.classList.remove('show');
+  }
+});
+msPopover.querySelector('[data-action="all"]').addEventListener('click', () => {
+  selectedCategories = new Set(categories);
+  rebuildCategoryOptions();
+  updateCategoryButton();
+  persistFilters();
+  sortAndFilter();
+});
+msPopover.querySelector('[data-action="none"]').addEventListener('click', () => {
+  selectedCategories.clear();
+  rebuildCategoryOptions();
+  updateCategoryButton();
+  persistFilters();
+  sortAndFilter();
+});
+
+rebuildCategoryOptions();
+updateCategoryButton();
+
+let sortKey = stored.sortKey || 'outage_when';
+let sortDir = stored.sortDir || 1;
 const search = document.getElementById('search');
 const matchFilter = document.getElementById('match-filter');
 const statusFilter = document.getElementById('status-filter');
 const minHours = document.getElementById('min-hours');
 const durationMode = document.getElementById('duration-mode');
+const groupMode = document.getElementById('group-mode');
 const tbody = document.getElementById('tbody');
 const summary = document.getElementById('summary');
+
+// Restore other filter values from storage (URL ?min= still wins)
+if (stored.search) search.value = stored.search;
+if (stored.matchFilter) matchFilter.value = stored.matchFilter;
+if (stored.statusFilter) statusFilter.value = stored.statusFilter;
+if (stored.minHours) minHours.value = stored.minHours;
+if (stored.durationMode) durationMode.value = stored.durationMode;
+if (stored.groupMode) groupMode.value = stored.groupMode;
 
 // Read ?min= from URL if main map passed it through
 const urlMin = new URLSearchParams(location.search).get('min');
 if (urlMin && [...minHours.options].some(o => o.value === urlMin)) {
   minHours.value = urlMin;
+}
+
+function persistFilters() {
+  saveStoredFilters({
+    search: search.value,
+    matchFilter: matchFilter.value,
+    statusFilter: statusFilter.value,
+    minHours: minHours.value,
+    durationMode: durationMode.value,
+    groupMode: groupMode.value,
+    categories: [...selectedCategories],
+    sortKey, sortDir,
+  });
 }
 
 function effectiveThreshold(r) {
@@ -206,17 +341,33 @@ function effectiveThreshold(r) {
   return parseFloat(minHours.value);
 }
 
+// Hide outages that already started (today or earlier).
+// Compares outage start to "start of today" so an outage that begins later
+// today is still shown.
+function isOutageInPast(o) {
+  const iso = o && o.start_iso;
+  if (!iso) return false;
+  const dt = new Date(iso);
+  if (isNaN(dt)) return false;
+  const startOfToday = new Date();
+  startOfToday.setHours(0, 0, 0, 0);
+  return dt < startOfToday;
+}
+
 function sortAndFilter() {
   const q = search.value.trim().toLowerCase();
   const mf = matchFilter.value;
-  const cf = catFilter.value;
   const sf = statusFilter.value;
   const mode = durationMode.value;
 
   let filtered = rows.filter(r => {
     if (mf !== 'all' && r.match.toLowerCase() !== mf) return false;
-    if (cf !== 'all' && r.client.category !== cf) return false;
+    // Multi-select: if any categories selected, row's category must be in that set.
+    // Empty selection means "show all" (default).
+    if (selectedCategories.size > 0 && !selectedCategories.has(r.client.category)) return false;
     if (sf === 'active' && r.outage.status === 'Cancelled') return false;
+    // Hide outages that have already started (today's date or earlier)
+    if (isOutageInPast(r.outage)) return false;
     const th = effectiveThreshold(r);
     if (th > 0) {
       let measure;
@@ -349,9 +500,14 @@ function sortAndFilter() {
       const pipedriveUrl = leadId
         ? `https://${pdDomain}.pipedrive.com/leads/inbox/${leadId}`
         : null;
+      // Hide button — only shown if we have a lead ID to label
+      const hideBtn = leadId
+        ? `<button class="btn-sm btn-hide" data-lead-id="${esc(leadId)}" data-client-name="${esc(c.name)}" title="Apply 'Not Affected' label in Pipedrive">Hide</button>`
+        : '';
       const actionsCell = `
         ${cid ? `<a class="btn-sm" href="index.html?focus=${esc(cid)}">Map</a>` : ''}
         ${pipedriveUrl ? `<a class="btn-sm" href="${pipedriveUrl}" target="_blank" rel="noopener">Pipedrive</a>` : ''}
+        ${hideBtn}
       `;
 
       return `<tr${cid ? ` id="client-${esc(cid)}"` : ''}>
@@ -386,13 +542,13 @@ document.querySelectorAll('th[data-sort]').forEach(th => {
     else { sortKey = k; sortDir = 1; }
     document.querySelectorAll('th').forEach(x => x.classList.remove('sort-asc', 'sort-desc'));
     th.classList.add(sortDir === 1 ? 'sort-asc' : 'sort-desc');
+    persistFilters();
     sortAndFilter();
   });
 });
 
-[search, matchFilter, catFilter, statusFilter, minHours, durationMode,
- document.getElementById('group-mode')].forEach(el =>
-  el.addEventListener('input', sortAndFilter)
+[search, matchFilter, statusFilter, minHours, durationMode, groupMode].forEach(el =>
+  el.addEventListener('input', () => { persistFilters(); sortAndFilter(); })
 );
 
 sortAndFilter();
@@ -410,6 +566,123 @@ function focusFromHash() {
 }
 focusFromHash();
 window.addEventListener('hashchange', focusFromHash);
+
+// ---------------------------------------------------------------------------
+// Hide button: apply "Not Affected" label to the lead in Pipedrive
+// ---------------------------------------------------------------------------
+const PIPEDRIVE_TOKEN_KEY = 'jemena-outages-pd-token';
+const PIPEDRIVE_NOT_AFFECTED_LABEL_KEY = 'jemena-outages-pd-not-affected-label-id';
+const PIPEDRIVE_DOMAIN = (DATA.meta && DATA.meta.pipedriveDomain) || 'nexusenergy';
+
+async function getPipedriveToken() {
+  let token = localStorage.getItem(PIPEDRIVE_TOKEN_KEY);
+  if (token) return token;
+  token = prompt(
+    'Pipedrive API token needed to mark leads "Not Affected".\n\n' +
+    'Generate one at: https://' + PIPEDRIVE_DOMAIN + '.pipedrive.com/settings/personal/api\n\n' +
+    'Stored only in your browser. Paste it here:'
+  );
+  if (token) {
+    token = token.trim();
+    localStorage.setItem(PIPEDRIVE_TOKEN_KEY, token);
+    return token;
+  }
+  return null;
+}
+
+async function getNotAffectedLabelId(token) {
+  // Cache for the session — labels rarely change
+  let cached = localStorage.getItem(PIPEDRIVE_NOT_AFFECTED_LABEL_KEY);
+  if (cached) return cached;
+  const url = `https://${PIPEDRIVE_DOMAIN}.pipedrive.com/api/v1/leadLabels?api_token=${encodeURIComponent(token)}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Could not fetch lead labels: ${res.status}`);
+  const j = await res.json();
+  const labels = j.data || [];
+  const match = labels.find(l => l.name && l.name.toLowerCase() === 'not affected');
+  if (!match) {
+    throw new Error("'Not Affected' label not found in Pipedrive. Create it first under Settings → Lead labels.");
+  }
+  localStorage.setItem(PIPEDRIVE_NOT_AFFECTED_LABEL_KEY, match.id);
+  return match.id;
+}
+
+async function applyNotAffectedLabel(leadId, token, labelId) {
+  // PATCH the lead to add the label, preserving any existing labels
+  const getUrl = `https://${PIPEDRIVE_DOMAIN}.pipedrive.com/api/v1/leads/${leadId}?api_token=${encodeURIComponent(token)}`;
+  const getRes = await fetch(getUrl);
+  if (!getRes.ok) throw new Error(`Could not fetch lead: ${getRes.status}`);
+  const lead = (await getRes.json()).data || {};
+  const currentLabels = lead.label_ids || [];
+  if (currentLabels.includes(labelId)) {
+    return { alreadyApplied: true };
+  }
+  const newLabels = [...currentLabels, labelId];
+  const patchUrl = `https://${PIPEDRIVE_DOMAIN}.pipedrive.com/api/v1/leads/${leadId}?api_token=${encodeURIComponent(token)}`;
+  const res = await fetch(patchUrl, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ label_ids: newLabels }),
+  });
+  if (!res.ok) {
+    const errText = await res.text();
+    throw new Error(`PATCH failed: ${res.status} ${errText.slice(0, 200)}`);
+  }
+  return { alreadyApplied: false };
+}
+
+// Delegate click on Hide buttons (works for dynamically-rendered rows)
+tbody.addEventListener('click', async ev => {
+  const btn = ev.target.closest('.btn-hide');
+  if (!btn) return;
+  ev.preventDefault();
+  const leadId = btn.dataset.leadId;
+  const clientName = btn.dataset.clientName || 'this client';
+  if (!leadId) return;
+
+  // Confirm
+  if (!confirm(
+    `Mark "${clientName}" as Not Affected in Pipedrive?\n\n` +
+    `This applies the "Not Affected" label to the lead and hides the row from the affected list. ` +
+    `Tomorrow's run will exclude this client across the whole team.\n\n` +
+    `You can undo this in Pipedrive by removing the label from the lead.`
+  )) return;
+
+  btn.classList.add('busy');
+  btn.disabled = true;
+  btn.textContent = '...';
+
+  try {
+    const token = await getPipedriveToken();
+    if (!token) { btn.classList.remove('busy'); btn.disabled = false; btn.textContent = 'Hide'; return; }
+    const labelId = await getNotAffectedLabelId(token);
+    const result = await applyNotAffectedLabel(leadId, token, labelId);
+    btn.classList.remove('busy');
+    btn.classList.add('done');
+    btn.textContent = result.alreadyApplied ? '✓ already' : '✓ hidden';
+    // Fade out and remove all rows in this client (a client may appear multiple times)
+    setTimeout(() => {
+      document.querySelectorAll(`button.btn-hide[data-lead-id="${leadId}"]`).forEach(b => {
+        const tr = b.closest('tr');
+        if (tr) {
+          tr.classList.add('row-hidden');
+          setTimeout(() => tr.remove(), 500);
+        }
+      });
+    }, 600);
+  } catch (e) {
+    btn.classList.remove('busy');
+    btn.disabled = false;
+    btn.textContent = 'Hide';
+    // If token was wrong, clear it so they can retry
+    if (String(e.message || '').includes('401') || String(e.message || '').includes('403')) {
+      localStorage.removeItem(PIPEDRIVE_TOKEN_KEY);
+      alert('Pipedrive token rejected. Cleared - try again to enter a fresh one.');
+    } else {
+      alert(`Hide failed: ${e.message}`);
+    }
+  }
+});
 
 // ---------------------------------------------------------------------------
 // Upload clients.csv → push to GitHub via API
