@@ -164,7 +164,10 @@ CHAINS = [
     # ---------- Industrial: cold storage / food / glass / kilns ----------
     # These tag patterns capture facilities tagged in OSM by industrial type.
     # Coverage varies — OSM is patchy on industrial tagging — but what's there
-    # is real.
+    # is real. Note: we deliberately don't catch the ultra-broad
+    # ["man_made"="works"] without a product filter, because that would return
+    # thousands of irrelevant works (mines, scrap yards, etc.) AND tends to
+    # cause Overpass to timeout.
     ("Cold storage facility", '["industrial"="cold_storage"]'),
     ("Cold storage facility", '["building"="warehouse"]["industrial"="cold_storage"]'),
     ("Food manufacturing", '["industrial"~"food|dairy|meat|brewery|bakery|abattoir",i]'),
@@ -173,7 +176,6 @@ CHAINS = [
     ("Glass manufacturing", '["man_made"="works"]["product"~"glass",i]'),
     ("Kiln / ceramics", '["man_made"="kiln"]'),
     ("Kiln / ceramics", '["industrial"~"ceramic|pottery|brick",i]'),
-    ("Industrial works", '["man_made"="works"]'),  # broad fallback - many won't match clients.csv
 
     # ---------- Shopping centre containers ----------
     ("Shopping centre", '["shop"="mall"]'),
@@ -592,7 +594,7 @@ def build_chains_query(bbox):
     for label, filt in CHAINS:
         parts.append(f'  node{filt}({s},{w},{n},{e});')
         parts.append(f'  way{filt}({s},{w},{n},{e});')
-    return "[out:json][timeout:120];\n(\n" + "\n".join(parts) + "\n);\nout center tags;"
+    return "[out:json][timeout:300];\n(\n" + "\n".join(parts) + "\n);\nout center tags;"
 
 
 def fetch_chains():
@@ -631,7 +633,7 @@ def fetch_chains():
         for ll, _ in CHAINS:
             # Skip categorical tags - those are matched in step 2
             if ll in ("Cold storage facility", "Food manufacturing", "Glass manufacturing",
-                      "Kiln / ceramics", "Industrial works", "Aged care", "Shopping centre"):
+                      "Kiln / ceramics", "Aged care", "Shopping centre"):
                 continue
             if ll.lower().rstrip("'s").rstrip("s") in brand or ll.lower().rstrip("'s").rstrip("s") in name_l:
                 label = ll
@@ -658,8 +660,6 @@ def fetch_chains():
                 label = "Food manufacturing"
             elif man_made == "kiln" or industrial in ("ceramic", "pottery", "brick"):
                 label = "Kiln / ceramics"
-            elif man_made == "works":
-                label = "Industrial works"
         if not label:
             continue
 
@@ -699,6 +699,14 @@ def fetch_chains():
             "lat": lat,
             "lng": lng,
         })
+
+    if not clients:
+        # Suspicious - chains query returned nothing. Don't overwrite the cache;
+        # fall back to whatever was there before.
+        prior = load_cache("chains.json").get("clients", [])
+        print(f"[chains] WARNING: query returned 0 chains. Keeping previous cache "
+              f"({len(prior)} entries) and NOT updating.", flush=True)
+        return prior
 
     save_cache("chains.json", {"clients": clients})
     save_cache("chains_meta.json", {"last_fetch": datetime.now(timezone.utc).isoformat()})
