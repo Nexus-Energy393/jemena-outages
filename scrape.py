@@ -190,7 +190,7 @@ CHAINS = [
 JEMENA_BBOX = (-39.9, 142.6, -36.3, 147.8)  # south, west, north, east
 
 CHAINS_REFRESH_DAYS = 7
-BUFFER_METRES = 200  # "possibly affected" radius around shaded streets
+BUFFER_METRES = 100  # "possibly affected" radius around shaded streets
 
 # Default minimum outage duration (hours) to consider a client a generator-hire
 # opportunity. Per-client values in clients.csv override this. Set to 0 to
