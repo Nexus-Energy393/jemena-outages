@@ -21,14 +21,15 @@
   .ms-button { padding:6px 24px 6px 10px; font-size:13px; border:1px solid var(--border); border-radius:4px; background:#fff; cursor:pointer; min-width:140px; text-align:left; position:relative; }
   .ms-button::after { content: '▾'; position:absolute; right:8px; top:6px; color:#888; font-size:10px; }
   .ms-button.has-selection { background:#e8f0fe; color:#0b57d0; font-weight:500; }
-  .ms-popover { display:none; position:absolute; top:calc(100% + 4px); left:0; min-width:240px; max-height:300px; overflow-y:auto; background:#fff; border:1px solid var(--border); border-radius:4px; box-shadow:0 4px 12px rgba(0,0,0,0.12); z-index:50; padding:8px; }
+  .ms-popover { display:none; position:absolute; top:calc(100% + 4px); left:0; min-width:200px; max-width:300px; max-height:300px; overflow-y:auto; background:#fff; border:1px solid var(--border); border-radius:4px; box-shadow:0 4px 12px rgba(0,0,0,0.12); z-index:50; padding:8px; }
   .ms-popover.show { display:block; }
   .ms-controls { display:flex; gap:8px; padding-bottom:6px; border-bottom:1px solid var(--border); margin-bottom:6px; }
   .ms-link { background:none; border:none; color:#0b57d0; font-size:12px; cursor:pointer; padding:2px 4px; }
   .ms-link:hover { text-decoration:underline; }
-  .ms-options label { display:flex; align-items:center; gap:8px; padding:4px 6px; font-size:13px; cursor:pointer; border-radius:3px; }
+  .ms-options label { display:flex; align-items:center; gap:6px; padding:4px 6px; font-size:13px; cursor:pointer; border-radius:3px; justify-content:flex-start; }
   .ms-options label:hover { background:#f5f5f5; }
-  .ms-options input[type="checkbox"] { margin:0; }
+  .ms-options input[type="checkbox"] { margin:0; flex-shrink:0; }
+  .ms-options span { flex:1; text-align:left; }
   table { width:100%; border-collapse:collapse; background:#fff; }
   thead { position:sticky; top:0; background:#fff; z-index:10; box-shadow:0 1px 0 var(--border); }
   th { text-align:left; padding:10px 14px; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.05em; color:#666; cursor:pointer; user-select:none; white-space:nowrap; }
@@ -608,11 +609,15 @@ async function getNotAffectedLabelId(token) {
 }
 
 async function applyNotAffectedLabel(leadId, token, labelId) {
-  // PATCH the lead to add the label, preserving any existing labels
+  // GET the lead first to capture its current label_ids (so we don't clobber others)
   const getUrl = `https://${PIPEDRIVE_DOMAIN}.pipedrive.com/api/v1/leads/${leadId}?api_token=${encodeURIComponent(token)}`;
   const getRes = await fetch(getUrl);
-  if (!getRes.ok) throw new Error(`Could not fetch lead: ${getRes.status}`);
-  const lead = (await getRes.json()).data || {};
+  if (!getRes.ok) {
+    const body = await getRes.text();
+    throw new Error(`GET lead ${leadId}: HTTP ${getRes.status} - ${body.slice(0, 250)}`);
+  }
+  const leadJson = await getRes.json();
+  const lead = leadJson.data || {};
   const currentLabels = lead.label_ids || [];
   if (currentLabels.includes(labelId)) {
     return { alreadyApplied: true };
@@ -625,8 +630,8 @@ async function applyNotAffectedLabel(leadId, token, labelId) {
     body: JSON.stringify({ label_ids: newLabels }),
   });
   if (!res.ok) {
-    const errText = await res.text();
-    throw new Error(`PATCH failed: ${res.status} ${errText.slice(0, 200)}`);
+    const body = await res.text();
+    throw new Error(`PATCH lead ${leadId}: HTTP ${res.status} - ${body.slice(0, 300)}`);
   }
   return { alreadyApplied: false };
 }
@@ -674,12 +679,15 @@ tbody.addEventListener('click', async ev => {
     btn.classList.remove('busy');
     btn.disabled = false;
     btn.textContent = 'Hide';
-    // If token was wrong, clear it so they can retry
-    if (String(e.message || '').includes('401') || String(e.message || '').includes('403')) {
+    console.error('[hide] failed:', e);
+    const msg = String(e.message || e);
+    // Only clear token if the error is an authentication failure on a request
+    const isAuthFailure = /HTTP (401|403)\b/.test(msg);
+    if (isAuthFailure) {
       localStorage.removeItem(PIPEDRIVE_TOKEN_KEY);
-      alert('Pipedrive token rejected. Cleared - try again to enter a fresh one.');
+      alert('Pipedrive token rejected (401/403). Cleared - try again to enter a fresh one.');
     } else {
-      alert(`Hide failed: ${e.message}`);
+      alert(`Hide failed:\n\n${msg}\n\n(Open the browser console for more detail.)`);
     }
   }
 });
