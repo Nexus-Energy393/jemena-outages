@@ -61,18 +61,121 @@ MELBOURNE_TZ = timezone(timedelta(hours=10))
 # Chains to pull from OSM. Each entry is an Overpass tag filter and a label.
 # Refreshed weekly; cached the rest of the time.
 CHAINS = [
+    # ---------- Fast food ----------
     ("McDonald's", '["amenity"="fast_food"]["brand"~"McDonald",i]'),
     ("Hungry Jack's", '["amenity"="fast_food"]["brand"~"Hungry",i]'),
     ("KFC", '["amenity"="fast_food"]["brand"~"^KFC$",i]'),
+    ("Subway", '["amenity"="fast_food"]["brand"~"Subway",i]'),
+    ("Domino's", '["amenity"="fast_food"]["brand"~"Domino",i]'),
+    ("Pizza Hut", '["amenity"="fast_food"]["brand"~"Pizza Hut",i]'),
+    ("Red Rooster", '["amenity"="fast_food"]["brand"~"Red Rooster",i]'),
+    ("Oporto", '["amenity"="fast_food"]["brand"~"Oporto",i]'),
+    ("Nando's", '["amenity"="fast_food"]["brand"~"Nando",i]'),
+    ("Grill'd", '["amenity"="fast_food"]["brand"~"Grill",i]'),
+    ("Guzman y Gomez", '["amenity"="fast_food"]["brand"~"Guzman",i]'),
+    ("Mad Mex", '["amenity"="fast_food"]["brand"~"Mad Mex",i]'),
+    ("Zambrero", '["amenity"="fast_food"]["brand"~"Zambrero",i]'),
+    ("Schnitz", '["amenity"="fast_food"]["brand"~"Schnitz",i]'),
+    ("Sushi Hub", '["amenity"="fast_food"]["brand"~"Sushi Hub",i]'),
+    ("Sushi Sushi", '["amenity"="fast_food"]["brand"~"Sushi Sushi",i]'),
+    ("Boost Juice", '["amenity"="fast_food"]["brand"~"Boost",i]'),
+    ("Muffin Break", '["amenity"="cafe"]["brand"~"Muffin Break",i]'),
+    ("Michel's Patisserie", '["amenity"="cafe"]["brand"~"Michel",i]'),
+    ("Donut King", '["amenity"="cafe"]["brand"~"Donut King",i]'),
+
+    # ---------- Supermarkets ----------
     ("Aldi", '["shop"="supermarket"]["brand"~"^ALDI$",i]'),
     ("Coles", '["shop"="supermarket"]["brand"~"^Coles$",i]'),
     ("Woolworths", '["shop"="supermarket"]["brand"~"Woolworths",i]'),
     ("IGA", '["shop"="supermarket"]["brand"~"^IGA$",i]'),
-    ("Bunnings", '["shop"~"hardware|doityourself"]["brand"~"Bunnings",i]'),
-    ("Officeworks", '["shop"]["brand"~"Officeworks",i]'),
+    ("FoodWorks", '["shop"="supermarket"]["brand"~"FoodWorks",i]'),
+    ("Foodland", '["shop"="supermarket"]["brand"~"Foodland",i]'),
+    ("Costco", '["shop"~"supermarket|wholesale"]["brand"~"Costco",i]'),
+
+    # ---------- Big-box / department / large retail ----------
     ("Kmart", '["shop"="department_store"]["brand"~"^Kmart$",i]'),
     ("Target", '["shop"="department_store"]["brand"~"^Target$",i]'),
     ("Big W", '["shop"="department_store"]["brand"~"Big W",i]'),
+    ("IKEA", '["shop"~"furniture|department_store"]["brand"~"IKEA",i]'),
+    ("Harvey Norman", '["shop"~"furniture|electronics|department_store"]["brand"~"Harvey Norman",i]'),
+    ("The Good Guys", '["shop"~"electronics|appliance"]["brand"~"Good Guys",i]'),
+    ("JB Hi-Fi", '["shop"~"electronics"]["brand"~"JB Hi",i]'),
+    ("Spotlight", '["shop"]["brand"~"Spotlight",i]'),
+    ("Anaconda", '["shop"]["brand"~"Anaconda",i]'),
+    ("BCF", '["shop"]["brand"~"BCF",i]'),
+    ("Rebel Sport", '["shop"="sports"]["brand"~"Rebel",i]'),
+    ("Fantastic Furniture", '["shop"="furniture"]["brand"~"Fantastic",i]'),
+    ("Snooze", '["shop"="furniture"]["brand"~"Snooze",i]'),
+    ("Forty Winks", '["shop"="furniture"]["brand"~"Forty Winks",i]'),
+    ("Domayne", '["shop"]["brand"~"Domayne",i]'),
+    ("Freedom", '["shop"="furniture"]["brand"~"Freedom",i]'),
+    ("Bing Lee", '["shop"]["brand"~"Bing Lee",i]'),
+
+    # ---------- Hardware / auto ----------
+    ("Bunnings", '["shop"~"hardware|doityourself"]["brand"~"Bunnings",i]'),
+    ("Mitre 10", '["shop"~"hardware|doityourself"]["brand"~"Mitre 10",i]'),
+    ("Total Tools", '["shop"~"hardware|doityourself|trade"]["brand"~"Total Tools",i]'),
+    ("Sydney Tools", '["shop"~"hardware|doityourself|trade"]["brand"~"Sydney Tools",i]'),
+    ("Officeworks", '["shop"]["brand"~"Officeworks",i]'),
+    ("Autobarn", '["shop"~"car_parts"]["brand"~"Autobarn",i]'),
+    ("Repco", '["shop"~"car_parts"]["brand"~"Repco",i]'),
+    ("Supercheap Auto", '["shop"~"car_parts"]["brand"~"Supercheap",i]'),
+
+    # ---------- Liquor (refrigerated) ----------
+    ("BWS", '["shop"~"alcohol|wine"]["brand"~"BWS",i]'),
+    ("Dan Murphy's", '["shop"~"alcohol|wine"]["brand"~"Dan Murphy",i]'),
+    ("First Choice Liquor", '["shop"~"alcohol|wine"]["brand"~"First Choice",i]'),
+    ("Liquorland", '["shop"~"alcohol|wine"]["brand"~"Liquorland",i]'),
+    ("Vintage Cellars", '["shop"~"alcohol|wine"]["brand"~"Vintage Cellars",i]'),
+
+    # ---------- Pharmacies ----------
+    ("Chemist Warehouse", '["amenity"="pharmacy"]["brand"~"Chemist Warehouse",i]'),
+    ("Priceline Pharmacy", '["amenity"="pharmacy"]["brand"~"Priceline",i]'),
+    ("TerryWhite Chemmart", '["amenity"="pharmacy"]["brand"~"TerryWhite",i]'),
+    ("Amcal", '["amenity"="pharmacy"]["brand"~"Amcal",i]'),
+    ("My Chemist", '["amenity"="pharmacy"]["brand"~"My Chemist",i]'),
+
+    # ---------- Pet supplies ----------
+    ("Petbarn", '["shop"="pet"]["brand"~"Petbarn",i]'),
+    ("Petstock", '["shop"="pet"]["brand"~"Petstock",i]'),
+
+    # ---------- Petrol stations ----------
+    ("7-Eleven", '["amenity"="fuel"]["brand"~"7-Eleven",i]'),
+    ("BP", '["amenity"="fuel"]["brand"~"^BP$",i]'),
+    ("Shell", '["amenity"="fuel"]["brand"~"Shell",i]'),
+    ("Caltex", '["amenity"="fuel"]["brand"~"Caltex",i]'),
+    ("Ampol", '["amenity"="fuel"]["brand"~"Ampol",i]'),
+    ("Mobil", '["amenity"="fuel"]["brand"~"Mobil",i]'),
+    ("United Petroleum", '["amenity"="fuel"]["brand"~"United",i]'),
+    ("Liberty", '["amenity"="fuel"]["brand"~"Liberty",i]'),
+    ("Puma Energy", '["amenity"="fuel"]["brand"~"Puma",i]'),
+
+    # ---------- Gyms (24-hour / large) ----------
+    ("Anytime Fitness", '["leisure"="fitness_centre"]["brand"~"Anytime Fitness",i]'),
+    ("Snap Fitness", '["leisure"="fitness_centre"]["brand"~"Snap Fitness",i]'),
+    ("Plus Fitness", '["leisure"="fitness_centre"]["brand"~"Plus Fitness",i]'),
+    ("Fitness First", '["leisure"="fitness_centre"]["brand"~"Fitness First",i]'),
+    ("Goodlife Health Clubs", '["leisure"="fitness_centre"]["brand"~"Goodlife",i]'),
+
+    # ---------- Aged care (life-safety) ----------
+    ("Aged care", '["amenity"="social_facility"]["social_facility:for"~"senior",i]'),
+    ("Aged care", '["amenity"="nursing_home"]'),
+
+    # ---------- Industrial: cold storage / food / glass / kilns ----------
+    # These tag patterns capture facilities tagged in OSM by industrial type.
+    # Coverage varies — OSM is patchy on industrial tagging — but what's there
+    # is real.
+    ("Cold storage facility", '["industrial"="cold_storage"]'),
+    ("Cold storage facility", '["building"="warehouse"]["industrial"="cold_storage"]'),
+    ("Food manufacturing", '["industrial"~"food|dairy|meat|brewery|bakery|abattoir",i]'),
+    ("Food manufacturing", '["man_made"="works"]["product"~"food|dairy|meat|beverage",i]'),
+    ("Glass manufacturing", '["industrial"~"glass",i]'),
+    ("Glass manufacturing", '["man_made"="works"]["product"~"glass",i]'),
+    ("Kiln / ceramics", '["man_made"="kiln"]'),
+    ("Kiln / ceramics", '["industrial"~"ceramic|pottery|brick",i]'),
+    ("Industrial works", '["man_made"="works"]'),  # broad fallback - many won't match clients.csv
+
+    # ---------- Shopping centre containers ----------
     ("Shopping centre", '["shop"="mall"]'),
 ]
 
@@ -522,15 +625,41 @@ def fetch_chains():
         tags = el.get("tags") or {}
         # Pick a label
         label = None
+        brand = (tags.get("brand") or "").lower()
+        name_l = (tags.get("name") or "").lower()
+        # 1) Try brand/name string match for retail chains
         for ll, _ in CHAINS:
-            brand = (tags.get("brand") or "").lower()
-            name_l = (tags.get("name") or "").lower()
+            # Skip categorical tags - those are matched in step 2
+            if ll in ("Cold storage facility", "Food manufacturing", "Glass manufacturing",
+                      "Kiln / ceramics", "Industrial works", "Aged care", "Shopping centre"):
+                continue
             if ll.lower().rstrip("'s").rstrip("s") in brand or ll.lower().rstrip("'s").rstrip("s") in name_l:
                 label = ll
                 break
-            if ll == "Shopping centre" and tags.get("shop") == "mall":
-                label = ll
-                break
+        # 2) Tag-based labelling for non-branded categories
+        if not label:
+            industrial = (tags.get("industrial") or "").lower()
+            man_made = (tags.get("man_made") or "").lower()
+            product = (tags.get("product") or "").lower()
+            shop = (tags.get("shop") or "").lower()
+            amenity = (tags.get("amenity") or "").lower()
+            social_for = (tags.get("social_facility:for") or "").lower()
+
+            if shop == "mall":
+                label = "Shopping centre"
+            elif amenity == "nursing_home" or "senior" in social_for:
+                label = "Aged care"
+            elif industrial == "cold_storage":
+                label = "Cold storage facility"
+            elif industrial in ("glass",) or "glass" in product:
+                label = "Glass manufacturing"
+            elif industrial in ("food", "dairy", "meat", "brewery", "bakery", "abattoir") \
+                    or any(x in product for x in ("food", "dairy", "meat", "beverage")):
+                label = "Food manufacturing"
+            elif man_made == "kiln" or industrial in ("ceramic", "pottery", "brick"):
+                label = "Kiln / ceramics"
+            elif man_made == "works":
+                label = "Industrial works"
         if not label:
             continue
 
