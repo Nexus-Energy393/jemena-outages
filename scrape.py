@@ -49,8 +49,13 @@ JEMENA_URL = "https://www.jemena.com.au/outages/electricity-outages/planned-outa
 OVERPASS_ENDPOINTS = [
     "https://overpass-api.de/api/interpreter",
     "https://overpass.kumi.systems/api/interpreter",
+    "https://overpass.private.coffee/api/interpreter",
+    "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
     "https://overpass.openstreetmap.ru/api/interpreter",
 ]
+OVERPASS_ATTEMPTS_PER_ENDPOINT = 2
+OVERPASS_BACKOFF_SECONDS = 8
+OVERPASS_TIMEOUT = (30, 180)  # (connect, read) seconds for Overpass requests
 
 NOMINATIM_URL = "https://nominatim.openstreetmap.org/search"
 NOMINATIM_REVERSE_URL = "https://nominatim.openstreetmap.org/reverse"
@@ -565,14 +570,22 @@ def regex_escape_minimal(s):
 def fetch_overpass(query: str):
     last_err = None
     for ep in OVERPASS_ENDPOINTS:
-        try:
-            print(f"[overpass] trying {ep}", flush=True)
-            r = requests.post(ep, data={"data": query}, headers={"User-Agent": USER_AGENT}, timeout=300)
-            r.raise_for_status()
-            return r.json()
-        except Exception as e:
-            print(f"[overpass] {ep} failed: {e}", flush=True)
-            last_err = e
+        for attempt in range(1, OVERPASS_ATTEMPTS_PER_ENDPOINT + 1):
+            try:
+                print(f"[overpass] trying {ep} (attempt {attempt})", flush=True)
+                r = requests.post(
+                    ep,
+                    data={"data": query},
+                    headers={"User-Agent": USER_AGENT},
+                    timeout=OVERPASS_TIMEOUT,
+                )
+                r.raise_for_status()
+                return r.json()
+            except Exception as e:
+                print(f"[overpass] {ep} attempt {attempt} failed: {e}", flush=True)
+                last_err = e
+                if attempt < OVERPASS_ATTEMPTS_PER_ENDPOINT:
+                    time.sleep(OVERPASS_BACKOFF_SECONDS)
     raise RuntimeError(f"Overpass failed: {last_err}")
 
 
@@ -1141,11 +1154,22 @@ def main() -> int:
         print("[fatal] no suburbs geocoded", flush=True)
         return 1
 
+    overpass = None
     try:
         overpass = fetch_overpass(build_streets_query(suburb_streets, suburb_geo))
+        save_cache("streets.json", overpass)
     except Exception as e:
-        print(f"[fatal] overpass streets failed: {e}", flush=True)
-        return 1
+        print(f"[warn] overpass streets failed: {e}", flush=True)
+        cached_streets = load_cache("streets.json")
+        if cached_streets and cached_streets.get("elements"):
+            print(
+                f"[warn] reusing cached streets ({len(cached_streets.get('elements', []))} elements) so the map can still rebuild",
+                flush=True,
+            )
+            overpass = cached_streets
+        else:
+            print("[fatal] overpass streets failed and no cached streets available", flush=True)
+            return 1
 
     outages_by_pair = {}
     for o in raw_outages:
