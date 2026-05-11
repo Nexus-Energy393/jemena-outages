@@ -3,7 +3,12 @@ name: Update Jemena outages map
 on:
   schedule:
     - cron: '0 20 * * *'
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      is_retry:
+        description: "Set to true when this run is a 15-min retry; prevents further retries"
+        required: false
+        default: "false"
 
 permissions:
   contents: write
@@ -16,6 +21,8 @@ jobs:
   update:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    outputs:
+      scrape_failed: ${{ steps.scrape.outcome == 'failure' && '1' || '0' }}
 
     steps:
       - name: Check out repo
@@ -85,3 +92,25 @@ jobs:
         run: |
           echo "::error::Scrape step failed. See docs/_last_scrape.png and docs/_last_scrape_raw.json."
           exit 1
+
+  retry:
+    needs: update
+    if: ${{ needs.update.outputs.scrape_failed == '1' && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.is_retry != 'true')) }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - name: Wait 15 minutes before retrying
+        run: sleep 900
+
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Re-dispatch update workflow as retry
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Re-dispatching update.yml on $GITHUB_REF_NAME as retry"
+          gh workflow run update.yml --ref "$GITHUB_REF_NAME" -f is_retry=true
