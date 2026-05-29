@@ -33397,13 +33397,14 @@
         "cycleway:both": "no",
         "foot": "yes",
         "highway": "trunk",
-        "lanes": "3",
+        "lanes": "4",
         "lit": "yes",
         "maxspeed": "70",
         "name": "Plenty Road",
         "network": "AU:VIC:S",
         "oneway": "yes",
-        "ref": "27"
+        "ref": "27",
+        "turn:lanes": "through|through|through|right"
       },
       "type": "way"
     },
@@ -36737,12 +36738,13 @@
         "cycleway:both": "no",
         "foot": "yes",
         "highway": "trunk",
-        "lanes": "3",
+        "lanes": "4",
         "maxspeed": "70",
         "name": "Plenty Road",
         "network": "AU:VIC:S",
         "oneway": "yes",
-        "ref": "27"
+        "ref": "27",
+        "turn:lanes": "left;through|through|through|right"
       },
       "type": "way"
     },
@@ -36773,12 +36775,13 @@
         "cycleway:both": "no",
         "foot": "yes",
         "highway": "trunk",
-        "lanes": "3",
+        "lanes": "4",
         "maxspeed": "70",
         "name": "Plenty Road",
         "network": "AU:VIC:S",
         "oneway": "yes",
-        "ref": "27"
+        "ref": "27",
+        "turn:lanes": "through|through|through|right"
       },
       "type": "way"
     },
@@ -56534,13 +56537,14 @@
         "cycleway:both": "no",
         "foot": "yes",
         "highway": "trunk",
-        "lanes": "3",
+        "lanes": "4",
         "lit": "yes",
         "maxspeed": "70",
         "name": "Plenty Road",
         "network": "AU:VIC:S",
         "oneway": "yes",
-        "ref": "27"
+        "ref": "27",
+        "turn:lanes": "left;through|through|through|right"
       },
       "type": "way"
     },
@@ -87159,7 +87163,7 @@
   "generator": "Overpass API 0.7.62.11 87bfad18",
   "osm3s": {
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.",
-    "timestamp_osm_base": "2026-05-28T21:52:58Z"
+    "timestamp_osm_base": "2026-05-29T21:50:15Z"
   },
   "version": 0.6
 }
