@@ -2910,6 +2910,7 @@
         "hgv:conditional": "no @ (Mo-Fr 00:00-06:00,20:00-24:00; Sa 00:00-06:00,13:00-24:00; Su 00:00-24:00)",
         "highway": "primary",
         "lanes": "4",
+        "lit": "yes",
         "maxspeed": "60",
         "name": "Francis Street",
         "network": "AU:VIC:S",
@@ -7291,6 +7292,10 @@
           "lon": 144.8786368
         },
         {
+          "lat": -37.7769846,
+          "lon": 144.8780141
+        },
+        {
           "lat": -37.777077,
           "lon": 144.8778608
         },
@@ -7319,6 +7324,7 @@
         7194623460,
         7192440053,
         7192440050,
+        13898009579,
         13729666888,
         12237289704
       ],
@@ -18135,6 +18141,7 @@
         "cycleway:both": "no",
         "highway": "secondary",
         "lanes": "2",
+        "lit": "yes",
         "maxspeed": "60",
         "name": "Whitehall Street",
         "network": "AU:VIC:S;AU:VIC:S",
@@ -27237,6 +27244,7 @@
         "hgv:conditional": "no @ (Mo-Fr 00:00-06:00,20:00-24:00; Sa 00:00-06:00,13:00-24:00; Su 00:00-24:00)",
         "highway": "secondary",
         "lanes": "2",
+        "lit": "yes",
         "maxspeed": "50",
         "name": "Francis Street",
         "network": "AU:VIC:T",
@@ -42136,6 +42144,7 @@
         "hgv:conditional": "no @ (Mo-Fr 00:00-06:00,20:00-24:00; Sa 00:00-06:00,13:00-24:00; Su 00:00-24:00)",
         "highway": "secondary",
         "lanes": "4",
+        "lit": "yes",
         "maxspeed": "50",
         "name": "Francis Street",
         "network": "AU:VIC:T",
@@ -43371,6 +43380,8 @@
         "cycleway:right": "no",
         "hgv:conditional": "no @ (Mo-Fr 00:00-06:00,20:00-24:00; Sa 00:00-06:00,13:00-24:00; Su 00:00-24:00)",
         "highway": "primary",
+        "lane_markings": "yes",
+        "lit": "yes",
         "maxspeed": "60",
         "name": "Hyde Street",
         "network": "AU:VIC:S;AU:VIC:T",
@@ -44027,6 +44038,7 @@
         "hgv": "delivery",
         "highway": "tertiary",
         "lanes": "2",
+        "lit": "yes",
         "name": "Hudsons Road",
         "surface": "asphalt"
       },
@@ -44834,7 +44846,8 @@
         "name": "Whitehall Street",
         "network": "AU:VIC:S;AU:VIC:S",
         "oneway": "yes",
-        "ref": "35;50"
+        "ref": "35;50",
+        "surface": "asphalt"
       },
       "type": "way"
     },
@@ -49747,6 +49760,7 @@
         "foot": "yes",
         "highway": "primary",
         "lanes": "2",
+        "lit": "yes",
         "maxspeed": "60",
         "name": "Whitehall Street",
         "network": "AU:VIC:S",
@@ -51567,6 +51581,7 @@
         "hgv:conditional": "no @ (Mo-Fr 00:00-06:00,20:00-24:00; Sa 00:00-06:00,13:00-24:00; Su 00:00-24:00)",
         "highway": "secondary",
         "lanes": "4",
+        "lit": "yes",
         "maxspeed": "50",
         "name": "Francis Street",
         "network": "AU:VIC:T",
@@ -51800,6 +51815,7 @@
         "foot": "yes",
         "highway": "primary",
         "lanes": "2",
+        "lit": "yes",
         "maxspeed": "60",
         "name": "Whitehall Street",
         "network": "AU:VIC:S;AU:VIC:S",
@@ -52852,6 +52868,7 @@
         "hgv:conditional": "no @ (Mo-Fr 00:00-06:00,20:00-24:00; Sa 00:00-06:00,13:00-24:00; Su 00:00-24:00)",
         "highway": "secondary",
         "lanes": "2",
+        "lit": "yes",
         "maxspeed": "50",
         "name": "Francis Street",
         "network": "AU:VIC:T",
@@ -59268,6 +59285,7 @@
         "hgv:conditional": "no @ (Mo-Fr 00:00-06:00,20:00-24:00; Sa 00:00-06:00,13:00-24:00; Su 00:00-24:00)",
         "highway": "secondary",
         "lanes": "2",
+        "lit": "yes",
         "maxspeed": "50",
         "name": "Francis Street",
         "network": "AU:VIC:T",
@@ -63926,6 +63944,7 @@
         "foot": "yes",
         "highway": "primary",
         "lanes": "2",
+        "lit": "yes",
         "maxspeed": "60",
         "name": "Whitehall Street",
         "network": "AU:VIC:S",
@@ -63962,6 +63981,7 @@
         "foot": "yes",
         "highway": "primary",
         "lanes": "2",
+        "lit": "yes",
         "maxspeed": "60",
         "name": "Whitehall Street",
         "network": "AU:VIC:S",
@@ -72892,6 +72912,7 @@
         "foot": "yes",
         "highway": "primary",
         "lanes": "2",
+        "lit": "yes",
         "maxspeed": "60",
         "name": "Whitehall Street",
         "network": "AU:VIC:S;AU:VIC:S",
@@ -73246,6 +73267,9 @@
         "cycleway:both:lane": "advisory",
         "hgv:conditional": "no @ (Mo-Fr 00:00-06:00,20:00-24:00; Sa 00:00-06:00,13:00-24:00; Su 00:00-24:00)",
         "highway": "primary",
+        "lane_markings": "yes",
+        "lanes": "4",
+        "lit": "yes",
         "maxspeed": "60",
         "name": "Hyde Street",
         "network": "AU:VIC:S;AU:VIC:T",
@@ -79616,7 +79640,8 @@
         "name": "Whitehall Street",
         "network": "AU:VIC:S;AU:VIC:S",
         "oneway": "yes",
-        "ref": "35;50"
+        "ref": "35;50",
+        "surface": "asphalt"
       },
       "type": "way"
     },
@@ -79772,6 +79797,7 @@
         "foot": "yes",
         "highway": "primary",
         "lanes": "2",
+        "lit": "yes",
         "maxspeed": "60",
         "name": "Whitehall Street",
         "network": "AU:VIC:S;AU:VIC:S",
@@ -79818,6 +79844,7 @@
         "foot": "yes",
         "highway": "primary",
         "lanes": "2",
+        "lit": "yes",
         "maxspeed": "40",
         "name": "Whitehall Street",
         "network": "AU:VIC:S;AU:VIC:S",
@@ -79873,6 +79900,7 @@
         "foot": "yes",
         "highway": "primary",
         "lanes": "2",
+        "lit": "yes",
         "maxspeed": "40",
         "name": "Whitehall Street",
         "network": "AU:VIC:S;AU:VIC:S",
@@ -84396,6 +84424,10 @@
           "lon": 144.8777245
         },
         {
+          "lat": -37.776944,
+          "lon": 144.8779698
+        },
+        {
           "lat": -37.7766691,
           "lon": 144.8782851
         },
@@ -84455,6 +84487,7 @@
       "id": 1346291263,
       "nodes": [
         12237289704,
+        13898009578,
         12452333807,
         12067688049,
         13729679009,
@@ -87163,7 +87196,7 @@
   "generator": "Overpass API 0.7.62.11 87bfad18",
   "osm3s": {
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.",
-    "timestamp_osm_base": "2026-05-30T20:52:43Z"
+    "timestamp_osm_base": "2026-05-31T20:57:01Z"
   },
   "version": 0.6
 }
