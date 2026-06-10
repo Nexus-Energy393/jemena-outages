@@ -395,7 +395,7 @@ function sortAndFilter() {
       case 'category': av = a.client.category||''; bv = b.client.category||''; break;
       case 'suburb': av = a.client.suburb||''; bv = b.client.suburb||''; break;
       case 'address': av = a.client.address||''; bv = b.client.address||''; break;
-      case 'contact': av = a.client.contact_name||a.client.contact_phone||''; bv = b.client.contact_name||b.client.contact_phone||''; break;
+      
       case 'outage_when': av = a.outage.start_iso || a.outage.start || ''; bv = b.outage.start_iso || b.outage.start || ''; break;
       case 'duration': av = a.duration; bv = b.duration; break;
       case 'outage_where': av = `${a.outage.suburb} ${a.outage.street}`; bv = `${b.outage.suburb} ${b.outage.street}`; break;
@@ -453,10 +453,10 @@ function sortAndFilter() {
     tbody.innerHTML = displayRows.map(r => {
       const c = r.client, o = r.outage;
       const matchChip = `<span class="chip ${r.match.toLowerCase()}">${r.match}</span>`;
-      const contactBits = [];
-      if (c.contact_name) contactBits.push(esc(c.contact_name));
-      if (c.contact_phone) contactBits.push(`<a href="tel:${esc(c.contact_phone)}">${esc(c.contact_phone)}</a>`);
-      if (c.contact_email) contactBits.push(`<a href="mailto:${esc(c.contact_email)}">${esc(c.contact_email)}</a>`);
+      
+      
+      
+      
       const overrideTag = c.min_outage_hours != null
         ? `<span class="small">(client threshold ${c.min_outage_hours}h)</span>` : '';
 
