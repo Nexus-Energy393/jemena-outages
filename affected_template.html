@@ -42,7 +42,7 @@
   .chip.definite { background:var(--red); color:#fff; }
   .chip.possible { background:var(--orange); color:#fff; }
   .chip.cat { background:#e3f2fd; color:#0d47a1; }
-  .chip.cancelled { background:#eee; color:#666; text-decoration:line-through; }
+  .chip.cancelled { background:#eee; color:#666; text-decoration:line-through; } .chip.confirmed { background:var(--red); color:#fff; } .match-cell { position:relative; } .match-btn { border:none; background:none; padding:0; cursor:pointer; font-family:inherit; } .match-menu { display:none; position:absolute; top:100%; left:0; margin-top:4px; background:#fff; border:1px solid var(--border); border-radius:4px; box-shadow:0 4px 12px rgba(0,0,0,0.15); z-index:60; min-width:120px; overflow:hidden; } .match-menu.show { display:block; } .match-menu button { display:block; width:100%; text-align:left; padding:7px 12px; border:none; background:none; font-size:12px; font-family:inherit; cursor:pointer; color:#222; } .match-menu button:hover { background:#f5f5f5; } .match-menu button.danger { color:#c5221f; } .match-menu button.danger:hover { background:#fce8e6; }
   .small { font-size:11px; color:#777; }
   a { color:#0b57d0; }
   .empty { padding:60px 20px; text-align:center; color:#666; }
@@ -213,7 +213,7 @@ const categories = [...new Set(rows.map(r => r.client.category).filter(Boolean))
 // ---------------------------------------------------------------------------
 // Filter persistence (localStorage) + multi-select category widget
 // ---------------------------------------------------------------------------
-const FILTER_STORAGE_KEY = 'jemena-affected-filters-v1';
+const CONFIRMED_LEADS_KEY = 'jemena-outages-confirmed-leads-v1'; function loadConfirmedLeads() { try { return new Set(JSON.parse(localStorage.getItem(CONFIRMED_LEADS_KEY) || '[]')); } catch (_e) { return new Set(); } } const confirmedLeads = loadConfirmedLeads(); function saveConfirmedLeads() { try { localStorage.setItem(CONFIRMED_LEADS_KEY, JSON.stringify([...confirmedLeads])); } catch (_e) {} } const FILTER_STORAGE_KEY = 'jemena-affected-filters-v1';
 function loadStoredFilters() {
   try {
     return JSON.parse(localStorage.getItem(FILTER_STORAGE_KEY) || '{}');
@@ -452,7 +452,7 @@ function sortAndFilter() {
   } else {
     tbody.innerHTML = displayRows.map(r => {
       const c = r.client, o = r.outage;
-      const matchChip = `<span class="chip ${r.match.toLowerCase()}">${r.match}</span>`;
+      const mLeadId = c.pipedrive_lead_id || ''; const isConfirmed = mLeadId && confirmedLeads.has(String(mLeadId)); const matchChip = isConfirmed ? `<span class="chip confirmed">Confirmed</span>` : `<span class="match-cell"><button type="button" class="match-btn" data-match-lead="${esc(mLeadId)}" data-client-name="${esc(c.name)}"><span class="chip ${r.match.toLowerCase()}">${r.match}</span></button><span class="match-menu"><button type="button" class="match-confirm">Confirmed</button><button type="button" class="match-delete danger">Delete</button></span></span>`;
       
       
       
@@ -693,8 +693,103 @@ tbody.addEventListener('click', async ev => {
 });
 
 // ---------------------------------------------------------------------------
-// Upload clients.csv → push to GitHub via API
 // ---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+  // Match button: per-row menu to mark a lead Confirmed or Delete it in Pipedrive
+  const PIPEDRIVE_CONFIRMED_LABEL_KEY = 'jemena-outages-pd-confirmed-label-id';
+  async function getConfirmedLabelId(token) {
+    let cached = localStorage.getItem(PIPEDRIVE_CONFIRMED_LABEL_KEY);
+    if (cached) return cached;
+    const url = `https://${PIPEDRIVE_DOMAIN}.pipedrive.com/api/v1/leadLabels?api_token=${encodeURIComponent(token)}`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`Could not fetch lead labels: ${res.status}`);
+    const labels = ((await res.json()).data) || [];
+    const m = labels.find(l => l.name && l.name.toLowerCase() === 'confirmed');
+    if (!m) throw new Error("'Confirmed' label not found in Pipedrive. Create it first under Settings, Lead labels.");
+    localStorage.setItem(PIPEDRIVE_CONFIRMED_LABEL_KEY, m.id);
+    return m.id;
+  }
+  async function applyConfirmedLabel(leadId, token, labelId) {
+    const getUrl = `https://${PIPEDRIVE_DOMAIN}.pipedrive.com/api/v1/leads/${leadId}?api_token=${encodeURIComponent(token)}`;
+    const getRes = await fetch(getUrl);
+    if (!getRes.ok) { const b = await getRes.text(); throw new Error(`GET lead ${leadId}: HTTP ${getRes.status} - ${b.slice(0,250)}`); }
+    const lead = ((await getRes.json()).data) || {};
+    const cur = lead.label_ids || [];
+    if (cur.includes(labelId)) return { alreadyApplied: true };
+    const patchUrl = `https://${PIPEDRIVE_DOMAIN}.pipedrive.com/api/v1/leads/${leadId}?api_token=${encodeURIComponent(token)}`;
+    const res = await fetch(patchUrl, { method:'PATCH', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ label_ids:[...cur, labelId] }) });
+    if (!res.ok) { const b = await res.text(); throw new Error(`PATCH lead ${leadId}: HTTP ${res.status} - ${b.slice(0,300)}`); }
+    return { alreadyApplied: false };
+  }
+  async function deleteLead(leadId, token) {
+    const url = `https://${PIPEDRIVE_DOMAIN}.pipedrive.com/api/v1/leads/${leadId}?api_token=${encodeURIComponent(token)}`;
+    const res = await fetch(url, { method:'DELETE' });
+    if (!res.ok) { const b = await res.text(); throw new Error(`DELETE lead ${leadId}: HTTP ${res.status} - ${b.slice(0,300)}`); }
+    return true;
+  }
+  function closeAllMatchMenus() { document.querySelectorAll('.match-menu.show').forEach(x => x.classList.remove('show')); }
+  document.addEventListener('click', () => closeAllMatchMenus());
+  tbody.addEventListener('click', async ev => {
+    const toggle = ev.target.closest('.match-btn');
+    if (toggle) {
+      ev.preventDefault(); ev.stopPropagation();
+      const menu = toggle.parentElement.querySelector('.match-menu');
+      const wasOpen = menu.classList.contains('show');
+      closeAllMatchMenus();
+      if (!wasOpen) menu.classList.add('show');
+      return;
+    }
+    const confirmBtn = ev.target.closest('.match-confirm');
+    if (confirmBtn) {
+      ev.preventDefault(); ev.stopPropagation();
+      const cell = confirmBtn.closest('.match-cell');
+      const trigger = cell.querySelector('.match-btn');
+      const leadId = trigger && trigger.dataset.matchLead;
+      closeAllMatchMenus();
+      const chip = cell.querySelector('.chip');
+      if (chip) { chip.className = 'chip confirmed'; chip.textContent = 'Confirmed'; }
+      const menuEl = cell.querySelector('.match-menu'); if (menuEl) menuEl.remove();
+      if (leadId) {
+        confirmedLeads.add(String(leadId));
+        saveConfirmedLeads();
+        try {
+          const token = await getPipedriveToken();
+          if (token) { const labelId = await getConfirmedLabelId(token); await applyConfirmedLabel(leadId, token, labelId); }
+        } catch (e) {
+          console.error('[confirm] Pipedrive label sync failed:', e);
+          const msg = String(e.message || e);
+          if (/HTTP (401|403)\b/.test(msg)) localStorage.removeItem(PIPEDRIVE_TOKEN_KEY);
+          alert(`Marked Confirmed locally, but syncing the label to Pipedrive failed:\n\n${msg}`);
+        }
+      }
+      return;
+    }
+    const deleteBtn = ev.target.closest('.match-delete');
+    if (deleteBtn) {
+      ev.preventDefault(); ev.stopPropagation();
+      const cell = deleteBtn.closest('.match-cell');
+      const trigger = cell.querySelector('.match-btn');
+      const leadId = trigger && trigger.dataset.matchLead;
+      const clientName = (trigger && trigger.dataset.clientName) || 'this client';
+      closeAllMatchMenus();
+      if (!leadId) { alert('No Pipedrive lead is linked to this row, so it cannot be deleted.'); return; }
+      if (!confirm(`Permanently DELETE the Pipedrive lead for "${clientName}"?\n\nThis removes the lead from Pipedrive entirely and CANNOT be undone. The row will disappear immediately.`)) return;
+      const tr = deleteBtn.closest('tr');
+      if (tr) { tr.classList.add('row-hidden'); setTimeout(() => tr.remove(), 500); }
+      try {
+        const token = await getPipedriveToken();
+        if (!token) { alert('No Pipedrive token provided - the row was hidden but the lead was NOT deleted in Pipedrive.'); return; }
+        await deleteLead(leadId, token);
+      } catch (e) {
+        console.error('[delete] failed:', e);
+        const msg = String(e.message || e);
+        if (/HTTP (401|403)\b/.test(msg)) localStorage.removeItem(PIPEDRIVE_TOKEN_KEY);
+        alert(`The row was hidden, but deleting the lead in Pipedrive failed:\n\n${msg}`);
+      }
+      return;
+    }
+  });
+  
 const REPO_OWNER = (DATA.meta && DATA.meta.repoOwner) || 'Nexus-Energy393';
 const REPO_NAME  = (DATA.meta && DATA.meta.repoName)  || 'jemena-outages';
 const CSV_PATH = 'clients.csv';
