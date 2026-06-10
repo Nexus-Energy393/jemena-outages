@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Affected clients — Jemena planned outages</title>
+<title>Affected clients — Jemena planned outagesh</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
   :root { --red:#b71c1c; --orange:#fb8c00; --grey:#9e9e9e; --bg:#fafafa; --border:#e0e0e0; }
@@ -156,7 +156,7 @@
         <th data-sort="category">Category</th>
         <th data-sort="suburb">Suburb</th>
         <th data-sort="address">Address</th>
-        <th data-sort="contact">Contact</th>
+        
         <th data-sort="outage_when">When</th>
         <th data-sort="duration">Duration</th>
         <th data-sort="outage_where">Outage location</th>
@@ -517,7 +517,7 @@ function sortAndFilter() {
         <td data-label="Category">${c.category?`<span class="chip cat">${esc(c.category)}</span>`:''}<div class="small">${esc(c.source||'')}</div></td>
         <td data-label="Suburb">${esc(c.suburb||'')}<div class="small">${esc(c.postcode||'')}</div></td>
         <td data-label="Address">${esc(c.address||'')}</td>
-        <td data-label="Contact">${contactBits.join('<br>')||'<span class="small">—</span>'}</td>
+        
         <td data-label="When">${whenCell}</td>
         <td data-label="Duration">${durCell}</td>
         <td data-label="Outage location">${locCell}</td>
