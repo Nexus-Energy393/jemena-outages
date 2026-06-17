@@ -45,6 +45,7 @@ DOCS.mkdir(exist_ok=True)
 CACHE.mkdir(exist_ok=True)
 
 JEMENA_URL = "https://www.jemena.com.au/outages/electricity-outages/planned-outages/"
+JEMENA_OUTAGES_API = "https://poweroutages.jemena.com.au/data/all-outages.json"
 
 OVERPASS_ENDPOINTS = [
     "https://overpass-api.de/api/interpreter",
@@ -355,94 +356,126 @@ def point_in_bbox(plat, plng, bbox):
 # Scraping (unchanged from v1.1)
 # ---------------------------------------------------------------------------
 async def scrape_outages():
-    from playwright.async_api import async_playwright
+    """Fetch planned outages from the Jemena outages map JSON feed.
 
-    print(f"[scrape] loading {JEMENA_URL}", flush=True)
-    async with async_playwright() as p:
-        browser = await p.chromium.launch()
-        ctx = await browser.new_context(
-            user_agent=USER_AGENT,
-            viewport={"width": 1400, "height": 2400},
+    Jemena retired the old HTML table on the planned-outages page and moved
+    the data to the "Electricity Outages Map" at poweroutages.jemena.com.au,
+    which is backed by a JSON feed. We consume that feed directly (far more
+    robust than scraping rendered HTML). Output shape is unchanged so the rest
+    of the pipeline keeps working.
+    """
+    print(f"[scrape] fetching {JEMENA_OUTAGES_API}", flush=True)
+    resp = requests.get(
+        JEMENA_OUTAGES_API,
+        headers={"User-Agent": USER_AGENT, "Accept": "application/json"},
+        timeout=60,
+    )
+    resp.raise_for_status()
+    feed = resp.json()
+
+    # Save a debug snapshot of the raw feed (mirrors old behaviour).
+    try:
+        (DOCS / "_last_scrape_raw.json").write_text(
+            json.dumps(feed, indent=2), encoding="utf-8"
         )
-        page = await ctx.new_page()
-        try:
-            await page.goto(JEMENA_URL, wait_until="domcontentloaded", timeout=90000)
-            try:
-                await page.wait_for_load_state("networkidle", timeout=30000)
-            except Exception:
-                pass
-            await page.wait_for_timeout(3000)
+    except Exception:
+        pass
 
-            for sel in [
-                'button:has-text("Accept")',
-                'button:has-text("Accept all")',
-                'button:has-text("Allow")',
-            ]:
-                try:
-                    btn = page.locator(sel).first
-                    if await btn.is_visible(timeout=500):
-                        await btn.click()
-                        await page.wait_for_timeout(500)
-                        break
-                except Exception:
-                    pass
+    if not isinstance(feed, list):
+        raise RuntimeError("Unexpected Jemena feed format (expected a list).")
 
-            try:
-                await page.wait_for_selector("table tbody tr", timeout=30000)
-            except Exception:
-                pass
+    # Statuses that mean the planned outage is finished - exclude them.
+    DONE_STATUSES = {"complete", "completed", "restored", "cancelled", "canceled"}
 
-            clicked = await page.evaluate(
-                """() => {
-                    const headers = document.querySelectorAll('tr.cursor-pointer');
-                    headers.forEach(h => h.click());
-                    return headers.length;
-                }"""
-            )
-            print(f"[scrape] clicked {clicked} suburb headers", flush=True)
-            await page.wait_for_timeout(2000)
+    outages = []
+    planned_seen = 0
+    for ev in feed:
+        if not isinstance(ev, dict):
+            continue
+        if (ev.get("Type") or "").strip().lower() != "planned":
+            continue
+        planned_seen += 1
+        status = (ev.get("Status") or "").strip()
+        if status.lower() in DONE_STATUSES:
+            continue
 
-            try:
-                await page.screenshot(path=str(DOCS / "_last_scrape.png"), full_page=True, timeout=30000)
-            except Exception:
-                pass
-            try:
-                (DOCS / "_last_scrape.html").write_text(await page.content(), encoding="utf-8")
-            except Exception:
-                pass
+        start_dt = _parse_iso_local(ev.get("PlannedStartTime") or ev.get("StartTime"))
+        end_dt = _parse_iso_local(
+            ev.get("PlannedEndTime")
+            or ev.get("EstimatedRestorationTime")
+            or ev.get("RestorationTime")
+        )
+        if start_dt is None or end_dt is None:
+            continue
+        if end_dt <= start_dt:
+            end_dt = end_dt + timedelta(days=1)
 
-            rows = await page.evaluate(
-                """() => {
-                    const tables = [...document.querySelectorAll('table')];
-                    let bestRows = null, bestCount = 0;
-                    for (const t of tables) {
-                        const trs = [...t.querySelectorAll('tr')];
-                        const cells = trs.map(tr => {
-                            const tds = [...tr.querySelectorAll('td,th')];
-                            return tds.map(td => ({
-                                text: (td.innerText || '').trim(),
-                                colspan: parseInt(td.getAttribute('colspan') || '1', 10)
-                            }));
-                        });
-                        const dataRows = cells.filter(r => r.length >= 6).length;
-                        if (dataRows > bestCount) { bestCount = dataRows; bestRows = cells; }
-                    }
-                    return bestRows || [];
-                }"""
-            )
-            try:
-                (DOCS / "_last_scrape_raw.json").write_text(json.dumps(rows, indent=2), encoding="utf-8")
-            except Exception:
-                pass
-        finally:
-            await browser.close()
+        # Active outages carry suburbs at the top level; finished ones only in
+        # History. Fall back to History so we never silently drop data.
+        impacted = ev.get("ImpactedSuburbs") or []
+        if not impacted:
+            for h in ev.get("History") or []:
+                if isinstance(h, dict) and h.get("ImpactedSuburbs"):
+                    impacted = h["ImpactedSuburbs"]
+                    break
 
-    if not rows:
-        raise RuntimeError("No table found on Jemena page.")
-    outages = _parse_table(rows)
+        for sub in impacted:
+            if not isinstance(sub, dict):
+                continue
+            suburb_name = (sub.get("SuburbName") or "").strip()
+            if not suburb_name:
+                continue
+            streets = sub.get("Streets") or []
+            # De-duplicate streets that only differ by ST/STREET style.
+            seen_keys = set()
+            for street in streets:
+                street = (street or "").strip()
+                if not street:
+                    continue
+                norm = normalise_street(street)
+                key = norm.lower()
+                if key in seen_keys:
+                    continue
+                seen_keys.add(key)
+                outages.append({
+                    "suburb": suburb_name.upper(),
+                    "street_raw": street,
+                    "street": norm,
+                    "start_dt": start_dt,
+                    "end_dt": end_dt,
+                    "start_display": start_dt.strftime("%a %d %b, %I:%M %p").replace(" 0", " "),
+                    "end_display": end_dt.strftime("%I:%M %p").lstrip("0"),
+                    "status": (status or "Scheduled"),
+                })
+
+    print(
+        f"[scrape] {planned_seen} planned events in feed, "
+        f"{len(outages)} suburb/street outage rows",
+        flush=True,
+    )
+
     if not outages:
-        raise RuntimeError("Found rows but no parseable outage data.")
+        raise RuntimeError("No planned outages found in Jemena feed.")
     return outages
+
+
+def _parse_iso_local(value):
+    """Parse an ISO-8601 timestamp from the Jemena feed as Melbourne local time.
+
+    The feed emits naive local timestamps (e.g. "2026-06-18T07:30:00") for the
+    planned start/end fields. We attach the Melbourne timezone so downstream
+    duration / display logic matches the old table-based behaviour.
+    """
+    if not value:
+        return None
+    try:
+        s = str(value).strip().replace("Z", "+00:00")
+        dt = datetime.fromisoformat(s)
+    except (ValueError, TypeError):
+        return None
+    if dt.tzinfo is not None:
+        dt = dt.astimezone(MELBOURNE_TZ)
+    return dt.replace(tzinfo=None)
 
 
 def _parse_table(rows):
