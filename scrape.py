@@ -367,7 +367,19 @@ async def scrape_outages():
     print(f"[scrape] fetching {JEMENA_OUTAGES_API}", flush=True)
     resp = requests.get(
         JEMENA_OUTAGES_API,
-        headers={"User-Agent": USER_AGENT, "Accept": "application/json"},
+        headers={
+            # Use a browser-like User-Agent + Referer. The feed is served via
+            # CloudFront/S3 which returns 403 to non-browser User-Agents.
+            "User-Agent": (
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/124.0.0.0 Safari/537.36"
+            ),
+            "Accept": "application/json, text/plain, */*",
+            "Accept-Language": "en-AU,en;q=0.9",
+            "Referer": "https://poweroutages.jemena.com.au/",
+            "Origin": "https://poweroutages.jemena.com.au",
+        },
         timeout=60,
     )
     resp.raise_for_status()
