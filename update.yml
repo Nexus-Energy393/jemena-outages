@@ -50,6 +50,8 @@ jobs:
           PIPEDRIVE_TYPE_OPTION_ID: ${{ vars.PIPEDRIVE_TYPE_OPTION_ID }}
           PIPEDRIVE_FIELD_MAP_JSON: ${{ secrets.PIPEDRIVE_FIELD_MAP_JSON }}
           MAP_BASE_URL: ${{ vars.MAP_BASE_URL || 'https://nexus-energy393.github.io/jemena-outages' }}
+          JEMENA_FEED_URL: ${{ secrets.JEMENA_FEED_URL }}
+          JEMENA_PROXY_URL: ${{ secrets.JEMENA_PROXY_URL }}
         run: python scrape.py
 
       - name: Commit updated docs and cache
