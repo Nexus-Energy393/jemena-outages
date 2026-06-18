@@ -47,6 +47,16 @@ CACHE.mkdir(exist_ok=True)
 JEMENA_URL = "https://www.jemena.com.au/outages/electricity-outages/planned-outages/"
 JEMENA_OUTAGES_API = "https://poweroutages.jemena.com.au/data/all-outages.json"
 
+# The Jemena outages feed is served via CloudFront and is geo-restricted to
+# Australian IPs (CI runners get HTTP 403). To run from non-AU infrastructure,
+# set one of these env vars (e.g. via GitHub Actions secrets):
+#   JEMENA_FEED_URL  - full URL of an AU-hosted relay that mirrors the feed JSON
+#                      (the scraper GETs this instead of the Jemena URL).
+#   JEMENA_PROXY_URL - an AU-egress HTTP(S) proxy, e.g. http://user:pass@host:port
+#                      (passed to requests via proxies=).
+JEMENA_FEED_URL = os.environ.get("JEMENA_FEED_URL", "").strip()
+JEMENA_PROXY_URL = os.environ.get("JEMENA_PROXY_URL", "").strip()
+
 OVERPASS_ENDPOINTS = [
     "https://overpass-api.de/api/interpreter",
     "https://overpass.kumi.systems/api/interpreter",
@@ -364,12 +374,22 @@ async def scrape_outages():
     robust than scraping rendered HTML). Output shape is unchanged so the rest
     of the pipeline keeps working.
     """
-    print(f"[scrape] fetching {JEMENA_OUTAGES_API}", flush=True)
+    # Resolve the effective feed URL and optional AU-egress proxy.
+    feed_url = JEMENA_FEED_URL or JEMENA_OUTAGES_API
+    proxies = None
+    if JEMENA_PROXY_URL:
+        proxies = {"http": JEMENA_PROXY_URL, "https": JEMENA_PROXY_URL}
+    if JEMENA_FEED_URL:
+        print("[scrape] using JEMENA_FEED_URL relay override", flush=True)
+    if JEMENA_PROXY_URL:
+        print("[scrape] routing feed request through JEMENA_PROXY_URL", flush=True)
+    print(f"[scrape] fetching {feed_url}", flush=True)
+
     resp = requests.get(
-        JEMENA_OUTAGES_API,
+        feed_url,
         headers={
-            # Use a browser-like User-Agent + Referer. The feed is served via
-            # CloudFront/S3 which returns 403 to non-browser User-Agents.
+            # Browser-like headers; the CloudFront/S3 origin rejects requests
+            # that do not look like a real browser.
             "User-Agent": (
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
                 "AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -380,8 +400,15 @@ async def scrape_outages():
             "Referer": "https://poweroutages.jemena.com.au/",
             "Origin": "https://poweroutages.jemena.com.au",
         },
+        proxies=proxies,
         timeout=60,
     )
+    if resp.status_code == 403:
+        raise RuntimeError(
+            "Jemena feed returned HTTP 403 (Forbidden). The feed is geo-restricted "
+            "to Australian IPs; set JEMENA_FEED_URL (AU relay) or JEMENA_PROXY_URL "
+            "(AU proxy) so the request originates from Australia."
+        )
     resp.raise_for_status()
     feed = resp.json()
 
