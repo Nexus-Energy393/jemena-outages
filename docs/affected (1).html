@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Affected clients — Jemena planned outagesh</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { --red:#b71c1c; --orange:#fb8c00; --grey:#9e9e9e; --bg:#fafafa; --border:#e0e0e0; }
+  html, body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; background:var(--bg); color:#222; }
+  header { background:#fff; border-bottom:1px solid var(--border); padding:14px 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+  header h1 { margin:0; font-size:18px; font-weight:600; }
+  header .meta { font-size:12px; color:#666; }
+  header .actions a { color:#0b57d0; text-decoration:none; margin-left:14px; font-size:13px; font-weight:500; }
+  header .actions a:hover { text-decoration:underline; }
+  .toolbar { padding:12px 20px; background:#fff; border-bottom:1px solid var(--border); display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+  .toolbar input, .toolbar select { padding:6px 10px; font-size:13px; border:1px solid var(--border); border-radius:4px; background:#fff; }
+  .toolbar input { min-width:240px; }
+  .toolbar .summary { margin-left:auto; font-size:12px; color:#666; }
+  /* Multi-select dropdown */
+  .multi-select { position:relative; display:inline-block; }
+  .ms-button { padding:6px 24px 6px 10px; font-size:13px; border:1px solid var(--border); border-radius:4px; background:#fff; cursor:pointer; min-width:140px; text-align:left; position:relative; }
+  .ms-button::after { content: '▾'; position:absolute; right:8px; top:6px; color:#888; font-size:10px; }
+  .ms-button.has-selection { background:#e8f0fe; color:#0b57d0; font-weight:500; }
+  .ms-popover { display:none; position:absolute; top:calc(100% + 4px); left:0; min-width:200px; max-width:300px; max-height:300px; overflow-y:auto; background:#fff; border:1px solid var(--border); border-radius:4px; box-shadow:0 4px 12px rgba(0,0,0,0.12); z-index:50; padding:8px; }
+  .ms-popover.show { display:block; }
+  .ms-controls { display:flex; gap:8px; padding-bottom:6px; border-bottom:1px solid var(--border); margin-bottom:6px; }
+  .ms-link { background:none; border:none; color:#0b57d0; font-size:12px; cursor:pointer; padding:2px 4px; }
+  .ms-link:hover { text-decoration:underline; }
+  .ms-options label { display:flex; align-items:center; gap:6px; padding:4px 6px; font-size:13px; cursor:pointer; border-radius:3px; justify-content:flex-start; }
+  .ms-options label:hover { background:#f5f5f5; }
+  .ms-options input[type="checkbox"] { margin:0; flex-shrink:0; }
+  .ms-options span { flex:1; text-align:left; }
+  table { width:100%; border-collapse:collapse; background:#fff; }
+  thead { position:sticky; top:0; background:#fff; z-index:10; box-shadow:0 1px 0 var(--border); }
+  th { position:sticky; top:0; background:#fff; z-index:11; text-align:left; padding:10px 14px; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.05em; color:#666; cursor:pointer; user-select:none; white-space:nowrap; }
+  th:hover { background:#f5f5f5; }
+  th.sort-asc::after { content:' ▲'; color:#999; }
+  th.sort-desc::after { content:' ▼'; color:#999; }
+  td { padding:10px 14px; border-top:1px solid var(--border); font-size:13px; vertical-align:top; } td[data-label="When"] { white-space:nowrap; } table.hide-hours th[data-sort="total_hours"], table.hide-hours td[data-label="Total hrs"], table.hide-hours th[data-sort="longest_hours"], table.hide-hours td[data-label="Longest hrs"] { display:none; }
+  tr:hover td { background:#fafbfc; }
+  .chip { display:inline-block; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:500; }
+  .chip.definite { background:var(--red); color:#fff; }
+  .chip.possible { background:var(--orange); color:#fff; }
+  .chip.cat { background:#e3f2fd; color:#0d47a1; }
+  .chip.cancelled { background:#eee; color:#666; text-decoration:line-through; } .chip.confirmed { background:var(--red); color:#fff; } .match-cell { position:relative; } .match-btn { border:none; background:none; padding:0; cursor:pointer; font-family:inherit; } .match-menu { display:none; position:absolute; top:100%; left:0; margin-top:4px; background:#fff; border:1px solid var(--border); border-radius:4px; box-shadow:0 4px 12px rgba(0,0,0,0.15); z-index:60; min-width:120px; overflow:hidden; } .match-menu.show { display:block; } .match-menu button { display:block; width:100%; text-align:left; padding:7px 12px; border:none; background:none; font-size:12px; font-family:inherit; cursor:pointer; color:#222; } .match-menu button:hover { background:#f5f5f5; } .match-menu button.danger { color:#c5221f; } .match-menu button.danger:hover { background:#fce8e6; }
+  .small { font-size:11px; color:#777; }
+  a { color:#0b57d0; }
+  .empty { padding:60px 20px; text-align:center; color:#666; }
+  .actions { white-space:nowrap; }
+  .btn-sm { display:inline-block; padding:4px 10px; margin-right:4px; border-radius:4px; font-size:11px; font-weight:500; text-decoration:none; background:#f1f3f4; color:#0b57d0; border:none; cursor:pointer; font-family:inherit; }
+  .btn-sm:hover { background:#e8eaed; }
+  .btn-hide { background:#fff3e0; color:#b26a00; }
+  .btn-hide:hover { background:#ffe0b2; }
+  .btn-hide.busy { opacity:0.6; cursor:wait; }
+  .btn-hide.done { background:#e6f4ea; color:#137333; }
+  tr.row-hidden { animation: fade-out 0.5s ease forwards; }
+  @keyframes fade-out {
+    to { opacity: 0; transform: translateX(20px); height: 0; }
+  }
+  tr.highlight-flash { animation: flash 1.5s ease-out; }
+  @keyframes flash {
+    0% { background-color: #fff59d; }
+    100% { background-color: transparent; }
+  }
+  /* Upload modal */
+  .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:100; display:none; align-items:center; justify-content:center; }
+  .modal-overlay.show { display:flex; }
+  .modal { background:#fff; padding:24px; border-radius:8px; max-width:560px; width:90%; max-height:85vh; overflow-y:auto; box-shadow:0 8px 32px rgba(0,0,0,0.3); }
+  .modal h2 { margin:0 0 12px; font-size:18px; }
+  .modal p { margin:8px 0; font-size:13px; line-height:1.5; color:#333; }
+  .modal .small { font-size:11px; color:#777; }
+  .modal label { display:block; font-size:12px; font-weight:600; margin:12px 0 4px; }
+  .modal input[type="text"], .modal input[type="password"], .modal input[type="file"] {
+    width:100%; padding:8px 10px; font-size:13px; border:1px solid var(--border); border-radius:4px; box-sizing:border-box;
+  }
+  .modal-buttons { display:flex; gap:8px; margin-top:16px; justify-content:flex-end; }
+  .modal-buttons button { padding:8px 16px; font-size:13px; font-weight:500; border-radius:4px; border:none; cursor:pointer; }
+  .modal-buttons .primary { background:#0b57d0; color:#fff; }
+  .modal-buttons .primary:disabled { background:#888; cursor:not-allowed; }
+  .modal-buttons .secondary { background:#f1f3f4; color:#333; }
+  .diff-preview { background:#fafbfc; border:1px solid var(--border); border-radius:4px; padding:10px; margin-top:8px; max-height:200px; overflow-y:auto; font-family:ui-monospace,Menlo,Monaco,monospace; font-size:11px; line-height:1.5; }
+  .diff-preview .added { background:#e6f4ea; color:#137333; }
+  .diff-preview .removed { background:#fce8e6; color:#c5221f; text-decoration:line-through; }
+  .modal .status-line { padding:8px 10px; border-radius:4px; margin-top:8px; font-size:13px; display:none; }
+  .modal .status-line.error { background:#fce8e6; color:#c5221f; display:block; }
+  .modal .status-line.success { background:#e6f4ea; color:#137333; display:block; }
+  .modal .status-line.working { background:#fff8e1; color:#a17900; display:block; }
+  @media (max-width: 700px) {
+    table, thead, tbody, th, td, tr { display:block; }
+    thead { display:none; }
+    tr { border:1px solid var(--border); border-radius:6px; margin:10px; padding:8px; background:#fff; }
+    td { border:none; padding:4px 8px; }
+    td::before { content: attr(data-label) ': '; font-weight:600; font-size:11px; color:#666; display:block; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Affected clients — Jemena planned outages</h1>
+    <div class="meta" id="meta"></div>
+  </div>
+  <div class="actions">
+    <a href="index.html">← Back to map</a>
+    <a href="affected.csv" download>Download CSV</a>
+    <a href="#" id="add-client-btn">+ Add client</a>
+    <a href="#" id="remove-client-btn">- Remove client</a>
+    <a href="#" id="upload-clients-btn">Upload clients.csv</a>
+  </div>
+</header>
+<div class="toolbar">
+  <input id="search" type="search" placeholder="Search client, suburb, street…" autofocus>
+  <select id="match-filter">
+    <option value="all">All matches</option>
+    <option value="definite">Definite only</option>
+    <option value="possible">Possible only</option>
+  </select>
+  <div class="multi-select" id="category-multi">
+    <button type="button" class="ms-button" id="ms-category-button">All categories</button>
+    <div class="ms-popover" id="ms-category-popover">
+      <div class="ms-controls">
+        <button type="button" class="ms-link" data-action="all">Select all</button>
+        <button type="button" class="ms-link" data-action="none">Clear</button>
+      </div>
+      <div class="ms-options" id="ms-category-options"></div>
+    </div>
+  </div>
+  <select id="status-filter">
+    <option value="active">Active only (hide cancelled)</option>
+    <option value="all">Show cancelled too</option>
+  </select>
+  <select id="min-hours">
+    <option value="0">Any duration</option>
+    <option value="2">2+ hrs</option>
+    <option value="3">3+ hrs</option>
+    <option value="4">4+ hrs</option>
+    <option value="6" selected>6+ hrs (generator opportunity)</option>
+    <option value="8">8+ hrs</option>
+  </select>
+  <select id="duration-mode">
+    <option value="row" selected>Each outage row</option>
+    <option value="longest">Client's longest outage</option>
+    <option value="total">Client's total exposure</option>
+  </select>
+  <select id="group-mode">
+    <option value="ungrouped">Ungrouped (one row per outage)</option>
+    <option value="client-street" selected>Group: client × street</option>
+    <option value="client">Group: client (collapse all)</option>
+  </select>
+  <div class="summary" id="summary"></div>
+</div>
+<div id="table-wrap">
+  <table id="table">
+    <thead>
+      <tr>
+        <th data-sort="match">Match</th>
+        <th data-sort="name">Client</th>
+        <th data-sort="category">Category</th>
+        <th data-sort="suburb">Suburb</th>
+        <th data-sort="address">Address</th>
+        
+        <th data-sort="outage_when">When</th>
+        <th data-sort="duration">Duration</th>
+        <th data-sort="outage_where">Outage location</th>
+        <th data-sort="distance">Distance</th>
+        <th data-sort="total_hours">Total hrs</th>
+        <th data-sort="longest_hours">Longest hrs</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</div>
+
+<script>
+const DATA = {"affected":[{"client":{"client_id":"coles-gippsland-centre","name":"Coles Gippsland Centre","category":"Coles","source":"osm","address":"37-79 Cunninghame Street","suburb":"SALE","postcode":"3850","lat":-38.1069769,"lng":147.0644793},"definite":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Tue 7 Jul, 8:30 AM","end":"3:30 PM","start_iso":"2026-07-07T08:30:00+10:00","end_iso":"2026-07-07T15:30:00+10:00","status":"Scheduled","duration_hours":7.0,"network":"Ausnet","incident_id":"INCD-205527-U","customers":440}],"possible":[],"nearest_street":null,"nearest_distance_m":null,"longest_hours":7.0,"total_hours":7.0},{"client":{"client_id":"kfc","name":"KFC","category":"KFC","source":"osm","address":"Macarthur Street","suburb":"SALE","postcode":"3850","lat":-38.1054747,"lng":147.0686315},"definite":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Tue 7 Jul, 8:30 AM","end":"3:30 PM","start_iso":"2026-07-07T08:30:00+10:00","end_iso":"2026-07-07T15:30:00+10:00","status":"Scheduled","duration_hours":7.0,"network":"Ausnet","incident_id":"INCD-205527-U","customers":440}],"possible":[],"nearest_street":null,"nearest_distance_m":null,"longest_hours":7.0,"total_hours":7.0},{"client":{"client_id":"caltex","name":"Caltex","category":"Caltex","source":"osm","address":"York Street","suburb":"SALE","postcode":"3850","lat":-38.1096852,"lng":147.0686262},"definite":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Tue 7 Jul, 8:30 AM","end":"3:30 PM","start_iso":"2026-07-07T08:30:00+10:00","end_iso":"2026-07-07T15:30:00+10:00","status":"Scheduled","duration_hours":7.0,"network":"Ausnet","incident_id":"INCD-205527-U","customers":440}],"possible":[],"nearest_street":null,"nearest_distance_m":null,"longest_hours":7.0,"total_hours":7.0},{"client":{"client_id":"iga-brunswick-west","name":"IGA Brunswick West","category":"IGA","source":"osm","address":"6 Olive York Way","suburb":"BRUNSWICK WEST","postcode":"3055","lat":-37.7581645,"lng":144.9394033},"definite":[],"possible":[{"suburb":"Essendon","street":"Albion Street","start":"Fri 12 Jun, 11:00 AM","end":"4:00 PM","start_iso":"2026-06-12T11:00:00+10:00","end_iso":"2026-06-12T16:00:00+10:00","status":"Scheduled","duration_hours":5.0,"_distance_m":17}],"nearest_street":"Albion Street, Essendon","nearest_distance_m":17,"longest_hours":5.0,"total_hours":5.0},{"client":{"client_id":"woolworths-gippsland-centre","name":"Woolworths Gippsland Centre","category":"Woolworths","source":"osm","address":"37-79 New Railway Road","suburb":"SALE","postcode":"3850","lat":-38.1065905,"lng":147.0621143},"definite":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Tue 7 Jul, 8:30 AM","end":"3:30 PM","start_iso":"2026-07-07T08:30:00+10:00","end_iso":"2026-07-07T15:30:00+10:00","status":"Scheduled","duration_hours":7.0,"network":"Ausnet","incident_id":"INCD-205527-U","customers":440}],"possible":[],"nearest_street":null,"nearest_distance_m":null,"longest_hours":7.0,"total_hours":7.0},{"client":{"client_id":"subway-2","name":"Subway","category":"Subway","source":"osm","address":"York Street","suburb":"SALE","postcode":"3850","lat":-38.1063989,"lng":147.0685099},"definite":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Tue 7 Jul, 8:30 AM","end":"3:30 PM","start_iso":"2026-07-07T08:30:00+10:00","end_iso":"2026-07-07T15:30:00+10:00","status":"Scheduled","duration_hours":7.0,"network":"Ausnet","incident_id":"INCD-205527-U","customers":440}],"possible":[],"nearest_street":null,"nearest_distance_m":null,"longest_hours":7.0,"total_hours":7.0},{"client":{"client_id":"iga-friendly-grocer-footscray","name":"IGA Friendly Grocer Footscray","category":"IGA","source":"osm","address":"Ballarat Road","suburb":"FOOTSCRAY","postcode":"3011","lat":-37.7911005,"lng":144.8899038},"definite":[],"possible":[{"suburb":"Footscray","street":"Ballarat Road","start":"Wed 24 Jun, 12:30 AM","end":"6:00 AM","start_iso":"2026-06-24T00:30:00+10:00","end_iso":"2026-06-24T06:00:00+10:00","status":"Scheduled","duration_hours":5.5,"_distance_m":21}],"nearest_street":"Ballarat Road, Footscray","nearest_distance_m":21,"longest_hours":5.5,"total_hours":5.5},{"client":{"client_id":"mcdonald-s-campbellfield","name":"McDonald's Campbellfield","category":"McDonald's","source":"osm","address":"1603 Sydney Road","suburb":"CAMPBELLFIELD","postcode":"3061","lat":-37.6740154,"lng":144.9553412,"pipedrive_lead_id":"df2b4010-5a16-11f1-ab44-5d756143e363"},"definite":[],"possible":[{"suburb":"Campbellfield","street":"Sydney Road","start":"Sun 14 Jun, 7:30 AM","end":"5:30 PM","start_iso":"2026-06-14T07:30:00+10:00","end_iso":"2026-06-14T17:30:00+10:00","status":"Scheduled","duration_hours":10.0,"_distance_m":36}],"nearest_street":"Sydney Road, Campbellfield","nearest_distance_m":36,"longest_hours":10.0,"total_hours":10.0},{"client":{"client_id":"aldi-2","name":"ALDI","category":"Aldi","source":"osm","address":"396-420 Raymond Street","suburb":"SALE","postcode":"3850","lat":-38.1040078,"lng":147.0660645},"definite":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Tue 7 Jul, 8:30 AM","end":"3:30 PM","start_iso":"2026-07-07T08:30:00+10:00","end_iso":"2026-07-07T15:30:00+10:00","status":"Scheduled","duration_hours":7.0,"network":"Ausnet","incident_id":"INCD-205527-U","customers":440}],"possible":[],"nearest_street":null,"nearest_distance_m":null,"longest_hours":7.0,"total_hours":7.0},{"client":{"client_id":"target-showgrounds-village","name":"Target Showgrounds Village","category":"Target","source":"osm","address":"Epsom Road","suburb":"FLEMINGTON","postcode":"3031","lat":-37.7817229,"lng":144.915166},"definite":[],"possible":[{"suburb":"Flemington","street":"Epsom Road","start":"Fri 26 Jun, 8:00 AM","end":"9:00 AM","start_iso":"2026-06-26T08:00:00+10:00","end_iso":"2026-06-26T09:00:00+10:00","status":"Scheduled","duration_hours":1.0,"_distance_m":39}],"nearest_street":"Epsom Road, Flemington","nearest_distance_m":39,"longest_hours":1.0,"total_hours":1.0},{"client":{"client_id":"harvey-norman-sale","name":"Harvey Norman Sale","category":"Harvey Norman","source":"osm","address":"363-375 Raymond Street","suburb":"SALE","postcode":"3850","lat":-38.1057357,"lng":147.0652171},"definite":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Tue 7 Jul, 8:30 AM","end":"3:30 PM","start_iso":"2026-07-07T08:30:00+10:00","end_iso":"2026-07-07T15:30:00+10:00","status":"Scheduled","duration_hours":7.0,"network":"Ausnet","incident_id":"INCD-205527-U","customers":440}],"possible":[],"nearest_street":null,"nearest_distance_m":null,"longest_hours":7.0,"total_hours":7.0},{"client":{"client_id":"supercheap-auto","name":"Supercheap Auto","category":"Supercheap Auto","source":"osm","address":"Macarthur Street","suburb":"SALE","postcode":"3850","lat":-38.1054354,"lng":147.0670619},"definite":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Tue 7 Jul, 8:30 AM","end":"3:30 PM","start_iso":"2026-07-07T08:30:00+10:00","end_iso":"2026-07-07T15:30:00+10:00","status":"Scheduled","duration_hours":7.0,"network":"Ausnet","incident_id":"INCD-205527-U","customers":440}],"possible":[],"nearest_street":null,"nearest_distance_m":null,"longest_hours":7.0,"total_hours":7.0},{"client":{"client_id":"subway-greenvale-shopping-centre","name":"Subway Greenvale Shopping Centre","category":"Subway","source":"osm","address":"Greenvale Drive","suburb":"GREENVALE","postcode":"3059","lat":-37.6396055,"lng":144.8818132,"pipedrive_lead_id":"f74b9a90-5adf-11f1-9732-231a802356b8"},"definite":[],"possible":[{"suburb":"Greenvale","street":"Mickleham Road","start":"Thu 11 Jun, 9:00 AM","end":"4:30 PM","start_iso":"2026-06-11T09:00:00+10:00","end_iso":"2026-06-11T16:30:00+10:00","status":"Cancelled","duration_hours":7.5,"_distance_m":73}],"nearest_street":"Mickleham Road, Greenvale","nearest_distance_m":73,"longest_hours":0.0,"total_hours":0.0},{"client":{"client_id":"iga-fairfield-2","name":"IGA Fairfield","category":"IGA","source":"osm","address":"Brunswick Road","suburb":"BRUNSWICK EAST","postcode":"3057","lat":-37.7787245,"lng":144.9764299,"pipedrive_lead_id":"49e8cec0-62b6-11f1-bab8-710463f4d6fa"},"definite":[],"possible":[{"suburb":"Fairfield","street":"Station Street","start":"Fri 19 Jun, 9:00 AM","end":"5:00 PM","start_iso":"2026-06-19T09:00:00+10:00","end_iso":"2026-06-19T17:00:00+10:00","status":"Scheduled","duration_hours":8.0,"_distance_m":63}],"nearest_street":"Station Street, Fairfield","nearest_distance_m":63,"longest_hours":8.0,"total_hours":8.0},{"client":{"client_id":"ampol-tremont","name":"Ampol Tremont","category":"Ampol","source":"osm","address":"100 Mount Dandenong Tourist Road","suburb":"TREMONT","postcode":"3785","lat":-37.8865695,"lng":145.3278134,"pipedrive_lead_id":"c3816ab0-6835-11f1-97bf-e7ab3c1811f7"},"definite":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Mon 6 Jul, 10:00 AM","end":"4:00 PM","start_iso":"2026-07-06T10:00:00+10:00","end_iso":"2026-07-06T16:00:00+10:00","status":"Scheduled","duration_hours":6.0,"network":"Ausnet","incident_id":"INCD-106203-X","customers":68}],"possible":[],"nearest_street":null,"nearest_distance_m":null,"longest_hours":6.0,"total_hours":6.0},{"client":{"client_id":"caltex-footscray","name":"Caltex Footscray","category":"Caltex","source":"osm","address":"Ballarat Road","suburb":"MAIDSTONE","postcode":"3012","lat":-37.7875564,"lng":144.8800112},"definite":[],"possible":[{"suburb":"Footscray","street":"Ballarat Road","start":"Wed 24 Jun, 12:30 AM","end":"6:00 AM","start_iso":"2026-06-24T00:30:00+10:00","end_iso":"2026-06-24T06:00:00+10:00","status":"Scheduled","duration_hours":5.5,"_distance_m":21}],"nearest_street":"Ballarat Road, Footscray","nearest_distance_m":21,"longest_hours":5.5,"total_hours":5.5},{"client":{"client_id":"subway-flemington","name":"Subway Flemington","category":"Subway","source":"osm","address":"Epsom Road","suburb":"ASCOT VALE","postcode":"3032","lat":-37.7708866,"lng":144.905063},"definite":[],"possible":[{"suburb":"Flemington","street":"Epsom Road","start":"Fri 26 Jun, 8:00 AM","end":"9:00 AM","start_iso":"2026-06-26T08:00:00+10:00","end_iso":"2026-06-26T09:00:00+10:00","status":"Scheduled","duration_hours":1.0,"_distance_m":30}],"nearest_street":"Epsom Road, Flemington","nearest_distance_m":30,"longest_hours":1.0,"total_hours":1.0},{"client":{"client_id":"liberty-petrol-station","name":"Liberty Petrol Station","category":"Liberty","source":"osm","address":"Kilmore - Lancefield Road","suburb":"KILMORE","postcode":"3764","lat":-37.2957476,"lng":144.9516678},"definite":[],"possible":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Tue 7 Jul, 9:00 AM","end":"4:00 PM","start_iso":"2026-07-07T09:00:00+10:00","end_iso":"2026-07-07T16:00:00+10:00","status":"Scheduled","duration_hours":7.0,"network":"Ausnet","incident_id":"INCD-205550-U","customers":34,"_distance_m":72}],"nearest_street":null,"nearest_distance_m":null,"longest_hours":7.0,"total_hours":7.0},{"client":{"client_id":"liquorland-showgrounds-village","name":"Liquorland Showgrounds Village","category":"Liquorland","source":"osm","address":"320-380 Epsom Road","suburb":"FLEMINGTON","postcode":"3031","lat":-37.7824779,"lng":144.915023},"definite":[{"suburb":"Flemington","street":"Epsom Road","start":"Fri 26 Jun, 8:00 AM","end":"9:00 AM","start_iso":"2026-06-26T08:00:00+10:00","end_iso":"2026-06-26T09:00:00+10:00","status":"Scheduled","duration_hours":1.0}],"possible":[],"nearest_street":"Epsom Road, Flemington","nearest_distance_m":100,"longest_hours":1.0,"total_hours":1.0},{"client":{"client_id":"iga-greenvale","name":"IGA Greenvale","category":"IGA","source":"osm","address":"825 Mickleham Road","suburb":"GREENVALE","postcode":"3059","lat":-37.6389263,"lng":144.8804683,"pipedrive_lead_id":"f8536da0-5adf-11f1-b0ce-e1ba3e8f5b87"},"definite":[],"possible":[{"suburb":"Greenvale","street":"Mickleham Road","start":"Thu 11 Jun, 9:00 AM","end":"4:30 PM","start_iso":"2026-06-11T09:00:00+10:00","end_iso":"2026-06-11T16:30:00+10:00","status":"Cancelled","duration_hours":7.5,"_distance_m":17}],"nearest_street":"Mickleham Road, Greenvale","nearest_distance_m":17,"longest_hours":0.0,"total_hours":0.0},{"client":{"client_id":"anytime-fitness-reservoir-2","name":"Anytime Fitness Reservoir","category":"Anytime Fitness","source":"osm","address":"Broadway","suburb":"RESERVOIR","postcode":"3073","lat":-37.7170477,"lng":145.0086332,"pipedrive_lead_id":"4d284250-62b6-11f1-a38f-75f3da8d0820"},"definite":[],"possible":[{"suburb":"Reservoir","street":"High Street","start":"Tue 16 Jun, 8:00 AM","end":"4:30 PM","start_iso":"2026-06-16T08:00:00+10:00","end_iso":"2026-06-16T16:30:00+10:00","status":"Scheduled","duration_hours":8.5,"_distance_m":86}],"nearest_street":"High Street, Reservoir","nearest_distance_m":86,"longest_hours":8.5,"total_hours":8.5},{"client":{"client_id":"priceline-pharmacy-gippsland-centre","name":"Priceline Pharmacy Gippsland Centre","category":"Priceline Pharmacy","source":"osm","address":"37-79 Cunninghame Street","suburb":"SALE","postcode":"3850","lat":-38.1068786,"lng":147.0619389},"definite":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Tue 7 Jul, 8:30 AM","end":"3:30 PM","start_iso":"2026-07-07T08:30:00+10:00","end_iso":"2026-07-07T15:30:00+10:00","status":"Scheduled","duration_hours":7.0,"network":"Ausnet","incident_id":"INCD-205527-U","customers":440}],"possible":[],"nearest_street":null,"nearest_distance_m":null,"longest_hours":7.0,"total_hours":7.0},{"client":{"client_id":"target-gippsland-centre","name":"Target Gippsland Centre","category":"Target","source":"osm","address":"37-79 New Railway Road","suburb":"SALE","postcode":"3850","lat":-38.1065857,"lng":147.0631843},"definite":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Tue 7 Jul, 8:30 AM","end":"3:30 PM","start_iso":"2026-07-07T08:30:00+10:00","end_iso":"2026-07-07T15:30:00+10:00","status":"Scheduled","duration_hours":7.0,"network":"Ausnet","incident_id":"INCD-205527-U","customers":440}],"possible":[],"nearest_street":null,"nearest_distance_m":null,"longest_hours":7.0,"total_hours":7.0},{"client":{"client_id":"muffin-break-gippsland-centre","name":"Muffin Break Gippsland Centre","category":"Muffin Break","source":"osm","address":"37-79 Cunninghame Street","suburb":"SALE","postcode":"3850","lat":-38.1069817,"lng":147.0632871},"definite":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Tue 7 Jul, 8:30 AM","end":"3:30 PM","start_iso":"2026-07-07T08:30:00+10:00","end_iso":"2026-07-07T15:30:00+10:00","status":"Scheduled","duration_hours":7.0,"network":"Ausnet","incident_id":"INCD-205527-U","customers":440}],"possible":[],"nearest_street":null,"nearest_distance_m":null,"longest_hours":7.0,"total_hours":7.0},{"client":{"client_id":"liquorland-gippsland-centre","name":"Liquorland Gippsland Centre","category":"Liquorland","source":"osm","address":"37-79 Desailly Street","suburb":"SALE","postcode":"3850","lat":-38.106994,"lng":147.0642804},"definite":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Tue 7 Jul, 8:30 AM","end":"3:30 PM","start_iso":"2026-07-07T08:30:00+10:00","end_iso":"2026-07-07T15:30:00+10:00","status":"Scheduled","duration_hours":7.0,"network":"Ausnet","incident_id":"INCD-205527-U","customers":440}],"possible":[],"nearest_street":null,"nearest_distance_m":null,"longest_hours":7.0,"total_hours":7.0},{"client":{"client_id":"chemist-warehouse","name":"Chemist Warehouse","category":"Chemist Warehouse","source":"osm","address":"276 Raymond Street","suburb":"SALE","postcode":"3850","lat":-38.1067695,"lng":147.0656847},"definite":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Tue 7 Jul, 8:30 AM","end":"3:30 PM","start_iso":"2026-07-07T08:30:00+10:00","end_iso":"2026-07-07T15:30:00+10:00","status":"Scheduled","duration_hours":7.0,"network":"Ausnet","incident_id":"INCD-205527-U","customers":440}],"possible":[],"nearest_street":null,"nearest_distance_m":null,"longest_hours":7.0,"total_hours":7.0},{"client":{"client_id":"spotlight-sale","name":"Spotlight Sale","category":"Spotlight","source":"osm","address":"216 Raymond Street","suburb":"SALE","postcode":"3850","lat":-38.1080344,"lng":147.0663628},"definite":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Tue 7 Jul, 8:30 AM","end":"3:30 PM","start_iso":"2026-07-07T08:30:00+10:00","end_iso":"2026-07-07T15:30:00+10:00","status":"Scheduled","duration_hours":7.0,"network":"Ausnet","incident_id":"INCD-205527-U","customers":440}],"possible":[],"nearest_street":null,"nearest_distance_m":null,"longest_hours":7.0,"total_hours":7.0},{"client":{"client_id":"dan-murphy-s-sale","name":"Dan Murphy's Sale","category":"Dan Murphy's","source":"osm","address":"114 Cunninghame Street","suburb":"SALE","postcode":"3850","lat":-38.1076402,"lng":147.0686635},"definite":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Tue 7 Jul, 8:30 AM","end":"3:30 PM","start_iso":"2026-07-07T08:30:00+10:00","end_iso":"2026-07-07T15:30:00+10:00","status":"Scheduled","duration_hours":7.0,"network":"Ausnet","incident_id":"INCD-205527-U","customers":440}],"possible":[],"nearest_street":null,"nearest_distance_m":null,"longest_hours":7.0,"total_hours":7.0},{"client":{"client_id":"anytime-fitness-sale","name":"Anytime Fitness Sale","category":"Anytime Fitness","source":"osm","address":"205 York Street","suburb":"SALE","postcode":"3850","lat":-38.1055509,"lng":147.0677753},"definite":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Tue 7 Jul, 8:30 AM","end":"3:30 PM","start_iso":"2026-07-07T08:30:00+10:00","end_iso":"2026-07-07T15:30:00+10:00","status":"Scheduled","duration_hours":7.0,"network":"Ausnet","incident_id":"INCD-205527-U","customers":440}],"possible":[],"nearest_street":null,"nearest_distance_m":null,"longest_hours":7.0,"total_hours":7.0},{"client":{"client_id":"repco-sale","name":"Repco Sale","category":"Repco","source":"osm","address":"266 York Street","suburb":"SALE","postcode":"3850","lat":-38.1028617,"lng":147.0683721},"definite":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Tue 7 Jul, 8:30 AM","end":"3:30 PM","start_iso":"2026-07-07T08:30:00+10:00","end_iso":"2026-07-07T15:30:00+10:00","status":"Scheduled","duration_hours":7.0,"network":"Ausnet","incident_id":"INCD-205527-U","customers":440}],"possible":[],"nearest_street":null,"nearest_distance_m":null,"longest_hours":7.0,"total_hours":7.0},{"client":{"client_id":"domino-s-sale","name":"Domino's Sale","category":"Domino's","source":"osm","address":"180-182 York Street","suburb":"SALE","postcode":"3850","lat":-38.1065479,"lng":147.0687703},"definite":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Tue 7 Jul, 8:30 AM","end":"3:30 PM","start_iso":"2026-07-07T08:30:00+10:00","end_iso":"2026-07-07T15:30:00+10:00","status":"Scheduled","duration_hours":7.0,"network":"Ausnet","incident_id":"INCD-205527-U","customers":440}],"possible":[],"nearest_street":null,"nearest_distance_m":null,"longest_hours":7.0,"total_hours":7.0},{"client":{"client_id":"iga-sale","name":"IGA Sale","category":"IGA","source":"osm","address":"177-179 Sillett Lane","suburb":"SALE","postcode":"3850","lat":-38.1059641,"lng":147.0677987},"definite":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Tue 7 Jul, 8:30 AM","end":"3:30 PM","start_iso":"2026-07-07T08:30:00+10:00","end_iso":"2026-07-07T15:30:00+10:00","status":"Scheduled","duration_hours":7.0,"network":"Ausnet","incident_id":"INCD-205527-U","customers":440}],"possible":[],"nearest_street":null,"nearest_distance_m":null,"longest_hours":7.0,"total_hours":7.0},{"client":{"client_id":"bcf-sale","name":"BCF Sale","category":"BCF","source":"osm","address":"82 Macarthur Street","suburb":"SALE","postcode":"3850","lat":-38.1053961,"lng":147.0668373},"definite":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Tue 7 Jul, 8:30 AM","end":"3:30 PM","start_iso":"2026-07-07T08:30:00+10:00","end_iso":"2026-07-07T15:30:00+10:00","status":"Scheduled","duration_hours":7.0,"network":"Ausnet","incident_id":"INCD-205527-U","customers":440}],"possible":[],"nearest_street":null,"nearest_distance_m":null,"longest_hours":7.0,"total_hours":7.0},{"client":{"client_id":"access-rehabilitation-equipment-sale","name":"Access Rehabilitation Equipment Sale","category":"Aged care","source":"osm","address":"72 Princes Highway","suburb":"SALE","postcode":"3850","lat":-38.0873925,"lng":147.0708747},"definite":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Tue 7 Jul, 8:30 AM","end":"3:30 PM","start_iso":"2026-07-07T08:30:00+10:00","end_iso":"2026-07-07T15:30:00+10:00","status":"Scheduled","duration_hours":7.0,"network":"Ausnet","incident_id":"INCD-205527-U","customers":440}],"possible":[],"nearest_street":null,"nearest_distance_m":null,"longest_hours":7.0,"total_hours":7.0},{"client":{"client_id":"aid-comfort-support-services-sale","name":"Aid & Comfort Support Services Sale","category":"Aged care","source":"osm","address":"387 York Street","suburb":"SALE","postcode":"3850","lat":-38.0965914,"lng":147.0675092},"definite":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Tue 7 Jul, 8:30 AM","end":"3:30 PM","start_iso":"2026-07-07T08:30:00+10:00","end_iso":"2026-07-07T15:30:00+10:00","status":"Scheduled","duration_hours":7.0,"network":"Ausnet","incident_id":"INCD-205527-U","customers":440}],"possible":[],"nearest_street":null,"nearest_distance_m":null,"longest_hours":7.0,"total_hours":7.0},{"client":{"client_id":"wilson-lodge","name":"Wilson Lodge","category":"Aged care","source":"osm","address":"155 Guthridge Parade","suburb":"SALE","postcode":"3850","lat":-38.1105308,"lng":147.0806966},"definite":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Tue 7 Jul, 8:30 AM","end":"3:30 PM","start_iso":"2026-07-07T08:30:00+10:00","end_iso":"2026-07-07T15:30:00+10:00","status":"Scheduled","duration_hours":7.0,"network":"Ausnet","incident_id":"INCD-205527-U","customers":440}],"possible":[],"nearest_street":null,"nearest_distance_m":null,"longest_hours":7.0,"total_hours":7.0},{"client":{"client_id":"aged-care","name":"Aged care","category":"Aged care","source":"osm","address":"12-180 Guthridge Parade","suburb":"SALE","postcode":"3850","lat":-38.1057809,"lng":147.083582},"definite":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Tue 7 Jul, 8:30 AM","end":"3:30 PM","start_iso":"2026-07-07T08:30:00+10:00","end_iso":"2026-07-07T15:30:00+10:00","status":"Scheduled","duration_hours":7.0,"network":"Ausnet","incident_id":"INCD-205527-U","customers":440}],"possible":[],"nearest_street":null,"nearest_distance_m":null,"longest_hours":7.0,"total_hours":7.0},{"client":{"client_id":"ashleigh-house-sale","name":"Ashleigh House Sale","category":"Aged care","source":"osm","address":"24 Bergen Crescent","suburb":"SALE","postcode":"3850","lat":-38.1057024,"lng":147.0851033},"definite":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Tue 7 Jul, 8:30 AM","end":"3:30 PM","start_iso":"2026-07-07T08:30:00+10:00","end_iso":"2026-07-07T15:30:00+10:00","status":"Scheduled","duration_hours":7.0,"network":"Ausnet","incident_id":"INCD-205527-U","customers":440}],"possible":[],"nearest_street":null,"nearest_distance_m":null,"longest_hours":7.0,"total_hours":7.0},{"client":{"client_id":"sale-elderly-citizens-village","name":"Sale Elderly Citizens Village","category":"Aged care","source":"osm","address":"20-24 Bergen Crescent","suburb":"SALE","postcode":"3850","lat":-38.105238,"lng":147.0852945},"definite":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Tue 7 Jul, 8:30 AM","end":"3:30 PM","start_iso":"2026-07-07T08:30:00+10:00","end_iso":"2026-07-07T15:30:00+10:00","status":"Scheduled","duration_hours":7.0,"network":"Ausnet","incident_id":"INCD-205527-U","customers":440}],"possible":[],"nearest_street":null,"nearest_distance_m":null,"longest_hours":7.0,"total_hours":7.0},{"client":{"client_id":"braybrook-plaza","name":"Braybrook Plaza","category":"Shopping centre","source":"osm","address":"227 Ballarat Road","suburb":"BRAYBROOK","postcode":"3019","lat":-37.7820639,"lng":144.8643704},"definite":[],"possible":[{"suburb":"Footscray","street":"Ballarat Road","start":"Wed 24 Jun, 12:30 AM","end":"6:00 AM","start_iso":"2026-06-24T00:30:00+10:00","end_iso":"2026-06-24T06:00:00+10:00","status":"Scheduled","duration_hours":5.5,"_distance_m":96}],"nearest_street":"Ballarat Road, Footscray","nearest_distance_m":96,"longest_hours":5.5,"total_hours":5.5},{"client":{"client_id":"iga-wantirna-south","name":"IGA Wantirna South","category":"IGA","source":"osm","address":"191-195 Stud Road","suburb":"WANTIRNA SOUTH","postcode":"3152","lat":-37.8594013,"lng":145.240895,"pipedrive_lead_id":"c14263d0-5a16-11f1-b0ce-e1ba3e8f5b87"},"definite":[],"possible":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Thu 18 Jun, 8:45 AM","end":"4:00 PM","start_iso":"2026-06-18T08:45:00+10:00","end_iso":"2026-06-18T16:00:00+10:00","status":"Scheduled","duration_hours":7.25,"network":"Ausnet","incident_id":"INCD-135732-W","customers":112,"_distance_m":56}],"nearest_street":null,"nearest_distance_m":null,"longest_hours":7.25,"total_hours":7.25},{"client":{"client_id":"kfc-glenroy","name":"KFC Glenroy","category":"KFC","source":"osm","address":"Pascoe Vale Road","suburb":"BROADMEADOWS","postcode":"3047","lat":-37.6758737,"lng":144.9223721,"pipedrive_lead_id":"080ffbb0-5c6a-11f1-9732-231a802356b8"},"definite":[],"possible":[{"suburb":"Glenroy","street":"Pascoe Vale Road","start":"Sun 21 Jun, 7:00 AM","end":"4:00 PM","start_iso":"2026-06-21T07:00:00+10:00","end_iso":"2026-06-21T16:00:00+10:00","status":"Scheduled","duration_hours":9.0,"_distance_m":25}],"nearest_street":"Pascoe Vale Road, Glenroy","nearest_distance_m":25,"longest_hours":9.0,"total_hours":9.0},{"client":{"client_id":"bp-showgrounds-village","name":"BP Showgrounds Village","category":"BP","source":"osm","address":"155 Epsom Road","suburb":"ASCOT VALE","postcode":"3032","lat":-37.7821364,"lng":144.916501},"definite":[],"possible":[{"suburb":"Flemington","street":"Epsom Road","start":"Fri 26 Jun, 8:00 AM","end":"9:00 AM","start_iso":"2026-06-26T08:00:00+10:00","end_iso":"2026-06-26T09:00:00+10:00","status":"Scheduled","duration_hours":1.0,"_distance_m":13}],"nearest_street":"Epsom Road, Flemington","nearest_distance_m":13,"longest_hours":1.0,"total_hours":1.0},{"client":{"client_id":"chemist-warehouse-flemington","name":"Chemist Warehouse Flemington","category":"Chemist Warehouse","source":"osm","address":"7-15 Union Road","suburb":"ASCOT VALE","postcode":"3032","lat":-37.7798394,"lng":144.9145562},"definite":[],"possible":[{"suburb":"Flemington","street":"Epsom Road","start":"Fri 26 Jun, 8:00 AM","end":"9:00 AM","start_iso":"2026-06-26T08:00:00+10:00","end_iso":"2026-06-26T09:00:00+10:00","status":"Scheduled","duration_hours":1.0,"_distance_m":38}],"nearest_street":"Epsom Road, Flemington","nearest_distance_m":38,"longest_hours":1.0,"total_hours":1.0},{"client":{"client_id":"hungry-jack-s-2","name":"Hungry Jack's","category":"Hungry Jack's","source":"osm","address":"Drive through","suburb":"SALE","postcode":"3850","lat":-38.1070202,"lng":147.0685722},"definite":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Tue 7 Jul, 8:30 AM","end":"3:30 PM","start_iso":"2026-07-07T08:30:00+10:00","end_iso":"2026-07-07T15:30:00+10:00","status":"Scheduled","duration_hours":7.0,"network":"Ausnet","incident_id":"INCD-205527-U","customers":440}],"possible":[],"nearest_street":null,"nearest_distance_m":null,"longest_hours":7.0,"total_hours":7.0},{"client":{"client_id":"mcdonald-s","name":"McDonald's","category":"McDonald's","source":"osm","address":"163-169 York Street","suburb":"SALE","postcode":"3850","lat":-38.1069431,"lng":147.0678441},"definite":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Tue 7 Jul, 8:30 AM","end":"3:30 PM","start_iso":"2026-07-07T08:30:00+10:00","end_iso":"2026-07-07T15:30:00+10:00","status":"Scheduled","duration_hours":7.0,"network":"Ausnet","incident_id":"INCD-205527-U","customers":440}],"possible":[],"nearest_street":null,"nearest_distance_m":null,"longest_hours":7.0,"total_hours":7.0},{"client":{"client_id":"bp-kingsbury-2","name":"BP Kingsbury","category":"BP","source":"osm","address":"917-929 Plenty Road","suburb":"KINGSBURY","postcode":"3083","lat":-37.7197331,"lng":145.0367476,"pipedrive_lead_id":"492426d0-6485-11f1-92f7-57308d910576"},"definite":[],"possible":[{"suburb":"Kingsbury","street":"Plenty Road","start":"Wed 24 Jun, 8:00 AM","end":"4:00 PM","start_iso":"2026-06-24T08:00:00+10:00","end_iso":"2026-06-24T16:00:00+10:00","status":"Scheduled","duration_hours":8.0,"_distance_m":25}],"nearest_street":"Plenty Road, Kingsbury","nearest_distance_m":25,"longest_hours":8.0,"total_hours":8.0},{"client":{"client_id":"caltex-glenroy-2","name":"Caltex Glenroy","category":"Caltex","source":"osm","address":"1064 Pascoe Vale Road","suburb":"BROADMEADOWS","postcode":"3047","lat":-37.6838202,"lng":144.9175362,"pipedrive_lead_id":"3761c400-62b6-11f1-9c56-ebe730fae2d3"},"definite":[],"possible":[{"suburb":"Glenroy","street":"Pascoe Vale Road","start":"Sun 21 Jun, 7:00 AM","end":"4:00 PM","start_iso":"2026-06-21T07:00:00+10:00","end_iso":"2026-06-21T16:00:00+10:00","status":"Scheduled","duration_hours":9.0,"_distance_m":38}],"nearest_street":"Pascoe Vale Road, Glenroy","nearest_distance_m":38,"longest_hours":9.0,"total_hours":9.0},{"client":{"client_id":"mcdonald-s-campbellfield-2","name":"McDonald's Campbellfield","category":"McDonald's","source":"osm","address":"Mahoneys Road","suburb":"FAWKNER","postcode":"3060","lat":-37.6901345,"lng":144.9588754,"pipedrive_lead_id":"df2b4010-5a16-11f1-ab44-5d756143e363"},"definite":[],"possible":[{"suburb":"Campbellfield","street":"Sydney Road","start":"Sun 14 Jun, 7:30 AM","end":"5:30 PM","start_iso":"2026-06-14T07:30:00+10:00","end_iso":"2026-06-14T17:30:00+10:00","status":"Scheduled","duration_hours":10.0,"_distance_m":42}],"nearest_street":"Sydney Road, Campbellfield","nearest_distance_m":42,"longest_hours":10.0,"total_hours":10.0},{"client":{"client_id":"bunnings-warehouse-gippsland-centre","name":"Bunnings Warehouse Gippsland Centre","category":"Bunnings","source":"osm","address":"38-50 Macarthur Street","suburb":"SALE","postcode":"3850","lat":-38.1058143,"lng":147.0632564},"definite":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Tue 7 Jul, 8:30 AM","end":"3:30 PM","start_iso":"2026-07-07T08:30:00+10:00","end_iso":"2026-07-07T15:30:00+10:00","status":"Scheduled","duration_hours":7.0,"network":"Ausnet","incident_id":"INCD-205527-U","customers":440}],"possible":[],"nearest_street":null,"nearest_distance_m":null,"longest_hours":7.0,"total_hours":7.0},{"client":{"client_id":"mcdonald-s-footscray","name":"McDonald's Footscray","category":"McDonald's","source":"osm","address":"190 Ballarat Road","suburb":"FOOTSCRAY","postcode":"3011","lat":-37.791111,"lng":144.8904071},"definite":[],"possible":[{"suburb":"Footscray","street":"Ballarat Road","start":"Wed 24 Jun, 12:30 AM","end":"6:00 AM","start_iso":"2026-06-24T00:30:00+10:00","end_iso":"2026-06-24T06:00:00+10:00","status":"Scheduled","duration_hours":5.5,"_distance_m":35}],"nearest_street":"Ballarat Road, Footscray","nearest_distance_m":35,"longest_hours":5.5,"total_hours":5.5},{"client":{"client_id":"shell-glenroy-2","name":"Shell Glenroy","category":"Shell","source":"osm","address":"945-957 Pascoe Vale Road","suburb":"JACANA","postcode":"3047","lat":-37.6928973,"lng":144.9149715,"pipedrive_lead_id":"66e687b0-62b6-11f1-b20b-41c2aa6266df"},"definite":[],"possible":[{"suburb":"Glenroy","street":"Pascoe Vale Road","start":"Sun 21 Jun, 7:00 AM","end":"4:00 PM","start_iso":"2026-06-21T07:00:00+10:00","end_iso":"2026-06-21T16:00:00+10:00","status":"Scheduled","duration_hours":9.0,"_distance_m":34}],"nearest_street":"Pascoe Vale Road, Glenroy","nearest_distance_m":34,"longest_hours":9.0,"total_hours":9.0},{"client":{"client_id":"bp-campbellfield-2","name":"BP Campbellfield","category":"BP","source":"osm","address":"171-173 Hume Highway","suburb":"SOMERTON","postcode":"3062","lat":-37.6288488,"lng":144.9479329,"pipedrive_lead_id":"39dd7260-62b6-11f1-b20b-41c2aa6266df"},"definite":[],"possible":[{"suburb":"Campbellfield","street":"Hume Highway","start":"Sun 14 Jun, 7:30 AM","end":"5:30 PM","start_iso":"2026-06-14T07:30:00+10:00","end_iso":"2026-06-14T17:30:00+10:00","status":"Scheduled","duration_hours":10.0,"_distance_m":78}],"nearest_street":"Hume Highway, Campbellfield","nearest_distance_m":78,"longest_hours":10.0,"total_hours":10.0},{"client":{"client_id":"caltex-flemington","name":"Caltex Flemington","category":"Caltex","source":"osm","address":"1 Epsom Road","suburb":"ASCOT VALE","postcode":"3032","lat":-37.770888,"lng":144.9060022},"definite":[],"possible":[{"suburb":"Flemington","street":"Epsom Road","start":"Fri 26 Jun, 8:00 AM","end":"9:00 AM","start_iso":"2026-06-26T08:00:00+10:00","end_iso":"2026-06-26T09:00:00+10:00","status":"Scheduled","duration_hours":1.0,"_distance_m":35}],"nearest_street":"Epsom Road, Flemington","nearest_distance_m":35,"longest_hours":1.0,"total_hours":1.0},{"client":{"client_id":"bp-footscray","name":"BP Footscray","category":"BP","source":"osm","address":"Lyons Street","suburb":"FOOTSCRAY","postcode":"3011","lat":-37.8084595,"lng":144.9018961,"pipedrive_lead_id":"b84eac20-5a16-11f1-b0ce-e1ba3e8f5b87"},"definite":[],"possible":[{"suburb":"Footscray","street":"Whitehall Street","start":"Thu 18 Jun, 8:00 PM","end":"5:00 AM","start_iso":"2026-06-18T20:00:00+10:00","end_iso":"2026-06-19T05:00:00+10:00","status":"Scheduled","duration_hours":9.0,"_distance_m":62}],"nearest_street":"Whitehall Street, Footscray","nearest_distance_m":62,"longest_hours":9.0,"total_hours":9.0},{"client":{"client_id":"bp-footscray-2","name":"BP Footscray","category":"BP","source":"osm","address":"32-50 Napier Street","suburb":"FOOTSCRAY","postcode":"3011","lat":-37.8046652,"lng":144.9036559,"pipedrive_lead_id":"b84eac20-5a16-11f1-b0ce-e1ba3e8f5b87"},"definite":[],"possible":[{"suburb":"Footscray","street":"Whitehall Street","start":"Thu 18 Jun, 8:00 PM","end":"5:00 AM","start_iso":"2026-06-18T20:00:00+10:00","end_iso":"2026-06-19T05:00:00+10:00","status":"Scheduled","duration_hours":9.0,"_distance_m":59}],"nearest_street":"Whitehall Street, Footscray","nearest_distance_m":59,"longest_hours":9.0,"total_hours":9.0},{"client":{"client_id":"bp-3","name":"BP","category":"BP","source":"osm","address":"327-333 Princes Highway","suburb":"TRARALGON EAST","postcode":"3844","lat":-38.1893554,"lng":146.5665575},"definite":[],"possible":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Sun 12 Jul, 8:30 AM","end":"3:00 PM","start_iso":"2026-07-12T08:30:00+10:00","end_iso":"2026-07-12T15:00:00+10:00","status":"Scheduled","duration_hours":6.5,"network":"Ausnet","incident_id":"INCD-205485-U","customers":114,"_distance_m":17}],"nearest_street":null,"nearest_distance_m":null,"longest_hours":6.5,"total_hours":6.5},{"client":{"client_id":"ampol-greenvale-shopping-centre","name":"Ampol Greenvale Shopping Centre","category":"Ampol","source":"osm","address":"Mickleham Rd & Greenvale Drive","suburb":"GREENVALE","postcode":"3059","lat":-37.6403745,"lng":144.8813464,"pipedrive_lead_id":"fc9adb50-5adf-11f1-9732-231a802356b8"},"definite":[],"possible":[{"suburb":"Greenvale","street":"Mickleham Road","start":"Thu 11 Jun, 9:00 AM","end":"4:30 PM","start_iso":"2026-06-11T09:00:00+10:00","end_iso":"2026-06-11T16:30:00+10:00","status":"Cancelled","duration_hours":7.5,"_distance_m":41}],"nearest_street":"Mickleham Road, Greenvale","nearest_distance_m":41,"longest_hours":0.0,"total_hours":0.0},{"client":{"client_id":"shell-yarraville","name":"Shell Yarraville","category":"Shell","source":"osm","address":"250 Whitehall Street","suburb":"YARRAVILLE","postcode":"3013","lat":-37.8178061,"lng":144.8986083,"pipedrive_lead_id":"fd3f7fc0-5adf-11f1-ab44-5d756143e363"},"definite":[{"suburb":"Yarraville","street":"Whitehall Street","start":"Thu 11 Jun, 8:00 AM","end":"5:30 PM","start_iso":"2026-06-11T08:00:00+10:00","end_iso":"2026-06-11T17:30:00+10:00","status":"Scheduled","duration_hours":9.5}],"possible":[],"nearest_street":"Whitehall Street, Yarraville","nearest_distance_m":45,"longest_hours":9.5,"total_hours":9.5},{"client":{"client_id":"chemist-warehouse-footscray","name":"Chemist Warehouse Footscray","category":"Chemist Warehouse","source":"osm","address":"190-194 Barkly Street","suburb":"FOOTSCRAY","postcode":"3011","lat":-37.7992343,"lng":144.8978998},"definite":[],"possible":[{"suburb":"Footscray","street":"Droop Street","start":"Wed 24 Jun, 12:30 AM","end":"6:00 AM","start_iso":"2026-06-24T00:30:00+10:00","end_iso":"2026-06-24T06:00:00+10:00","status":"Scheduled","duration_hours":5.5,"_distance_m":99}],"nearest_street":"Droop Street, Footscray","nearest_distance_m":99,"longest_hours":5.5,"total_hours":5.5},{"client":{"client_id":"liberty-greenvale","name":"Liberty Greenvale","category":"Liberty","source":"osm","address":"825 Mickleham Road","suburb":"GREENVALE","postcode":"3059","lat":-37.639219,"lng":144.880225,"pipedrive_lead_id":"fdf27c10-5adf-11f1-ab44-5d756143e363"},"definite":[{"suburb":"Greenvale","street":"Mickleham Road","start":"Thu 11 Jun, 9:00 AM","end":"4:30 PM","start_iso":"2026-06-11T09:00:00+10:00","end_iso":"2026-06-11T16:30:00+10:00","status":"Cancelled","duration_hours":7.5}],"possible":[],"nearest_street":"Mickleham Road, Greenvale","nearest_distance_m":35,"longest_hours":0.0,"total_hours":0.0},{"client":{"client_id":"bp-greenvale","name":"BP Greenvale","category":"BP","source":"osm","address":"910 Mickleham Road","suburb":"GREENVALE","postcode":"3059","lat":-37.6341446,"lng":144.8823318,"pipedrive_lead_id":"fe69cef0-5adf-11f1-ab44-5d756143e363"},"definite":[{"suburb":"Greenvale","street":"Mickleham Road","start":"Thu 11 Jun, 9:00 AM","end":"4:30 PM","start_iso":"2026-06-11T09:00:00+10:00","end_iso":"2026-06-11T16:30:00+10:00","status":"Cancelled","duration_hours":7.5}],"possible":[],"nearest_street":"Mickleham Road, Greenvale","nearest_distance_m":63,"longest_hours":0.0,"total_hours":0.0},{"client":{"client_id":"hungry-jack-s-greenvale","name":"Hungry Jack's Greenvale","category":"Hungry Jack's","source":"osm","address":"Somerton Road","suburb":"GREENVALE","postcode":"3059","lat":-37.6344723,"lng":144.8821937,"pipedrive_lead_id":"ff27eed0-5adf-11f1-9732-231a802356b8"},"definite":[],"possible":[{"suburb":"Greenvale","street":"Mickleham Road","start":"Thu 11 Jun, 9:00 AM","end":"4:30 PM","start_iso":"2026-06-11T09:00:00+10:00","end_iso":"2026-06-11T16:30:00+10:00","status":"Cancelled","duration_hours":7.5,"_distance_m":53}],"nearest_street":"Mickleham Road, Greenvale","nearest_distance_m":53,"longest_hours":0.0,"total_hours":0.0},{"client":{"client_id":"chemist-warehouse-greenvale","name":"Chemist Warehouse Greenvale","category":"Chemist Warehouse","source":"osm","address":"212-220 Greenvale Drive","suburb":"GREENVALE","postcode":"3059","lat":-37.6505131,"lng":144.8959081,"pipedrive_lead_id":"005cec60-5ae0-11f1-ab44-5d756143e363"},"definite":[],"possible":[{"suburb":"Greenvale","street":"Barrymore Road","start":"Thu 11 Jun, 9:00 AM","end":"4:30 PM","start_iso":"2026-06-11T09:00:00+10:00","end_iso":"2026-06-11T16:30:00+10:00","status":"Cancelled","duration_hours":7.5,"_distance_m":55}],"nearest_street":"Barrymore Road, Greenvale","nearest_distance_m":55,"longest_hours":0.0,"total_hours":0.0},{"client":{"client_id":"shell-3","name":"Shell","category":"Shell","source":"osm","address":"137-139 Princes Drive","suburb":"MORWELL","postcode":"3840","lat":-38.2348354,"lng":146.3925459,"pipedrive_lead_id":"31490040-676d-11f1-9c56-ebe730fae2d3"},"definite":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Sun 5 Jul, 8:00 AM","end":"4:00 PM","start_iso":"2026-07-05T08:00:00+10:00","end_iso":"2026-07-05T16:00:00+10:00","status":"Scheduled","duration_hours":8.0,"network":"Ausnet","incident_id":"INCD-206359-U","customers":579}],"possible":[],"nearest_street":null,"nearest_distance_m":null,"longest_hours":8.0,"total_hours":8.0},{"client":{"client_id":"amcal-wantirna-south","name":"Amcal Wantirna South","category":"Amcal","source":"osm","address":"203 Stud Road","suburb":"WANTIRNA SOUTH","postcode":"3152","lat":-37.8596424,"lng":145.2407501,"pipedrive_lead_id":"c1bc27b0-5a16-11f1-9732-231a802356b8"},"definite":[],"possible":[{"suburb":"","street":"Outage zone (Ausnet)","start":"Thu 18 Jun, 8:45 AM","end":"4:00 PM","start_iso":"2026-06-18T08:45:00+10:00","end_iso":"2026-06-18T16:00:00+10:00","status":"Scheduled","duration_hours":7.25,"network":"Ausnet","incident_id":"INCD-135732-W","customers":112,"_distance_m":32}],"nearest_street":null,"nearest_distance_m":null,"longest_hours":7.25,"total_hours":7.25}],"meta":{"source":"Jemena + Ausnet planned outages \u00b7 auto-updated","extracted":"Mon 15 Jun 2026, 07:12 AM AEST","totalOutages":281,"totalAusnet":162,"totalClients":4974,"definiteCount":35,"possibleCount":31,"bufferMetres":100,"defaultMinHours":6.0,"pipedriveDomain":"nexusenergy","repoOwner":"Nexus-Energy393","repoName":"jemena-outages"}};
+document.getElementById('meta').textContent =
+  `Last updated ${DATA.meta.extracted}. ${DATA.meta.definiteCount} definite, ${DATA.meta.possibleCount} possible. ` +
+  `${DATA.meta.totalClients} total clients tracked. Default minimum duration: ${DATA.meta.defaultMinHours||4}h.`;
+
+function esc(s) { return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+// Flatten: one row per (client, outage)
+const rows = [];
+for (const a of DATA.affected) {
+  const c = a.client;
+  const total = a.total_hours || 0;
+  const longest = a.longest_hours || 0;
+  for (const o of a.definite) {
+    rows.push({
+      match: 'Definite', sortMatch: 0,
+      client: c, outage: o,
+      distance: null,
+      duration: o.duration_hours || 0,
+      total_hours: total,
+      longest_hours: longest,
+      client_min: c.min_outage_hours,
+    });
+  }
+  for (const o of a.possible) {
+    rows.push({
+      match: 'Possible', sortMatch: 1,
+      client: c, outage: o,
+      distance: o._distance_m,
+      duration: o.duration_hours || 0,
+      total_hours: total,
+      longest_hours: longest,
+      client_min: c.min_outage_hours,
+    });
+  }
+}
+
+const categories = [...new Set(rows.map(r => r.client.category).filter(Boolean))].sort();
+
+// ---------------------------------------------------------------------------
+// Filter persistence (localStorage) + multi-select category widget
+// ---------------------------------------------------------------------------
+const CONFIRMED_LEADS_KEY = 'jemena-outages-confirmed-leads-v1'; function loadConfirmedLeads() { try { return new Set(JSON.parse(localStorage.getItem(CONFIRMED_LEADS_KEY) || '[]')); } catch (_e) { return new Set(); } } const confirmedLeads = loadConfirmedLeads(); function saveConfirmedLeads() { try { localStorage.setItem(CONFIRMED_LEADS_KEY, JSON.stringify([...confirmedLeads])); } catch (_e) {} } const FILTER_STORAGE_KEY = 'jemena-affected-filters-v1';
+function loadStoredFilters() {
+  try {
+    return JSON.parse(localStorage.getItem(FILTER_STORAGE_KEY) || '{}');
+  } catch (_e) { return {}; }
+}
+function saveStoredFilters(f) {
+  try { localStorage.setItem(FILTER_STORAGE_KEY, JSON.stringify(f)); } catch (_e) {}
+}
+const stored = loadStoredFilters();
+
+// Build multi-select category options
+const msOptionsBox = document.getElementById('ms-category-options');
+const msButton = document.getElementById('ms-category-button');
+const msPopover = document.getElementById('ms-category-popover');
+let selectedCategories = new Set(
+  Array.isArray(stored.categories) ? stored.categories.filter(c => categories.includes(c)) : []
+);
+
+function rebuildCategoryOptions() {
+  msOptionsBox.innerHTML = '';
+  for (const c of categories) {
+    const id = 'ms-cat-' + c.replace(/[^a-z0-9]/gi, '_');
+    const wrap = document.createElement('label');
+    wrap.htmlFor = id;
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.id = id;
+    cb.value = c;
+    cb.checked = selectedCategories.has(c);
+    cb.addEventListener('change', () => {
+      if (cb.checked) selectedCategories.add(c);
+      else selectedCategories.delete(c);
+      updateCategoryButton();
+      persistFilters();
+      sortAndFilter();
+    });
+    const txt = document.createElement('span');
+    txt.textContent = c;
+    wrap.appendChild(cb);
+    wrap.appendChild(txt);
+    msOptionsBox.appendChild(wrap);
+  }
+}
+
+function updateCategoryButton() {
+  if (selectedCategories.size === 0) {
+    msButton.textContent = 'All categories';
+    msButton.classList.remove('has-selection');
+  } else if (selectedCategories.size === 1) {
+    msButton.textContent = [...selectedCategories][0];
+    msButton.classList.add('has-selection');
+  } else {
+    msButton.textContent = `${selectedCategories.size} categories`;
+    msButton.classList.add('has-selection');
+  }
+}
+
+msButton.addEventListener('click', e => {
+  e.stopPropagation();
+  msPopover.classList.toggle('show');
+});
+document.addEventListener('click', e => {
+  if (!msPopover.contains(e.target) && e.target !== msButton) {
+    msPopover.classList.remove('show');
+  }
+});
+msPopover.querySelector('[data-action="all"]').addEventListener('click', () => {
+  selectedCategories = new Set(categories);
+  rebuildCategoryOptions();
+  updateCategoryButton();
+  persistFilters();
+  sortAndFilter();
+});
+msPopover.querySelector('[data-action="none"]').addEventListener('click', () => {
+  selectedCategories.clear();
+  rebuildCategoryOptions();
+  updateCategoryButton();
+  persistFilters();
+  sortAndFilter();
+});
+
+rebuildCategoryOptions();
+updateCategoryButton();
+
+let sortKey = stored.sortKey || 'outage_when';
+let sortDir = stored.sortDir || 1;
+const search = document.getElementById('search');
+const matchFilter = document.getElementById('match-filter');
+const statusFilter = document.getElementById('status-filter');
+const minHours = document.getElementById('min-hours');
+const durationMode = document.getElementById('duration-mode');
+const groupMode = document.getElementById('group-mode');
+const tbody = document.getElementById('tbody');
+const summary = document.getElementById('summary');
+
+// Restore other filter values from storage (URL ?min= still wins)
+if (stored.search) search.value = stored.search;
+if (stored.matchFilter) matchFilter.value = stored.matchFilter;
+if (stored.statusFilter) statusFilter.value = stored.statusFilter;
+if (stored.minHours) minHours.value = stored.minHours;
+if (stored.durationMode) durationMode.value = stored.durationMode;
+if (stored.groupMode) groupMode.value = stored.groupMode;
+
+// Read ?min= from URL if main map passed it through
+const urlMin = new URLSearchParams(location.search).get('min');
+if (urlMin && [...minHours.options].some(o => o.value === urlMin)) {
+  minHours.value = urlMin;
+}
+
+function persistFilters() {
+  saveStoredFilters({
+    search: search.value,
+    matchFilter: matchFilter.value,
+    statusFilter: statusFilter.value,
+    minHours: minHours.value,
+    durationMode: durationMode.value,
+    groupMode: groupMode.value,
+    categories: [...selectedCategories],
+    sortKey, sortDir,
+  });
+}
+
+function effectiveThreshold(r) {
+  // Per-client override beats page-level filter
+  if (r.client_min != null) return parseFloat(r.client_min);
+  return parseFloat(minHours.value);
+}
+
+// Hide outages that already started (today or earlier).
+// Compares outage start to "start of today" so an outage that begins later
+// today is still shown.
+function isOutageInPast(o) {
+  const iso = o && o.start_iso;
+  if (!iso) return false;
+  const dt = new Date(iso);
+  if (isNaN(dt)) return false;
+  const startOfToday = new Date();
+  startOfToday.setHours(0, 0, 0, 0);
+  return dt < startOfToday;
+}
+
+function sortAndFilter() {
+  const q = search.value.trim().toLowerCase();
+  const mf = matchFilter.value;
+  const sf = statusFilter.value;
+  const mode = durationMode.value;
+
+  let filtered = rows.filter(r => {
+    if (mf !== 'all' && r.match.toLowerCase() !== mf) return false;
+    // Multi-select: if any categories selected, row's category must be in that set.
+    // Empty selection means "show all" (default).
+    if (selectedCategories.size > 0 && !selectedCategories.has(r.client.category)) return false;
+    if (sf === 'active' && r.outage.status === 'Cancelled') return false;
+    // Hide outages that have already started (today's date or earlier)
+    if (isOutageInPast(r.outage)) return false;
+    const th = effectiveThreshold(r);
+    if (th > 0) {
+      let measure;
+      if (mode === 'row') measure = r.duration;
+      else if (mode === 'total') measure = r.total_hours;
+      else measure = r.longest_hours;
+      if (measure < th) return false;
+    }
+    if (q) {
+      const hay = [
+        r.client.name, r.client.address, r.client.suburb, r.client.category,
+        r.outage.street, r.outage.suburb,
+      ].join(' ').toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+
+  filtered.sort((a, b) => {
+    let av, bv;
+    switch (sortKey) {
+      case 'match': av = a.sortMatch; bv = b.sortMatch; break;
+      case 'name': av = a.client.name||''; bv = b.client.name||''; break;
+      case 'category': av = a.client.category||''; bv = b.client.category||''; break;
+      case 'suburb': av = a.client.suburb||''; bv = b.client.suburb||''; break;
+      case 'address': av = a.client.address||''; bv = b.client.address||''; break;
+      
+      case 'outage_when': av = a.outage.start_iso || a.outage.start || ''; bv = b.outage.start_iso || b.outage.start || ''; break;
+      case 'duration': av = a.duration; bv = b.duration; break;
+      case 'outage_where': av = `${a.outage.suburb} ${a.outage.street}`; bv = `${b.outage.suburb} ${b.outage.street}`; break;
+      case 'distance': av = a.distance===null ? -1 : a.distance; bv = b.distance===null ? -1 : b.distance; break;
+      case 'total_hours': av = a.total_hours; bv = b.total_hours; break;
+      case 'longest_hours': av = a.longest_hours; bv = b.longest_hours; break;
+      default: av=''; bv='';
+    }
+    if (av < bv) return -sortDir;
+    if (av > bv) return sortDir;
+    return 0;
+  });
+
+  // Group rows if requested
+  const groupMode = document.getElementById('group-mode').value;
+  let displayRows = filtered;
+  if (groupMode !== 'ungrouped' && filtered.length > 0) {
+    const groups = new Map();
+    for (const r of filtered) {
+      const key = groupMode === 'client'
+        ? `${r.client.name}|${r.client.address||''}|${r.client.lat||''},${r.client.lng||''}`
+        : `${r.client.name}|${r.client.address||''}|${r.outage.street}|${r.outage.suburb}`;
+      if (!groups.has(key)) groups.set(key, { rep: r, items: [], minDistance: r.distance });
+      const g = groups.get(key);
+      g.items.push(r);
+      if (r.distance !== null && (g.minDistance === null || r.distance < g.minDistance)) {
+        g.minDistance = r.distance;
+        g.rep = r;  // promote closer match as representative
+      }
+    }
+    displayRows = [...groups.values()].map(g => ({ ...g.rep, _group: g.items, _minDistance: g.minDistance }));
+    // Re-sort grouped rows
+    displayRows.sort((a, b) => {
+      const av = sortKey === 'duration' ? Math.max(...a._group.map(x => x.duration))
+              : sortKey === 'outage_when' ? (a._group.map(x => x.outage.start_iso || x.outage.start || '').sort()[0] || '')
+              : sortKey === 'longest_hours' ? a.longest_hours
+              : sortKey === 'total_hours' ? a.total_hours
+              : sortKey === 'distance' ? (a._minDistance===null ? -1 : a._minDistance)
+              : a[sortKey] || a.client[sortKey] || '';
+      const bv = sortKey === 'duration' ? Math.max(...b._group.map(x => x.duration))
+              : sortKey === 'outage_when' ? (b._group.map(x => x.outage.start_iso || x.outage.start || '').sort()[0] || '')
+              : sortKey === 'longest_hours' ? b.longest_hours
+              : sortKey === 'total_hours' ? b.total_hours
+              : sortKey === 'distance' ? (b._minDistance===null ? -1 : b._minDistance)
+              : b[sortKey] || b.client[sortKey] || '';
+      if (av < bv) return -sortDir;
+      if (av > bv) return sortDir;
+      return 0;
+    });
+  }
+
+  if (displayRows.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="12" class="empty">No matching rows. Try clearing filters or lowering the minimum duration.</td></tr>`;
+  } else {
+    tbody.innerHTML = displayRows.map(r => {
+      const c = r.client, o = r.outage;
+      const mLeadId = c.pipedrive_lead_id || ''; const isConfirmed = mLeadId && confirmedLeads.has(String(mLeadId)); const matchChip = isConfirmed ? `<span class="chip confirmed">Confirmed</span>` : `<span class="match-cell"><button type="button" class="match-btn" data-match-lead="${esc(mLeadId)}" data-client-name="${esc(c.name)}"><span class="chip ${r.match.toLowerCase()}">${r.match}</span></button><span class="match-menu"><button type="button" class="match-confirm">Confirmed</button><button type="button" class="match-delete danger">Delete</button></span></span>`;
+      
+      
+      
+      
+      const overrideTag = c.min_outage_hours != null
+        ? `<span class="small">(client threshold ${c.min_outage_hours}h)</span>` : '';
+
+      let whenCell, durCell, locCell, distCell;
+      if (r._group) {
+        // Sort group items chronologically so 'When' lists soonest first
+        const items = [...r._group].sort((x, y) =>
+          (x.outage.start_iso || x.outage.start || '').localeCompare(y.outage.start_iso || y.outage.start || '')
+        );
+        const distinctLocations = [...new Set(items.map(x => `${x.outage.street}|${x.outage.suburb}`))];
+        // When: stack each window
+        whenCell = items.map(x => {
+          const cancelled = x.outage.status === 'Cancelled' ? ' <span class="chip cancelled">cancelled</span>' : '';
+          return `<div>${esc(x.outage.start)} – ${esc(x.outage.end)} <span class="small">(${x.duration.toFixed(1)}h)</span>${cancelled}</div>`;
+        }).join('');
+        const totalGroupHours = items.reduce((acc, x) => acc + (x.outage.status === 'Cancelled' ? 0 : x.duration), 0);
+        const longestGroupHours = Math.max(...items.map(x => x.duration));
+        durCell = `<div><strong>${longestGroupHours.toFixed(1)}h</strong> longest</div><div class="small">${totalGroupHours.toFixed(1)}h across ${items.length}</div>`;
+        // Location: prefer single shared location, else list
+        if (distinctLocations.length === 1) {
+          locCell = `${esc(o.street)}<div class="small">${esc(o.suburb)}</div>`;
+        } else {
+          locCell = distinctLocations.map(loc => {
+            const [st, sub] = loc.split('|');
+            return `<div>${esc(st)} <span class="small">${esc(sub)}</span></div>`;
+          }).join('');
+        }
+        distCell = r._minDistance !== null
+          ? `${r._minDistance}m <span class="small">closest</span>`
+          : '<span class="small">on street</span>';
+      } else {
+        const cancelledChip = o.status === 'Cancelled' ? '<span class="chip cancelled">cancelled</span>' : '';
+        whenCell = `${esc(o.start)} – ${esc(o.end)} ${cancelledChip}`;
+        durCell = `${r.duration.toFixed(1)}h`;
+        locCell = `${esc(o.street)}<div class="small">${esc(o.suburb)}</div>`;
+        distCell = r.distance !== null ? `${r.distance}m` : '<span class="small">on street</span>';
+      }
+
+      const cid = c.client_id || '';
+      const pdDomain = (DATA.meta && DATA.meta.pipedriveDomain) || 'nexusenergy';
+      const leadId = c.pipedrive_lead_id || '';
+      const pipedriveUrl = leadId
+        ? `https://${pdDomain}.pipedrive.com/leads/inbox/${leadId}`
+        : null;
+      // Hide button — only shown if we have a lead ID to label
+      const hideBtn = leadId
+        ? `<button class="btn-sm btn-hide" data-lead-id="${esc(leadId)}" data-client-name="${esc(c.name)}" title="Apply 'Not Affected' label in Pipedrive">Hide</button>`
+        : '';
+      const actionsCell = `
+        ${cid ? `<a class="btn-sm" href="index.html?focus=${esc(cid)}">Map</a>` : ''}
+        ${pipedriveUrl ? `<a class="btn-sm" href="${pipedriveUrl}" target="_blank" rel="noopener">Pipedrive</a>` : ''}
+        ${hideBtn}
+      `;
+
+      return `<tr${cid ? ` id="client-${esc(cid)}"` : ''}>
+        <td data-label="Match">${matchChip}</td>
+        <td data-label="Client"><strong>${esc(c.name)}</strong>${c.notes?`<div class="small">${esc(c.notes)}</div>`:''}</td>
+        <td data-label="Category">${c.category?`<span class="chip cat">${esc(c.category)}</span>`:''}<div class="small">${esc(c.source||'')}</div></td>
+        <td data-label="Suburb">${esc(c.suburb||'')}<div class="small">${esc(c.postcode||'')}</div></td>
+        <td data-label="Address">${esc(c.address||'')}</td>
+        
+        <td data-label="When">${whenCell}</td>
+        <td data-label="Duration">${durCell}</td>
+        <td data-label="Outage location">${locCell}</td>
+        <td data-label="Distance">${distCell}</td>
+        <td data-label="Total hrs">${r.total_hours.toFixed(1)}h ${overrideTag}</td>
+        <td data-label="Longest hrs">${r.longest_hours.toFixed(1)}h</td>
+        <td data-label="Actions" class="actions">${actionsCell}</td>
+      </tr>`;
+    }).join('');
+  }
+  // Distinct affected clients in current view
+  const distinctClients = new Set(filtered.map(r => r.client.name + '|' + (r.client.address||'')));
+  document.getElementById('table').classList.toggle('hide-hours', durationMode.value === 'longest' && groupMode === 'ungrouped'); const rowLabel = displayRows.length === 1 ? 'row' : 'rows';
+  summary.textContent = `${displayRows.length} ${rowLabel}` +
+    (groupMode !== 'ungrouped' ? ` (from ${filtered.length} outages)` : '') +
+    ` · ${distinctClients.size} client${distinctClients.size===1?'':'s'}`;
+}
+
+document.querySelectorAll('th[data-sort]').forEach(th => {
+  th.addEventListener('click', () => {
+    const k = th.dataset.sort;
+    if (sortKey === k) sortDir = -sortDir;
+    else { sortKey = k; sortDir = 1; }
+    document.querySelectorAll('th').forEach(x => x.classList.remove('sort-asc', 'sort-desc'));
+    th.classList.add(sortDir === 1 ? 'sort-asc' : 'sort-desc');
+    persistFilters();
+    sortAndFilter();
+  });
+});
+
+[search, matchFilter, statusFilter, minHours, durationMode, groupMode].forEach(el =>
+  el.addEventListener('input', () => { persistFilters(); sortAndFilter(); })
+);
+
+sortAndFilter();
+
+// Honour #client-<id> hash by scrolling to and flashing the matching row.
+function focusFromHash() {
+  if (!location.hash || !location.hash.startsWith('#client-')) return;
+  // Wait one tick to ensure the table is rendered
+  setTimeout(() => {
+    const target = document.querySelector(location.hash);
+    if (!target) return;
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    target.classList.add('highlight-flash');
+  }, 50);
+}
+focusFromHash();
+window.addEventListener('hashchange', focusFromHash);
+
+// ---------------------------------------------------------------------------
+// Hide button: apply "Not Affected" label to the lead in Pipedrive
+// ---------------------------------------------------------------------------
+const PIPEDRIVE_TOKEN_KEY = 'jemena-outages-pd-token';
+const PIPEDRIVE_NOT_AFFECTED_LABEL_KEY = 'jemena-outages-pd-not-affected-label-id';
+const PIPEDRIVE_DOMAIN = (DATA.meta && DATA.meta.pipedriveDomain) || 'nexusenergy';
+
+async function getPipedriveToken() {
+  let token = localStorage.getItem(PIPEDRIVE_TOKEN_KEY);
+  if (token) return token;
+  token = prompt(
+    'Pipedrive API token needed to mark leads "Not Affected".\n\n' +
+    'Generate one at: https://' + PIPEDRIVE_DOMAIN + '.pipedrive.com/settings/personal/api\n\n' +
+    'Stored only in your browser. Paste it here:'
+  );
+  if (token) {
+    token = token.trim();
+    localStorage.setItem(PIPEDRIVE_TOKEN_KEY, token);
+    return token;
+  }
+  return null;
+}
+
+async function getNotAffectedLabelId(token) {
+  // Cache for the session — labels rarely change
+  let cached = localStorage.getItem(PIPEDRIVE_NOT_AFFECTED_LABEL_KEY);
+  if (cached) return cached;
+  const url = `https://${PIPEDRIVE_DOMAIN}.pipedrive.com/api/v1/leadLabels?api_token=${encodeURIComponent(token)}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Could not fetch lead labels: ${res.status}`);
+  const j = await res.json();
+  const labels = j.data || [];
+  const match = labels.find(l => l.name && l.name.toLowerCase() === 'not affected');
+  if (!match) {
+    throw new Error("'Not Affected' label not found in Pipedrive. Create it first under Settings → Lead labels.");
+  }
+  localStorage.setItem(PIPEDRIVE_NOT_AFFECTED_LABEL_KEY, match.id);
+  return match.id;
+}
+
+async function applyNotAffectedLabel(leadId, token, labelId) {
+  // GET the lead first to capture its current label_ids (so we don't clobber others)
+  const getUrl = `https://${PIPEDRIVE_DOMAIN}.pipedrive.com/api/v1/leads/${leadId}?api_token=${encodeURIComponent(token)}`;
+  const getRes = await fetch(getUrl);
+  if (!getRes.ok) {
+    const body = await getRes.text();
+    throw new Error(`GET lead ${leadId}: HTTP ${getRes.status} - ${body.slice(0, 250)}`);
+  }
+  const leadJson = await getRes.json();
+  const lead = leadJson.data || {};
+  const currentLabels = lead.label_ids || [];
+  if (currentLabels.includes(labelId)) {
+    return { alreadyApplied: true };
+  }
+  const newLabels = [...currentLabels, labelId];
+  const patchUrl = `https://${PIPEDRIVE_DOMAIN}.pipedrive.com/api/v1/leads/${leadId}?api_token=${encodeURIComponent(token)}`;
+  const res = await fetch(patchUrl, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ label_ids: newLabels }),
+  });
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`PATCH lead ${leadId}: HTTP ${res.status} - ${body.slice(0, 300)}`);
+  }
+  return { alreadyApplied: false };
+}
+
+// Delegate click on Hide buttons (works for dynamically-rendered rows)
+tbody.addEventListener('click', async ev => {
+  const btn = ev.target.closest('.btn-hide');
+  if (!btn) return;
+  ev.preventDefault();
+  const leadId = btn.dataset.leadId;
+  const clientName = btn.dataset.clientName || 'this client';
+  if (!leadId) return;
+
+  // Confirm
+  if (!confirm(
+    `Mark "${clientName}" as Not Affected in Pipedrive?\n\n` +
+    `This applies the "Not Affected" label to the lead and hides the row from the affected list. ` +
+    `Tomorrow's run will exclude this client across the whole team.\n\n` +
+    `You can undo this in Pipedrive by removing the label from the lead.`
+  )) return;
+
+  btn.classList.add('busy');
+  btn.disabled = true;
+  btn.textContent = '...';
+
+  try {
+    const token = await getPipedriveToken();
+    if (!token) { btn.classList.remove('busy'); btn.disabled = false; btn.textContent = 'Hide'; return; }
+    const labelId = await getNotAffectedLabelId(token);
+    const result = await applyNotAffectedLabel(leadId, token, labelId);
+    btn.classList.remove('busy');
+    btn.classList.add('done');
+    btn.textContent = result.alreadyApplied ? '✓ already' : '✓ hidden';
+    // Fade out and remove all rows in this client (a client may appear multiple times)
+    setTimeout(() => {
+      document.querySelectorAll(`button.btn-hide[data-lead-id="${leadId}"]`).forEach(b => {
+        const tr = b.closest('tr');
+        if (tr) {
+          tr.classList.add('row-hidden');
+          setTimeout(() => tr.remove(), 500);
+        }
+      });
+    }, 600);
+  } catch (e) {
+    btn.classList.remove('busy');
+    btn.disabled = false;
+    btn.textContent = 'Hide';
+    console.error('[hide] failed:', e);
+    const msg = String(e.message || e);
+    // Only clear token if the error is an authentication failure on a request
+    const isAuthFailure = /HTTP (401|403)\b/.test(msg);
+    if (isAuthFailure) {
+      localStorage.removeItem(PIPEDRIVE_TOKEN_KEY);
+      alert('Pipedrive token rejected (401/403). Cleared - try again to enter a fresh one.');
+    } else {
+      alert(`Hide failed:\n\n${msg}\n\n(Open the browser console for more detail.)`);
+    }
+  }
+});
+
+// ---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+  // Match button: per-row menu to mark a lead Confirmed or Delete it in Pipedrive
+  const PIPEDRIVE_CONFIRMED_LABEL_KEY = 'jemena-outages-pd-confirmed-label-id';
+  async function getConfirmedLabelId(token) {
+    let cached = localStorage.getItem(PIPEDRIVE_CONFIRMED_LABEL_KEY);
+    if (cached) return cached;
+    const url = `https://${PIPEDRIVE_DOMAIN}.pipedrive.com/api/v1/leadLabels?api_token=${encodeURIComponent(token)}`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`Could not fetch lead labels: ${res.status}`);
+    const labels = ((await res.json()).data) || [];
+    const m = labels.find(l => l.name && l.name.toLowerCase() === 'confirmed');
+    if (!m) throw new Error("'Confirmed' label not found in Pipedrive. Create it first under Settings, Lead labels.");
+    localStorage.setItem(PIPEDRIVE_CONFIRMED_LABEL_KEY, m.id);
+    return m.id;
+  }
+  async function applyConfirmedLabel(leadId, token, labelId) {
+    const getUrl = `https://${PIPEDRIVE_DOMAIN}.pipedrive.com/api/v1/leads/${leadId}?api_token=${encodeURIComponent(token)}`;
+    const getRes = await fetch(getUrl);
+    if (!getRes.ok) { const b = await getRes.text(); throw new Error(`GET lead ${leadId}: HTTP ${getRes.status} - ${b.slice(0,250)}`); }
+    const lead = ((await getRes.json()).data) || {};
+    const cur = lead.label_ids || [];
+    if (cur.includes(labelId)) return { alreadyApplied: true };
+    const patchUrl = `https://${PIPEDRIVE_DOMAIN}.pipedrive.com/api/v1/leads/${leadId}?api_token=${encodeURIComponent(token)}`;
+    const res = await fetch(patchUrl, { method:'PATCH', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ label_ids:[...cur, labelId] }) });
+    if (!res.ok) { const b = await res.text(); throw new Error(`PATCH lead ${leadId}: HTTP ${res.status} - ${b.slice(0,300)}`); }
+    return { alreadyApplied: false };
+  }
+  async function deleteLead(leadId, token) {
+    const url = `https://${PIPEDRIVE_DOMAIN}.pipedrive.com/api/v1/leads/${leadId}?api_token=${encodeURIComponent(token)}`;
+    const res = await fetch(url, { method:'DELETE' });
+    if (!res.ok) { const b = await res.text(); throw new Error(`DELETE lead ${leadId}: HTTP ${res.status} - ${b.slice(0,300)}`); }
+    return true;
+  }
+  function closeAllMatchMenus() { document.querySelectorAll('.match-menu.show').forEach(x => x.classList.remove('show')); }
+  document.addEventListener('click', () => closeAllMatchMenus());
+  tbody.addEventListener('click', async ev => {
+    const toggle = ev.target.closest('.match-btn');
+    if (toggle) {
+      ev.preventDefault(); ev.stopPropagation();
+      const menu = toggle.parentElement.querySelector('.match-menu');
+      const wasOpen = menu.classList.contains('show');
+      closeAllMatchMenus();
+      if (!wasOpen) menu.classList.add('show');
+      return;
+    }
+    const confirmBtn = ev.target.closest('.match-confirm');
+    if (confirmBtn) {
+      ev.preventDefault(); ev.stopPropagation();
+      const cell = confirmBtn.closest('.match-cell');
+      const trigger = cell.querySelector('.match-btn');
+      const leadId = trigger && trigger.dataset.matchLead;
+      closeAllMatchMenus();
+      const chip = cell.querySelector('.chip');
+      if (chip) { chip.className = 'chip confirmed'; chip.textContent = 'Confirmed'; }
+      const menuEl = cell.querySelector('.match-menu'); if (menuEl) menuEl.remove();
+      if (leadId) {
+        confirmedLeads.add(String(leadId));
+        saveConfirmedLeads();
+        try {
+          const token = await getPipedriveToken();
+          if (token) { const labelId = await getConfirmedLabelId(token); await applyConfirmedLabel(leadId, token, labelId); }
+        } catch (e) {
+          console.error('[confirm] Pipedrive label sync failed:', e);
+          const msg = String(e.message || e);
+          if (/HTTP (401|403)\b/.test(msg)) localStorage.removeItem(PIPEDRIVE_TOKEN_KEY);
+          alert(`Marked Confirmed locally, but syncing the label to Pipedrive failed:\n\n${msg}`);
+        }
+      }
+      return;
+    }
+    const deleteBtn = ev.target.closest('.match-delete');
+    if (deleteBtn) {
+      ev.preventDefault(); ev.stopPropagation();
+      const cell = deleteBtn.closest('.match-cell');
+      const trigger = cell.querySelector('.match-btn');
+      const leadId = trigger && trigger.dataset.matchLead;
+      const clientName = (trigger && trigger.dataset.clientName) || 'this client';
+      closeAllMatchMenus();
+      if (!leadId) { alert('No Pipedrive lead is linked to this row, so it cannot be deleted.'); return; }
+      if (!confirm(`Permanently DELETE the Pipedrive lead for "${clientName}"?\n\nThis removes the lead from Pipedrive entirely and CANNOT be undone. The row will disappear immediately.`)) return;
+      const tr = deleteBtn.closest('tr');
+      if (tr) { tr.classList.add('row-hidden'); setTimeout(() => tr.remove(), 500); }
+      try {
+        const token = await getPipedriveToken();
+        if (!token) { alert('No Pipedrive token provided - the row was hidden but the lead was NOT deleted in Pipedrive.'); return; }
+        await deleteLead(leadId, token);
+      } catch (e) {
+        console.error('[delete] failed:', e);
+        const msg = String(e.message || e);
+        if (/HTTP (401|403)\b/.test(msg)) localStorage.removeItem(PIPEDRIVE_TOKEN_KEY);
+        alert(`The row was hidden, but deleting the lead in Pipedrive failed:\n\n${msg}`);
+      }
+      return;
+    }
+  });
+  
+const REPO_OWNER = (DATA.meta && DATA.meta.repoOwner) || 'Nexus-Energy393';
+const REPO_NAME  = (DATA.meta && DATA.meta.repoName)  || 'jemena-outages';
+const CSV_PATH = 'clients.csv';
+const TOKEN_KEY = 'jemena-outages-gh-token';
+
+const REQUIRED_HEADERS = [
+  'name','address','suburb','postcode','category',
+  'contact_name','contact_phone','contact_email','min_outage_hours','notes'
+];
+
+const uploadModal = document.createElement('div');
+uploadModal.className = 'modal-overlay';
+uploadModal.innerHTML = `
+<div class="modal">
+  <h2>Upload <code>clients.csv</code></h2>
+  <p>This will replace the file in the GitHub repo. The next workflow run (within 24 hours, or trigger manually) will use the new list.</p>
+
+  <label for="upload-token">GitHub Personal Access Token</label>
+  <input id="upload-token" type="password" placeholder="github_pat_... or ghp_..." autocomplete="off">
+  <p class="small">
+    Stored locally in your browser only. Needs repo write access.
+    <a href="https://github.com/settings/tokens/new?description=Jemena%20outage%20map&scopes=repo" target="_blank" rel="noopener">Create one</a>
+    (tick "repo" scope, give it a sensible expiry).
+  </p>
+
+  <label for="upload-file">New <code>clients.csv</code></label>
+  <input id="upload-file" type="file" accept=".csv,text/csv">
+
+  <div id="upload-preview"></div>
+  <div id="upload-status" class="status-line"></div>
+
+  <div class="modal-buttons">
+    <button class="secondary" id="upload-cancel">Cancel</button>
+    <button class="primary" id="upload-confirm" disabled>Push to GitHub</button>
+  </div>
+</div>`;
+document.body.appendChild(uploadModal);
+/* ===== Add Client feature (reuses existing GitHub push flow) ===== */
+const AC_FIELD_LABELS = {
+  name: 'Business / client name',
+  address: 'Address',
+  suburb: 'Suburb',
+  postcode: 'Postcode',
+  category: 'Category',
+  contact_name: 'Contact name',
+  contact_phone: 'Contact phone',
+  contact_email: 'Contact email',
+  min_outage_hours: 'Min outage hours',
+  notes: 'Notes'
+};
+function acCsvCell(v){
+  v = (v == null ? '' : String(v));
+  if (/[",\r\n]/.test(v) || /^\s|\s$/.test(v)) {
+    return '"' + v.replace(/"/g, '""') + '"';
+  }
+  return v;
+}
+const addModal = document.createElement('div');
+addModal.className = 'modal-overlay';
+const acFieldsHtml = REQUIRED_HEADERS.map(function(h){
+  const label = AC_FIELD_LABELS[h] || h;
+  const req = (h === 'name') ? ' <span style="color:var(--red)">*</span>' : '';
+  if (h === 'notes') {
+    return '<label for="ac-' + h + '">' + label + req + '</label><textarea id="ac-' + h + '" rows="2"></textarea>';
+  }
+  let type = 'text';
+  if (h === 'contact_email') type = 'email';
+  if (h === 'min_outage_hours') type = 'number';
+  const extra = (type === 'number') ? ' min="0" step="0.5"' : '';
+  return '<label for="ac-' + h + '">' + label + req + '</label><input id="ac-' + h + '" type="' + type + '"' + extra + '>';
+}).join('');
+addModal.innerHTML = '<div class="modal">'
+  + '<h2>Add a client</h2>'
+  + '<p>Add a new business to <code>clients.csv</code>. After saving, you will review the change and push it to GitHub.</p>'
+  + acFieldsHtml
+  + '<div id="ac-status" class="status-line"></div>'
+  + '<div class="modal-buttons"><button class="secondary" id="ac-cancel">Cancel</button><button class="primary" id="ac-save">Save &amp; review</button></div>'
+  + '</div>';
+document.body.appendChild(addModal);
+const $acStatus = addModal.querySelector('#ac-status');
+const $acSave = addModal.querySelector('#ac-save');
+const $acCancel = addModal.querySelector('#ac-cancel');
+function acSetStatus(kind, text){
+  $acStatus.className = 'status-line ' + (kind || '');
+  $acStatus.textContent = text || '';
+  $acStatus.style.display = text ? '' : 'none';
+}
+function openAddModal(){
+  REQUIRED_HEADERS.forEach(function(h){ const el = addModal.querySelector('#ac-' + h); if (el) el.value = ''; });
+  acSetStatus('', '');
+  addModal.classList.add('show');
+  const n = addModal.querySelector('#ac-name'); if (n) n.focus();
+}
+function closeAddModal(){ addModal.classList.remove('show'); }
+document.getElementById('add-client-btn').addEventListener('click', function(e){ e.preventDefault(); openAddModal(); });
+$acCancel.addEventListener('click', closeAddModal);
+addModal.addEventListener('click', function(e){ if (e.target === addModal) closeAddModal(); });
+$acSave.addEventListener('click', async function(){
+  const values = {};
+  REQUIRED_HEADERS.forEach(function(h){ const el = addModal.querySelector('#ac-' + h); values[h] = el ? el.value.trim() : ''; });
+  if (!values.name){ acSetStatus('error', 'Client name is required.'); const n = addModal.querySelector('#ac-name'); if (n) n.focus(); return; }
+  if (values.contact_email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(values.contact_email)){ acSetStatus('error', 'Contact email looks invalid.'); return; }
+  if (values.min_outage_hours && isNaN(Number(values.min_outage_hours))){ acSetStatus('error', 'Min outage hours must be a number.'); return; }
+  $acSave.disabled = true;
+  acSetStatus('working', 'Loading current list from GitHub…');
+  let cur;
+  try { cur = await fetchCurrentCsv(); }
+  catch (err){ acSetStatus('error', 'Could not load current list: ' + err.message); $acSave.disabled = false; return; }
+  const row = REQUIRED_HEADERS.map(function(h){ return acCsvCell(values[h]); }).join(',');
+  let base = (cur.text || '').replace(/\r\n/g, '\n');
+  const sep = (base.length && !base.endsWith('\n')) ? '\n' : '';
+  const newCsv = base + sep + row + '\n';
+  $acSave.disabled = false;
+  closeAddModal();
+  openModal();
+  pendingCsvText = newCsv;
+  showDiff(cur.text, newCsv);
+  setStatus('', '');
+  $confirm.disabled = false;
+});
+/* ===== end Add Client feature ===== */
+/* ===== Remove Client feature (reuses existing GitHub push flow) ===== */
+const rmModal = document.createElement('div');
+rmModal.className = 'modal-overlay';
+rmModal.innerHTML = '<div class="modal">'
+  + '<h2>Remove a client</h2>'
+  + '<p>Remove a business from <code>clients.csv</code>. After selecting, you will review the change and push it to GitHub.</p>'
+  + '<input id="rm-search" type="search" placeholder="Search clients…">'
+  + '<select id="rm-list" size="10" style="width:100%;margin-top:8px"></select>'
+  + '<div id="rm-status" class="status-line"></div>'
+  + '<div class="modal-buttons"><button class="secondary" id="rm-cancel">Cancel</button><button class="primary" id="rm-confirm" disabled>Remove &amp; review</button></div>'
+  + '</div>';
+document.body.appendChild(rmModal);
+const $rmSearch = rmModal.querySelector('#rm-search');
+const $rmList = rmModal.querySelector('#rm-list');
+const $rmStatus = rmModal.querySelector('#rm-status');
+const $rmConfirm = rmModal.querySelector('#rm-confirm');
+const $rmCancel = rmModal.querySelector('#rm-cancel');
+let rmCsvText = '';
+function rmSetStatus(kind, text){
+  $rmStatus.className = 'status-line ' + (kind || '');
+  $rmStatus.textContent = text || '';
+  $rmStatus.style.display = text ? '' : 'none';
+}
+function rmFirstField(line){
+  if (line.charAt(0) === '"'){
+    let i = 1, out = '';
+    while (i < line.length){
+      if (line.charAt(i) === '"'){ if (line.charAt(i+1) === '"'){ out += '"'; i += 2; continue; } break; }
+      out += line.charAt(i); i++;
+    }
+    return out;
+  }
+  const c = line.indexOf(',');
+  return c < 0 ? line : line.slice(0, c);
+}
+function rmGetLines(){ return rmCsvText.split('\n'); }
+function rmRender(filter){
+  const f = (filter || '').toLowerCase();
+  const lines = rmGetLines();
+  $rmList.innerHTML = '';
+  for (let i = 1; i < lines.length; i++){
+    const ln = lines[i];
+    if (ln.trim() === '') continue;
+    const nm = rmFirstField(ln) || '(unnamed)';
+    if (f && nm.toLowerCase().indexOf(f) < 0) continue;
+    const o = document.createElement('option');
+    o.value = String(i);
+    o.textContent = nm;
+    $rmList.appendChild(o);
+  }
+  $rmConfirm.disabled = true;
+}
+async function openRmModal(){
+  rmModal.classList.add('show');
+  $rmSearch.value = ''; $rmList.innerHTML = ''; $rmConfirm.disabled = true;
+  rmSetStatus('working', 'Loading current list from GitHub…');
+  try{
+    const cur = await fetchCurrentCsv();
+    rmCsvText = (cur.text || '').replace(/\r\n/g, '\n');
+    rmRender('');
+    rmSetStatus('', '');
+  }catch(err){ rmSetStatus('error', 'Could not load current list: ' + err.message); }
+}
+function closeRmModal(){ rmModal.classList.remove('show'); }
+document.getElementById('remove-client-btn').addEventListener('click', function(e){ e.preventDefault(); openRmModal(); });
+$rmCancel.addEventListener('click', closeRmModal);
+rmModal.addEventListener('click', function(e){ if (e.target === rmModal) closeRmModal(); });
+$rmSearch.addEventListener('input', function(){ if (rmCsvText) rmRender($rmSearch.value); });
+$rmList.addEventListener('change', function(){ $rmConfirm.disabled = !$rmList.value; });
+$rmConfirm.addEventListener('click', function(){
+  if (!$rmList.value){ rmSetStatus('error', 'Pick a client to remove.'); return; }
+  const idx = Number($rmList.value);
+  const lines = rmGetLines();
+  lines.splice(idx, 1);
+  let newCsv = lines.join('\n');
+  if (!newCsv.endsWith('\n')) newCsv += '\n';
+  closeRmModal();
+  openModal();
+  pendingCsvText = newCsv;
+  showDiff(rmCsvText, newCsv);
+  setStatus('', '');
+  $confirm.disabled = false;
+});
+/* ===== end Remove Client feature ===== */
+
+const $token = uploadModal.querySelector('#upload-token');
+const $file = uploadModal.querySelector('#upload-file');
+const $preview = uploadModal.querySelector('#upload-preview');
+const $status = uploadModal.querySelector('#upload-status');
+const $confirm = uploadModal.querySelector('#upload-confirm');
+const $cancel = uploadModal.querySelector('#upload-cancel');
+
+// Restore saved token
+$token.value = localStorage.getItem(TOKEN_KEY) || '';
+
+let pendingCsvText = null;
+
+function setStatus(kind, text) {
+  $status.className = 'status-line ' + (kind || '');
+  $status.textContent = text;
+  if (!text) $status.style.display = 'none';
+}
+
+function openModal() {
+  uploadModal.classList.add('show');
+  $token.value = localStorage.getItem(TOKEN_KEY) || '';
+  $file.value = '';
+  $preview.innerHTML = '';
+  setStatus('', '');
+  pendingCsvText = null;
+  $confirm.disabled = true;
+}
+function closeModal() { uploadModal.classList.remove('show'); }
+
+document.getElementById('upload-clients-btn').addEventListener('click', e => {
+  e.preventDefault();
+  openModal();
+});
+$cancel.addEventListener('click', closeModal);
+uploadModal.addEventListener('click', e => { if (e.target === uploadModal) closeModal(); });
+
+function parseCsvHeaders(text) {
+  const firstLine = (text.split(/\r?\n/)[0] || '').trim();
+  // Simple CSV split that respects double-quoted fields
+  const headers = [];
+  let cur = '', inQ = false;
+  for (const ch of firstLine) {
+    if (ch === '"') { inQ = !inQ; continue; }
+    if (ch === ',' && !inQ) { headers.push(cur.trim()); cur = ''; continue; }
+    cur += ch;
+  }
+  headers.push(cur.trim());
+  return headers;
+}
+
+function showDiff(oldText, newText) {
+  const oldLines = oldText.split(/\r?\n/);
+  const newLines = newText.split(/\r?\n/);
+  const oldSet = new Set(oldLines);
+  const newSet = new Set(newLines);
+
+  let html = '<div class="small" style="margin-top:8px;font-weight:600">Changes:</div><div class="diff-preview">';
+  let added = 0, removed = 0;
+
+  for (const line of newLines) {
+    if (line && !oldSet.has(line)) {
+      html += `<div class="added">+ ${escapeHtml(line)}</div>`;
+      added++;
+    }
+  }
+  for (const line of oldLines) {
+    if (line && !newSet.has(line)) {
+      html += `<div class="removed">- ${escapeHtml(line)}</div>`;
+      removed++;
+    }
+  }
+  if (added === 0 && removed === 0) {
+    html += '<div class="small">(no changes detected)</div>';
+  }
+  html += '</div>';
+  html = `<div class="small" style="margin-top:8px;font-weight:600">${added} line(s) added, ${removed} removed</div>` + html;
+  $preview.innerHTML = html;
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+async function fetchCurrentCsv() {
+  const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${CSV_PATH}`;
+  const res = await fetch(url, { headers: { 'Accept': 'application/vnd.github.v3+json' }});
+  if (!res.ok) throw new Error(`GitHub fetch failed: ${res.status}`);
+  const j = await res.json();
+  // content is base64 with line breaks; decode
+  const text = atob(j.content.replace(/\n/g, ''));
+  return { text, sha: j.sha };
+}
+
+$file.addEventListener('change', async () => {
+  if (!$file.files.length) return;
+  setStatus('', '');
+  $confirm.disabled = true;
+  try {
+    const text = await $file.files[0].text();
+    const headers = parseCsvHeaders(text);
+    const missing = REQUIRED_HEADERS.filter(h => !headers.includes(h));
+    if (missing.length) {
+      setStatus('error', `CSV is missing required columns: ${missing.join(', ')}. Header row must include all of: ${REQUIRED_HEADERS.join(', ')}.`);
+      return;
+    }
+    pendingCsvText = text;
+    setStatus('working', 'Loading current file from GitHub for diff…');
+    try {
+      const current = await fetchCurrentCsv();
+      showDiff(current.text, text);
+      setStatus('', '');
+    } catch (e) {
+      $preview.innerHTML = `<div class="small" style="margin-top:8px">Could not load current file for diff: ${escapeHtml(e.message)}. You can still upload.</div>`;
+      setStatus('', '');
+    }
+    $confirm.disabled = false;
+  } catch (e) {
+    setStatus('error', `Could not read file: ${e.message}`);
+  }
+});
+
+$confirm.addEventListener('click', async () => {
+  const token = $token.value.trim();
+  if (!token) { setStatus('error', 'Token is required.'); return; }
+  if (!pendingCsvText) { setStatus('error', 'Pick a CSV file first.'); return; }
+
+  // Save token for next time
+  localStorage.setItem(TOKEN_KEY, token);
+
+  $confirm.disabled = true;
+  setStatus('working', 'Fetching current file SHA…');
+  let sha;
+  try {
+    const cur = await fetchCurrentCsv();
+    sha = cur.sha;
+  } catch (e) {
+    setStatus('error', `Could not fetch current file: ${e.message}`);
+    $confirm.disabled = false;
+    return;
+  }
+
+  setStatus('working', 'Pushing to GitHub…');
+  // Encode CSV as base64
+  const utf8 = new TextEncoder().encode(pendingCsvText);
+  let binary = '';
+  for (const b of utf8) binary += String.fromCharCode(b);
+  const b64 = btoa(binary);
+
+  const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${CSV_PATH}`;
+  try {
+    const res = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: `Update clients.csv via map UI (${new Date().toISOString()})`,
+        content: b64,
+        sha,
+      }),
+    });
+    if (!res.ok) {
+      const j = await res.json().catch(() => ({}));
+      throw new Error(j.message || `${res.status} ${res.statusText}`);
+    }
+    setStatus('success', '✓ Pushed. Now trigger the workflow on GitHub Actions, or wait for tomorrow morning.');
+    $confirm.textContent = 'Done';
+  } catch (e) {
+    setStatus('error', `Push failed: ${e.message}`);
+    $confirm.disabled = false;
+  }
+});
+</script>
+</body>
+</html>
