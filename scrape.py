@@ -567,24 +567,24 @@ def regex_escape_minimal(s):
     return re.sub(r"([.^$*+?()\[\]{}|\\])", r"\\\1", s)
 
 
-def fetch_overpass(query: str):
+def fetch_overpass(query: str, endpoints=OVERPASS_ENDPOINTS, attempts=OVERPASS_ATTEMPTS_PER_ENDPOINT, timeout=OVERPASS_TIMEOUT):
     last_err = None
-    for ep in OVERPASS_ENDPOINTS:
-        for attempt in range(1, OVERPASS_ATTEMPTS_PER_ENDPOINT + 1):
+    for ep in endpoints:
+        for attempt in range(1, attempts + 1):
             try:
                 print(f"[overpass] trying {ep} (attempt {attempt})", flush=True)
                 r = requests.post(
                     ep,
                     data={"data": query},
                     headers={"User-Agent": USER_AGENT},
-                    timeout=OVERPASS_TIMEOUT,
+                    timeout=timeout,
                 )
                 r.raise_for_status()
                 return r.json()
             except Exception as e:
                 print(f"[overpass] {ep} attempt {attempt} failed: {e}", flush=True)
                 last_err = e
-                if attempt < OVERPASS_ATTEMPTS_PER_ENDPOINT:
+                if attempt < attempts:
                     time.sleep(OVERPASS_BACKOFF_SECONDS)
     raise RuntimeError(f"Overpass failed: {last_err}")
 
@@ -628,7 +628,7 @@ def fetch_chains():
     print("[chains] fetching from OSM (weekly refresh)", flush=True)
     query = build_chains_query(JEMENA_BBOX)
     try:
-        result = fetch_overpass(query)
+        result = fetch_overpass(query, endpoints=OVERPASS_ENDPOINTS[:3], attempts=1, timeout=(15, 60))
     except Exception as e:
         print(f"[chains] fetch failed, using stale cache if any: {e}", flush=True)
         cached = load_cache("chains.json")
