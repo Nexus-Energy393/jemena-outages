@@ -103,6 +103,7 @@
   <div class="actions">
     <a href="index.html">← Back to map</a>
     <a href="affected.csv" download>Download CSV</a>
+    <a href="#" id="add-client-btn">+ Add client</a>
     <a href="#" id="upload-clients-btn">Upload clients.csv</a>
   </div>
 </header>
@@ -827,6 +828,90 @@ uploadModal.innerHTML = `
   </div>
 </div>`;
 document.body.appendChild(uploadModal);
+/* ===== Add Client feature (reuses existing GitHub push flow) ===== */
+const AC_FIELD_LABELS = {
+  name: 'Business / client name',
+  address: 'Address',
+  suburb: 'Suburb',
+  postcode: 'Postcode',
+  category: 'Category',
+  contact_name: 'Contact name',
+  contact_phone: 'Contact phone',
+  contact_email: 'Contact email',
+  min_outage_hours: 'Min outage hours',
+  notes: 'Notes'
+};
+function acCsvCell(v){
+  v = (v == null ? '' : String(v));
+  if (/[",\r\n]/.test(v) || /^\s|\s$/.test(v)) {
+    return '"' + v.replace(/"/g, '""') + '"';
+  }
+  return v;
+}
+const addModal = document.createElement('div');
+addModal.className = 'modal-overlay';
+const acFieldsHtml = REQUIRED_HEADERS.map(function(h){
+  const label = AC_FIELD_LABELS[h] || h;
+  const req = (h === 'name') ? ' <span style="color:var(--red)">*</span>' : '';
+  if (h === 'notes') {
+    return '<label for="ac-' + h + '">' + label + req + '</label><textarea id="ac-' + h + '" rows="2"></textarea>';
+  }
+  let type = 'text';
+  if (h === 'contact_email') type = 'email';
+  if (h === 'min_outage_hours') type = 'number';
+  const extra = (type === 'number') ? ' min="0" step="0.5"' : '';
+  return '<label for="ac-' + h + '">' + label + req + '</label><input id="ac-' + h + '" type="' + type + '"' + extra + '>';
+}).join('');
+addModal.innerHTML = '<div class="modal">'
+  + '<h2>Add a client</h2>'
+  + '<p>Add a new business to <code>clients.csv</code>. After saving, you will review the change and push it to GitHub.</p>'
+  + acFieldsHtml
+  + '<div id="ac-status" class="status-line"></div>'
+  + '<div class="modal-buttons"><button class="secondary" id="ac-cancel">Cancel</button><button class="primary" id="ac-save">Save &amp; review</button></div>'
+  + '</div>';
+document.body.appendChild(addModal);
+const $acStatus = addModal.querySelector('#ac-status');
+const $acSave = addModal.querySelector('#ac-save');
+const $acCancel = addModal.querySelector('#ac-cancel');
+function acSetStatus(kind, text){
+  $acStatus.className = 'status-line ' + (kind || '');
+  $acStatus.textContent = text || '';
+  $acStatus.style.display = text ? '' : 'none';
+}
+function openAddModal(){
+  REQUIRED_HEADERS.forEach(function(h){ const el = addModal.querySelector('#ac-' + h); if (el) el.value = ''; });
+  acSetStatus('', '');
+  addModal.classList.add('show');
+  const n = addModal.querySelector('#ac-name'); if (n) n.focus();
+}
+function closeAddModal(){ addModal.classList.remove('show'); }
+document.getElementById('add-client-btn').addEventListener('click', function(e){ e.preventDefault(); openAddModal(); });
+$acCancel.addEventListener('click', closeAddModal);
+addModal.addEventListener('click', function(e){ if (e.target === addModal) closeAddModal(); });
+$acSave.addEventListener('click', async function(){
+  const values = {};
+  REQUIRED_HEADERS.forEach(function(h){ const el = addModal.querySelector('#ac-' + h); values[h] = el ? el.value.trim() : ''; });
+  if (!values.name){ acSetStatus('error', 'Client name is required.'); const n = addModal.querySelector('#ac-name'); if (n) n.focus(); return; }
+  if (values.contact_email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(values.contact_email)){ acSetStatus('error', 'Contact email looks invalid.'); return; }
+  if (values.min_outage_hours && isNaN(Number(values.min_outage_hours))){ acSetStatus('error', 'Min outage hours must be a number.'); return; }
+  $acSave.disabled = true;
+  acSetStatus('working', 'Loading current list from GitHub…');
+  let cur;
+  try { cur = await fetchCurrentCsv(); }
+  catch (err){ acSetStatus('error', 'Could not load current list: ' + err.message); $acSave.disabled = false; return; }
+  const row = REQUIRED_HEADERS.map(function(h){ return acCsvCell(values[h]); }).join(',');
+  let base = (cur.text || '').replace(/\r\n/g, '\n');
+  const sep = (base.length && !base.endsWith('\n')) ? '\n' : '';
+  const newCsv = base + sep + row + '\n';
+  $acSave.disabled = false;
+  closeAddModal();
+  openModal();
+  pendingCsvText = newCsv;
+  showDiff(cur.text, newCsv);
+  setStatus('', '');
+  $confirm.disabled = false;
+});
+/* ===== end Add Client feature ===== */
 
 const $token = uploadModal.querySelector('#upload-token');
 const $file = uploadModal.querySelector('#upload-file');
