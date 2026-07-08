@@ -45,8 +45,13 @@ CACHE.mkdir(exist_ok=True)
 
 # Jemena removed the suburb/street table from their website (Jul 2026): the
 # planned-outages page now just links to poweroutages.jemena.com.au, a map app
-# fed by public JSON. We read that feed directly — no browser, no DOM.
-JEMENA_URL = "https://poweroutages.jemena.com.au/data/all-outages.json"
+# fed by public JSON. That feed is geo-restricted to Australia, so from GitHub's
+# overseas runners we read it via an AU-egress relay on the Nexy CRM (Vercel
+# Sydney); the direct URL is kept as a fallback for local runs from AU.
+JEMENA_FEED_URLS = [
+    os.environ.get("JEMENA_FEED_URL", "https://crm.nexusenergy.au/api/jemena-feed"),
+    "https://poweroutages.jemena.com.au/data/all-outages.json",
+]
 
 OVERPASS_ENDPOINTS = [
     "https://overpass-api.de/api/interpreter",
@@ -366,33 +371,34 @@ def scrape_outages():
     ImpactedSuburbs -> [{SuburbName, PostCode, Streets: [...]}, ...], which maps
     one-to-one onto the suburb/street rows the old website table provided.
     """
-    print(f"[scrape] fetching {JEMENA_URL}", flush=True)
-    # The feed sits behind CloudFront; plain bot user agents get 403'd, so
-    # request it exactly like the map app's own browser traffic does.
-    resp = requests.get(
-        JEMENA_URL,
-        headers={
-            "User-Agent": (
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-                "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
-            ),
-            "Accept": "application/json, text/plain, */*",
-            "Accept-Language": "en-AU,en;q=0.9",
-            "Referer": "https://poweroutages.jemena.com.au/",
-            "Origin": "https://poweroutages.jemena.com.au",
-            "Sec-Fetch-Dest": "empty",
-            "Sec-Fetch-Mode": "cors",
-            "Sec-Fetch-Site": "same-origin",
-        },
-        timeout=60,
-    )
-    if not resp.ok:
-        # Surface WHY CloudFront refused us (a geo-restriction block names
-        # itself in the body) so a failed run diagnoses itself in the log.
-        body = (resp.text or "")[:500].replace("\n", " ")
-        print(f"[scrape] HTTP {resp.status_code}; x-cache={resp.headers.get('x-cache')}; body: {body}", flush=True)
-    resp.raise_for_status()
-    data = resp.json()
+    headers = {
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+            "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
+        ),
+        "Accept": "application/json, text/plain, */*",
+        "Accept-Language": "en-AU,en;q=0.9",
+        "Referer": "https://poweroutages.jemena.com.au/",
+    }
+    data = None
+    last_err = None
+    for url in JEMENA_FEED_URLS:
+        print(f"[scrape] fetching {url}", flush=True)
+        try:
+            resp = requests.get(url, headers=headers, timeout=60)
+            if not resp.ok:
+                # Surface WHY we were refused (a CloudFront geo-restriction
+                # names itself in the body) so failed runs diagnose themselves.
+                body = (resp.text or "")[:300].replace("\n", " ")
+                print(f"[scrape] HTTP {resp.status_code}; x-cache={resp.headers.get('x-cache')}; body: {body}", flush=True)
+            resp.raise_for_status()
+            data = resp.json()
+            break
+        except Exception as e:
+            last_err = e
+            print(f"[scrape] source failed ({e}); trying next", flush=True)
+    if data is None:
+        raise RuntimeError(f"All Jemena feed sources failed: {last_err}")
     try:
         (DOCS / "_last_scrape_raw.json").write_text(json.dumps(data, indent=2), encoding="utf-8")
     except Exception:
