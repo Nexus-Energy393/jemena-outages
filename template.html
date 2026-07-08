@@ -152,16 +152,14 @@ function buildClientPopup(client, affected) {
     }
     // Action buttons
     const cid = client.client_id || '';
-    const pdDomain = (DATA.meta && DATA.meta.pipedriveDomain) || 'nexusenergy';
-    const leadId = client.pipedrive_lead_id || '';
-    const pipedriveUrl = leadId
-      ? `https://${pdDomain}.pipedrive.com/leads/inbox/${leadId}`
-      : `https://${pdDomain}.pipedrive.com/leads/inbox`;
+    const crmBase = ((DATA.meta && DATA.meta.crmBaseUrl) || 'https://crm.nexusenergy.au').replace(/\/$/, '');
+    const leadId = client.lead_id || '';
+    const nexyUrl = leadId ? `${crmBase}/leads?lead=${encodeURIComponent(leadId)}` : `${crmBase}/leads`;
     body += `<div class="popup-actions">`;
     if (cid) {
       body += `<a class="btn-secondary" href="affected.html#client-${esc(cid)}">View on list</a>`;
     }
-    body += `<a class="btn-primary" href="${pipedriveUrl}" target="_blank" rel="noopener">${leadId ? 'Open in Pipedrive' : 'Pipedrive inbox'}</a>`;
+    body += `<a class="btn-primary" href="${nexyUrl}" target="_blank" rel="noopener">${leadId ? 'Open lead in Nexy' : 'Nexy leads inbox'}</a>`;
     body += `</div>`;
   }
   return `<div>${header}${body}</div>`;

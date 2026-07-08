@@ -46,18 +46,14 @@ jobs:
         id: scrape
         continue-on-error: true
         env:
-          PIPEDRIVE_API_TOKEN: ${{ secrets.PIPEDRIVE_API_TOKEN }}
-          PIPEDRIVE_DOMAIN: ${{ secrets.PIPEDRIVE_DOMAIN }}
-          PIPEDRIVE_DRY_RUN: ${{ vars.PIPEDRIVE_DRY_RUN || 'true' }}
-          PIPEDRIVE_MIN_HOURS: ${{ vars.PIPEDRIVE_MIN_HOURS || '6' }}
-          PIPEDRIVE_MAX_DAYS_AHEAD: ${{ vars.PIPEDRIVE_MAX_DAYS_AHEAD || '21' }}
-          PIPEDRIVE_OWNER_ID: ${{ secrets.PIPEDRIVE_OWNER_ID }}
-          PIPEDRIVE_LABEL_NAME: ${{ vars.PIPEDRIVE_LABEL_NAME || 'Jemena Planned Outage' }}
-          PIPEDRIVE_CANCELLED_LABEL_NAME: ${{ vars.PIPEDRIVE_CANCELLED_LABEL_NAME || 'CANCELLED' }}
-          PIPEDRIVE_NOT_AFFECTED_LABEL_NAME: ${{ vars.PIPEDRIVE_NOT_AFFECTED_LABEL_NAME || 'Not Affected' }}
-          PIPEDRIVE_TYPE_OPTION_ID: ${{ vars.PIPEDRIVE_TYPE_OPTION_ID }}
-          PIPEDRIVE_FIELD_MAP_JSON: ${{ secrets.PIPEDRIVE_FIELD_MAP_JSON }}
-          MAP_BASE_URL: ${{ vars.MAP_BASE_URL || 'https://nexus-energy393.github.io/jemena-outages' }}
+          # Nexy CRM leads sink (replaces the retired Pipedrive integration)
+          NEXY_INTAKE_SECRET: ${{ secrets.NEXY_INTAKE_SECRET }}
+          NEXY_INTAKE_URL: ${{ vars.NEXY_INTAKE_URL || 'https://crm.nexusenergy.au/api/intake/outage-lead' }}
+          NEXY_DRY_RUN: ${{ vars.NEXY_DRY_RUN || 'false' }}
+          NEXY_MIN_HOURS: ${{ vars.NEXY_MIN_HOURS || '6' }}
+          NEXY_MAX_DAYS_AHEAD: ${{ vars.NEXY_MAX_DAYS_AHEAD || '21' }}
+          CRM_BASE_URL: ${{ vars.CRM_BASE_URL || 'https://crm.nexusenergy.au' }}
+          MAP_BASE_URL: ${{ vars.MAP_BASE_URL || 'https://outages.nexusenergy.au' }}
         run: python scrape.py
 
       - name: Commit updated docs and cache

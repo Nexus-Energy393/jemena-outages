@@ -1471,7 +1471,7 @@ def main() -> int:
     # Outage-suburb fallback: if an affected client's name still has no suburb
     # or mall, append the outage's suburb. (User CSV rows always have suburb,
     # so this mostly applies to OSM chains in OSM-without-addr:suburb regions.)
-    # Done BEFORE Pipedrive sync so leads carry the decorated names.
+    # Done BEFORE the Nexy sync so leads carry the decorated names.
     for a in affected:
         client = a["client"]
         if client.get("category") == "Shopping centre":
@@ -1514,34 +1514,35 @@ def main() -> int:
         seen_ids[cid] = n
         a["client"]["client_id"] = cid if n == 1 else f"{cid}-{n}"
 
-    # Push to Pipedrive (no-op if PIPEDRIVE_API_TOKEN env var not set)
+    # Push to the Nexy CRM leads inbox (no-op if NEXY_INTAKE_SECRET not set)
     try:
-        from pipedrive import sync_to_pipedrive
-        pipedrive_summary = sync_to_pipedrive(affected)
+        from nexy_leads import sync_to_nexy
+        lead_summary = sync_to_nexy(affected)
     except Exception as e:
-        print(f"[pipedrive] sync failed but continuing: {e}", flush=True)
+        print(f"[nexy] sync failed but continuing: {e}", flush=True)
         traceback.print_exc()
-        pipedrive_summary = {"created": 0, "updated": 0, "cancelled": 0, "skipped": 0, "configured": False}
+        lead_summary = {"created": 0, "updated": 0, "cancelled": 0, "skipped": 0, "configured": False}
 
-    # Apply Not Affected exclusions to the affected list shown on the map
-    not_affected_ids = set(pipedrive_summary.get("not_affected_client_ids", []) or [])
+    # Apply dismissed-client exclusions to the affected list shown on the map
+    # (clients the rep marked "Hide / not affected" in the CRM or on the table)
+    not_affected_ids = set(lead_summary.get("not_affected_client_ids", []) or [])
     if not_affected_ids:
         before = len(affected)
         affected = [a for a in affected if a["client"].get("client_id") not in not_affected_ids]
         excluded = before - len(affected)
         if excluded:
-            print(f"[map] excluded {excluded} client(s) marked Not Affected in Pipedrive", flush=True)
+            print(f"[map] excluded {excluded} client(s) dismissed in the Nexy CRM", flush=True)
         # Recompute counts
         n_def = sum(1 for a in affected if a["definite"])
         n_pos = sum(1 for a in affected if a["possible"] and not a["definite"])
 
-    # Attach Pipedrive lead IDs to clients so the map and table can deep-link
-    client_lead_ids = pipedrive_summary.get("client_lead_ids") or {}
+    # Attach Nexy lead IDs to clients so the map and table can deep-link
+    client_lead_ids = lead_summary.get("client_lead_ids") or {}
     if client_lead_ids:
         for a in affected:
             cid = a["client"].get("client_id")
             if cid and cid in client_lead_ids:
-                a["client"]["pipedrive_lead_id"] = client_lead_ids[cid]
+                a["client"]["lead_id"] = client_lead_ids[cid]
         print(f"[map] attached {len(client_lead_ids)} lead IDs to affected clients", flush=True)
 
     # Suburb summaries
@@ -1573,7 +1574,7 @@ def main() -> int:
         out = {}
         for k in ("client_id", "name", "category", "source", "address", "suburb", "postcode",
                   "contact_name", "contact_phone", "contact_email", "notes",
-                  "lat", "lng", "pipedrive_lead_id"):
+                  "lat", "lng", "lead_id"):
             if c.get(k) not in (None, ""):
                 out[k] = c.get(k)
         # Carry per-client minimum-hours threshold if set
@@ -1751,7 +1752,8 @@ def main() -> int:
             "possibleCount": n_pos,
             "bufferMetres": BUFFER_METRES,
             "defaultMinHours": DEFAULT_MIN_HOURS,
-            "pipedriveDomain": os.environ.get("PIPEDRIVE_DOMAIN", "nexusenergy"),
+            "crmBaseUrl": os.environ.get("CRM_BASE_URL", "https://crm.nexusenergy.au"),
+            "intakeUrl": os.environ.get("NEXY_INTAKE_URL", "https://crm.nexusenergy.au/api/intake/outage-lead"),
             "repoOwner": os.environ.get("GITHUB_REPOSITORY_OWNER", "Nexus-Energy393"),
             "repoName": (os.environ.get("GITHUB_REPOSITORY", "").split("/")[-1] or "jemena-outages"),
         },
@@ -1766,6 +1768,12 @@ def main() -> int:
     (DOCS / "affected.html").write_text(render_affected_html(affected_payload_full), encoding="utf-8")
     (DOCS / "data.json").write_text(json.dumps(main_payload, separators=(",", ":")), encoding="utf-8")
     write_affected_csv(affected, DOCS / "affected.csv", DEFAULT_MIN_HOURS)
+    # Keep the GitHub Pages custom domain pinned on every rebuild so it can't
+    # be lost when docs/ is regenerated. Overridable via PAGES_CNAME.
+    (DOCS / "CNAME").write_text(
+        os.environ.get("PAGES_CNAME", "outages.nexusenergy.au").strip() + "\n",
+        encoding="utf-8",
+    )
 
     size = (DOCS / "index.html").stat().st_size
     print(f"[done] wrote docs/index.html ({size:,}B), affected.html, affected.csv", flush=True)

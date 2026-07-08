@@ -117,6 +117,32 @@ Existing caches (`.cache/suburbs.json`) carry over. New caches
 
 ---
 
+## Nexy CRM leads sink
+
+Every affected client that meets the duration threshold is pushed to the
+**Nexy CRM Leads inbox** (`crm.nexusenergy.au/leads`) by `nexy_leads.py`
+after each scrape. The sync is idempotent (one lead per client per outage,
+keyed `<client_id>::<incident_id>`) and two-way: cancellations close their
+leads automatically, and clients dismissed in the CRM (or via the table's
+Hide button) are excluded from the map on the next run. The map and table
+deep-link each client to its lead (`/leads?lead=<id>`), and each lead links
+back with `?focus=<client_id>`.
+
+Configuration (repo **Settings → Secrets and variables → Actions**):
+
+| Name | Type | Purpose |
+|---|---|---|
+| `NEXY_INTAKE_SECRET` | secret (required) | The CRM's `INTAKE_WEBHOOK_SECRET` |
+| `NEXY_DRY_RUN` | variable, default `false` | `true` = log without pushing |
+| `NEXY_MIN_HOURS` | variable, default `6` | Minimum outage hours for a lead (per-client `min_outage_hours` in `clients.csv` wins) |
+| `NEXY_MAX_DAYS_AHEAD` | variable, default `21` | Don't create leads for outages further out than this |
+
+The table's Hide / Confirm / Archive buttons call the CRM's intake endpoint
+directly from the browser and prompt once for the CRM's
+`INTAKE_BROWSER_SECRET` (stored in localStorage).
+
+---
+
 ## Attribution and disclaimer
 
 Outage data © Jemena. Map tiles © CARTO and OpenStreetMap contributors

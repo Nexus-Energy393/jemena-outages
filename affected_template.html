@@ -453,7 +453,7 @@ function sortAndFilter() {
   } else {
     tbody.innerHTML = displayRows.map(r => {
       const c = r.client, o = r.outage;
-      const mLeadId = c.pipedrive_lead_id || ''; const isConfirmed = mLeadId && confirmedLeads.has(String(mLeadId)); const matchChip = isConfirmed ? `<span class="chip confirmed">Confirmed</span>` : `<span class="match-cell"><button type="button" class="match-btn" data-match-lead="${esc(mLeadId)}" data-client-name="${esc(c.name)}"><span class="chip ${r.match.toLowerCase()}">${r.match}</span></button><span class="match-menu"><button type="button" class="match-confirm">Confirmed</button><button type="button" class="match-delete danger">Delete</button></span></span>`;
+      const mLeadId = c.lead_id || ''; const isConfirmed = mLeadId && confirmedLeads.has(String(mLeadId)); const matchChip = isConfirmed ? `<span class="chip confirmed">Confirmed</span>` : `<span class="match-cell"><button type="button" class="match-btn" data-match-lead="${esc(mLeadId)}" data-client-name="${esc(c.name)}"><span class="chip ${r.match.toLowerCase()}">${r.match}</span></button><span class="match-menu"><button type="button" class="match-confirm">Confirmed</button><button type="button" class="match-delete danger">Archive</button></span></span>`;
       
       
       
@@ -497,18 +497,16 @@ function sortAndFilter() {
       }
 
       const cid = c.client_id || '';
-      const pdDomain = (DATA.meta && DATA.meta.pipedriveDomain) || 'nexusenergy';
-      const leadId = c.pipedrive_lead_id || '';
-      const pipedriveUrl = leadId
-        ? `https://${pdDomain}.pipedrive.com/leads/inbox/${leadId}`
-        : null;
-      // Hide button — only shown if we have a lead ID to label
+      const crmBase = ((DATA.meta && DATA.meta.crmBaseUrl) || 'https://crm.nexusenergy.au').replace(/\/$/, '');
+      const leadId = c.lead_id || '';
+      const nexyUrl = leadId ? `${crmBase}/leads?lead=${encodeURIComponent(leadId)}` : null;
+      // Hide button — only shown if we have a lead ID to act on
       const hideBtn = leadId
-        ? `<button class="btn-sm btn-hide" data-lead-id="${esc(leadId)}" data-client-name="${esc(c.name)}" title="Apply 'Not Affected' label in Pipedrive">Hide</button>`
+        ? `<button class="btn-sm btn-hide" data-lead-id="${esc(leadId)}" data-client-name="${esc(c.name)}" title="Dismiss the lead in Nexy (marks this client not affected)">Hide</button>`
         : '';
       const actionsCell = `
         ${cid ? `<a class="btn-sm" href="index.html?focus=${esc(cid)}">Map</a>` : ''}
-        ${pipedriveUrl ? `<a class="btn-sm" href="${pipedriveUrl}" target="_blank" rel="noopener">Pipedrive</a>` : ''}
+        ${nexyUrl ? `<a class="btn-sm" href="${nexyUrl}" target="_blank" rel="noopener">Nexy</a>` : ''}
         ${hideBtn}
       `;
 
@@ -570,71 +568,47 @@ focusFromHash();
 window.addEventListener('hashchange', focusFromHash);
 
 // ---------------------------------------------------------------------------
-// Hide button: apply "Not Affected" label to the lead in Pipedrive
+// Lead actions → Nexy CRM intake endpoint (dismiss / reviewed / archive).
+// Authenticated with the CRM's browser intake key, stored locally after a
+// one-time prompt (same UX as the old Pipedrive token).
 // ---------------------------------------------------------------------------
-const PIPEDRIVE_TOKEN_KEY = 'jemena-outages-pd-token';
-const PIPEDRIVE_NOT_AFFECTED_LABEL_KEY = 'jemena-outages-pd-not-affected-label-id';
-const PIPEDRIVE_DOMAIN = (DATA.meta && DATA.meta.pipedriveDomain) || 'nexusenergy';
+const NEXY_KEY_STORAGE = 'nexy-intake-key';
+const NEXY_INTAKE_URL = (DATA.meta && DATA.meta.intakeUrl) || 'https://crm.nexusenergy.au/api/intake/outage-lead';
 
-async function getPipedriveToken() {
-  let token = localStorage.getItem(PIPEDRIVE_TOKEN_KEY);
-  if (token) return token;
-  token = prompt(
-    'Pipedrive API token needed to mark leads "Not Affected".\n\n' +
-    'Generate one at: https://' + PIPEDRIVE_DOMAIN + '.pipedrive.com/settings/personal/api\n\n' +
+function getNexyKey() {
+  let key = localStorage.getItem(NEXY_KEY_STORAGE);
+  if (key) return key;
+  key = prompt(
+    'Nexy intake key needed to update leads from this page.\n\n' +
+    'Use the CRM\'s INTAKE_BROWSER_SECRET (ask Justin / see Vercel env).\n\n' +
     'Stored only in your browser. Paste it here:'
   );
-  if (token) {
-    token = token.trim();
-    localStorage.setItem(PIPEDRIVE_TOKEN_KEY, token);
-    return token;
+  if (key) {
+    key = key.trim();
+    localStorage.setItem(NEXY_KEY_STORAGE, key);
+    return key;
   }
   return null;
 }
 
-async function getNotAffectedLabelId(token) {
-  // Cache for the session — labels rarely change
-  let cached = localStorage.getItem(PIPEDRIVE_NOT_AFFECTED_LABEL_KEY);
-  if (cached) return cached;
-  const url = `https://${PIPEDRIVE_DOMAIN}.pipedrive.com/api/v1/leadLabels?api_token=${encodeURIComponent(token)}`;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`Could not fetch lead labels: ${res.status}`);
-  const j = await res.json();
-  const labels = j.data || [];
-  const match = labels.find(l => l.name && l.name.toLowerCase() === 'not affected');
-  if (!match) {
-    throw new Error("'Not Affected' label not found in Pipedrive. Create it first under Settings → Lead labels.");
-  }
-  localStorage.setItem(PIPEDRIVE_NOT_AFFECTED_LABEL_KEY, match.id);
-  return match.id;
-}
-
-async function applyNotAffectedLabel(leadId, token, labelId) {
-  // GET the lead first to capture its current label_ids (so we don't clobber others)
-  const getUrl = `https://${PIPEDRIVE_DOMAIN}.pipedrive.com/api/v1/leads/${leadId}?api_token=${encodeURIComponent(token)}`;
-  const getRes = await fetch(getUrl);
-  if (!getRes.ok) {
-    const body = await getRes.text();
-    throw new Error(`GET lead ${leadId}: HTTP ${getRes.status} - ${body.slice(0, 250)}`);
-  }
-  const leadJson = await getRes.json();
-  const lead = leadJson.data || {};
-  const currentLabels = lead.label_ids || [];
-  if (currentLabels.includes(labelId)) {
-    return { alreadyApplied: true };
-  }
-  const newLabels = [...currentLabels, labelId];
-  const patchUrl = `https://${PIPEDRIVE_DOMAIN}.pipedrive.com/api/v1/leads/${leadId}?api_token=${encodeURIComponent(token)}`;
-  const res = await fetch(patchUrl, {
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ label_ids: newLabels }),
+async function nexyLeadAction(leadId, action) {
+  const key = getNexyKey();
+  if (!key) throw new Error('No Nexy intake key provided.');
+  const res = await fetch(NEXY_INTAKE_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-nexy-intake-secret': key },
+    body: JSON.stringify({ leadId: String(leadId), action }),
   });
-  if (!res.ok) {
-    const body = await res.text();
-    throw new Error(`PATCH lead ${leadId}: HTTP ${res.status} - ${body.slice(0, 300)}`);
+  let body = {};
+  try { body = await res.json(); } catch (_e) {}
+  if (res.status === 401 || res.status === 403) {
+    localStorage.removeItem(NEXY_KEY_STORAGE);
+    throw new Error(`HTTP ${res.status} - intake key rejected. Cleared; try again with a fresh key.`);
   }
-  return { alreadyApplied: false };
+  if (!res.ok || body.ok === false) {
+    throw new Error(`HTTP ${res.status} - ${(body && body.message) || 'action failed'}`);
+  }
+  return body;
 }
 
 // Delegate click on Hide buttons (works for dynamically-rendered rows)
@@ -648,10 +622,10 @@ tbody.addEventListener('click', async ev => {
 
   // Confirm
   if (!confirm(
-    `Mark "${clientName}" as Not Affected in Pipedrive?\n\n` +
-    `This applies the "Not Affected" label to the lead and hides the row from the affected list. ` +
+    `Mark "${clientName}" as not affected?\n\n` +
+    `This dismisses the lead in the Nexy CRM and hides the row from the affected list. ` +
     `Tomorrow's run will exclude this client across the whole team.\n\n` +
-    `You can undo this in Pipedrive by removing the label from the lead.`
+    `You can undo this in Nexy by setting the lead's status back to New.`
   )) return;
 
   btn.classList.add('busy');
@@ -659,13 +633,10 @@ tbody.addEventListener('click', async ev => {
   btn.textContent = '...';
 
   try {
-    const token = await getPipedriveToken();
-    if (!token) { btn.classList.remove('busy'); btn.disabled = false; btn.textContent = 'Hide'; return; }
-    const labelId = await getNotAffectedLabelId(token);
-    const result = await applyNotAffectedLabel(leadId, token, labelId);
+    await nexyLeadAction(leadId, 'dismiss');
     btn.classList.remove('busy');
     btn.classList.add('done');
-    btn.textContent = result.alreadyApplied ? '✓ already' : '✓ hidden';
+    btn.textContent = '✓ hidden';
     // Fade out and remove all rows in this client (a client may appear multiple times)
     setTimeout(() => {
       document.querySelectorAll(`button.btn-hide[data-lead-id="${leadId}"]`).forEach(b => {
@@ -681,53 +652,14 @@ tbody.addEventListener('click', async ev => {
     btn.disabled = false;
     btn.textContent = 'Hide';
     console.error('[hide] failed:', e);
-    const msg = String(e.message || e);
-    // Only clear token if the error is an authentication failure on a request
-    const isAuthFailure = /HTTP (401|403)\b/.test(msg);
-    if (isAuthFailure) {
-      localStorage.removeItem(PIPEDRIVE_TOKEN_KEY);
-      alert('Pipedrive token rejected (401/403). Cleared - try again to enter a fresh one.');
-    } else {
-      alert(`Hide failed:\n\n${msg}\n\n(Open the browser console for more detail.)`);
-    }
+    alert(`Hide failed:\n\n${String(e.message || e)}\n\n(Open the browser console for more detail.)`);
   }
 });
 
 // ---------------------------------------------------------------------------
+// Match button: per-row menu to mark a lead Confirmed (Reviewed in Nexy) or
+// Archive it (removes it from the inbox without deleting history).
 // ---------------------------------------------------------------------------
-// ---------------------------------------------------------------------------
-  // Match button: per-row menu to mark a lead Confirmed or Delete it in Pipedrive
-  const PIPEDRIVE_CONFIRMED_LABEL_KEY = 'jemena-outages-pd-confirmed-label-id';
-  async function getConfirmedLabelId(token) {
-    let cached = localStorage.getItem(PIPEDRIVE_CONFIRMED_LABEL_KEY);
-    if (cached) return cached;
-    const url = `https://${PIPEDRIVE_DOMAIN}.pipedrive.com/api/v1/leadLabels?api_token=${encodeURIComponent(token)}`;
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`Could not fetch lead labels: ${res.status}`);
-    const labels = ((await res.json()).data) || [];
-    const m = labels.find(l => l.name && l.name.toLowerCase() === 'confirmed');
-    if (!m) throw new Error("'Confirmed' label not found in Pipedrive. Create it first under Settings, Lead labels.");
-    localStorage.setItem(PIPEDRIVE_CONFIRMED_LABEL_KEY, m.id);
-    return m.id;
-  }
-  async function applyConfirmedLabel(leadId, token, labelId) {
-    const getUrl = `https://${PIPEDRIVE_DOMAIN}.pipedrive.com/api/v1/leads/${leadId}?api_token=${encodeURIComponent(token)}`;
-    const getRes = await fetch(getUrl);
-    if (!getRes.ok) { const b = await getRes.text(); throw new Error(`GET lead ${leadId}: HTTP ${getRes.status} - ${b.slice(0,250)}`); }
-    const lead = ((await getRes.json()).data) || {};
-    const cur = lead.label_ids || [];
-    if (cur.includes(labelId)) return { alreadyApplied: true };
-    const patchUrl = `https://${PIPEDRIVE_DOMAIN}.pipedrive.com/api/v1/leads/${leadId}?api_token=${encodeURIComponent(token)}`;
-    const res = await fetch(patchUrl, { method:'PATCH', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ label_ids:[...cur, labelId] }) });
-    if (!res.ok) { const b = await res.text(); throw new Error(`PATCH lead ${leadId}: HTTP ${res.status} - ${b.slice(0,300)}`); }
-    return { alreadyApplied: false };
-  }
-  async function deleteLead(leadId, token) {
-    const url = `https://${PIPEDRIVE_DOMAIN}.pipedrive.com/api/v1/leads/${leadId}?api_token=${encodeURIComponent(token)}`;
-    const res = await fetch(url, { method:'DELETE' });
-    if (!res.ok) { const b = await res.text(); throw new Error(`DELETE lead ${leadId}: HTTP ${res.status} - ${b.slice(0,300)}`); }
-    return true;
-  }
   function closeAllMatchMenus() { document.querySelectorAll('.match-menu.show').forEach(x => x.classList.remove('show')); }
   document.addEventListener('click', () => closeAllMatchMenus());
   tbody.addEventListener('click', async ev => {
@@ -754,13 +686,10 @@ tbody.addEventListener('click', async ev => {
         confirmedLeads.add(String(leadId));
         saveConfirmedLeads();
         try {
-          const token = await getPipedriveToken();
-          if (token) { const labelId = await getConfirmedLabelId(token); await applyConfirmedLabel(leadId, token, labelId); }
+          await nexyLeadAction(leadId, 'reviewed');
         } catch (e) {
-          console.error('[confirm] Pipedrive label sync failed:', e);
-          const msg = String(e.message || e);
-          if (/HTTP (401|403)\b/.test(msg)) localStorage.removeItem(PIPEDRIVE_TOKEN_KEY);
-          alert(`Marked Confirmed locally, but syncing the label to Pipedrive failed:\n\n${msg}`);
+          console.error('[confirm] Nexy status sync failed:', e);
+          alert(`Marked Confirmed locally, but syncing to Nexy failed:\n\n${String(e.message || e)}`);
         }
       }
       return;
@@ -773,19 +702,15 @@ tbody.addEventListener('click', async ev => {
       const leadId = trigger && trigger.dataset.matchLead;
       const clientName = (trigger && trigger.dataset.clientName) || 'this client';
       closeAllMatchMenus();
-      if (!leadId) { alert('No Pipedrive lead is linked to this row, so it cannot be deleted.'); return; }
-      if (!confirm(`Permanently DELETE the Pipedrive lead for "${clientName}"?\n\nThis removes the lead from Pipedrive entirely and CANNOT be undone. The row will disappear immediately.`)) return;
+      if (!leadId) { alert('No Nexy lead is linked to this row, so it cannot be archived.'); return; }
+      if (!confirm(`Archive the Nexy lead for "${clientName}"?\n\nThe lead moves out of the Leads inbox (it can be restored from Archived). The row will disappear immediately.`)) return;
       const tr = deleteBtn.closest('tr');
       if (tr) { tr.classList.add('row-hidden'); setTimeout(() => tr.remove(), 500); }
       try {
-        const token = await getPipedriveToken();
-        if (!token) { alert('No Pipedrive token provided - the row was hidden but the lead was NOT deleted in Pipedrive.'); return; }
-        await deleteLead(leadId, token);
+        await nexyLeadAction(leadId, 'archive');
       } catch (e) {
-        console.error('[delete] failed:', e);
-        const msg = String(e.message || e);
-        if (/HTTP (401|403)\b/.test(msg)) localStorage.removeItem(PIPEDRIVE_TOKEN_KEY);
-        alert(`The row was hidden, but deleting the lead in Pipedrive failed:\n\n${msg}`);
+        console.error('[archive] failed:', e);
+        alert(`The row was hidden, but archiving the lead in Nexy failed:\n\n${String(e.message || e)}`);
       }
       return;
     }
