@@ -1,267 +1,5 @@
 [
   {
-    "PlannedStartTime": "2026-07-07T08:00:00",
-    "PlannedEndTime": "2026-07-07T17:30:00",
-    "EventId": "J.26.0140775",
-    "Type": "Planned",
-    "Status": "Complete",
-    "Cause": "Essential Maintenance",
-    "StartTime": "2026-07-07T08:03:25",
-    "RestorationTime": "2026-07-07T11:33:01",
-    "ImpactedCustomers": 68,
-    "LocationGeoJson": null,
-    "Location": null,
-    "ImpactedSuburbs": [],
-    "ImpactedAreaGeoJson": null,
-    "ImpactedArea": null,
-    "LastUpdatedTime": "2026-07-08T00:25:06.903Z",
-    "FeedReceivedTime": "2026-07-07T03:23:24.186Z",
-    "History": [
-      {
-        "ImpactedSuburbs": [
-          {
-            "SuburbName": "HADFIELD",
-            "PostCode": 3046,
-            "Streets": [
-              "BATTERSEA STREET",
-              "EAST ST",
-              "EXETER ST",
-              "SHERWOOD ST"
-            ]
-          }
-        ],
-        "ImpactedAreaGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 67,
-            "eventId": "J.26.0140775",
-            "startTime": "2026-07-07T08:03:25",
-            "restoreTime": "2026-07-07T11:33:01",
-            "suburbs": [
-              {
-                "suburbName": "HADFIELD",
-                "postcode": 3046,
-                "streets": [
-                  "BATTERSEA STREET",
-                  "EAST ST",
-                  "EXETER ST",
-                  "SHERWOOD ST"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-              [
-                [
-                  144.94919456920783,
-                  -37.712813529121426
-                ],
-                [
-                  144.94682137850745,
-                  -37.71236342069385
-                ],
-                [
-                  144.94673486997678,
-                  -37.71230639538539
-                ],
-                [
-                  144.94669911016476,
-                  -37.71222192569927
-                ],
-                [
-                  144.94676151550385,
-                  -37.71186432033253
-                ],
-                [
-                  144.9467964648023,
-                  -37.711813192812464
-                ],
-                [
-                  144.94724821520418,
-                  -37.71136651102784
-                ],
-                [
-                  144.9473041876755,
-                  -37.711328041613825
-                ],
-                [
-                  144.94737373914646,
-                  -37.71130771544224
-                ],
-                [
-                  144.9503151082484,
-                  -37.71132265311039
-                ],
-                [
-                  144.95041254732755,
-                  -37.71134267148978
-                ],
-                [
-                  144.95222477896598,
-                  -37.712127002080244
-                ],
-                [
-                  144.9522877331445,
-                  -37.712169102040896
-                ],
-                [
-                  144.95233162084523,
-                  -37.71225966942651
-                ],
-                [
-                  144.9521883848772,
-                  -37.713102599189526
-                ],
-                [
-                  144.95213768748928,
-                  -37.71318902886171
-                ],
-                [
-                  144.95203461622458,
-                  -37.713238325174515
-                ],
-                [
-                  144.9519537629972,
-                  -37.71324152496395
-                ],
-                [
-                  144.95146428193044,
-                  -37.71318370144382
-                ],
-                [
-                  144.94919456920783,
-                  -37.712813529121426
-                ]
-              ]
-            ]
-          }
-        },
-        "ImpactedArea": [
-          [
-            {
-              "Latitude": -37.712813529121426,
-              "Longitude": 144.94919456920783
-            },
-            {
-              "Latitude": -37.71236342069385,
-              "Longitude": 144.94682137850745
-            },
-            {
-              "Latitude": -37.71230639538539,
-              "Longitude": 144.94673486997678
-            },
-            {
-              "Latitude": -37.71222192569927,
-              "Longitude": 144.94669911016476
-            },
-            {
-              "Latitude": -37.71186432033253,
-              "Longitude": 144.94676151550385
-            },
-            {
-              "Latitude": -37.711813192812464,
-              "Longitude": 144.9467964648023
-            },
-            {
-              "Latitude": -37.71136651102784,
-              "Longitude": 144.94724821520418
-            },
-            {
-              "Latitude": -37.711328041613825,
-              "Longitude": 144.9473041876755
-            },
-            {
-              "Latitude": -37.71130771544224,
-              "Longitude": 144.94737373914646
-            },
-            {
-              "Latitude": -37.71132265311039,
-              "Longitude": 144.9503151082484
-            },
-            {
-              "Latitude": -37.71134267148978,
-              "Longitude": 144.95041254732755
-            },
-            {
-              "Latitude": -37.712127002080244,
-              "Longitude": 144.95222477896598
-            },
-            {
-              "Latitude": -37.712169102040896,
-              "Longitude": 144.9522877331445
-            },
-            {
-              "Latitude": -37.71225966942651,
-              "Longitude": 144.95233162084523
-            },
-            {
-              "Latitude": -37.713102599189526,
-              "Longitude": 144.9521883848772
-            },
-            {
-              "Latitude": -37.71318902886171,
-              "Longitude": 144.95213768748928
-            },
-            {
-              "Latitude": -37.713238325174515,
-              "Longitude": 144.95203461622458
-            },
-            {
-              "Latitude": -37.71324152496395,
-              "Longitude": 144.9519537629972
-            },
-            {
-              "Latitude": -37.71318370144382,
-              "Longitude": 144.95146428193044
-            },
-            {
-              "Latitude": -37.712813529121426,
-              "Longitude": 144.94919456920783
-            }
-          ]
-        ],
-        "RestorationTime": "2026-07-07T11:33:01",
-        "ImpactedCustomers": 67,
-        "LocationGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 67,
-            "eventId": "J.26.0140775",
-            "startTime": "2026-07-07T08:03:25",
-            "restoreTime": "2026-07-07T11:33:01",
-            "suburbs": [
-              {
-                "suburbName": "HADFIELD",
-                "postcode": 3046,
-                "streets": [
-                  "BATTERSEA STREET",
-                  "EAST ST",
-                  "EXETER ST",
-                  "SHERWOOD ST"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [
-              144.949515365505,
-              -37.71227462020309
-            ]
-          }
-        },
-        "Location": {
-          "Latitude": -37.71227462020309,
-          "Longitude": 144.949515365505
-        }
-      }
-    ]
-  },
-  {
     "PlannedStartTime": "2026-07-07T07:30:00",
     "PlannedEndTime": "2026-07-07T17:30:00",
     "EventId": "J.26.0141699",
@@ -276,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-07-08T00:25:06.903Z",
+    "LastUpdatedTime": "2026-07-08T01:59:10.005Z",
     "FeedReceivedTime": "2026-07-07T05:10:11.572Z",
     "History": [
       {
@@ -495,7 +233,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-07-08T00:25:06.903Z",
+    "LastUpdatedTime": "2026-07-08T01:59:10.005Z",
     "FeedReceivedTime": "2026-07-07T06:47:11.022Z",
     "History": [
       {
@@ -1111,7 +849,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-07-08T00:25:06.903Z",
+    "LastUpdatedTime": "2026-07-08T01:59:10.005Z",
     "FeedReceivedTime": "2026-07-07T10:24:27.564Z",
     "History": [
       {
@@ -1395,7 +1133,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-07-08T00:25:06.903Z",
+    "LastUpdatedTime": "2026-07-08T01:59:10.005Z",
     "FeedReceivedTime": "2026-07-07T10:51:42.408Z",
     "History": [
       {
@@ -2293,7 +2031,7 @@
         }
       ]
     ],
-    "LastUpdatedTime": "2026-07-08T00:25:06.903Z",
+    "LastUpdatedTime": "2026-07-08T01:59:10.005Z",
     "FeedReceivedTime": "2026-07-07T23:01:00.540Z",
     "History": null
   },
@@ -2302,8 +2040,8 @@
     "DispatchedTime": "2026-07-07T23:40:38",
     "EventId": "J.26.0143910",
     "Type": "Unplanned",
-    "Status": "Acknowledged",
-    "Cause": "Under Investigation",
+    "Status": "In Progress (ZM10)",
+    "Cause": "Network equipment fault",
     "StartTime": "2026-07-08T09:19:49",
     "RestorationTime": null,
     "ImpactedCustomers": 123,
@@ -2313,19 +2051,21 @@
         "eventId": "J.26.0143910",
         "customerReference": "",
         "customersOff": "123",
-        "status": "Acknowledged",
+        "status": "In Progress (ZM10)",
         "type": "Unplanned",
         "resolvedFlag": "false",
         "showOutageFlag": "true",
-        "symptoms": [],
-        "cause": "Under Investigation",
+        "symptoms": [
+          "WD"
+        ],
+        "cause": "Elements - Aged & Deteriorated",
         "startTime": "2026-07-08T09:19:49",
         "restoreTime": "",
         "dispatchedTime": "2026-07-07T23:40:38",
         "etr": "2026-07-08T13:19:56",
         "plannedStartTime": "",
         "plannedEndTime": "",
-        "lastUpdateTime": "2026-07-08T10:17:10"
+        "lastUpdateTime": "2026-07-08T10:57:43"
       },
       "geometry": {
         "type": "Point",
@@ -2360,19 +2100,21 @@
         "eventId": "J.26.0143910",
         "customerReference": "",
         "customersOff": "123",
-        "status": "Acknowledged",
+        "status": "In Progress (ZM10)",
         "type": "Unplanned",
         "resolvedFlag": "false",
         "showOutageFlag": "true",
-        "symptoms": [],
-        "cause": "Under Investigation",
+        "symptoms": [
+          "WD"
+        ],
+        "cause": "Elements - Aged & Deteriorated",
         "startTime": "2026-07-08T09:19:49",
         "restoreTime": "",
         "dispatchedTime": "2026-07-07T23:40:38",
         "etr": "2026-07-08T13:19:56",
         "plannedStartTime": "",
         "plannedEndTime": "",
-        "lastUpdateTime": "2026-07-08T10:17:10"
+        "lastUpdateTime": "2026-07-08T10:57:43"
       },
       "geometry": {
         "type": "Polygon",
@@ -2554,8 +2296,8 @@
         }
       ]
     ],
-    "LastUpdatedTime": "2026-07-08T00:25:06.903Z",
-    "FeedReceivedTime": "2026-07-08T00:21:34.499Z",
+    "LastUpdatedTime": "2026-07-08T01:59:10.005Z",
+    "FeedReceivedTime": "2026-07-08T00:57:53.717Z",
     "History": null
   }
 ]
