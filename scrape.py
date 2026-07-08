@@ -1339,25 +1339,34 @@ def main() -> int:
             suburb_geo[sub] = loc
 
     if not suburb_geo:
-        print("[fatal] no suburbs geocoded", flush=True)
-        return 1
+        if raw_outages:
+            # Real geocoding failure — Jemena published outages we can't place.
+            print("[fatal] no suburbs geocoded", flush=True)
+            return 1
+        # Quiet Jemena feed (nothing scheduled right now, or street detail not
+        # yet attached to upcoming events). scrape_outages() deliberately
+        # tolerates this — carry that through: keep building the map and
+        # pushing leads from the polygon networks (Ausnet/CitiPower/Powercor/
+        # United Energy) instead of failing the whole run.
+        print("[scrape] Jemena feed quiet — continuing with polygon networks only", flush=True)
 
     overpass = None
-    try:
-        overpass = fetch_overpass(build_streets_query(suburb_streets, suburb_geo))
-        save_cache("streets.json", overpass)
-    except Exception as e:
-        print(f"[warn] overpass streets failed: {e}", flush=True)
-        cached_streets = load_cache("streets.json")
-        if cached_streets and cached_streets.get("elements"):
-            print(
-                f"[warn] reusing cached streets ({len(cached_streets.get('elements', []))} elements) so the map can still rebuild",
-                flush=True,
-            )
-            overpass = cached_streets
-        else:
-            print("[fatal] overpass streets failed and no cached streets available", flush=True)
-            return 1
+    if suburb_streets:
+        try:
+            overpass = fetch_overpass(build_streets_query(suburb_streets, suburb_geo))
+            save_cache("streets.json", overpass)
+        except Exception as e:
+            print(f"[warn] overpass streets failed: {e}", flush=True)
+            cached_streets = load_cache("streets.json")
+            if cached_streets and cached_streets.get("elements"):
+                print(
+                    f"[warn] reusing cached streets ({len(cached_streets.get('elements', []))} elements) so the map can still rebuild",
+                    flush=True,
+                )
+                overpass = cached_streets
+            else:
+                print("[fatal] overpass streets failed and no cached streets available", flush=True)
+                return 1
 
     outages_by_pair = {}
     for o in raw_outages:
@@ -1379,7 +1388,7 @@ def main() -> int:
         if g:
             pairs_by_street.setdefault(street_n, []).append((suburb_l.title(), g["lat"], g["lng"]))
 
-    streets = match_streets(overpass, outages_by_pair, pairs_by_street)
+    streets = match_streets(overpass, outages_by_pair, pairs_by_street) if overpass else []
     print(f"[match] {len(streets)} street segments matched", flush=True)
 
     # Scrape the parallel polygon networks (Ausnet + CitiPower/Powercor +
