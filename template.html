@@ -2,13 +2,21 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Jemena planned outages — affected streets &amp; clients</title>
+<title>Planned outages map — Nexus Generators &amp; Electrical</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
       integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 <style>
   html, body { margin:0; height:100%; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; color:#222; }
-  #map { position:absolute; inset:0; }
+  /* Nexy brand bar */
+  #nexy-bar { position:absolute; top:0; left:0; right:0; height:46px; z-index:1100; background:#0b1626; border-bottom:3px solid #1a7f4b; display:flex; align-items:center; justify-content:space-between; padding:0 14px; box-sizing:border-box; }
+  #nexy-bar .brand img { height:26px; width:auto; display:block; }
+  #nexy-bar .nexy-right { display:flex; align-items:center; gap:10px; }
+  #nexy-bar .nexy-leads-btn { background:#1a7f4b; color:#fff; text-decoration:none; font-size:12.5px; font-weight:700; padding:7px 14px; border-radius:8px; }
+  #nexy-bar .nexy-leads-btn:hover { background:#0f4c2a; }
+  #nexy-bar .nexy-phone { color:#25c06d; text-decoration:none; font-size:12px; font-weight:700; }
+  #nexy-bar .nexy-phone span { color:#9fb3c8; font-weight:500; }
+  #map { position:absolute; inset:49px 0 0 0; }
   .info-box { background:#fff; padding:10px 14px; border-radius:6px; box-shadow:0 1px 6px rgba(0,0,0,.25); font-size:13px; line-height:1.45; max-width:280px; }
   .info-box h4 { margin:0 0 6px; font-size:14px; font-weight:600; }
   .legend-item { display:flex; align-items:center; gap:8px; margin:4px 0; }
@@ -31,10 +39,10 @@
   .leaflet-container a { color:#0b57d0; }
   .popup-actions { display:flex; gap:6px; margin-top:10px; padding-top:8px; border-top:1px solid #eee; }
   .popup-actions a { flex:1; text-align:center; padding:6px 8px; border-radius:4px; font-size:12px; font-weight:500; text-decoration:none; }
-  .popup-actions a.btn-primary { background:#0b57d0; color:#fff; }
-  .popup-actions a.btn-secondary { background:#f1f3f4; color:#0b57d0; }
+  .popup-actions a.btn-primary { background:#1a7f4b; color:#fff; }
+  .popup-actions a.btn-secondary { background:#f1f3f4; color:#1a7f4b; }
   .popup-actions a:hover { opacity:0.85; }
-  #header-bar { position:absolute; top:12px; left:12px; right:60px; z-index:1000; pointer-events:none; display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap; }
+  #header-bar { position:absolute; top:61px; left:12px; right:60px; z-index:1000; pointer-events:none; display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap; }
   #header-bar > * { pointer-events:auto; }
   #updated { background:#fff; padding:6px 10px; border-radius:6px; box-shadow:0 1px 4px rgba(0,0,0,.15); font-size:11px; color:#555; }
   #updated strong { color:#222; }
@@ -48,6 +56,15 @@
 </style>
 </head>
 <body>
+<div id="nexy-bar">
+  <a class="brand" href="https://nexusenergy.au" target="_blank" rel="noopener" title="nexusenergy.au">
+    <img src="nexus-logo-white.svg" alt="Nexus Generator Hire &amp; Electrical">
+  </a>
+  <div class="nexy-right">
+    <a class="nexy-phone" href="tel:1300639500"><span>24/7</span> 1300 639 500</a>
+    <a class="nexy-leads-btn" href="https://crm.nexusenergy.au/leads" target="_blank" rel="noopener">Nexy Leads inbox →</a>
+  </div>
+</div>
 <div id="map"></div>
 <div id="header-bar">
   <div id="updated">Updated: <strong id="updated-value">…</strong></div>
