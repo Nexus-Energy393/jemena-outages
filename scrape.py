@@ -432,11 +432,58 @@ def _parse_feed_time(s):
         return None
 
 
+def _extract_polygon(ev):
+    """Pull the de-energisation boundary as [[lat, lng], ...] from a feed event.
+
+    Jemena publishes the actual outage boundary (a tight ~15-20 point polygon,
+    not a loose octagon) in two mirrored forms — ImpactedArea (list of
+    {Latitude, Longitude}) and ImpactedAreaGeoJson (GeoJSON [lng, lat]). We
+    prefer ImpactedArea; on live events without it, the current-state GeoJSON is
+    the fallback. Returns [] when the event carries no geometry.
+    """
+    ia = ev.get("ImpactedArea")
+    if isinstance(ia, list) and ia:
+        ring = ia[0] if (ia and isinstance(ia[0], list)) else ia
+        pts = []
+        for p in ring:
+            if isinstance(p, dict) and "Latitude" in p and "Longitude" in p:
+                try:
+                    pts.append([float(p["Latitude"]), float(p["Longitude"])])
+                except (TypeError, ValueError):
+                    pass
+        if len(pts) >= 3:
+            return pts
+    gj = ev.get("ImpactedAreaGeoJson")
+    if isinstance(gj, dict):
+        geom = gj.get("geometry") or {}
+        coords = geom.get("coordinates")
+        if geom.get("type") == "Polygon" and coords:
+            ring = coords[0]
+        elif geom.get("type") == "MultiPolygon" and coords and coords[0]:
+            ring = coords[0][0]
+        else:
+            ring = None
+        if ring:
+            pts = []
+            for p in ring:
+                if isinstance(p, (list, tuple)) and len(p) >= 2:
+                    try:
+                        pts.append([float(p[1]), float(p[0])])  # GeoJSON is [lng, lat]
+                    except (TypeError, ValueError):
+                        pass
+            if len(pts) >= 3:
+                return pts
+    return []
+
+
 def _parse_feed(events):
     """Map feed events to the shape the rest of the pipeline expects — one
-    entry per suburb+street, with the same keys _parse_table used to emit."""
+    entry per suburb+street. Each entry now also carries the event's actual
+    de-energisation polygon (when published) and a shared event id, so client
+    matching can test true point-in-zone containment instead of shading whole
+    named streets across a suburb."""
     out = []
-    for ev in events:
+    for idx, ev in enumerate(events):
         if not isinstance(ev, dict) or ev.get("Type") != "Planned":
             continue
         status = (ev.get("Status") or "Scheduled").strip()
@@ -450,6 +497,8 @@ def _parse_feed(events):
             end_dt = start_dt + timedelta(hours=8)
         if end_dt <= start_dt:
             end_dt = end_dt + timedelta(days=1)
+        event_id = str(ev.get("EventId") or f"idx{idx}")
+        polygon = _extract_polygon(ev)
         for sub in ev.get("ImpactedSuburbs") or []:
             if not isinstance(sub, dict):
                 continue
@@ -469,6 +518,9 @@ def _parse_feed(events):
                     "start_display": start_dt.strftime("%a %d %b, %I:%M %p").replace(" 0", " "),
                     "end_display": end_dt.strftime("%I:%M %p").lstrip("0"),
                     "status": status,
+                    "event_id": event_id,
+                    "polygon": polygon,
+                    "customers": ev.get("ImpactedCustomers"),
                 })
     return out
 
@@ -984,8 +1036,42 @@ def match_clients_to_outages(clients, streets, raw_outages, ausnet_outages=None)
                 "end_iso": o["end_dt"].isoformat(),
                 "status": o.get("status", "Scheduled"),
                 "duration_hours": round(duration_h, 2),
+                "event_id": o.get("event_id"),
             }
         outages_by_pair.setdefault((o["suburb"].lower(), norm_key(o["street"])), []).append(disp)
+
+    # Build one Jemena polygon zone per event (the real de-energisation
+    # boundary). Containment against this is FAR tighter than shading every
+    # named street across a suburb, so it becomes the primary Jemena signal;
+    # events without a published polygon fall back to the street geometry below.
+    jemena_zones = {}
+    for o in raw_outages:
+        poly = o.get("polygon")
+        eid = o.get("event_id")
+        if not poly or len(poly) < 3 or eid is None:
+            continue
+        z = jemena_zones.get(eid)
+        if z is None:
+            duration_h = (o["end_dt"] - o["start_dt"]).total_seconds() / 3600.0
+            z = jemena_zones[eid] = {
+                "polygon": poly,
+                "streets": set(),
+                "suburbs": set(),
+                "start_iso": o["start_dt"].isoformat(),
+                "end_iso": o["end_dt"].isoformat(),
+                "start": o.get("start_display"),
+                "end": o.get("end_display"),
+                "status": o.get("status", "Scheduled"),
+                "duration_hours": round(duration_h, 2),
+                "customers": o.get("customers"),
+            }
+        z["streets"].add(o["street"])
+        z["suburbs"].add(o["suburb"].title())
+    events_with_polygon = set(jemena_zones.keys())
+    from ausnet import polygon_bbox as _poly_bbox, point_in_polygon as _pip, polygon_distance_m as _pdist
+    jemena_zone_list = []
+    for eid, z in jemena_zones.items():
+        jemena_zone_list.append((bbox_expand(_poly_bbox(z["polygon"]), BUFFER_METRES), eid, z))
 
     # Pre-compute bboxes for each Jemena street (with buffer expansion)
     bboxes = []
@@ -1012,13 +1098,52 @@ def match_clients_to_outages(clients, streets, raw_outages, ausnet_outages=None)
         nearest_street_name = None
         nearest_street_suburb = None
 
-        # Jemena: definite via street + suburb match
+        # Jemena: PRIMARY signal — is the client inside (or beside) the actual
+        # de-energisation polygon? This is the accuracy win: it replaces
+        # "somewhere on a street of this name" with "inside the real outage
+        # boundary". A listed-street corroboration promotes a near-edge point.
+        for zbbox, eid, z in jemena_zone_list:
+            if not point_in_bbox(plat, plng, zbbox):
+                continue
+            dist = _pdist(plat, plng, z["polygon"])
+            on_listed_street = bool(
+                client_street and norm_key(client_street) in {norm_key(s) for s in z["streets"]}
+            )
+            street_label = client_street or ", ".join(sorted(z["streets"])[:3])
+            zrec = {
+                "suburb": ", ".join(sorted(z["suburbs"])[:2]),
+                "street": street_label,
+                "start": z["start"], "end": z["end"],
+                "start_iso": z["start_iso"], "end_iso": z["end_iso"],
+                "status": z["status"], "duration_hours": z["duration_hours"],
+                "network": "Jemena", "event_id": eid, "customers": z.get("customers"),
+            }
+            if dist == 0.0:
+                zrec["_match"] = "in-zone"
+                definite_outages.append(zrec)
+            elif on_listed_street and dist <= BUFFER_METRES:
+                zrec["_match"] = "listed-street-edge"
+                definite_outages.append(zrec)
+            elif dist <= BUFFER_METRES:
+                zrec["_match"] = "near-zone"
+                possible_outages.append({**zrec, "_distance_m": int(dist)})
+
+        # Jemena: definite via exact street + suburb match — but ONLY for events
+        # with no published polygon. When a polygon exists it is authoritative:
+        # a client on a same-named street far from the de-energised block (the
+        # classic false positive) is correctly excluded by the polygon pass, so
+        # we must not re-add them here on name alone.
         if client_street and client_suburb_l:
             key = (client_suburb_l, norm_key(client_street))
-            if key in outages_by_pair:
-                definite_outages.extend(outages_by_pair[key])
+            for disp in outages_by_pair.get(key, []):
+                if disp.get("event_id") in events_with_polygon:
+                    continue
+                definite_outages.append(disp)
 
-        # Jemena: possible via geometry proximity
+        # Jemena FALLBACK: whole-street proximity, but ONLY for events with no
+        # published polygon. When a polygon exists it already answers precisely,
+        # so shading the entire named street (the old false-positive source) is
+        # skipped for those events.
         for bbox, s in zip(bboxes, streets):
             if not point_in_bbox(plat, plng, bbox):
                 continue
@@ -1029,6 +1154,8 @@ def match_clients_to_outages(clients, streets, raw_outages, ausnet_outages=None)
                 nearest_street_suburb = s["suburb"]
             if d <= BUFFER_METRES:
                 for raw_o in s["outages"]:
+                    if raw_o.get("event_id") in events_with_polygon:
+                        continue  # polygon pass already handled this event precisely
                     # Display-format if needed (mirrors the conversion above)
                     if "start" in raw_o and "end" in raw_o:
                         o = raw_o
@@ -1075,17 +1202,32 @@ def match_clients_to_outages(clients, streets, raw_outages, ausnet_outages=None)
         if not definite_outages and not possible_outages:
             continue
 
-        # Dedupe possible outages by signature; keep min distance
+        # Dedupe definite outages: the polygon pass and the exact-street pass
+        # can both fire for one event. Prefer the polygon ("in-zone") record.
+        unique_definite = {}
+        for o in definite_outages:
+            sig = (o.get("event_id") or "", o.get("incident_id") or "",
+                   o.get("suburb"), o.get("street"), o.get("start"), o.get("end"))
+            existing = unique_definite.get(sig)
+            if existing is None or (o.get("_match") == "in-zone" and existing.get("_match") != "in-zone"):
+                unique_definite[sig] = o
+        definite_final = list(unique_definite.values())
+
+        # Dedupe possible outages by signature; keep min distance. Drop any that
+        # are already a definite match for this client.
+        def_events = {(o.get("event_id"), o.get("incident_id")) for o in definite_final}
         unique_possible = {}
         for o in possible_outages:
+            if (o.get("event_id"), o.get("incident_id")) in def_events:
+                continue
             sig = (o.get("suburb"), o.get("street"), o.get("start"), o.get("end"),
-                   o.get("incident_id", ""))
+                   o.get("incident_id", ""), o.get("event_id", ""))
             if sig not in unique_possible or o["_distance_m"] < unique_possible[sig]["_distance_m"]:
                 unique_possible[sig] = o
 
         affected.append({
             "client": c,
-            "definite": definite_outages,
+            "definite": definite_final,
             "possible": list(unique_possible.values()),
             "nearest_distance_m": int(nearest_distance) if nearest_distance < math.inf else None,
             "nearest_street": (
@@ -1113,9 +1255,9 @@ def write_affected_csv(affected, path, default_min_hours):
     with open(path, "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow([
-            "Match", "Client", "Category", "Source", "Address", "Suburb",
+            "Match", "Match Basis", "Client", "Category", "Source", "Address", "Suburb",
             "Postcode", "Contact Name", "Contact Phone", "Contact Email",
-            "Outage Suburb", "Outage Street", "Start", "End", "Duration (hrs)",
+            "Network", "Outage Suburb", "Outage Street", "Start", "End", "Duration (hrs)",
             "Status", "Distance (m)",
             "Client Total Hours", "Client Longest Outage (hrs)",
             "Min Hours Threshold", "Generator Opportunity", "Notes",
@@ -1142,10 +1284,16 @@ def write_affected_csv(affected, path, default_min_hours):
                 (a.get("possible", []), "Possible"),
             ):
                 for o in outages:
+                    basis = {
+                        "in-zone": "In outage zone",
+                        "listed-street-edge": "Listed street, zone edge",
+                        "near-zone": "Near outage zone",
+                    }.get(o.get("_match"), "Street/suburb match" if label == "Definite" else "Near affected street")
                     w.writerow([
-                        label, c.get("name", ""), c.get("category", ""), c.get("source", ""),
+                        label, basis, c.get("name", ""), c.get("category", ""), c.get("source", ""),
                         c.get("address", ""), c.get("suburb", ""), c.get("postcode", ""),
                         c.get("contact_name", ""), c.get("contact_phone", ""), c.get("contact_email", ""),
+                        o.get("network", "Jemena"),
                         o["suburb"], o["street"], o["start"], o["end"],
                         o.get("duration_hours", ""), o["status"],
                         o.get("_distance_m", "") if label == "Possible" else "",
