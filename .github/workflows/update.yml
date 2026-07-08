@@ -39,8 +39,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Install Playwright browser
-        run: python -m playwright install --with-deps chromium
+      # Playwright no longer needed: Jemena's outage data now comes straight
+      # from the poweroutages.jemena.com.au JSON feed (no browser, no DOM).
 
       - name: Run scraper and rebuild map
         id: scrape
@@ -90,7 +90,7 @@ jobs:
       - name: Fail the run if the scrape itself failed
         if: steps.scrape.outcome == 'failure'
         run: |
-          echo "::error::Scrape step failed. See docs/_last_scrape.png and docs/_last_scrape_raw.json."
+          echo "::error::Scrape step failed. See docs/_last_scrape_raw.json for the raw Jemena feed."
           exit 1
 
   retry:

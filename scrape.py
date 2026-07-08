@@ -17,7 +17,6 @@ Inputs:
 """
 from __future__ import annotations
 
-import asyncio
 import csv
 import json
 import math
@@ -44,7 +43,10 @@ CLIENTS_CSV = ROOT / "clients.csv"
 DOCS.mkdir(exist_ok=True)
 CACHE.mkdir(exist_ok=True)
 
-JEMENA_URL = "https://www.jemena.com.au/outages/electricity-outages/planned-outages/"
+# Jemena removed the suburb/street table from their website (Jul 2026): the
+# planned-outages page now just links to poweroutages.jemena.com.au, a map app
+# fed by public JSON. We read that feed directly — no browser, no DOM.
+JEMENA_URL = "https://poweroutages.jemena.com.au/data/all-outages.json"
 
 OVERPASS_ENDPOINTS = [
     "https://overpass-api.de/api/interpreter",
@@ -211,6 +213,9 @@ ABBR = {
     "CT": "Court", "CRES": "Crescent", "CCT": "Circuit", "WAY": "Way",
     "PL": "Place", "PDE": "Parade", "HWY": "Highway", "BVD": "Boulevard",
     "GR": "Grove", "CL": "Close", "LANE": "Lane", "LOOP": "Loop",
+    # Short forms used by the poweroutages.jemena.com.au feed
+    "AV": "Avenue", "TCE": "Terrace", "ESP": "Esplanade", "GDNS": "Gardens",
+    "BLVD": "Boulevard", "CIR": "Circle", "CRT": "Court",
 }
 
 
@@ -352,97 +357,95 @@ def point_in_bbox(plat, plng, bbox):
 
 
 # ---------------------------------------------------------------------------
-# Scraping (unchanged from v1.1)
+# Scraping — v2: Jemena's outage-map JSON feed (the website table is gone)
 # ---------------------------------------------------------------------------
-async def scrape_outages():
-    from playwright.async_api import async_playwright
+def scrape_outages():
+    """Fetch planned outages from Jemena's outage-map JSON feed.
 
-    print(f"[scrape] loading {JEMENA_URL}", flush=True)
-    async with async_playwright() as p:
-        browser = await p.chromium.launch()
-        ctx = await browser.new_context(
-            user_agent=USER_AGENT,
-            viewport={"width": 1400, "height": 2400},
-        )
-        page = await ctx.new_page()
-        try:
-            await page.goto(JEMENA_URL, wait_until="domcontentloaded", timeout=90000)
-            try:
-                await page.wait_for_load_state("networkidle", timeout=30000)
-            except Exception:
-                pass
-            await page.wait_for_timeout(3000)
+    Each feed event carries Type/Status, PlannedStartTime/PlannedEndTime and
+    ImpactedSuburbs -> [{SuburbName, PostCode, Streets: [...]}, ...], which maps
+    one-to-one onto the suburb/street rows the old website table provided.
+    """
+    print(f"[scrape] fetching {JEMENA_URL}", flush=True)
+    resp = requests.get(
+        JEMENA_URL,
+        headers={"User-Agent": USER_AGENT, "Accept": "application/json"},
+        timeout=60,
+    )
+    resp.raise_for_status()
+    data = resp.json()
+    try:
+        (DOCS / "_last_scrape_raw.json").write_text(json.dumps(data, indent=2), encoding="utf-8")
+    except Exception:
+        pass
 
-            for sel in [
-                'button:has-text("Accept")',
-                'button:has-text("Accept all")',
-                'button:has-text("Allow")',
-            ]:
-                try:
-                    btn = page.locator(sel).first
-                    if await btn.is_visible(timeout=500):
-                        await btn.click()
-                        await page.wait_for_timeout(500)
-                        break
-                except Exception:
-                    pass
+    if not isinstance(data, list):
+        raise RuntimeError("Unexpected Jemena feed shape (expected a JSON list of events).")
+    if data and not any(isinstance(ev, dict) and "Type" in ev for ev in data):
+        raise RuntimeError("Jemena feed schema changed: events no longer carry a Type field.")
 
-            try:
-                await page.wait_for_selector("table tbody tr", timeout=30000)
-            except Exception:
-                pass
-
-            clicked = await page.evaluate(
-                """() => {
-                    const headers = document.querySelectorAll('tr.cursor-pointer');
-                    headers.forEach(h => h.click());
-                    return headers.length;
-                }"""
-            )
-            print(f"[scrape] clicked {clicked} suburb headers", flush=True)
-            await page.wait_for_timeout(2000)
-
-            try:
-                await page.screenshot(path=str(DOCS / "_last_scrape.png"), full_page=True, timeout=30000)
-            except Exception:
-                pass
-            try:
-                (DOCS / "_last_scrape.html").write_text(await page.content(), encoding="utf-8")
-            except Exception:
-                pass
-
-            rows = await page.evaluate(
-                """() => {
-                    const tables = [...document.querySelectorAll('table')];
-                    let bestRows = null, bestCount = 0;
-                    for (const t of tables) {
-                        const trs = [...t.querySelectorAll('tr')];
-                        const cells = trs.map(tr => {
-                            const tds = [...tr.querySelectorAll('td,th')];
-                            return tds.map(td => ({
-                                text: (td.innerText || '').trim(),
-                                colspan: parseInt(td.getAttribute('colspan') || '1', 10)
-                            }));
-                        });
-                        const dataRows = cells.filter(r => r.length >= 6).length;
-                        if (dataRows > bestCount) { bestCount = dataRows; bestRows = cells; }
-                    }
-                    return bestRows || [];
-                }"""
-            )
-            try:
-                (DOCS / "_last_scrape_raw.json").write_text(json.dumps(rows, indent=2), encoding="utf-8")
-            except Exception:
-                pass
-        finally:
-            await browser.close()
-
-    if not rows:
-        raise RuntimeError("No table found on Jemena page.")
-    outages = _parse_table(rows)
-    if not outages:
-        raise RuntimeError("Found rows but no parseable outage data.")
+    outages = _parse_feed(data)
+    planned = sum(1 for ev in data if isinstance(ev, dict) and ev.get("Type") == "Planned")
+    print(
+        f"[scrape] feed: {len(data)} events, {planned} planned, "
+        f"{len(outages)} suburb/street entries",
+        flush=True,
+    )
+    # An empty result can be legitimate (nothing scheduled right now, or street
+    # detail not yet attached to upcoming events) — the schema tripwire above
+    # is what guards against silent breakage, so don't fail the run on quiet days.
     return outages
+
+
+def _parse_feed_time(s):
+    """'2026-07-08T07:30:00' (naive, Melbourne local) -> datetime, else None."""
+    if not s:
+        return None
+    try:
+        return datetime.fromisoformat(str(s).replace("Z", "+00:00")).replace(tzinfo=None)
+    except Exception:
+        return None
+
+
+def _parse_feed(events):
+    """Map feed events to the shape the rest of the pipeline expects — one
+    entry per suburb+street, with the same keys _parse_table used to emit."""
+    out = []
+    for ev in events:
+        if not isinstance(ev, dict) or ev.get("Type") != "Planned":
+            continue
+        status = (ev.get("Status") or "Scheduled").strip()
+        if status.lower() in {"complete", "completed", "cancelled"}:
+            continue
+        start_dt = _parse_feed_time(ev.get("PlannedStartTime"))
+        end_dt = _parse_feed_time(ev.get("PlannedEndTime"))
+        if start_dt is None:
+            continue
+        if end_dt is None:
+            end_dt = start_dt + timedelta(hours=8)
+        if end_dt <= start_dt:
+            end_dt = end_dt + timedelta(days=1)
+        for sub in ev.get("ImpactedSuburbs") or []:
+            if not isinstance(sub, dict):
+                continue
+            name = (sub.get("SuburbName") or "").strip()
+            if not name:
+                continue
+            for street in sub.get("Streets") or []:
+                street = (street or "").strip()
+                if not street:
+                    continue
+                out.append({
+                    "suburb": name.upper(),
+                    "street_raw": street,
+                    "street": normalise_street(street),
+                    "start_dt": start_dt,
+                    "end_dt": end_dt,
+                    "start_display": start_dt.strftime("%a %d %b, %I:%M %p").replace(" 0", " "),
+                    "end_display": end_dt.strftime("%I:%M %p").lstrip("0"),
+                    "status": status,
+                })
+    return out
 
 
 def _parse_table(rows):
@@ -1131,7 +1134,7 @@ def write_affected_csv(affected, path, default_min_hours):
 # ---------------------------------------------------------------------------
 def main() -> int:
     try:
-        raw_outages = asyncio.run(scrape_outages())
+        raw_outages = scrape_outages()
     except Exception as e:
         print(f"[fatal] scrape failed: {e}", flush=True)
         traceback.print_exc()
