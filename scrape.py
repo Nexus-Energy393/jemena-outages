@@ -1192,8 +1192,12 @@ def match_clients_to_outages(clients, streets, raw_outages, ausnet_outages=None)
                 "street": ao.get("street") or f"Outage zone ({net})",
                 "start": ao.get("start_display") or _format_outage_display(ao["start_dt"]) if ao.get("start_dt") else (ao.get("start_display") or "Scheduled"),
                 "end": ao.get("end_display") or (_format_outage_end_display(ao["end_dt"]) if ao.get("end_dt") else ""),
-                "start_iso": ao.get("start_iso"),
-                "end_iso": ao.get("end_iso"),
+                # Derive ISO from start_dt/end_dt when the record doesn't carry
+                # it (Ausnet records only have datetimes). A null start_iso made
+                # the map's date filter drop these clients' diamond markers even
+                # though the zone popup listed them as affected.
+                "start_iso": ao.get("start_iso") or (ao["start_dt"].isoformat() if ao.get("start_dt") else None),
+                "end_iso": ao.get("end_iso") or (ao["end_dt"].isoformat() if ao.get("end_dt") else None),
                 "status": ao["status"],
                 "duration_hours": ao["duration_hours"],
                 "network": net,

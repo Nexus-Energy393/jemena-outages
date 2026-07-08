@@ -301,12 +301,17 @@ function daysAhead(isoString) {
 }
 
 function affectedSoonestDays(a) {
-  // Smallest days_ahead across all (active) outages on this client
+  // Smallest days_ahead across all (active) outages on this client. Some feeds
+  // (United Energy) publish only an estimated restore time, no start — fall
+  // back to the end date, and if neither is present treat it as happening now
+  // (0) so the client still shows rather than being filtered out.
   if (!a) return Infinity;
   let best = Infinity;
   for (const o of (a.definite || []).concat(a.possible || [])) {
     if (o.status === 'Cancelled') continue;
-    const d = daysAhead(o.start_iso);
+    let d = daysAhead(o.start_iso);
+    if (!isFinite(d)) d = daysAhead(o.end_iso);
+    if (!isFinite(d)) d = 0;
     if (d < best) best = d;
   }
   return best;
