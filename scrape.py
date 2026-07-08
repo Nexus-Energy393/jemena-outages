@@ -1669,6 +1669,63 @@ def main() -> int:
     if ausnet_skipped_no_clients:
         print(f"[polygons] hidden {ausnet_skipped_no_clients} polygons with no tracked clients", flush=True)
 
+    # Jemena outage zones as tight polygons for the map — the real
+    # de-energisation boundary the feed publishes, drawn instead of relying on
+    # the loose whole-street shading. Dedupe raw_outages by event, keep only
+    # events that carry a polygon, and attach the clients inside each.
+    jemena_zone_payload = {}
+    for o in raw_outages:
+        poly = o.get("polygon")
+        eid = o.get("event_id")
+        if not poly or len(poly) < 3 or eid is None:
+            continue
+        z = jemena_zone_payload.get(eid)
+        if z is None:
+            duration_h = (o["end_dt"] - o["start_dt"]).total_seconds() / 3600.0
+            z = jemena_zone_payload[eid] = {
+                "incident_id": eid, "network": "Jemena",
+                "polygon": poly,
+                "centroid": [sum(p[0] for p in poly) / len(poly), sum(p[1] for p in poly) / len(poly)],
+                "streets": set(), "suburbs": set(),
+                "start": o.get("start_display"), "end": o.get("end_display"),
+                "start_iso": o["start_dt"].isoformat(), "end_iso": o["end_dt"].isoformat(),
+                "status": o.get("status", "Scheduled"),
+                "duration_hours": round(duration_h, 2), "customers": o.get("customers"),
+            }
+        z["streets"].add(o["street"])
+        z["suburbs"].add(o["suburb"].title())
+    for eid, z in jemena_zone_payload.items():
+        matched_clients = []
+        for a in affected:
+            c = a["client"]
+            clat, clng = c.get("lat"), c.get("lng")
+            if clat is None or clng is None:
+                continue
+            if _pip(clat, clng, z["polygon"]):
+                dm, mm = 0, "definite"
+            else:
+                dd = _pdist(clat, clng, z["polygon"])
+                if dd > BUFFER_METRES:
+                    continue
+                dm, mm = int(dd), "possible"
+            matched_clients.append({
+                "client_id": c.get("client_id"), "name": c.get("name"),
+                "category": c.get("category"), "address": c.get("address", ""),
+                "suburb": c.get("suburb", ""), "match": mm, "distance_m": dm,
+            })
+        if not matched_clients:
+            continue
+        ausnet_payload.append({
+            "incident_id": eid, "network": "Jemena",
+            "suburb": ", ".join(sorted(z["suburbs"])[:2]),
+            "street": ", ".join(sorted(z["streets"])[:3]),
+            "start": z["start"], "end": z["end"],
+            "start_iso": z["start_iso"], "end_iso": z["end_iso"],
+            "duration_hours": z["duration_hours"], "status": z["status"],
+            "customers": z["customers"], "polygon": z["polygon"],
+            "centroid": z["centroid"], "affected_clients": matched_clients,
+        })
+
     main_payload = {
         "suburbs": suburbs,
         "outages": [o for outs in outages_by_pair.values() for o in outs],
