@@ -236,31 +236,37 @@ function buildAusnetPopup(ao) {
       body += `<div class="outage" style="color:#999">… and ${sorted.length - 12} more</div>`;
     }
   } else {
-    body += `<h4>No clients matched</h4>
-      <div style="font-size:12px;color:#999">No tracked clients sit inside this polygon or within ${DATA.meta.bufferMetres}m of its edge.</div>`;
+    body += `<h4>Prospect — no client here yet</h4>
+      <div style="font-size:12px;color:#777">Planned outage with no tracked client inside (or within ${DATA.meta.bufferMetres}m). A potential generator-hire opportunity for sites in this zone.</div>`;
   }
 
   body += `</div>`;
   return body;
 }
+// A second, fainter layer for planned outages with NO tracked client inside —
+// a prospecting view of where power will be down near sites we don't yet serve.
+const prospectLayer = L.layerGroup();
 function redrawAusnetLayer() {
   ausnetLayer.clearLayers();
+  prospectLayer.clearLayers();
   const maxDays = parseFloat(document.getElementById('max-days-select').value || '21');
   for (const ao of (DATA.ausnet || [])) {
     if (ao.start_iso && daysAhead(ao.start_iso) > maxDays) continue;
     const st = netStyle(ao.network);
-    L.polygon(ao.polygon, {
-      color: st.stroke,
-      weight: 2,
-      opacity: 0.9,
-      fillColor: st.fill,
-      fillOpacity: 0.3,
+    const hasClients = ao.has_clients !== false && (ao.affected_clients || []).length > 0;
+    L.polygon(ao.polygon, hasClients ? {
+      color: st.stroke, weight: 2, opacity: 0.9,
+      fillColor: st.fill, fillOpacity: 0.32,
+    } : {
+      color: st.stroke, weight: 1, opacity: 0.55,
+      fillColor: st.fill, fillOpacity: 0.08, dashArray: '4 3',
     }).bindPopup(buildAusnetPopup(ao), { maxHeight: 380 })
-      .addTo(ausnetLayer);
+      .addTo(hasClients ? ausnetLayer : prospectLayer);
   }
 }
 // Initial render happens after the daysAhead helper is defined below.
 ausnetLayer.addTo(map);
+prospectLayer.addTo(map);
 
 const suburbLayer = L.layerGroup();
 DATA.suburbs.forEach(s => {
@@ -382,18 +388,24 @@ document.getElementById('max-days-select').addEventListener('change', () => {
   redrawAusnetLayer();
 });
 
-// Initial map bounds — fit to whatever's interesting today (suburbs + Ausnet polygons)
+// Initial map bounds — focus on where our clients actually are (suburbs +
+// client-bearing outage zones), so distant rural prospect zones don't zoom the
+// whole state out. Falls back to all zones if nothing has a client yet.
 const allBoundsPoints = [];
 DATA.suburbs.forEach(s => allBoundsPoints.push([s.lat, s.lng]));
 for (const ao of (DATA.ausnet || [])) {
-  if (ao.centroid) allBoundsPoints.push(ao.centroid);
+  if (ao.centroid && (ao.has_clients !== false && (ao.affected_clients||[]).length > 0)) allBoundsPoints.push(ao.centroid);
+}
+if (!allBoundsPoints.length) {
+  for (const ao of (DATA.ausnet || [])) if (ao.centroid) allBoundsPoints.push(ao.centroid);
 }
 if (allBoundsPoints.length) {
   map.fitBounds(L.latLngBounds(allBoundsPoints).pad(0.1));
 }
 
 L.control.layers(null, {
-  'Outage zones (all networks)': ausnetLayer,
+  'Outage zones — our clients affected': ausnetLayer,
+  'Outage zones — prospects (no client yet)': prospectLayer,
   'Jemena street shading': streetLayer,
   'Suburb markers': suburbLayer,
   'Affected clients': affectedLayer,
@@ -412,11 +424,12 @@ legend.onAdd = () => {
     <div class="legend-item">${zoneSwatch(NETWORK_STYLE['Powercor'])} Powercor</div>
     <div class="legend-item">${zoneSwatch(NETWORK_STYLE['United Energy'])} United Energy</div>
     <div class="legend-item">${zoneSwatch(NETWORK_STYLE['Ausnet'])} Ausnet</div>
+    <div class="legend-item"><span style="display:inline-block;width:18px;height:14px;background:transparent;border:1px dashed #888;vertical-align:middle"></span> Prospect zone — outage, no client yet</div>
     <div class="legend-item"><span style="display:inline-block;width:18px;height:0;border-top:4px solid #ef9a9a;vertical-align:middle"></span> Jemena street shading (context)</div>
     <div class="legend-item"><span style="display:inline-block;width:12px;height:12px;background:#b71c1c;transform:rotate(45deg);border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.4)"></span>Client — definitely affected</div>
     <div class="legend-item"><span style="display:inline-block;width:12px;height:12px;background:#fb8c00;transform:rotate(45deg);border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.4)"></span>Client — possibly affected (within ${DATA.meta.bufferMetres}m)</div>
     <div class="legend-item"><span style="display:inline-block;width:8px;height:8px;background:#546e7a;transform:rotate(45deg);border:2px solid #fff"></span>Other client (toggle on)</div>
-    <div style="font-size:11px;color:#666;margin-top:6px">${esc((DATA.ausnet||[]).length)} outage zones with tracked clients · ${unmapped} streets in popup only</div>
+    <div style="font-size:11px;color:#666;margin-top:6px">${esc((DATA.ausnet||[]).filter(o=>o.has_clients!==false&&(o.affected_clients||[]).length>0).length)} zones affecting clients · ${esc((DATA.ausnet||[]).filter(o=>!(o.has_clients!==false&&(o.affected_clients||[]).length>0)).length)} prospect zones</div>
     <div style="font-size:11px;color:#666;margin-top:2px">${esc(DATA.meta.totalClients)} clients tracked · ${esc(DATA.meta.definiteCount)} definite · ${esc(DATA.meta.possibleCount)} possible</div>`;
   return div;
 };

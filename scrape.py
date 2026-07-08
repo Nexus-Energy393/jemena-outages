@@ -1645,10 +1645,12 @@ def main() -> int:
                         "distance_m": int(d),
                     })
 
-        # Skip the polygon entirely if no tracked clients are affected
+        # Every planned outage zone is kept — even with no tracked client — so
+        # the map can double as a prospecting tool (planned outages near sites
+        # we don't yet service). The template renders client-bearing zones
+        # prominently and no-client zones as a faint, toggleable prospect layer.
         if not matched_clients:
             ausnet_skipped_no_clients += 1
-            continue
 
         ausnet_payload.append({
             "incident_id": ao["incident_id"],
@@ -1665,9 +1667,10 @@ def main() -> int:
             "polygon": ao["polygon"],
             "centroid": list(ao["polygon_centroid"]),
             "affected_clients": matched_clients,
+            "has_clients": bool(matched_clients),
         })
     if ausnet_skipped_no_clients:
-        print(f"[polygons] hidden {ausnet_skipped_no_clients} polygons with no tracked clients", flush=True)
+        print(f"[polygons] {ausnet_skipped_no_clients} zones with no tracked client (kept as prospects)", flush=True)
 
     # Jemena outage zones as tight polygons for the map — the real
     # de-energisation boundary the feed publishes, drawn instead of relying on
@@ -1713,8 +1716,7 @@ def main() -> int:
                 "category": c.get("category"), "address": c.get("address", ""),
                 "suburb": c.get("suburb", ""), "match": mm, "distance_m": dm,
             })
-        if not matched_clients:
-            continue
+        # Kept whether or not a client is inside (prospecting layer).
         ausnet_payload.append({
             "incident_id": eid, "network": "Jemena",
             "suburb": ", ".join(sorted(z["suburbs"])[:2]),
@@ -1724,6 +1726,7 @@ def main() -> int:
             "duration_hours": z["duration_hours"], "status": z["status"],
             "customers": z["customers"], "polygon": z["polygon"],
             "centroid": z["centroid"], "affected_clients": matched_clients,
+            "has_clients": bool(matched_clients),
         })
 
     main_payload = {
