@@ -1079,12 +1079,15 @@ def match_clients_to_outages(clients, streets, raw_outages, ausnet_outages=None)
         bbox = polyline_bbox(s["coords"])
         bboxes.append(bbox_expand(bbox, BUFFER_METRES))
 
-    # Pre-compute bboxes for each Ausnet polygon (with buffer)
+    # Pre-compute bboxes for every polygon network (Ausnet + CitiPower +
+    # Powercor + United Energy). They all share the ausnet-style record shape,
+    # so one containment loop covers them all.
     from ausnet import polygon_bbox as _ausnet_polygon_bbox, point_in_polygon, polygon_distance_m
-    ausnet_bboxes = []
-    for ao in ausnet_outages:
+    polygon_outages = [o for o in (ausnet_outages or []) if o.get("polygon")]
+    polygon_bboxes = []
+    for ao in polygon_outages:
         ab = _ausnet_polygon_bbox(ao["polygon"])
-        ausnet_bboxes.append(bbox_expand(ab, BUFFER_METRES))
+        polygon_bboxes.append(bbox_expand(ab, BUFFER_METRES))
 
     affected = []
     for c in clients:
@@ -1175,28 +1178,33 @@ def match_clients_to_outages(clients, streets, raw_outages, ausnet_outages=None)
                     if sig not in {(d2.get("suburb"), d2.get("street"), d2.get("start"), d2.get("end")) for d2 in definite_outages}:
                         possible_outages.append({**o, "_distance_m": int(d)})
 
-        # Ausnet: definite if client lat/lng is INSIDE the polygon, possible if within buffer.
-        for bbox, ao in zip(ausnet_bboxes, ausnet_outages):
+        # Other polygon networks (Ausnet, CitiPower, Powercor, United Energy):
+        # definite if the client is INSIDE the de-energisation polygon, possible
+        # if within the buffer of its edge. CPPC/UE polygons are tight (metro
+        # ones ~150m); Ausnet's are looser but the best geometry they publish.
+        for bbox, ao in zip(polygon_bboxes, polygon_outages):
             if not point_in_bbox(plat, plng, bbox):
                 continue
             d = polygon_distance_m(plat, plng, ao["polygon"])
+            net = ao.get("network", "Network")
             ao_record = {
-                "suburb": "",
-                "street": f"Outage zone (Ausnet)",
-                "start": _format_outage_display(ao["start_dt"]),
-                "end": _format_outage_end_display(ao["end_dt"]),
-                "start_iso": ao["start_dt"].isoformat(),
-                "end_iso": ao["end_dt"].isoformat(),
+                "suburb": ao.get("suburb", "") or "",
+                "street": ao.get("street") or f"Outage zone ({net})",
+                "start": ao.get("start_display") or _format_outage_display(ao["start_dt"]) if ao.get("start_dt") else (ao.get("start_display") or "Scheduled"),
+                "end": ao.get("end_display") or (_format_outage_end_display(ao["end_dt"]) if ao.get("end_dt") else ""),
+                "start_iso": ao.get("start_iso"),
+                "end_iso": ao.get("end_iso"),
                 "status": ao["status"],
                 "duration_hours": ao["duration_hours"],
-                "network": "Ausnet",
+                "network": net,
                 "incident_id": ao["incident_id"],
                 "customers": ao["customers"],
             }
             if d == 0.0:
-                # Inside the polygon — definite match
+                ao_record["_match"] = "in-zone"
                 definite_outages.append(ao_record)
             elif d <= BUFFER_METRES:
+                ao_record["_match"] = "near-zone"
                 possible_outages.append({**ao_record, "_distance_m": int(d)})
 
         if not definite_outages and not possible_outages:
@@ -1370,14 +1378,23 @@ def main() -> int:
     streets = match_streets(overpass, outages_by_pair, pairs_by_street)
     print(f"[match] {len(streets)} street segments matched", flush=True)
 
-    # Scrape Ausnet (parallel network). Failures here are non-fatal — we still
-    # produce a Jemena-only map.
+    # Scrape the parallel polygon networks (Ausnet + CitiPower/Powercor +
+    # United Energy). Each is non-fatal — a Jemena-only map still builds if any
+    # of them fail. All share the same polygon-outage record shape.
     ausnet_outages = []
     try:
         from ausnet import scrape_ausnet
         ausnet_outages = scrape_ausnet()
     except Exception as e:
         print(f"[ausnet] scrape failed (continuing without Ausnet): {e}", flush=True)
+        traceback.print_exc()
+    try:
+        from vic_networks import scrape_vic_networks
+        vic = scrape_vic_networks()
+        print(f"[vic] {len(vic)} CitiPower/Powercor/United Energy outages", flush=True)
+        ausnet_outages = list(ausnet_outages) + vic
+    except Exception as e:
+        print(f"[vic] scrape failed (continuing without CPPC/UE): {e}", flush=True)
         traceback.print_exc()
 
     # Clients
@@ -1635,10 +1652,13 @@ def main() -> int:
 
         ausnet_payload.append({
             "incident_id": ao["incident_id"],
-            "start": _format_outage_display(ao["start_dt"]),
-            "end": _format_outage_end_display(ao["end_dt"]),
-            "start_iso": ao["start_dt"].isoformat(),
-            "end_iso": ao["end_dt"].isoformat(),
+            "network": ao.get("network", "Ausnet"),
+            "suburb": ao.get("suburb", ""),
+            "street": ao.get("street", ""),
+            "start": ao.get("start_display") or (_format_outage_display(ao["start_dt"]) if ao.get("start_dt") else "Scheduled"),
+            "end": ao.get("end_display") or (_format_outage_end_display(ao["end_dt"]) if ao.get("end_dt") else ""),
+            "start_iso": ao.get("start_iso") or (ao["start_dt"].isoformat() if ao.get("start_dt") else None),
+            "end_iso": ao.get("end_iso") or (ao["end_dt"].isoformat() if ao.get("end_dt") else None),
             "duration_hours": ao["duration_hours"],
             "status": ao["status"],
             "customers": ao["customers"],
@@ -1647,7 +1667,7 @@ def main() -> int:
             "affected_clients": matched_clients,
         })
     if ausnet_skipped_no_clients:
-        print(f"[ausnet] hidden {ausnet_skipped_no_clients} polygons with no tracked clients", flush=True)
+        print(f"[polygons] hidden {ausnet_skipped_no_clients} polygons with no tracked clients", flush=True)
 
     main_payload = {
         "suburbs": suburbs,
@@ -1658,7 +1678,7 @@ def main() -> int:
         "affected": affected_payload,
         "ausnet": ausnet_payload,
         "meta": {
-            "source": "Jemena + Ausnet planned outages · auto-updated",
+            "source": "Jemena + Ausnet + CitiPower/Powercor + United Energy planned outages · auto-updated",
             "extracted": now,
             "totalOutages": len(raw_outages),
             "totalAusnet": len(ausnet_outages),
