@@ -14,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-07-11T21:39:57.784Z",
+    "LastUpdatedTime": "2026-07-11T22:37:04.840Z",
     "FeedReceivedTime": "2026-07-11T03:33:12.543Z",
     "History": [
       {
@@ -430,7 +430,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-07-11T21:39:57.784Z",
+    "LastUpdatedTime": "2026-07-11T22:37:04.840Z",
     "FeedReceivedTime": "2026-07-11T03:51:00.730Z",
     "History": [
       {
@@ -697,7 +697,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-07-11T21:39:57.784Z",
+    "LastUpdatedTime": "2026-07-11T22:37:04.840Z",
     "FeedReceivedTime": "2026-07-11T07:37:14.806Z",
     "History": [
       {
@@ -2645,7 +2645,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-07-11T21:39:57.784Z",
+    "LastUpdatedTime": "2026-07-11T22:37:04.840Z",
     "FeedReceivedTime": "2026-07-11T12:46:02.951Z",
     "History": [
       {
@@ -2818,7 +2818,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-07-11T21:39:57.784Z",
+    "LastUpdatedTime": "2026-07-11T22:37:04.840Z",
     "FeedReceivedTime": "2026-07-11T16:53:13.577Z",
     "History": [
       {
@@ -3298,6 +3298,597 @@
         "Location": {
           "Latitude": -37.72602437408125,
           "Longitude": 145.01715808010772
+        }
+      }
+    ]
+  },
+  {
+    "PlannedStartTime": "2026-07-12T07:30:00",
+    "PlannedEndTime": "2026-07-12T16:00:00",
+    "EventId": "J.26.0140169",
+    "Type": "Planned",
+    "Status": "Planned Outage Execution",
+    "Cause": "Essential Maintenance",
+    "StartTime": "2026-07-12T07:39:47",
+    "RestorationTime": null,
+    "ImpactedCustomers": 23,
+    "LocationGeoJson": {
+      "type": "Feature",
+      "properties": {
+        "eventId": "J.26.0140169",
+        "customerReference": "J5222223",
+        "customersOff": "23",
+        "status": "Planned Outage Execution",
+        "type": "Planned",
+        "resolvedFlag": "false",
+        "showOutageFlag": "true",
+        "symptoms": [],
+        "cause": "Essential Maintenance",
+        "startTime": "2026-07-12T07:39:47",
+        "restoreTime": "",
+        "dispatchedTime": "",
+        "etr": "2026-07-12T16:00:00",
+        "plannedStartTime": "2026-07-12T07:30:00",
+        "plannedEndTime": "2026-07-12T16:00:00",
+        "lastUpdateTime": "2026-07-12T07:42:10"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          145.0273941385305,
+          -37.7239192930022
+        ]
+      }
+    },
+    "Location": {
+      "Latitude": -37.7239192930022,
+      "Longitude": 145.0273941385305
+    },
+    "ImpactedSuburbs": [
+      {
+        "SuburbName": "RESERVOIR",
+        "PostCode": 3073,
+        "Streets": [
+          "PLENTY RD",
+          "PLENTY ROAD"
+        ]
+      }
+    ],
+    "ImpactedAreaGeoJson": {
+      "type": "Feature",
+      "properties": {
+        "eventId": "J.26.0140169",
+        "customerReference": "J5222223",
+        "customersOff": "23",
+        "status": "Planned Outage Execution",
+        "type": "Planned",
+        "resolvedFlag": "false",
+        "showOutageFlag": "true",
+        "symptoms": [],
+        "cause": "Essential Maintenance",
+        "startTime": "2026-07-12T07:39:47",
+        "restoreTime": "",
+        "dispatchedTime": "",
+        "etr": "2026-07-12T16:00:00",
+        "plannedStartTime": "2026-07-12T07:30:00",
+        "plannedEndTime": "2026-07-12T16:00:00",
+        "lastUpdateTime": "2026-07-12T07:42:10"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              145.0265913119201,
+              -37.724527674656365
+            ],
+            [
+              145.0265254453838,
+              -37.724524009886736
+            ],
+            [
+              145.0264897469621,
+              -37.724496182079896
+            ],
+            [
+              145.02625859098399,
+              -37.72415282124311
+            ],
+            [
+              145.02624949007136,
+              -37.72411282962825
+            ],
+            [
+              145.02627157245564,
+              -37.72407614075192
+            ],
+            [
+              145.02739541011678,
+              -37.72346117730709
+            ],
+            [
+              145.02795949750157,
+              -37.72331091134802
+            ],
+            [
+              145.0284581612577,
+              -37.723319496088834
+            ],
+            [
+              145.02850325563156,
+              -37.723330942339736
+            ],
+            [
+              145.02853332570166,
+              -37.723359882763305
+            ],
+            [
+              145.02853878698963,
+              -37.723397092929105
+            ],
+            [
+              145.0284427378496,
+              -37.72383166647557
+            ],
+            [
+              145.02816280713927,
+              -37.724091762785854
+            ],
+            [
+              145.0265913119201,
+              -37.724527674656365
+            ]
+          ]
+        ]
+      }
+    },
+    "ImpactedArea": [
+      [
+        {
+          "Latitude": -37.724527674656365,
+          "Longitude": 145.0265913119201
+        },
+        {
+          "Latitude": -37.724524009886736,
+          "Longitude": 145.0265254453838
+        },
+        {
+          "Latitude": -37.724496182079896,
+          "Longitude": 145.0264897469621
+        },
+        {
+          "Latitude": -37.72415282124311,
+          "Longitude": 145.02625859098399
+        },
+        {
+          "Latitude": -37.72411282962825,
+          "Longitude": 145.02624949007136
+        },
+        {
+          "Latitude": -37.72407614075192,
+          "Longitude": 145.02627157245564
+        },
+        {
+          "Latitude": -37.72346117730709,
+          "Longitude": 145.02739541011678
+        },
+        {
+          "Latitude": -37.72331091134802,
+          "Longitude": 145.02795949750157
+        },
+        {
+          "Latitude": -37.723319496088834,
+          "Longitude": 145.0284581612577
+        },
+        {
+          "Latitude": -37.723330942339736,
+          "Longitude": 145.02850325563156
+        },
+        {
+          "Latitude": -37.723359882763305,
+          "Longitude": 145.02853332570166
+        },
+        {
+          "Latitude": -37.723397092929105,
+          "Longitude": 145.02853878698963
+        },
+        {
+          "Latitude": -37.72383166647557,
+          "Longitude": 145.0284427378496
+        },
+        {
+          "Latitude": -37.724091762785854,
+          "Longitude": 145.02816280713927
+        },
+        {
+          "Latitude": -37.724527674656365,
+          "Longitude": 145.0265913119201
+        }
+      ]
+    ],
+    "LastUpdatedTime": "2026-07-11T22:37:04.840Z",
+    "FeedReceivedTime": "2026-07-11T21:43:21.922Z",
+    "History": null
+  },
+  {
+    "PlannedStartTime": "2026-07-12T07:30:00",
+    "PlannedEndTime": "2026-07-12T16:30:00",
+    "EventId": "J.26.0140175",
+    "Type": "Planned",
+    "Status": "Planned Outage Execution",
+    "Cause": "Essential Maintenance",
+    "StartTime": "2026-07-12T07:53:31",
+    "RestorationTime": "2026-07-12T08:03:27",
+    "ImpactedCustomers": 83,
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-07-11T22:37:04.840Z",
+    "FeedReceivedTime": "2026-07-11T22:03:43.624Z",
+    "History": [
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "WILLIAMSTOWN NORTH",
+            "PostCode": 3016,
+            "Streets": [
+              "KOROROIT CREEK RD",
+              "KOROROIT CREEK ROAD",
+              "LEMMON ST",
+              "SHEPHERD CT"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 72,
+            "eventId": "J.26.0140175",
+            "startTime": "2026-07-12T07:53:31",
+            "restoreTime": "2026-07-12T08:03:27",
+            "suburbs": [
+              {
+                "suburbName": "WILLIAMSTOWN NORTH",
+                "postcode": 3016,
+                "streets": [
+                  "KOROROIT CREEK RD",
+                  "KOROROIT CREEK ROAD",
+                  "LEMMON ST",
+                  "SHEPHERD CT"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  144.8846002822458,
+                  -37.85745606887624
+                ],
+                [
+                  144.88328941587937,
+                  -37.85719417094767
+                ],
+                [
+                  144.88325638590834,
+                  -37.85715575108385
+                ],
+                [
+                  144.88325335534503,
+                  -37.85712460515194
+                ],
+                [
+                  144.88333398009297,
+                  -37.856652454640574
+                ],
+                [
+                  144.8833642090267,
+                  -37.8566176957486
+                ],
+                [
+                  144.88471106927537,
+                  -37.855748276931145
+                ],
+                [
+                  144.8852551756666,
+                  -37.85564565352032
+                ],
+                [
+                  144.88532123608644,
+                  -37.85565218779249
+                ],
+                [
+                  144.88550186971221,
+                  -37.85577433621012
+                ],
+                [
+                  144.8858685696518,
+                  -37.85651749547498
+                ],
+                [
+                  144.8858694235928,
+                  -37.85657064616099
+                ],
+                [
+                  144.88567736158225,
+                  -37.85683402414083
+                ],
+                [
+                  144.8851948002077,
+                  -37.85737793298599
+                ],
+                [
+                  144.88514201182946,
+                  -37.857397829792646
+                ],
+                [
+                  144.8846002822458,
+                  -37.85745606887624
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.85745606887624,
+              "Longitude": 144.8846002822458
+            },
+            {
+              "Latitude": -37.85719417094767,
+              "Longitude": 144.88328941587937
+            },
+            {
+              "Latitude": -37.85715575108385,
+              "Longitude": 144.88325638590834
+            },
+            {
+              "Latitude": -37.85712460515194,
+              "Longitude": 144.88325335534503
+            },
+            {
+              "Latitude": -37.856652454640574,
+              "Longitude": 144.88333398009297
+            },
+            {
+              "Latitude": -37.8566176957486,
+              "Longitude": 144.8833642090267
+            },
+            {
+              "Latitude": -37.855748276931145,
+              "Longitude": 144.88471106927537
+            },
+            {
+              "Latitude": -37.85564565352032,
+              "Longitude": 144.8852551756666
+            },
+            {
+              "Latitude": -37.85565218779249,
+              "Longitude": 144.88532123608644
+            },
+            {
+              "Latitude": -37.85577433621012,
+              "Longitude": 144.88550186971221
+            },
+            {
+              "Latitude": -37.85651749547498,
+              "Longitude": 144.8858685696518
+            },
+            {
+              "Latitude": -37.85657064616099,
+              "Longitude": 144.8858694235928
+            },
+            {
+              "Latitude": -37.85683402414083,
+              "Longitude": 144.88567736158225
+            },
+            {
+              "Latitude": -37.85737793298599,
+              "Longitude": 144.8851948002077
+            },
+            {
+              "Latitude": -37.857397829792646,
+              "Longitude": 144.88514201182946
+            },
+            {
+              "Latitude": -37.85745606887624,
+              "Longitude": 144.8846002822458
+            }
+          ]
+        ],
+        "RestorationTime": "2026-07-12T08:03:27",
+        "ImpactedCustomers": 72,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 72,
+            "eventId": "J.26.0140175",
+            "startTime": "2026-07-12T07:53:31",
+            "restoreTime": "2026-07-12T08:03:27",
+            "suburbs": [
+              {
+                "suburbName": "WILLIAMSTOWN NORTH",
+                "postcode": 3016,
+                "streets": [
+                  "KOROROIT CREEK RD",
+                  "KOROROIT CREEK ROAD",
+                  "LEMMON ST",
+                  "SHEPHERD CT"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              144.8845613894689,
+              -37.85655086119828
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.85655086119828,
+          "Longitude": 144.8845613894689
+        }
+      },
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "WILLIAMSTOWN NORTH",
+            "PostCode": 3016,
+            "Streets": [
+              "KOROROIT CREEK RD"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 10,
+            "eventId": "J.26.0140175",
+            "startTime": "2026-07-12T07:53:31",
+            "restoreTime": "2026-07-12T08:03:10",
+            "suburbs": [
+              {
+                "suburbName": "WILLIAMSTOWN NORTH",
+                "postcode": 3016,
+                "streets": [
+                  "KOROROIT CREEK RD"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  144.8826061297203,
+                  -37.857086335345
+                ],
+                [
+                  144.88244082861868,
+                  -37.85706803551295
+                ],
+                [
+                  144.88241504666476,
+                  -37.857041272530196
+                ],
+                [
+                  144.88249438358483,
+                  -37.85657715745727
+                ],
+                [
+                  144.8825091261965,
+                  -37.856557178044106
+                ],
+                [
+                  144.8834302961454,
+                  -37.85664625886008
+                ],
+                [
+                  144.88345940754783,
+                  -37.856662927236485
+                ],
+                [
+                  144.88338637525777,
+                  -37.857138463845295
+                ],
+                [
+                  144.88337168207767,
+                  -37.85715852600898
+                ],
+                [
+                  144.8826061297203,
+                  -37.857086335345
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.857086335345,
+              "Longitude": 144.8826061297203
+            },
+            {
+              "Latitude": -37.85706803551295,
+              "Longitude": 144.88244082861868
+            },
+            {
+              "Latitude": -37.857041272530196,
+              "Longitude": 144.88241504666476
+            },
+            {
+              "Latitude": -37.85657715745727,
+              "Longitude": 144.88249438358483
+            },
+            {
+              "Latitude": -37.856557178044106,
+              "Longitude": 144.8825091261965
+            },
+            {
+              "Latitude": -37.85664625886008,
+              "Longitude": 144.8834302961454
+            },
+            {
+              "Latitude": -37.856662927236485,
+              "Longitude": 144.88345940754783
+            },
+            {
+              "Latitude": -37.857138463845295,
+              "Longitude": 144.88338637525777
+            },
+            {
+              "Latitude": -37.85715852600898,
+              "Longitude": 144.88337168207767
+            },
+            {
+              "Latitude": -37.857086335345,
+              "Longitude": 144.8826061297203
+            }
+          ]
+        ],
+        "RestorationTime": "2026-07-12T08:03:10",
+        "ImpactedCustomers": 10,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 10,
+            "eventId": "J.26.0140175",
+            "startTime": "2026-07-12T07:53:31",
+            "restoreTime": "2026-07-12T08:03:10",
+            "suburbs": [
+              {
+                "suburbName": "WILLIAMSTOWN NORTH",
+                "postcode": 3016,
+                "streets": [
+                  "KOROROIT CREEK RD"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              144.8829372271063,
+              -37.85685785202654
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.85685785202654,
+          "Longitude": 144.8829372271063
         }
       }
     ]
