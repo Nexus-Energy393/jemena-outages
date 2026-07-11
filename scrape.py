@@ -18,6 +18,7 @@ Inputs:
 from __future__ import annotations
 
 import csv
+import io
 import json
 import math
 import os
@@ -39,7 +40,11 @@ DOCS = ROOT / "docs"
 CACHE = ROOT / ".cache"
 TEMPLATE = ROOT / "template.html"
 AFFECTED_TEMPLATE = ROOT / "affected_template.html"
-CLIENTS_CSV = ROOT / "clients.csv"
+CLIENTS_CSV = ROOT / "clients.csv"  # legacy fallback only — the watch list now lives in the Nexy CRM
+NEXY_SITES_URL = os.environ.get(
+    "NEXY_SITES_URL",
+    os.environ.get("CRM_BASE_URL", "https://crm.nexusenergy.au").rstrip("/") + "/api/intake/monitored-sites",
+)
 DOCS.mkdir(exist_ok=True)
 CACHE.mkdir(exist_ok=True)
 
@@ -848,20 +853,55 @@ def match_streets(overpass, outages_by_pair, pairs_by_street, max_dist_deg=0.04)
 # Client list assembly
 # ---------------------------------------------------------------------------
 def load_user_clients():
-    if not CLIENTS_CSV.exists():
-        return []
+    """Tracked-client watch list, straight from the Nexy CRM.
+
+    Organisations flagged "Outage watch" in the CRM contribute their Sites
+    (and their own head-office address) via /api/intake/monitored-sites —
+    same columns as the old clients.csv plus crm_org_id. Flag an org in the
+    CRM and its sites are watched on the next run; no CSV to maintain.
+
+    Resilient by design: the last good response is cached, so a CRM blip
+    reuses yesterday's list rather than emptying the map. A leftover
+    clients.csv (if present) is only a final fallback.
+    """
+    secret = os.environ.get("NEXY_INTAKE_SECRET", "").strip()
+    text = None
+    if secret:
+        try:
+            r = requests.get(NEXY_SITES_URL, headers={"x-nexy-intake-secret": secret}, timeout=30)
+            r.raise_for_status()
+            if not (r.text or "").lstrip().lower().startswith("name,"):
+                raise ValueError(f"unexpected response (not CSV): {r.text[:120]!r}")
+            text = r.text
+            (CACHE / "nexy_sites.csv").write_text(text, encoding="utf-8")
+            print(f"[clients] watch list fetched from Nexy CRM ({NEXY_SITES_URL})", flush=True)
+        except Exception as e:
+            print(f"[clients] CRM watch-list fetch failed: {e}", flush=True)
+    else:
+        print("[clients] NEXY_INTAKE_SECRET not set — cannot fetch the CRM watch list", flush=True)
+    if text is None:
+        cached = CACHE / "nexy_sites.csv"
+        if cached.exists():
+            text = cached.read_text(encoding="utf-8")
+            print("[clients] using cached CRM watch list (.cache/nexy_sites.csv)", flush=True)
+    if text is None:
+        if CLIENTS_CSV.exists():
+            print("[clients] falling back to legacy clients.csv", flush=True)
+            text = CLIENTS_CSV.read_text(encoding="utf-8-sig")
+        else:
+            print("[clients] WARNING: no CRM watch list, no cache, no clients.csv — 0 tracked clients", flush=True)
+            return []
     out = []
-    with CLIENTS_CSV.open(encoding="utf-8-sig") as f:  # utf-8-sig strips BOM if present
-        reader = csv.DictReader(f)
-        # Normalise headers to lowercase so "Name" matches "name", etc.
-        if reader.fieldnames:
-            reader.fieldnames = [(h or "").strip().lower() for h in reader.fieldnames]
-        for row in reader:
-            row = {(k or "").strip().lower(): (v or "").strip() for k, v in row.items()}
-            if not row.get("name"):
-                continue  # need a name at minimum; suburb is helpful but not strictly required
-            row["source"] = "user"
-            out.append(row)
+    reader = csv.DictReader(io.StringIO(text))
+    # Normalise headers to lowercase so "Name" matches "name", etc.
+    if reader.fieldnames:
+        reader.fieldnames = [(h or "").strip().lower() for h in reader.fieldnames]
+    for row in reader:
+        row = {(k or "").strip().lower(): (v or "").strip() for k, v in row.items()}
+        if not row.get("name"):
+            continue  # need a name at minimum; suburb is helpful but not strictly required
+        row["source"] = "user"
+        out.append(row)
     return out
 
 
@@ -978,7 +1018,7 @@ def enrich_client_names(clients):
 
 def assemble_clients():
     user_clients = load_user_clients()
-    print(f"[clients] {len(user_clients)} from clients.csv", flush=True)
+    print(f"[clients] {len(user_clients)} from the Nexy CRM watch list", flush=True)
 
     chain_clients = fetch_chains()
     print(f"[clients] {len(chain_clients)} chains from OSM", flush=True)
@@ -1517,8 +1557,11 @@ def main() -> int:
 
     seen_ids = {}
     for a in affected:
-        cid = make_client_id(a["client"])
-        # Disambiguate collisions
+        # CRM-sourced sites use their organisation id — stable forever, and the
+        # CRM intake links "<orgId>::<incident>" leads straight to the right org.
+        preset = (a["client"].get("crm_org_id") or "").strip()
+        cid = preset or make_client_id(a["client"])
+        # Disambiguate collisions (slug ids only; org ids are unique already)
         n = seen_ids.get(cid, 0) + 1
         seen_ids[cid] = n
         a["client"]["client_id"] = cid if n == 1 else f"{cid}-{n}"
@@ -1581,7 +1624,7 @@ def main() -> int:
     # Slim down clients for embedding (drop heavy/unused fields)
     def slim_client(c):
         out = {}
-        for k in ("client_id", "name", "category", "source", "address", "suburb", "postcode",
+        for k in ("client_id", "crm_org_id", "name", "category", "source", "address", "suburb", "postcode",
                   "contact_name", "contact_phone", "contact_email", "notes",
                   "lat", "lng", "lead_id"):
             if c.get(k) not in (None, ""):
