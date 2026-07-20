@@ -1023,11 +1023,34 @@ def assemble_clients():
     chain_clients = fetch_chains()
     print(f"[clients] {len(chain_clients)} chains from OSM", flush=True)
 
+    # Geocode budget: Nominatim allows ~1 req/sec, so a bulk addition to
+    # clients.csv (hundreds of new rows) would otherwise blow the workflow
+    # timeout — and a cancelled run never commits the cache, so no progress
+    # is ever made (this exact death spiral took the map down for 3 days in
+    # Jul 2026). Cap NEW lookups per run; the rest are deferred and drain
+    # over the following hourly runs as the cache fills.
+    budget = int(os.environ.get("GEOCODE_BUDGET", "200"))
+    client_cache = load_cache("clients.json")
+
+    def _cache_key(c):
+        return f"{c.get('address','')}|{c.get('suburb','')}|{c.get('postcode','')}|{c.get('name','')}".upper()
+
     geocoded = []
+    new_lookups = 0
+    deferred = 0
     for c in user_clients:
+        cached = _cache_key(c) in client_cache
+        if not cached:
+            if new_lookups >= budget:
+                deferred += 1
+                continue
+            new_lookups += 1
         gc = geocode_client(c)
         if gc and gc.get("lat") and gc.get("lng"):
             geocoded.append(gc)
+    if deferred:
+        print(f"[geocode-budget] {new_lookups} new lookups done (budget {budget}) — "
+              f"{deferred} clients deferred to the next run", flush=True)
     # Chain clients are already geocoded
     geocoded.extend(chain_clients)
 

@@ -22,7 +22,10 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    # 25 min: normal runs take ~5, but a geocode-budget run (200 new client
+    # lookups after a bulk clients.csv addition) can legitimately need ~15.
+    # A cancelled run commits nothing, so the timeout must never be the norm.
+    timeout-minutes: 25
     outputs:
       scrape_failed: ${{ steps.scrape.outcome == 'failure' && '1' || '0' }}
 
