@@ -14,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-07-22T05:40:49.237Z",
+    "LastUpdatedTime": "2026-07-22T08:13:14.589Z",
     "FeedReceivedTime": "2026-07-21T21:10:45.925Z",
     "History": [
       {
@@ -233,7 +233,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-07-22T05:40:49.237Z",
+    "LastUpdatedTime": "2026-07-22T08:13:14.589Z",
     "FeedReceivedTime": "2026-07-21T21:14:18.936Z",
     "History": [
       {
@@ -403,206 +403,6 @@
     ]
   },
   {
-    "PlannedStartTime": "2026-07-22T08:00:00",
-    "PlannedEndTime": "2026-07-22T17:30:00",
-    "EventId": "J.26.0143071",
-    "Type": "Planned",
-    "Status": "Planned Outage Execution",
-    "Cause": "Essential Maintenance",
-    "StartTime": "2026-07-22T09:25:14",
-    "RestorationTime": null,
-    "ImpactedCustomers": 6,
-    "LocationGeoJson": {
-      "type": "Feature",
-      "properties": {
-        "eventId": "J.26.0143071",
-        "customerReference": "J5221708",
-        "customersOff": "6",
-        "status": "Planned Outage Execution",
-        "type": "Planned",
-        "resolvedFlag": "false",
-        "showOutageFlag": "false",
-        "symptoms": [],
-        "cause": "Essential Maintenance",
-        "startTime": "2026-07-22T09:25:14",
-        "restoreTime": "",
-        "dispatchedTime": "",
-        "etr": "2026-07-22T17:30:00",
-        "plannedStartTime": "2026-07-22T08:00:00",
-        "plannedEndTime": "2026-07-22T17:30:00",
-        "lastUpdateTime": "2026-07-22T09:25:25"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          144.8799563458537,
-          -37.700605304466904
-        ]
-      }
-    },
-    "Location": {
-      "Latitude": -37.700605304466904,
-      "Longitude": 144.8799563458537
-    },
-    "ImpactedSuburbs": [
-      {
-        "SuburbName": "TULLAMARINE",
-        "PostCode": 3043,
-        "Streets": [
-          "BROADMEADOWS RD",
-          "THERESA ST"
-        ]
-      }
-    ],
-    "ImpactedAreaGeoJson": {
-      "type": "Feature",
-      "properties": {
-        "eventId": "J.26.0143071",
-        "customerReference": "J5221708",
-        "customersOff": "6",
-        "status": "Planned Outage Execution",
-        "type": "Planned",
-        "resolvedFlag": "false",
-        "showOutageFlag": "false",
-        "symptoms": [],
-        "cause": "Essential Maintenance",
-        "startTime": "2026-07-22T09:25:14",
-        "restoreTime": "",
-        "dispatchedTime": "",
-        "etr": "2026-07-22T17:30:00",
-        "plannedStartTime": "2026-07-22T08:00:00",
-        "plannedEndTime": "2026-07-22T17:30:00",
-        "lastUpdateTime": "2026-07-22T09:25:25"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              144.87949730236733,
-              -37.701006342173514
-            ],
-            [
-              144.87946921313946,
-              -37.70098015519217
-            ],
-            [
-              144.87939122226302,
-              -37.70080328447132
-            ],
-            [
-              144.87944954026142,
-              -37.70048471139599
-            ],
-            [
-              144.8797279365882,
-              -37.69994427552092
-            ],
-            [
-              144.87978215423098,
-              -37.69992942789788
-            ],
-            [
-              144.88001283126394,
-              -37.69995910079497
-            ],
-            [
-              144.88004160113638,
-              -37.69998717439152
-            ],
-            [
-              144.88050141247768,
-              -37.70113104715092
-            ],
-            [
-              144.8805214694444,
-              -37.70125042109883
-            ],
-            [
-              144.88049965546404,
-              -37.70127246870902
-            ],
-            [
-              144.88045429128076,
-              -37.701281181035924
-            ],
-            [
-              144.87999637064473,
-              -37.70122784391285
-            ],
-            [
-              144.87949730236733,
-              -37.701006342173514
-            ]
-          ]
-        ]
-      }
-    },
-    "ImpactedArea": [
-      [
-        {
-          "Latitude": -37.701006342173514,
-          "Longitude": 144.87949730236733
-        },
-        {
-          "Latitude": -37.70098015519217,
-          "Longitude": 144.87946921313946
-        },
-        {
-          "Latitude": -37.70080328447132,
-          "Longitude": 144.87939122226302
-        },
-        {
-          "Latitude": -37.70048471139599,
-          "Longitude": 144.87944954026142
-        },
-        {
-          "Latitude": -37.69994427552092,
-          "Longitude": 144.8797279365882
-        },
-        {
-          "Latitude": -37.69992942789788,
-          "Longitude": 144.87978215423098
-        },
-        {
-          "Latitude": -37.69995910079497,
-          "Longitude": 144.88001283126394
-        },
-        {
-          "Latitude": -37.69998717439152,
-          "Longitude": 144.88004160113638
-        },
-        {
-          "Latitude": -37.70113104715092,
-          "Longitude": 144.88050141247768
-        },
-        {
-          "Latitude": -37.70125042109883,
-          "Longitude": 144.8805214694444
-        },
-        {
-          "Latitude": -37.70127246870902,
-          "Longitude": 144.88049965546404
-        },
-        {
-          "Latitude": -37.701281181035924,
-          "Longitude": 144.88045429128076
-        },
-        {
-          "Latitude": -37.70122784391285,
-          "Longitude": 144.87999637064473
-        },
-        {
-          "Latitude": -37.701006342173514,
-          "Longitude": 144.87949730236733
-        }
-      ]
-    ],
-    "LastUpdatedTime": "2026-07-22T05:40:49.237Z",
-    "FeedReceivedTime": "2026-07-21T23:27:17.045Z",
-    "History": null
-  },
-  {
     "PlannedStartTime": "2026-07-22T07:30:00",
     "PlannedEndTime": "2026-07-22T17:30:00",
     "EventId": "J.26.0142896",
@@ -617,7 +417,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-07-22T05:40:49.237Z",
+    "LastUpdatedTime": "2026-07-22T08:13:14.589Z",
     "FeedReceivedTime": "2026-07-22T04:37:32.887Z",
     "History": [
       {
@@ -1577,7 +1377,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-07-22T05:40:49.237Z",
+    "LastUpdatedTime": "2026-07-22T08:13:14.589Z",
     "FeedReceivedTime": "2026-07-22T05:18:12.481Z",
     "History": [
       {
@@ -1971,7 +1771,7 @@
         }
       ]
     ],
-    "LastUpdatedTime": "2026-07-22T05:40:49.237Z",
+    "LastUpdatedTime": "2026-07-22T08:13:14.589Z",
     "FeedReceivedTime": "2026-07-22T05:23:07.558Z",
     "History": null
   },
@@ -1990,7 +1790,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-07-22T05:40:49.237Z",
+    "LastUpdatedTime": "2026-07-22T08:13:14.589Z",
     "FeedReceivedTime": "2026-07-22T05:33:28.586Z",
     "History": [
       {
@@ -2408,7 +2208,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-07-22T05:40:49.237Z",
+    "LastUpdatedTime": "2026-07-22T08:13:14.589Z",
     "FeedReceivedTime": "2026-07-22T05:38:33.589Z",
     "History": [
       {
@@ -2641,6 +2441,214 @@
         "Location": {
           "Latitude": -37.657750484527654,
           "Longitude": 144.92232292992492
+        }
+      }
+    ]
+  },
+  {
+    "PlannedStartTime": "2026-07-22T08:00:00",
+    "PlannedEndTime": "2026-07-22T17:30:00",
+    "EventId": "J.26.0143071",
+    "Type": "Planned",
+    "Status": "Complete",
+    "Cause": "Essential Maintenance",
+    "StartTime": "2026-07-22T08:29:14",
+    "RestorationTime": "2026-07-22T15:20:34",
+    "ImpactedCustomers": 6,
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-07-22T08:13:14.589Z",
+    "FeedReceivedTime": "2026-07-22T05:58:54.402Z",
+    "History": [
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "TULLAMARINE",
+            "PostCode": 3043,
+            "Streets": [
+              "BROADMEADOWS RD",
+              "THERESA ST"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 6,
+            "eventId": "J.26.0143071",
+            "startTime": "2026-07-22T08:29:14",
+            "restoreTime": "2026-07-22T15:20:34",
+            "suburbs": [
+              {
+                "suburbName": "TULLAMARINE",
+                "postcode": 3043,
+                "streets": [
+                  "BROADMEADOWS RD",
+                  "THERESA ST"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  144.87949730236733,
+                  -37.701006342173514
+                ],
+                [
+                  144.87946921313946,
+                  -37.70098015519217
+                ],
+                [
+                  144.87939122226302,
+                  -37.70080328447132
+                ],
+                [
+                  144.87944954026142,
+                  -37.70048471139599
+                ],
+                [
+                  144.8797279365882,
+                  -37.69994427552092
+                ],
+                [
+                  144.87978215423098,
+                  -37.69992942789788
+                ],
+                [
+                  144.88001283126394,
+                  -37.69995910079497
+                ],
+                [
+                  144.88004160113638,
+                  -37.69998717439152
+                ],
+                [
+                  144.88050141247768,
+                  -37.70113104715092
+                ],
+                [
+                  144.8805214694444,
+                  -37.70125042109883
+                ],
+                [
+                  144.88049965546404,
+                  -37.70127246870902
+                ],
+                [
+                  144.88045429128076,
+                  -37.701281181035924
+                ],
+                [
+                  144.87999637064473,
+                  -37.70122784391285
+                ],
+                [
+                  144.87949730236733,
+                  -37.701006342173514
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.701006342173514,
+              "Longitude": 144.87949730236733
+            },
+            {
+              "Latitude": -37.70098015519217,
+              "Longitude": 144.87946921313946
+            },
+            {
+              "Latitude": -37.70080328447132,
+              "Longitude": 144.87939122226302
+            },
+            {
+              "Latitude": -37.70048471139599,
+              "Longitude": 144.87944954026142
+            },
+            {
+              "Latitude": -37.69994427552092,
+              "Longitude": 144.8797279365882
+            },
+            {
+              "Latitude": -37.69992942789788,
+              "Longitude": 144.87978215423098
+            },
+            {
+              "Latitude": -37.69995910079497,
+              "Longitude": 144.88001283126394
+            },
+            {
+              "Latitude": -37.69998717439152,
+              "Longitude": 144.88004160113638
+            },
+            {
+              "Latitude": -37.70113104715092,
+              "Longitude": 144.88050141247768
+            },
+            {
+              "Latitude": -37.70125042109883,
+              "Longitude": 144.8805214694444
+            },
+            {
+              "Latitude": -37.70127246870902,
+              "Longitude": 144.88049965546404
+            },
+            {
+              "Latitude": -37.701281181035924,
+              "Longitude": 144.88045429128076
+            },
+            {
+              "Latitude": -37.70122784391285,
+              "Longitude": 144.87999637064473
+            },
+            {
+              "Latitude": -37.701006342173514,
+              "Longitude": 144.87949730236733
+            }
+          ]
+        ],
+        "RestorationTime": "2026-07-22T15:20:34",
+        "ImpactedCustomers": 6,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 6,
+            "eventId": "J.26.0143071",
+            "startTime": "2026-07-22T08:29:14",
+            "restoreTime": "2026-07-22T15:20:34",
+            "suburbs": [
+              {
+                "suburbName": "TULLAMARINE",
+                "postcode": 3043,
+                "streets": [
+                  "BROADMEADOWS RD",
+                  "THERESA ST"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              144.8799563458537,
+              -37.700605304466904
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.700605304466904,
+          "Longitude": 144.8799563458537
         }
       }
     ]
