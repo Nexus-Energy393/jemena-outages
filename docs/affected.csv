@@ -1,4 +1,8 @@
 Match,Match Basis,Client,Category,Source,Address,Suburb,Postcode,Contact Name,Contact Phone,Contact Email,Network,Outage Suburb,Outage Street,Start,End,Duration (hrs),Status,Distance (m),Client Total Hours,Client Longest Outage (hrs),Min Hours Threshold,Generator Opportunity,Notes
+Possible,Near outage zone,"800 Bourke Street, Melbourne Docklands",,user,"800 Bourke Street, Melbourne",Melbourne,,,,,CitiPower,Docklands,BOURKE STREET,"Sat 25 Jul, 5:00 PM",3:00 AM,10.0,Partially Restored,59,20.0,10.0,6.0,Yes,head office
+Possible,Near outage zone,"800 Bourke Street, Melbourne Docklands",,user,"800 Bourke Street, Melbourne",Melbourne,,,,,CitiPower,Docklands,BOURKE STREET,"Sat 25 Jul, 5:15 PM",3:15 AM,10.0,Partially Restored,71,20.0,10.0,6.0,Yes,head office
+Definite,In outage zone,"808 Bourke Street, Melbourne Docklands",,user,"808 Bourke Street, Melbourne",Melbourne,,,,,CitiPower,Docklands,BOURKE STREET,"Sat 25 Jul, 5:00 PM",3:00 AM,10.0,Partially Restored,,20.0,10.0,6.0,Yes,head office
+Definite,In outage zone,"808 Bourke Street, Melbourne Docklands",,user,"808 Bourke Street, Melbourne",Melbourne,,,,,CitiPower,Docklands,BOURKE STREET,"Sat 25 Jul, 5:15 PM",3:15 AM,10.0,Partially Restored,,20.0,10.0,6.0,Yes,head office
 Definite,In outage zone,ALDI Stores - Lower Plenty,Supermarket,user,45 Main Road,Lower Plenty,3093,Talia Vasile,03 9434 4424,talia.vasile@aldi.com.au,Ausnet,,Outage zone (Ausnet),"Tue 4 Aug, 9:00 PM",6:00 AM,9.0,Scheduled,,17.0,9.0,6.0,Yes,site of ALDI Stores
 Definite,In outage zone,ALDI Stores - Lower Plenty,Supermarket,user,45 Main Road,Lower Plenty,3093,Talia Vasile,03 9434 4424,talia.vasile@aldi.com.au,Ausnet,,Outage zone (Ausnet),"Wed 12 Aug, 8:30 AM",4:30 PM,8.0,Scheduled,,17.0,9.0,6.0,Yes,site of ALDI Stores
 Definite,In outage zone,ALDI Stores - Wonthaggi,Supermarket,user,"Cnr Murray Street, McKenzie St",Wonthaggi,3995,Craig Wallace,03 5672 1300,craig.wallace@aldi.com.au,Ausnet,,Outage zone (Ausnet),"Sun 16 Aug, 9:00 AM",5:00 PM,8.0,Scheduled,,8.0,8.0,6.0,Yes,site of ALDI Stores
@@ -23,7 +27,6 @@ Definite,In outage zone,rebel Chirnside Park Chirnside Homemaker Centre,,user,28
 Definite,In outage zone,United Leongatha,,user,1 Shingler St,Leongatha,3953,,,,Ausnet,,Outage zone (Ausnet),"Tue 4 Aug, 8:00 AM",4:00 PM,8.0,Scheduled,,8.0,8.0,6.0,Yes,head office
 Definite,In outage zone,United Sale North,Fuel / Service station,user,2 Maffra-Sale Road,Sale,3850,Marie Naboli,0394131674,marie.naboli@unitedpetroleum.com.au,Ausnet,,Outage zone (Ausnet),"Sun 9 Aug, 8:30 AM",4:30 PM,8.0,Scheduled,,8.0,8.0,6.0,Yes,site of United Petroleum
 Possible,Near outage zone,United Warragul,Fuel / Service station,user,143 Queen Street,Warragul,3820,Marie Naboli,0394131674,marie.naboli@unitedpetroleum.com.au,Ausnet,,Outage zone (Ausnet),"Sun 2 Aug, 9:00 AM",5:00 PM,8.0,Scheduled,76,8.0,8.0,6.0,Yes,site of United Petroleum
-Possible,Near affected street,Caltex Craigieburn,Caltex,osm,Hume Highway,CRAIGIEBURN,3064,,,,Jemena,Craigieburn,Yellowbox Drive,"Sat 25 Jul, 7:00 AM",5:30 PM,10.5,Planned Outage Execution,81,10.5,10.5,6.0,Yes,
 Definite,In outage zone,IGA Euroa,IGA,osm,75 Binney Street,EUROA,3666,,,,Ausnet,,Outage zone (Ausnet),"Sun 16 Aug, 8:30 AM",4:30 PM,8.0,Scheduled,,8.0,8.0,6.0,Yes,
 Definite,In outage zone,IGA,IGA,osm,160-168 Graham Street,WONTHAGGI,3995,,,,Ausnet,,Outage zone (Ausnet),"Sun 16 Aug, 9:00 AM",5:00 PM,8.0,Scheduled,,8.0,8.0,6.0,Yes,
 Definite,In outage zone,ALDI,Aldi,osm,Bass Coast Rail Trail,WONTHAGGI,3995,,,,Ausnet,,Outage zone (Ausnet),"Sun 16 Aug, 9:00 AM",5:00 PM,8.0,Scheduled,,8.0,8.0,6.0,Yes,
@@ -44,6 +47,8 @@ Possible,Near outage zone,Subway,Subway,osm,High Street,MANSFIELD,3722,,,,Ausnet
 Possible,Near outage zone,Euroa BP,BP,osm,29 Tarcombe Street,EUROA,3666,,,,Ausnet,,Outage zone (Ausnet),"Sun 16 Aug, 8:30 AM",4:30 PM,8.0,Scheduled,40,8.0,8.0,6.0,Yes,
 Definite,In outage zone,IGA,IGA,osm,Mine Road,KORUMBURRA,3950,,,,Ausnet,,Outage zone (Ausnet),"Tue 4 Aug, 8:00 AM",4:00 PM,8.0,Scheduled,,8.0,8.0,6.0,Yes,
 Definite,In outage zone,Amcal Euroa,Amcal,osm,26 Binney Street,EUROA,3666,,,,Ausnet,,Outage zone (Ausnet),"Sun 16 Aug, 8:30 AM",4:30 PM,8.0,Scheduled,,8.0,8.0,6.0,Yes,
+Possible,Near outage zone,Subway Docklands,Subway,osm,836 Bourke Street,DOCKLANDS,3008,,,,CitiPower,Docklands,BOURKE STREET,"Sat 25 Jul, 5:00 PM",3:00 AM,10.0,Partially Restored,71,20.0,10.0,6.0,Yes,
+Possible,Near outage zone,Subway Docklands,Subway,osm,836 Bourke Street,DOCKLANDS,3008,,,,CitiPower,Docklands,BOURKE STREET,"Sat 25 Jul, 5:15 PM",3:15 AM,10.0,Partially Restored,57,20.0,10.0,6.0,Yes,
 Possible,Near outage zone,Subway Mount Evelyn,Subway,osm,1 York Road,MOUNT EVELYN,,,,,Ausnet,,Outage zone (Ausnet),"Sun 9 Aug, 9:00 AM",4:00 PM,7.0,Scheduled,52,7.0,7.0,6.0,Yes,
 Possible,Near outage zone,K Hub,Kmart,osm,High Street,MANSFIELD,3722,,,,Ausnet,,Outage zone (Ausnet),"Fri 14 Aug, 9:00 AM",4:00 PM,7.0,Scheduled,41,14.0,7.0,6.0,Yes,
 Possible,Near outage zone,K Hub,Kmart,osm,High Street,MANSFIELD,3722,,,,Ausnet,,Outage zone (Ausnet),"Fri 14 Aug, 9:00 AM",4:00 PM,7.0,Scheduled,41,14.0,7.0,6.0,Yes,
