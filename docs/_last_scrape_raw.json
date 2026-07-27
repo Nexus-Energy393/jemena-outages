@@ -1,24 +1,5 @@
 [
   {
-    "PlannedStartTime": "2026-07-26T07:30:00",
-    "PlannedEndTime": "2026-07-26T17:30:00",
-    "EventId": "J.26.0143829",
-    "Type": "Planned",
-    "Status": "Complete",
-    "Cause": "Essential Maintenance",
-    "StartTime": "2026-07-26T07:35:15",
-    "RestorationTime": "2026-07-26T16:58:37",
-    "ImpactedCustomers": 1,
-    "LocationGeoJson": null,
-    "Location": null,
-    "ImpactedSuburbs": [],
-    "ImpactedAreaGeoJson": null,
-    "ImpactedArea": null,
-    "LastUpdatedTime": "2026-07-27T06:18:46.408Z",
-    "FeedReceivedTime": "2026-07-26T07:43:51.936Z",
-    "History": []
-  },
-  {
     "PlannedStartTime": "2026-07-27T07:30:00",
     "PlannedEndTime": "2026-07-27T16:30:00",
     "EventId": "J.26.0140403",
@@ -33,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-07-27T06:18:46.408Z",
+    "LastUpdatedTime": "2026-07-27T10:31:20.896Z",
     "FeedReceivedTime": "2026-07-27T01:08:46.742Z",
     "History": [
       {
@@ -281,7 +262,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-07-27T06:18:46.408Z",
+    "LastUpdatedTime": "2026-07-27T10:31:20.896Z",
     "FeedReceivedTime": "2026-07-27T02:45:33.650Z",
     "History": [
       {
@@ -612,7 +593,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-07-27T06:18:46.408Z",
+    "LastUpdatedTime": "2026-07-27T10:31:20.896Z",
     "FeedReceivedTime": "2026-07-27T03:36:37.631Z",
     "History": [
       {
@@ -840,5 +821,213 @@
         }
       }
     ]
+  },
+  {
+    "EstimatedRestorationTime": "2026-07-28T00:09:49",
+    "DispatchedTime": null,
+    "EventId": "J.26.0145293",
+    "Type": "Unplanned",
+    "Status": "Acknowledged",
+    "Cause": "Under Investigation",
+    "StartTime": "2026-07-27T20:09:43",
+    "RestorationTime": null,
+    "ImpactedCustomers": 19,
+    "LocationGeoJson": {
+      "type": "Feature",
+      "properties": {
+        "eventId": "J.26.0145293",
+        "customerReference": "",
+        "customersOff": "19",
+        "status": "Acknowledged",
+        "type": "Unplanned",
+        "resolvedFlag": "false",
+        "showOutageFlag": "true",
+        "symptoms": [],
+        "cause": "Under Investigation",
+        "startTime": "2026-07-27T20:09:43",
+        "restoreTime": "",
+        "dispatchedTime": "",
+        "etr": "2026-07-28T00:09:49",
+        "plannedStartTime": "",
+        "plannedEndTime": "",
+        "lastUpdateTime": "2026-07-27T20:11:25"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          144.89692018927707,
+          -37.79132743950936
+        ]
+      }
+    },
+    "Location": {
+      "Latitude": -37.79132743950936,
+      "Longitude": 144.89692018927707
+    },
+    "ImpactedSuburbs": [
+      {
+        "SuburbName": "FOOTSCRAY",
+        "PostCode": 3011,
+        "Streets": [
+          "RIPPON ST",
+          "RIPPON STREET"
+        ]
+      }
+    ],
+    "ImpactedAreaGeoJson": {
+      "type": "Feature",
+      "properties": {
+        "eventId": "J.26.0145293",
+        "customerReference": "",
+        "customersOff": "19",
+        "status": "Acknowledged",
+        "type": "Unplanned",
+        "resolvedFlag": "false",
+        "showOutageFlag": "true",
+        "symptoms": [],
+        "cause": "Under Investigation",
+        "startTime": "2026-07-27T20:09:43",
+        "restoreTime": "",
+        "dispatchedTime": "",
+        "etr": "2026-07-28T00:09:49",
+        "plannedStartTime": "",
+        "plannedEndTime": "",
+        "lastUpdateTime": "2026-07-27T20:11:25"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              144.89631061700746,
+              -37.791934508396125
+            ],
+            [
+              144.89626628931882,
+              -37.791910402474066
+            ],
+            [
+              144.89625390937496,
+              -37.79187969680021
+            ],
+            [
+              144.89622549505273,
+              -37.79100780355526
+            ],
+            [
+              144.89632840702825,
+              -37.79064686141802
+            ],
+            [
+              144.89637761189607,
+              -37.79061372797367
+            ],
+            [
+              144.89675831861567,
+              -37.79053835453964
+            ],
+            [
+              144.8971323354643,
+              -37.79056673010588
+            ],
+            [
+              144.89715654865836,
+              -37.79059715513561
+            ],
+            [
+              144.8976148835014,
+              -37.79204545263452
+            ],
+            [
+              144.89761271778582,
+              -37.79207909617694
+            ],
+            [
+              144.89758717134612,
+              -37.79210606409176
+            ],
+            [
+              144.89753256082452,
+              -37.79211652447908
+            ],
+            [
+              144.8968325603628,
+              -37.79202912046048
+            ],
+            [
+              144.89631061700746,
+              -37.791934508396125
+            ]
+          ]
+        ]
+      }
+    },
+    "ImpactedArea": [
+      [
+        {
+          "Latitude": -37.791934508396125,
+          "Longitude": 144.89631061700746
+        },
+        {
+          "Latitude": -37.791910402474066,
+          "Longitude": 144.89626628931882
+        },
+        {
+          "Latitude": -37.79187969680021,
+          "Longitude": 144.89625390937496
+        },
+        {
+          "Latitude": -37.79100780355526,
+          "Longitude": 144.89622549505273
+        },
+        {
+          "Latitude": -37.79064686141802,
+          "Longitude": 144.89632840702825
+        },
+        {
+          "Latitude": -37.79061372797367,
+          "Longitude": 144.89637761189607
+        },
+        {
+          "Latitude": -37.79053835453964,
+          "Longitude": 144.89675831861567
+        },
+        {
+          "Latitude": -37.79056673010588,
+          "Longitude": 144.8971323354643
+        },
+        {
+          "Latitude": -37.79059715513561,
+          "Longitude": 144.89715654865836
+        },
+        {
+          "Latitude": -37.79204545263452,
+          "Longitude": 144.8976148835014
+        },
+        {
+          "Latitude": -37.79207909617694,
+          "Longitude": 144.89761271778582
+        },
+        {
+          "Latitude": -37.79210606409176,
+          "Longitude": 144.89758717134612
+        },
+        {
+          "Latitude": -37.79211652447908,
+          "Longitude": 144.89753256082452
+        },
+        {
+          "Latitude": -37.79202912046048,
+          "Longitude": 144.8968325603628
+        },
+        {
+          "Latitude": -37.791934508396125,
+          "Longitude": 144.89631061700746
+        }
+      ]
+    ],
+    "LastUpdatedTime": "2026-07-27T10:31:20.896Z",
+    "FeedReceivedTime": "2026-07-27T10:13:36.122Z",
+    "History": null
   }
 ]
