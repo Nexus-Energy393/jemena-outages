@@ -136,6 +136,18 @@ def _iso_date(outage: dict) -> str | None:
     return iso[:10] if iso else None
 
 
+def _aware_iso(s: str | None) -> str | None:
+    """Feed datetimes are Melbourne local. Jemena's come through naive
+    ("2026-08-16T09:00:00") while AusNet's carry +10:00 — a naive string
+    parsed on the CRM's UTC servers lands 10 hours late, so make the offset
+    explicit before it leaves here. Already-aware strings pass through."""
+    if not s:
+        return s
+    if "+" in s[10:] or s.endswith("Z"):
+        return s  # already timezone-aware (AusNet)
+    return s + "+10:00"
+
+
 def prepare_opportunities(affected, min_hours, max_days_ahead=None, map_base_url="https://outages.nexusenergy.au"):
     """One opportunity per (client, incident). Cancelled-only groups are still
     emitted (with outageStatus='Cancelled') so the CRM can close their leads."""
@@ -217,8 +229,8 @@ def prepare_opportunities(affected, min_hours, max_days_ahead=None, map_base_url
                 # ---- rich signals ----
                 "network": primary.get("network") or "Jemena",
                 "customersAffected": int(primary.get("customers")) if str(primary.get("customers") or "").isdigit() else None,
-                "outageStartIso": primary.get("start_iso"),
-                "outageEndIso": primary.get("end_iso"),
+                "outageStartIso": _aware_iso(primary.get("start_iso")),
+                "outageEndIso": _aware_iso(primary.get("end_iso")),
                 "durationHours": round(longest, 2),
                 "matchBasis": _match_basis(primary, primary_definite),
                 "distanceM": primary.get("_distance_m"),

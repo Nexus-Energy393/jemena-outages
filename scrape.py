@@ -582,6 +582,22 @@ def save_cache(name, data):
 # ---------------------------------------------------------------------------
 # Geocoding
 # ---------------------------------------------------------------------------
+# Plausibility guards: Nominatim happily returns the Victoria *state* centroid
+# (a paddock near Serpentine) for junk queries, and interstate suburbs like
+# "Victoria Point" QLD for others. 21 clients once sat stacked on that paddock.
+VIC_LAT_RANGE = (-39.3, -33.8)
+VIC_LNG_RANGE = (140.5, 150.5)
+_STATE_CENTROID = (-36.5986, 144.678)
+
+
+def _valid_vic_loc(lat, lng):
+    if not (VIC_LAT_RANGE[0] <= lat <= VIC_LAT_RANGE[1] and VIC_LNG_RANGE[0] <= lng <= VIC_LNG_RANGE[1]):
+        return False
+    if abs(lat - _STATE_CENTROID[0]) < 0.01 and abs(lng - _STATE_CENTROID[1]) < 0.01:
+        return False  # generic "Victoria, Australia" match — useless
+    return True
+
+
 def nominatim(query: str, retries=2):
     for attempt in range(retries + 1):
         try:
@@ -602,33 +618,64 @@ def nominatim(query: str, retries=2):
 
 
 def geocode_suburb(name):
+    name = (name or "").strip()
+    if not name:
+        return None  # empty query would match "Victoria, Australia" = state centroid
     cache = load_cache("suburbs.json")
     if name.upper() in cache:
-        return cache[name.upper()]
+        loc = cache[name.upper()]
+        return loc if _valid_vic_loc(loc.get("lat", 0), loc.get("lng", 0)) else None
     print(f"[geocode-suburb] {name}", flush=True)
     r = nominatim(f"{name}, Victoria, Australia")
     if not r:
         return None
     loc = {"lat": float(r["lat"]), "lng": float(r["lon"])}
+    if not _valid_vic_loc(loc["lat"], loc["lng"]):
+        print(f"[geo-quality] suburb {name!r} geocoded outside Victoria — rejected", flush=True)
+        return None
     cache[name.upper()] = loc
     save_cache("suburbs.json", cache)
     return loc
 
 
 def geocode_client(client):
-    """client: dict with name/address/suburb/postcode. Returns dict with lat/lng added, or None."""
+    """client: dict with name/address/suburb/postcode. Returns dict with lat/lng added, or None.
+
+    Results are validated against the Victoria bounding box, and generic
+    state-centroid matches are rejected (never cached). Unit-prefixed street
+    addresses ("2 / 658 Church St") get a second try with the prefix stripped.
+    """
     cache = load_cache("clients.json")
     key = f"{client.get('address','')}|{client.get('suburb','')}|{client.get('postcode','')}|{client.get('name','')}".upper()
     if key in cache:
-        c = dict(client)
-        c.update(cache[key])
-        return c
-    addr_parts = [client.get("address", ""), client.get("suburb", ""), client.get("postcode", ""), "Victoria, Australia"]
-    query = ", ".join(p for p in addr_parts if p)
-    print(f"[geocode-client] {client.get('name')}: {query}", flush=True)
-    r = nominatim(query)
+        loc = cache[key]
+        if _valid_vic_loc(loc.get("lat", 0), loc.get("lng", 0)):
+            c = dict(client)
+            c.update(loc)
+            return c
+        # junk cached before validation existed — drop and re-geocode
+        cache.pop(key, None)
+        save_cache("clients.json", cache)
+    address = (client.get("address", "") or "").strip()
+    queries = []
+    if address:
+        queries.append(address)
+        stripped = re.sub(r"^\s*[\w-]{1,6}\s*/\s*", "", address)  # "2 / 658 Church St" → "658 Church St"
+        if stripped and stripped != address:
+            queries.append(stripped)
+    r = None
+    for q in queries:
+        full = ", ".join(p for p in [q, client.get("suburb", ""), client.get("postcode", ""), "Victoria, Australia"] if p)
+        print(f"[geocode-client] {client.get('name')}: {full}", flush=True)
+        r = nominatim(full)
+        if r and _valid_vic_loc(float(r["lat"]), float(r["lon"])):
+            break
+        if r:
+            print(f"[geo-quality] {client.get('name')}: match outside Victoria / state centroid — rejected", flush=True)
+        r = None
     if not r:
-        # Fall back to suburb only
+        # Fall back to suburb centroid (approximate pin, still useful for
+        # suburb-level matching; skipped entirely when suburb is unknown).
         sub_loc = geocode_suburb(client.get("suburb", ""))
         if sub_loc:
             cache[key] = {"lat": sub_loc["lat"], "lng": sub_loc["lng"], "geocoded": "suburb-fallback"}
@@ -636,6 +683,7 @@ def geocode_client(client):
             c = dict(client)
             c.update(cache[key])
             return c
+        print(f"[geo-quality] UNLOCATED: {client.get('name')!r} — fix the address/suburb on this record in the CRM", flush=True)
         return None
     loc = {"lat": float(r["lat"]), "lng": float(r["lon"]), "geocoded": "address"}
     cache[key] = loc
@@ -1031,6 +1079,15 @@ def assemble_clients():
     # over the following hourly runs as the cache fills.
     budget = int(os.environ.get("GEOCODE_BUDGET", "200"))
     client_cache = load_cache("clients.json")
+
+    # One-off hygiene: drop cached locations that fail plausibility (state
+    # centroid / outside VIC) so those clients re-geocode under validation.
+    junk = [k for k, v in client_cache.items() if not _valid_vic_loc(v.get("lat", 0), v.get("lng", 0))]
+    if junk:
+        for k in junk:
+            client_cache.pop(k, None)
+        save_cache("clients.json", client_cache)
+        print(f"[geo-quality] purged {len(junk)} implausible cached locations — re-geocoding under validation", flush=True)
 
     def _cache_key(c):
         return f"{c.get('address','')}|{c.get('suburb','')}|{c.get('postcode','')}|{c.get('name','')}".upper()
