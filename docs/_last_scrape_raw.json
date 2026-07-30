@@ -1,453 +1,5 @@
 [
   {
-    "PlannedStartTime": "2026-07-29T08:00:00",
-    "PlannedEndTime": "2026-07-29T18:00:00",
-    "EventId": "J.26.0143603",
-    "Type": "Planned",
-    "Status": "Complete",
-    "Cause": "Essential Maintenance",
-    "StartTime": "2026-07-29T11:02:04",
-    "RestorationTime": "2026-07-29T17:54:49",
-    "ImpactedCustomers": 148,
-    "LocationGeoJson": null,
-    "Location": null,
-    "ImpactedSuburbs": [],
-    "ImpactedAreaGeoJson": null,
-    "ImpactedArea": null,
-    "LastUpdatedTime": "2026-07-30T05:27:30.812Z",
-    "FeedReceivedTime": "2026-07-29T08:10:21.890Z",
-    "History": [
-      {
-        "ImpactedSuburbs": [
-          {
-            "SuburbName": "YARRAVILLE",
-            "PostCode": 3013,
-            "Streets": [
-              "ADENEY ST",
-              "BALLARD ST",
-              "FRANCIS ST",
-              "FRANCIS STREET",
-              "ROBERTS ST",
-              "URWIN ST"
-            ]
-          }
-        ],
-        "ImpactedAreaGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 109,
-            "eventId": "J.26.0143603",
-            "startTime": "2026-07-29T11:02:04",
-            "restoreTime": "2026-07-29T17:54:12",
-            "suburbs": [
-              {
-                "suburbName": "YARRAVILLE",
-                "postcode": 3013,
-                "streets": [
-                  "ADENEY ST",
-                  "BALLARD ST",
-                  "FRANCIS ST",
-                  "FRANCIS STREET",
-                  "ROBERTS ST",
-                  "URWIN ST"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-              [
-                [
-                  144.8649833140772,
-                  -37.81818886552144
-                ],
-                [
-                  144.86454117236195,
-                  -37.81801491117077
-                ],
-                [
-                  144.86445748853427,
-                  -37.81792371825751
-                ],
-                [
-                  144.86444321703553,
-                  -37.81784889818656
-                ],
-                [
-                  144.86450121561137,
-                  -37.816746108393424
-                ],
-                [
-                  144.86464488878931,
-                  -37.81593836128013
-                ],
-                [
-                  144.86470633285532,
-                  -37.815833760457316
-                ],
-                [
-                  144.86494663741698,
-                  -37.81569159637596
-                ],
-                [
-                  144.86505420966876,
-                  -37.81567370824022
-                ],
-                [
-                  144.86886106301523,
-                  -37.81571229865976
-                ],
-                [
-                  144.8711226487576,
-                  -37.815969699635446
-                ],
-                [
-                  144.8712558417754,
-                  -37.81601913003588
-                ],
-                [
-                  144.8713314289758,
-                  -37.81611887501503
-                ],
-                [
-                  144.87133597111935,
-                  -37.81619692858384
-                ],
-                [
-                  144.87081674910561,
-                  -37.818884275861826
-                ],
-                [
-                  144.87078348614568,
-                  -37.81895698913926
-                ],
-                [
-                  144.8706755191424,
-                  -37.819034206971196
-                ],
-                [
-                  144.87053150840075,
-                  -37.81905138462654
-                ],
-                [
-                  144.86790621556102,
-                  -37.818751090751284
-                ],
-                [
-                  144.8649833140772,
-                  -37.81818886552144
-                ]
-              ]
-            ]
-          }
-        },
-        "ImpactedArea": [
-          [
-            {
-              "Latitude": -37.81818886552144,
-              "Longitude": 144.8649833140772
-            },
-            {
-              "Latitude": -37.81801491117077,
-              "Longitude": 144.86454117236195
-            },
-            {
-              "Latitude": -37.81792371825751,
-              "Longitude": 144.86445748853427
-            },
-            {
-              "Latitude": -37.81784889818656,
-              "Longitude": 144.86444321703553
-            },
-            {
-              "Latitude": -37.816746108393424,
-              "Longitude": 144.86450121561137
-            },
-            {
-              "Latitude": -37.81593836128013,
-              "Longitude": 144.86464488878931
-            },
-            {
-              "Latitude": -37.815833760457316,
-              "Longitude": 144.86470633285532
-            },
-            {
-              "Latitude": -37.81569159637596,
-              "Longitude": 144.86494663741698
-            },
-            {
-              "Latitude": -37.81567370824022,
-              "Longitude": 144.86505420966876
-            },
-            {
-              "Latitude": -37.81571229865976,
-              "Longitude": 144.86886106301523
-            },
-            {
-              "Latitude": -37.815969699635446,
-              "Longitude": 144.8711226487576
-            },
-            {
-              "Latitude": -37.81601913003588,
-              "Longitude": 144.8712558417754
-            },
-            {
-              "Latitude": -37.81611887501503,
-              "Longitude": 144.8713314289758
-            },
-            {
-              "Latitude": -37.81619692858384,
-              "Longitude": 144.87133597111935
-            },
-            {
-              "Latitude": -37.818884275861826,
-              "Longitude": 144.87081674910561
-            },
-            {
-              "Latitude": -37.81895698913926,
-              "Longitude": 144.87078348614568
-            },
-            {
-              "Latitude": -37.819034206971196,
-              "Longitude": 144.8706755191424
-            },
-            {
-              "Latitude": -37.81905138462654,
-              "Longitude": 144.87053150840075
-            },
-            {
-              "Latitude": -37.818751090751284,
-              "Longitude": 144.86790621556102
-            },
-            {
-              "Latitude": -37.81818886552144,
-              "Longitude": 144.8649833140772
-            }
-          ]
-        ],
-        "RestorationTime": "2026-07-29T17:54:12",
-        "ImpactedCustomers": 109,
-        "LocationGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 109,
-            "eventId": "J.26.0143603",
-            "startTime": "2026-07-29T11:02:04",
-            "restoreTime": "2026-07-29T17:54:12",
-            "suburbs": [
-              {
-                "suburbName": "YARRAVILLE",
-                "postcode": 3013,
-                "streets": [
-                  "ADENEY ST",
-                  "BALLARD ST",
-                  "FRANCIS ST",
-                  "FRANCIS STREET",
-                  "ROBERTS ST",
-                  "URWIN ST"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [
-              144.86788959407744,
-              -37.81736254643338
-            ]
-          }
-        },
-        "Location": {
-          "Latitude": -37.81736254643338,
-          "Longitude": 144.86788959407744
-        }
-      },
-      {
-        "ImpactedSuburbs": [
-          {
-            "SuburbName": "YARRAVILLE",
-            "PostCode": 3013,
-            "Streets": [
-              "ROBERTS ST",
-              "ROBERTS STREET"
-            ]
-          }
-        ],
-        "ImpactedAreaGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 30,
-            "eventId": "J.26.0143603",
-            "startTime": "2026-07-29T11:02:04",
-            "restoreTime": "2026-07-29T17:54:49",
-            "suburbs": [
-              {
-                "suburbName": "YARRAVILLE",
-                "postcode": 3013,
-                "streets": [
-                  "ROBERTS ST",
-                  "ROBERTS STREET"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-              [
-                [
-                  144.8686108314842,
-                  -37.81632884967961
-                ],
-                [
-                  144.86850857045468,
-                  -37.816355955044116
-                ],
-                [
-                  144.86808370947722,
-                  -37.816308188374705
-                ],
-                [
-                  144.86800450718192,
-                  -37.81627119455794
-                ],
-                [
-                  144.8679805886734,
-                  -37.816219397236445
-                ],
-                [
-                  144.86837465494898,
-                  -37.81408855738485
-                ],
-                [
-                  144.86842200103567,
-                  -37.81404235218009
-                ],
-                [
-                  144.86899279264594,
-                  -37.81376074346188
-                ],
-                [
-                  144.8697105617239,
-                  -37.81388639279317
-                ],
-                [
-                  144.86975338637382,
-                  -37.81392735135605
-                ],
-                [
-                  144.8697616777041,
-                  -37.81398007025039
-                ],
-                [
-                  144.8694073031755,
-                  -37.81568455835413
-                ],
-                [
-                  144.8686108314842,
-                  -37.81632884967961
-                ]
-              ]
-            ]
-          }
-        },
-        "ImpactedArea": [
-          [
-            {
-              "Latitude": -37.81632884967961,
-              "Longitude": 144.8686108314842
-            },
-            {
-              "Latitude": -37.816355955044116,
-              "Longitude": 144.86850857045468
-            },
-            {
-              "Latitude": -37.816308188374705,
-              "Longitude": 144.86808370947722
-            },
-            {
-              "Latitude": -37.81627119455794,
-              "Longitude": 144.86800450718192
-            },
-            {
-              "Latitude": -37.816219397236445,
-              "Longitude": 144.8679805886734
-            },
-            {
-              "Latitude": -37.81408855738485,
-              "Longitude": 144.86837465494898
-            },
-            {
-              "Latitude": -37.81404235218009,
-              "Longitude": 144.86842200103567
-            },
-            {
-              "Latitude": -37.81376074346188,
-              "Longitude": 144.86899279264594
-            },
-            {
-              "Latitude": -37.81388639279317,
-              "Longitude": 144.8697105617239
-            },
-            {
-              "Latitude": -37.81392735135605,
-              "Longitude": 144.86975338637382
-            },
-            {
-              "Latitude": -37.81398007025039,
-              "Longitude": 144.8697616777041
-            },
-            {
-              "Latitude": -37.81568455835413,
-              "Longitude": 144.8694073031755
-            },
-            {
-              "Latitude": -37.81632884967961,
-              "Longitude": 144.8686108314842
-            }
-          ]
-        ],
-        "RestorationTime": "2026-07-29T17:54:49",
-        "ImpactedCustomers": 30,
-        "LocationGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 30,
-            "eventId": "J.26.0143603",
-            "startTime": "2026-07-29T11:02:04",
-            "restoreTime": "2026-07-29T17:54:49",
-            "suburbs": [
-              {
-                "suburbName": "YARRAVILLE",
-                "postcode": 3013,
-                "streets": [
-                  "ROBERTS ST",
-                  "ROBERTS STREET"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [
-              144.86887113318875,
-              -37.81505834925299
-            ]
-          }
-        },
-        "Location": {
-          "Latitude": -37.81505834925299,
-          "Longitude": 144.86887113318875
-        }
-      }
-    ]
-  },
-  {
     "EstimatedRestorationTime": "2026-07-29T23:07:01",
     "DispatchedTime": "2026-07-29T09:14:00",
     "EventId": "J.26.0145448",
@@ -462,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-07-30T05:27:30.812Z",
+    "LastUpdatedTime": "2026-07-30T08:10:53.419Z",
     "FeedReceivedTime": "2026-07-29T13:06:28.112Z",
     "History": [
       {
@@ -729,7 +281,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-07-30T05:27:30.812Z",
+    "LastUpdatedTime": "2026-07-30T08:10:53.419Z",
     "FeedReceivedTime": "2026-07-29T14:03:10.737Z",
     "History": [
       {
@@ -982,7 +534,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-07-30T05:27:30.812Z",
+    "LastUpdatedTime": "2026-07-30T08:10:53.419Z",
     "FeedReceivedTime": "2026-07-29T16:21:56.057Z",
     "History": [
       {
@@ -1258,7 +810,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-07-30T05:27:30.812Z",
+    "LastUpdatedTime": "2026-07-30T08:10:53.419Z",
     "FeedReceivedTime": "2026-07-29T17:10:28.826Z",
     "History": [
       {
@@ -1507,7 +1059,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-07-30T05:27:30.812Z",
+    "LastUpdatedTime": "2026-07-30T08:10:53.419Z",
     "FeedReceivedTime": "2026-07-30T01:24:23.194Z",
     "History": [
       {
@@ -1737,7 +1289,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-07-30T05:27:30.812Z",
+    "LastUpdatedTime": "2026-07-30T08:10:53.419Z",
     "FeedReceivedTime": "2026-07-30T01:24:23.382Z",
     "History": [
       {
@@ -1982,7 +1534,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-07-30T05:27:30.812Z",
+    "LastUpdatedTime": "2026-07-30T08:10:53.419Z",
     "FeedReceivedTime": "2026-07-30T03:46:55.318Z",
     "History": [
       {
@@ -2217,7 +1769,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-07-30T05:27:30.812Z",
+    "LastUpdatedTime": "2026-07-30T08:10:53.419Z",
     "FeedReceivedTime": "2026-07-30T04:02:11.817Z",
     "History": [
       {
@@ -2693,7 +2245,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-07-30T05:27:30.812Z",
+    "LastUpdatedTime": "2026-07-30T08:10:53.419Z",
     "FeedReceivedTime": "2026-07-30T04:27:42.886Z",
     "History": [
       {
@@ -3127,6 +2679,246 @@
         "Location": {
           "Latitude": -37.789088971291896,
           "Longitude": 144.9124792205561
+        }
+      }
+    ]
+  },
+  {
+    "EstimatedRestorationTime": "2026-07-30T12:42:06",
+    "DispatchedTime": null,
+    "EventId": "J.26.0145467",
+    "Type": "Unplanned",
+    "Status": "Completed",
+    "Cause": "Network equipment fault",
+    "StartTime": "2026-07-30T07:56:59",
+    "RestorationTime": "2026-07-30T08:03:24",
+    "ImpactedCustomers": 0,
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-07-30T08:10:53.419Z",
+    "FeedReceivedTime": "2026-07-30T06:02:53.813Z",
+    "History": [
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "RESERVOIR",
+            "PostCode": 3073,
+            "Streets": [
+              "CHAUVEL ST",
+              "ELLIOT ST"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 33,
+            "eventId": "J.26.0145467",
+            "startTime": "2026-07-30T07:56:59",
+            "restoreTime": "2026-07-30T08:03:24",
+            "suburbs": [
+              {
+                "suburbName": "RESERVOIR",
+                "postcode": 3073,
+                "streets": [
+                  "CHAUVEL ST",
+                  "ELLIOT ST"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  144.99969442922193,
+                  -37.707422503619895
+                ],
+                [
+                  144.99963814745968,
+                  -37.707395040264196
+                ],
+                [
+                  144.998897147878,
+                  -37.70672095831754
+                ],
+                [
+                  144.99887050101535,
+                  -37.706654114559534
+                ],
+                [
+                  144.99890670645036,
+                  -37.70640699348641
+                ],
+                [
+                  144.99917052286997,
+                  -37.7058394295373
+                ],
+                [
+                  144.99969774987258,
+                  -37.70531248225525
+                ],
+                [
+                  144.999750684348,
+                  -37.705283496728875
+                ],
+                [
+                  144.9997936610594,
+                  -37.70527955930594
+                ],
+                [
+                  144.99985356740117,
+                  -37.705298206632655
+                ],
+                [
+                  145.00029751181086,
+                  -37.7055764972121
+                ],
+                [
+                  145.0014854403576,
+                  -37.70649966359535
+                ],
+                [
+                  145.00151849226035,
+                  -37.706567336414835
+                ],
+                [
+                  145.00130542782605,
+                  -37.70718254026281
+                ],
+                [
+                  145.0010822964016,
+                  -37.707623270481534
+                ],
+                [
+                  145.0010394387645,
+                  -37.707664414922185
+                ],
+                [
+                  145.00095186004773,
+                  -37.707675753667225
+                ],
+                [
+                  144.99969442922193,
+                  -37.707422503619895
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.707422503619895,
+              "Longitude": 144.99969442922193
+            },
+            {
+              "Latitude": -37.707395040264196,
+              "Longitude": 144.99963814745968
+            },
+            {
+              "Latitude": -37.70672095831754,
+              "Longitude": 144.998897147878
+            },
+            {
+              "Latitude": -37.706654114559534,
+              "Longitude": 144.99887050101535
+            },
+            {
+              "Latitude": -37.70640699348641,
+              "Longitude": 144.99890670645036
+            },
+            {
+              "Latitude": -37.7058394295373,
+              "Longitude": 144.99917052286997
+            },
+            {
+              "Latitude": -37.70531248225525,
+              "Longitude": 144.99969774987258
+            },
+            {
+              "Latitude": -37.705283496728875,
+              "Longitude": 144.999750684348
+            },
+            {
+              "Latitude": -37.70527955930594,
+              "Longitude": 144.9997936610594
+            },
+            {
+              "Latitude": -37.705298206632655,
+              "Longitude": 144.99985356740117
+            },
+            {
+              "Latitude": -37.7055764972121,
+              "Longitude": 145.00029751181086
+            },
+            {
+              "Latitude": -37.70649966359535,
+              "Longitude": 145.0014854403576
+            },
+            {
+              "Latitude": -37.706567336414835,
+              "Longitude": 145.00151849226035
+            },
+            {
+              "Latitude": -37.70718254026281,
+              "Longitude": 145.00130542782605
+            },
+            {
+              "Latitude": -37.707623270481534,
+              "Longitude": 145.0010822964016
+            },
+            {
+              "Latitude": -37.707664414922185,
+              "Longitude": 145.0010394387645
+            },
+            {
+              "Latitude": -37.707675753667225,
+              "Longitude": 145.00095186004773
+            },
+            {
+              "Latitude": -37.707422503619895,
+              "Longitude": 144.99969442922193
+            }
+          ]
+        ],
+        "RestorationTime": "2026-07-30T08:03:24",
+        "ImpactedCustomers": 33,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 33,
+            "eventId": "J.26.0145467",
+            "startTime": "2026-07-30T07:56:59",
+            "restoreTime": "2026-07-30T08:03:24",
+            "suburbs": [
+              {
+                "suburbName": "RESERVOIR",
+                "postcode": 3073,
+                "streets": [
+                  "CHAUVEL ST",
+                  "ELLIOT ST"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              145.00019449663785,
+              -37.706477656486584
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.706477656486584,
+          "Longitude": 145.00019449663785
         }
       }
     ]
