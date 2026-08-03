@@ -554,7 +554,7 @@
         }
       ]
     ],
-    "LastUpdatedTime": "2026-08-03T10:35:55.346Z",
+    "LastUpdatedTime": "2026-08-03T21:59:25.823Z",
     "FeedReceivedTime": "2026-08-03T00:44:16.234Z",
     "History": null
   },
@@ -573,7 +573,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-03T10:35:55.346Z",
+    "LastUpdatedTime": "2026-08-03T21:59:25.823Z",
     "FeedReceivedTime": "2026-08-03T01:43:14.757Z",
     "History": [
       {
@@ -830,7 +830,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-03T10:35:55.346Z",
+    "LastUpdatedTime": "2026-08-03T21:59:25.823Z",
     "FeedReceivedTime": "2026-08-03T01:48:19.689Z",
     "History": [
       {
@@ -1051,7 +1051,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-03T10:35:55.346Z",
+    "LastUpdatedTime": "2026-08-03T21:59:25.823Z",
     "FeedReceivedTime": "2026-08-03T05:42:27.962Z",
     "History": [
       {
@@ -1327,6 +1327,451 @@
         "Location": {
           "Latitude": -37.784856185655826,
           "Longitude": 144.8616984235344
+        }
+      }
+    ]
+  },
+  {
+    "PlannedStartTime": "2026-08-03T21:30:00",
+    "PlannedEndTime": "2026-08-04T05:30:00",
+    "EventId": "J.26.0143634",
+    "Type": "Planned",
+    "Status": "Complete",
+    "Cause": "Essential Maintenance",
+    "StartTime": "2026-08-03T21:30:00",
+    "RestorationTime": "2026-08-04T05:08:00",
+    "ImpactedCustomers": 68,
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-08-03T21:59:25.823Z",
+    "FeedReceivedTime": "2026-08-03T20:33:38.512Z",
+    "History": [
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "YARRAVILLE",
+            "PostCode": 3013,
+            "Streets": [
+              "SANDFORD GR",
+              "STEPHEN ST",
+              "YORK ST",
+              "YORK STREET"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 17,
+            "eventId": "J.26.0143634",
+            "startTime": "2026-08-03T21:30:00",
+            "restoreTime": "2026-08-04T05:08:00",
+            "suburbs": [
+              {
+                "suburbName": "YARRAVILLE",
+                "postcode": 3013,
+                "streets": [
+                  "SANDFORD GR",
+                  "STEPHEN ST",
+                  "YORK ST",
+                  "YORK STREET"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  144.89538204535617,
+                  -37.818644351652225
+                ],
+                [
+                  144.8944744039508,
+                  -37.81854194559911
+                ],
+                [
+                  144.89441845763596,
+                  -37.81850933946263
+                ],
+                [
+                  144.89441193922434,
+                  -37.81847592034809
+                ],
+                [
+                  144.89458537487096,
+                  -37.817550156714375
+                ],
+                [
+                  144.89464097547497,
+                  -37.81743401514722
+                ],
+                [
+                  144.89469739158264,
+                  -37.81742153766218
+                ],
+                [
+                  144.894999678148,
+                  -37.817455345002706
+                ],
+                [
+                  144.89638790832743,
+                  -37.81788029219247
+                ],
+                [
+                  144.89642745233732,
+                  -37.817908800176454
+                ],
+                [
+                  144.89643231530312,
+                  -37.81795091643065
+                ],
+                [
+                  144.8962788252259,
+                  -37.81837402877939
+                ],
+                [
+                  144.8962565450448,
+                  -37.81840183235348
+                ],
+                [
+                  144.8959331957518,
+                  -37.8185511714784
+                ],
+                [
+                  144.89538204535617,
+                  -37.818644351652225
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.818644351652225,
+              "Longitude": 144.89538204535617
+            },
+            {
+              "Latitude": -37.81854194559911,
+              "Longitude": 144.8944744039508
+            },
+            {
+              "Latitude": -37.81850933946263,
+              "Longitude": 144.89441845763596
+            },
+            {
+              "Latitude": -37.81847592034809,
+              "Longitude": 144.89441193922434
+            },
+            {
+              "Latitude": -37.817550156714375,
+              "Longitude": 144.89458537487096
+            },
+            {
+              "Latitude": -37.81743401514722,
+              "Longitude": 144.89464097547497
+            },
+            {
+              "Latitude": -37.81742153766218,
+              "Longitude": 144.89469739158264
+            },
+            {
+              "Latitude": -37.817455345002706,
+              "Longitude": 144.894999678148
+            },
+            {
+              "Latitude": -37.81788029219247,
+              "Longitude": 144.89638790832743
+            },
+            {
+              "Latitude": -37.817908800176454,
+              "Longitude": 144.89642745233732
+            },
+            {
+              "Latitude": -37.81795091643065,
+              "Longitude": 144.89643231530312
+            },
+            {
+              "Latitude": -37.81837402877939,
+              "Longitude": 144.8962788252259
+            },
+            {
+              "Latitude": -37.81840183235348,
+              "Longitude": 144.8962565450448
+            },
+            {
+              "Latitude": -37.8185511714784,
+              "Longitude": 144.8959331957518
+            },
+            {
+              "Latitude": -37.818644351652225,
+              "Longitude": 144.89538204535617
+            }
+          ]
+        ],
+        "RestorationTime": "2026-08-04T05:08:00",
+        "ImpactedCustomers": 17,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 17,
+            "eventId": "J.26.0143634",
+            "startTime": "2026-08-03T21:30:00",
+            "restoreTime": "2026-08-04T05:08:00",
+            "suburbs": [
+              {
+                "suburbName": "YARRAVILLE",
+                "postcode": 3013,
+                "streets": [
+                  "SANDFORD GR",
+                  "STEPHEN ST",
+                  "YORK ST",
+                  "YORK STREET"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              144.8954221272637,
+              -37.818032944657205
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.818032944657205,
+          "Longitude": 144.8954221272637
+        }
+      },
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "YARRAVILLE",
+            "PostCode": 3013,
+            "Streets": [
+              "SCHILD ST",
+              "SCHILD STREET",
+              "STEPHEN ST"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 49,
+            "eventId": "J.26.0143634",
+            "startTime": "2026-08-03T21:30:00",
+            "restoreTime": "2026-08-04T05:07:00",
+            "suburbs": [
+              {
+                "suburbName": "YARRAVILLE",
+                "postcode": 3013,
+                "streets": [
+                  "SCHILD ST",
+                  "SCHILD STREET",
+                  "STEPHEN ST"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  144.8939887469911,
+                  -37.81906991492016
+                ],
+                [
+                  144.89339529402065,
+                  -37.818961957776565
+                ],
+                [
+                  144.89333951136337,
+                  -37.81892108819891
+                ],
+                [
+                  144.8933244953662,
+                  -37.818882427794165
+                ],
+                [
+                  144.89367882159328,
+                  -37.81659220281484
+                ],
+                [
+                  144.89369372167798,
+                  -37.81652452784275
+                ],
+                [
+                  144.89371810795845,
+                  -37.81649215353735
+                ],
+                [
+                  144.89377878410065,
+                  -37.81646308448301
+                ],
+                [
+                  144.89382639667247,
+                  -37.8164609652019
+                ],
+                [
+                  144.8949579395121,
+                  -37.816586775488645
+                ],
+                [
+                  144.8964463055676,
+                  -37.816876751256785
+                ],
+                [
+                  144.89652530846652,
+                  -37.816925414651855
+                ],
+                [
+                  144.89653839124432,
+                  -37.81698465224049
+                ],
+                [
+                  144.89646559945132,
+                  -37.81738511844791
+                ],
+                [
+                  144.89643268159688,
+                  -37.81743845324587
+                ],
+                [
+                  144.8944199415287,
+                  -37.81909318455208
+                ],
+                [
+                  144.8943311270141,
+                  -37.81910993131501
+                ],
+                [
+                  144.8939887469911,
+                  -37.81906991492016
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.81906991492016,
+              "Longitude": 144.8939887469911
+            },
+            {
+              "Latitude": -37.818961957776565,
+              "Longitude": 144.89339529402065
+            },
+            {
+              "Latitude": -37.81892108819891,
+              "Longitude": 144.89333951136337
+            },
+            {
+              "Latitude": -37.818882427794165,
+              "Longitude": 144.8933244953662
+            },
+            {
+              "Latitude": -37.81659220281484,
+              "Longitude": 144.89367882159328
+            },
+            {
+              "Latitude": -37.81652452784275,
+              "Longitude": 144.89369372167798
+            },
+            {
+              "Latitude": -37.81649215353735,
+              "Longitude": 144.89371810795845
+            },
+            {
+              "Latitude": -37.81646308448301,
+              "Longitude": 144.89377878410065
+            },
+            {
+              "Latitude": -37.8164609652019,
+              "Longitude": 144.89382639667247
+            },
+            {
+              "Latitude": -37.816586775488645,
+              "Longitude": 144.8949579395121
+            },
+            {
+              "Latitude": -37.816876751256785,
+              "Longitude": 144.8964463055676
+            },
+            {
+              "Latitude": -37.816925414651855,
+              "Longitude": 144.89652530846652
+            },
+            {
+              "Latitude": -37.81698465224049,
+              "Longitude": 144.89653839124432
+            },
+            {
+              "Latitude": -37.81738511844791,
+              "Longitude": 144.89646559945132
+            },
+            {
+              "Latitude": -37.81743845324587,
+              "Longitude": 144.89643268159688
+            },
+            {
+              "Latitude": -37.81909318455208,
+              "Longitude": 144.8944199415287
+            },
+            {
+              "Latitude": -37.81910993131501,
+              "Longitude": 144.8943311270141
+            },
+            {
+              "Latitude": -37.81906991492016,
+              "Longitude": 144.8939887469911
+            }
+          ]
+        ],
+        "RestorationTime": "2026-08-04T05:07:00",
+        "ImpactedCustomers": 49,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 49,
+            "eventId": "J.26.0143634",
+            "startTime": "2026-08-03T21:30:00",
+            "restoreTime": "2026-08-04T05:07:00",
+            "suburbs": [
+              {
+                "suburbName": "YARRAVILLE",
+                "postcode": 3013,
+                "streets": [
+                  "SCHILD ST",
+                  "SCHILD STREET",
+                  "STEPHEN ST"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              144.89493144330527,
+              -37.817785448258455
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.817785448258455,
+          "Longitude": 144.89493144330527
         }
       }
     ]
