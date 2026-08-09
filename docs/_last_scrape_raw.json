@@ -1,278 +1,5 @@
 [
   {
-    "PlannedStartTime": "2026-08-08T10:30:00",
-    "PlannedEndTime": "2026-08-08T16:00:00",
-    "EventId": "J.26.0143179",
-    "Type": "Planned",
-    "Status": "Complete",
-    "Cause": "Essential Maintenance",
-    "StartTime": "2026-08-08T10:47:42",
-    "RestorationTime": "2026-08-08T12:28:46",
-    "ImpactedCustomers": 96,
-    "LocationGeoJson": null,
-    "Location": null,
-    "ImpactedSuburbs": [],
-    "ImpactedAreaGeoJson": null,
-    "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-09T01:10:22.506Z",
-    "FeedReceivedTime": "2026-08-08T03:11:29.202Z",
-    "History": [
-      {
-        "ImpactedSuburbs": [
-          {
-            "SuburbName": "RESERVOIR",
-            "PostCode": 3073,
-            "Streets": [
-              "BOURKE ST",
-              "BOURKE STREET",
-              "GILBERT RD",
-              "GILBERT ROAD",
-              "PERSHING ST"
-            ]
-          }
-        ],
-        "ImpactedAreaGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 95,
-            "eventId": "J.26.0143179",
-            "startTime": "2026-08-08T10:47:42",
-            "restoreTime": "2026-08-08T12:28:46",
-            "suburbs": [
-              {
-                "suburbName": "RESERVOIR",
-                "postcode": 3073,
-                "streets": [
-                  "BOURKE ST",
-                  "BOURKE STREET",
-                  "GILBERT RD",
-                  "GILBERT ROAD",
-                  "PERSHING ST"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-              [
-                [
-                  144.99151398062844,
-                  -37.72628677013174
-                ],
-                [
-                  144.98847617925207,
-                  -37.72504840483551
-                ],
-                [
-                  144.988398612008,
-                  -37.72495674399125
-                ],
-                [
-                  144.98839051574433,
-                  -37.72488286189298
-                ],
-                [
-                  144.98851509893143,
-                  -37.72409343072473
-                ],
-                [
-                  144.98854766966593,
-                  -37.72402162434959
-                ],
-                [
-                  144.98865656336608,
-                  -37.72394784894521
-                ],
-                [
-                  144.98875127239043,
-                  -37.7239334234363
-                ],
-                [
-                  144.9918335690195,
-                  -37.72397482347261
-                ],
-                [
-                  144.9923713496586,
-                  -37.724025215710036
-                ],
-                [
-                  144.99446029427108,
-                  -37.72474933820458
-                ],
-                [
-                  144.9945251111195,
-                  -37.72480432147979
-                ],
-                [
-                  144.99477747148092,
-                  -37.725139676584064
-                ],
-                [
-                  144.9947911407744,
-                  -37.72521224929838
-                ],
-                [
-                  144.99478032117952,
-                  -37.72536437619589
-                ],
-                [
-                  144.99459615468535,
-                  -37.725712105741955
-                ],
-                [
-                  144.9941341641884,
-                  -37.72603030304732
-                ],
-                [
-                  144.99405847904427,
-                  -37.72606451447709
-                ],
-                [
-                  144.9926934563567,
-                  -37.72643159923472
-                ],
-                [
-                  144.9921797524561,
-                  -37.72638142287058
-                ],
-                [
-                  144.99151398062844,
-                  -37.72628677013174
-                ]
-              ]
-            ]
-          }
-        },
-        "ImpactedArea": [
-          [
-            {
-              "Latitude": -37.72628677013174,
-              "Longitude": 144.99151398062844
-            },
-            {
-              "Latitude": -37.72504840483551,
-              "Longitude": 144.98847617925207
-            },
-            {
-              "Latitude": -37.72495674399125,
-              "Longitude": 144.988398612008
-            },
-            {
-              "Latitude": -37.72488286189298,
-              "Longitude": 144.98839051574433
-            },
-            {
-              "Latitude": -37.72409343072473,
-              "Longitude": 144.98851509893143
-            },
-            {
-              "Latitude": -37.72402162434959,
-              "Longitude": 144.98854766966593
-            },
-            {
-              "Latitude": -37.72394784894521,
-              "Longitude": 144.98865656336608
-            },
-            {
-              "Latitude": -37.7239334234363,
-              "Longitude": 144.98875127239043
-            },
-            {
-              "Latitude": -37.72397482347261,
-              "Longitude": 144.9918335690195
-            },
-            {
-              "Latitude": -37.724025215710036,
-              "Longitude": 144.9923713496586
-            },
-            {
-              "Latitude": -37.72474933820458,
-              "Longitude": 144.99446029427108
-            },
-            {
-              "Latitude": -37.72480432147979,
-              "Longitude": 144.9945251111195
-            },
-            {
-              "Latitude": -37.725139676584064,
-              "Longitude": 144.99477747148092
-            },
-            {
-              "Latitude": -37.72521224929838,
-              "Longitude": 144.9947911407744
-            },
-            {
-              "Latitude": -37.72536437619589,
-              "Longitude": 144.99478032117952
-            },
-            {
-              "Latitude": -37.725712105741955,
-              "Longitude": 144.99459615468535
-            },
-            {
-              "Latitude": -37.72603030304732,
-              "Longitude": 144.9941341641884
-            },
-            {
-              "Latitude": -37.72606451447709,
-              "Longitude": 144.99405847904427
-            },
-            {
-              "Latitude": -37.72643159923472,
-              "Longitude": 144.9926934563567
-            },
-            {
-              "Latitude": -37.72638142287058,
-              "Longitude": 144.9921797524561
-            },
-            {
-              "Latitude": -37.72628677013174,
-              "Longitude": 144.99151398062844
-            }
-          ]
-        ],
-        "RestorationTime": "2026-08-08T12:28:46",
-        "ImpactedCustomers": 95,
-        "LocationGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 95,
-            "eventId": "J.26.0143179",
-            "startTime": "2026-08-08T10:47:42",
-            "restoreTime": "2026-08-08T12:28:46",
-            "suburbs": [
-              {
-                "suburbName": "RESERVOIR",
-                "postcode": 3073,
-                "streets": [
-                  "BOURKE ST",
-                  "BOURKE STREET",
-                  "GILBERT RD",
-                  "GILBERT ROAD",
-                  "PERSHING ST"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [
-              144.99159082825935,
-              -37.72518251133551
-            ]
-          }
-        },
-        "Location": {
-          "Latitude": -37.72518251133551,
-          "Longitude": 144.99159082825935
-        }
-      }
-    ]
-  },
-  {
     "EstimatedRestorationTime": "2026-08-08T20:56:00",
     "DispatchedTime": "2026-08-08T02:12:01",
     "EventId": "J.26.0146085",
@@ -287,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-09T01:10:22.506Z",
+    "LastUpdatedTime": "2026-08-09T03:25:23.877Z",
     "FeedReceivedTime": "2026-08-08T09:03:40.509Z",
     "History": [
       {
@@ -519,7 +246,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-09T01:10:22.506Z",
+    "LastUpdatedTime": "2026-08-09T03:25:23.877Z",
     "FeedReceivedTime": "2026-08-08T11:04:39.141Z",
     "History": [
       {
@@ -978,7 +705,7 @@
         }
       ]
     ],
-    "LastUpdatedTime": "2026-08-09T01:10:22.506Z",
+    "LastUpdatedTime": "2026-08-09T03:25:23.877Z",
     "FeedReceivedTime": "2026-08-08T22:23:52.956Z",
     "History": null
   },
@@ -1235,164 +962,8 @@
         }
       ]
     ],
-    "LastUpdatedTime": "2026-08-09T01:10:22.506Z",
+    "LastUpdatedTime": "2026-08-09T03:25:23.877Z",
     "FeedReceivedTime": "2026-08-08T22:39:08.538Z",
-    "History": null
-  },
-  {
-    "PlannedStartTime": "2026-08-09T07:30:00",
-    "PlannedEndTime": "2026-08-09T16:30:00",
-    "EventId": "J.26.0144808",
-    "Type": "Planned",
-    "Status": "Planned Outage Execution",
-    "Cause": "Essential Maintenance",
-    "StartTime": "2026-08-09T08:38:31",
-    "RestorationTime": null,
-    "ImpactedCustomers": 11,
-    "LocationGeoJson": {
-      "type": "Feature",
-      "properties": {
-        "eventId": "J.26.0144808",
-        "customerReference": "J5220332",
-        "customersOff": "11",
-        "status": "Planned Outage Execution",
-        "type": "Planned",
-        "resolvedFlag": "false",
-        "showOutageFlag": "true",
-        "symptoms": [],
-        "cause": "Essential Maintenance",
-        "startTime": "2026-08-09T08:38:31",
-        "etr": "2026-08-09T16:30:00",
-        "plannedStartTime": "2026-08-09T07:30:00",
-        "plannedEndTime": "2026-08-09T16:30:00",
-        "lastUpdateTime": "2026-08-09T08:38:38"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          145.00761309719616,
-          -37.71808977550296
-        ]
-      }
-    },
-    "Location": {
-      "Latitude": -37.71808977550296,
-      "Longitude": 145.00761309719616
-    },
-    "ImpactedSuburbs": [
-      {
-        "SuburbName": "RESERVOIR",
-        "PostCode": 3073,
-        "Streets": [
-          "HIGH ST",
-          "HIGH STREET"
-        ]
-      }
-    ],
-    "ImpactedAreaGeoJson": {
-      "type": "Feature",
-      "properties": {
-        "eventId": "J.26.0144808",
-        "customerReference": "J5220332",
-        "customersOff": "11",
-        "status": "Planned Outage Execution",
-        "type": "Planned",
-        "resolvedFlag": "false",
-        "showOutageFlag": "true",
-        "symptoms": [],
-        "cause": "Essential Maintenance",
-        "startTime": "2026-08-09T08:38:31",
-        "etr": "2026-08-09T16:30:00",
-        "plannedStartTime": "2026-08-09T07:30:00",
-        "plannedEndTime": "2026-08-09T16:30:00",
-        "lastUpdateTime": "2026-08-09T08:38:38"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              145.00793528121307,
-              -37.71832382486615
-            ],
-            [
-              145.0079058821107,
-              -37.71834324430261
-            ],
-            [
-              145.0072389687307,
-              -37.71830549095857
-            ],
-            [
-              145.00723211636296,
-              -37.71828593852022
-            ],
-            [
-              145.0073490520573,
-              -37.717852588147665
-            ],
-            [
-              145.00773557949594,
-              -37.71783630670332
-            ],
-            [
-              145.00798553162457,
-              -37.717917345963365
-            ],
-            [
-              145.00799407802936,
-              -37.71793603076324
-            ],
-            [
-              145.00793528121307,
-              -37.71832382486615
-            ]
-          ]
-        ]
-      }
-    },
-    "ImpactedArea": [
-      [
-        {
-          "Latitude": -37.71832382486615,
-          "Longitude": 145.00793528121307
-        },
-        {
-          "Latitude": -37.71834324430261,
-          "Longitude": 145.0079058821107
-        },
-        {
-          "Latitude": -37.71830549095857,
-          "Longitude": 145.0072389687307
-        },
-        {
-          "Latitude": -37.71828593852022,
-          "Longitude": 145.00723211636296
-        },
-        {
-          "Latitude": -37.717852588147665,
-          "Longitude": 145.0073490520573
-        },
-        {
-          "Latitude": -37.71783630670332,
-          "Longitude": 145.00773557949594
-        },
-        {
-          "Latitude": -37.717917345963365,
-          "Longitude": 145.00798553162457
-        },
-        {
-          "Latitude": -37.71793603076324,
-          "Longitude": 145.00799407802936
-        },
-        {
-          "Latitude": -37.71832382486615,
-          "Longitude": 145.00793528121307
-        }
-      ]
-    ],
-    "LastUpdatedTime": "2026-08-09T01:10:22.506Z",
-    "FeedReceivedTime": "2026-08-08T22:39:08.686Z",
     "History": null
   },
   {
@@ -1400,257 +971,649 @@
     "PlannedEndTime": "2026-08-09T17:30:00",
     "EventId": "J.26.0144970",
     "Type": "Planned",
-    "Status": "Planned Outage Execution",
+    "Status": "Complete",
     "Cause": "Essential Maintenance",
-    "StartTime": "2026-08-09T08:45:22",
-    "RestorationTime": null,
+    "StartTime": "2026-08-09T08:31:03",
+    "RestorationTime": "2026-08-09T12:02:29",
     "ImpactedCustomers": 21,
-    "LocationGeoJson": {
-      "type": "Feature",
-      "properties": {
-        "eventId": "J.26.0144970",
-        "customerReference": "TBA",
-        "customersOff": "21",
-        "status": "Planned Outage Execution",
-        "type": "Planned",
-        "resolvedFlag": "false",
-        "showOutageFlag": "true",
-        "symptoms": [],
-        "cause": "Essential Maintenance",
-        "startTime": "2026-08-09T08:45:22",
-        "restoreTime": "",
-        "dispatchedTime": "",
-        "etr": "2026-08-09T17:30:00",
-        "plannedStartTime": "2026-08-09T08:30:00",
-        "plannedEndTime": "2026-08-09T17:30:00",
-        "lastUpdateTime": "2026-08-09T08:48:31"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          144.88495718971035,
-          -37.834654886787774
-        ]
-      }
-    },
-    "Location": {
-      "Latitude": -37.834654886787774,
-      "Longitude": 144.88495718971035
-    },
-    "ImpactedSuburbs": [
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-08-09T03:25:23.877Z",
+    "FeedReceivedTime": "2026-08-09T03:04:41.307Z",
+    "History": [
       {
-        "SuburbName": "SPOTSWOOD",
-        "PostCode": 3015,
-        "Streets": [
-          "BURLEIGH ST",
-          "BURLEIGH STREET",
-          "HALL ST",
-          "MELBOURNE RD"
-        ]
-      }
-    ],
-    "ImpactedAreaGeoJson": {
-      "type": "Feature",
-      "properties": {
-        "eventId": "J.26.0144970",
-        "customerReference": "TBA",
-        "customersOff": "21",
-        "status": "Planned Outage Execution",
-        "type": "Planned",
-        "resolvedFlag": "false",
-        "showOutageFlag": "true",
-        "symptoms": [],
-        "cause": "Essential Maintenance",
-        "startTime": "2026-08-09T08:45:22",
-        "restoreTime": "",
-        "dispatchedTime": "",
-        "etr": "2026-08-09T17:30:00",
-        "plannedStartTime": "2026-08-09T08:30:00",
-        "plannedEndTime": "2026-08-09T17:30:00",
-        "lastUpdateTime": "2026-08-09T08:48:31"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              144.88416917821633,
-              -37.83528610941945
-            ],
-            [
-              144.88291146502152,
-              -37.83512260438163
-            ],
-            [
-              144.8828269107646,
-              -37.83508907862195
-            ],
-            [
-              144.8827813448125,
-              -37.835023592922134
-            ],
-            [
-              144.8827813469023,
-              -37.83497335495004
-            ],
-            [
-              144.88292911409235,
-              -37.83440070140399
-            ],
-            [
-              144.88295324558194,
-              -37.834355348099734
-            ],
-            [
-              144.882997553345,
-              -37.834320770650734
-            ],
-            [
-              144.88305526271876,
-              -37.83430225597137
-            ],
-            [
-              144.88576579705415,
-              -37.83389259827786
-            ],
-            [
-              144.8862926005095,
-              -37.83390767103385
-            ],
-            [
-              144.88695634586253,
-              -37.83402390555017
-            ],
-            [
-              144.8870160897301,
-              -37.834045293116844
-            ],
-            [
-              144.88707328501997,
-              -37.83410766637551
-            ],
-            [
-              144.8871129813833,
-              -37.8343725847662
-            ],
-            [
-              144.88713303460818,
-              -37.83471784343513
-            ],
-            [
-              144.88701329108105,
-              -37.835264996579035
-            ],
-            [
-              144.88697476974036,
-              -37.835309612519275
-            ],
-            [
-              144.8868501252645,
-              -37.83539881323418
-            ],
-            [
-              144.88675652953933,
-              -37.83541717529768
-            ],
-            [
-              144.88416917821633,
-              -37.83528610941945
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "SPOTSWOOD",
+            "PostCode": 3015,
+            "Streets": [
+              "BURLEIGH ST",
+              "BURLEIGH STREET",
+              "HALL ST"
             ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 20,
+            "eventId": "J.26.0144970",
+            "startTime": "2026-08-09T08:31:03",
+            "restoreTime": "2026-08-09T12:02:29",
+            "suburbs": [
+              {
+                "suburbName": "SPOTSWOOD",
+                "postcode": 3015,
+                "streets": [
+                  "BURLEIGH ST",
+                  "BURLEIGH STREET",
+                  "HALL ST"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  144.88516844853896,
+                  -37.835177890132755
+                ],
+                [
+                  144.88507756039448,
+                  -37.83515752583192
+                ],
+                [
+                  144.88505571533437,
+                  -37.83510390293102
+                ],
+                [
+                  144.88529964951167,
+                  -37.83415204373794
+                ],
+                [
+                  144.88532962849675,
+                  -37.83411610831603
+                ],
+                [
+                  144.88579859680607,
+                  -37.83395861809362
+                ],
+                [
+                  144.88627390299845,
+                  -37.83397427119394
+                ],
+                [
+                  144.88693764835148,
+                  -37.834090505605324
+                ],
+                [
+                  144.8869850333625,
+                  -37.83411796102359
+                ],
+                [
+                  144.88702641720496,
+                  -37.834373228234035
+                ],
+                [
+                  144.88704784587165,
+                  -37.834706579999455
+                ],
+                [
+                  144.88693314811314,
+                  -37.835239556249086
+                ],
+                [
+                  144.8868065526599,
+                  -37.835339868967495
+                ],
+                [
+                  144.88675688879988,
+                  -37.835348690532534
+                ],
+                [
+                  144.88516844853896,
+                  -37.835177890132755
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.835177890132755,
+              "Longitude": 144.88516844853896
+            },
+            {
+              "Latitude": -37.83515752583192,
+              "Longitude": 144.88507756039448
+            },
+            {
+              "Latitude": -37.83510390293102,
+              "Longitude": 144.88505571533437
+            },
+            {
+              "Latitude": -37.83415204373794,
+              "Longitude": 144.88529964951167
+            },
+            {
+              "Latitude": -37.83411610831603,
+              "Longitude": 144.88532962849675
+            },
+            {
+              "Latitude": -37.83395861809362,
+              "Longitude": 144.88579859680607
+            },
+            {
+              "Latitude": -37.83397427119394,
+              "Longitude": 144.88627390299845
+            },
+            {
+              "Latitude": -37.834090505605324,
+              "Longitude": 144.88693764835148
+            },
+            {
+              "Latitude": -37.83411796102359,
+              "Longitude": 144.8869850333625
+            },
+            {
+              "Latitude": -37.834373228234035,
+              "Longitude": 144.88702641720496
+            },
+            {
+              "Latitude": -37.834706579999455,
+              "Longitude": 144.88704784587165
+            },
+            {
+              "Latitude": -37.835239556249086,
+              "Longitude": 144.88693314811314
+            },
+            {
+              "Latitude": -37.835339868967495,
+              "Longitude": 144.8868065526599
+            },
+            {
+              "Latitude": -37.835348690532534,
+              "Longitude": 144.88675688879988
+            },
+            {
+              "Latitude": -37.835177890132755,
+              "Longitude": 144.88516844853896
+            }
           ]
-        ]
-      }
-    },
-    "ImpactedArea": [
-      [
-        {
-          "Latitude": -37.83528610941945,
-          "Longitude": 144.88416917821633
+        ],
+        "RestorationTime": "2026-08-09T12:02:29",
+        "ImpactedCustomers": 20,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 20,
+            "eventId": "J.26.0144970",
+            "startTime": "2026-08-09T08:31:03",
+            "restoreTime": "2026-08-09T12:02:29",
+            "suburbs": [
+              {
+                "suburbName": "SPOTSWOOD",
+                "postcode": 3015,
+                "streets": [
+                  "BURLEIGH ST",
+                  "BURLEIGH STREET",
+                  "HALL ST"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              144.886051780603,
+              -37.83465365431307
+            ]
+          }
         },
-        {
-          "Latitude": -37.83512260438163,
-          "Longitude": 144.88291146502152
-        },
-        {
-          "Latitude": -37.83508907862195,
-          "Longitude": 144.8828269107646
-        },
-        {
-          "Latitude": -37.835023592922134,
-          "Longitude": 144.8827813448125
-        },
-        {
-          "Latitude": -37.83497335495004,
-          "Longitude": 144.8827813469023
-        },
-        {
-          "Latitude": -37.83440070140399,
-          "Longitude": 144.88292911409235
-        },
-        {
-          "Latitude": -37.834355348099734,
-          "Longitude": 144.88295324558194
-        },
-        {
-          "Latitude": -37.834320770650734,
-          "Longitude": 144.882997553345
-        },
-        {
-          "Latitude": -37.83430225597137,
-          "Longitude": 144.88305526271876
-        },
-        {
-          "Latitude": -37.83389259827786,
-          "Longitude": 144.88576579705415
-        },
-        {
-          "Latitude": -37.83390767103385,
-          "Longitude": 144.8862926005095
-        },
-        {
-          "Latitude": -37.83402390555017,
-          "Longitude": 144.88695634586253
-        },
-        {
-          "Latitude": -37.834045293116844,
-          "Longitude": 144.8870160897301
-        },
-        {
-          "Latitude": -37.83410766637551,
-          "Longitude": 144.88707328501997
-        },
-        {
-          "Latitude": -37.8343725847662,
-          "Longitude": 144.8871129813833
-        },
-        {
-          "Latitude": -37.83471784343513,
-          "Longitude": 144.88713303460818
-        },
-        {
-          "Latitude": -37.835264996579035,
-          "Longitude": 144.88701329108105
-        },
-        {
-          "Latitude": -37.835309612519275,
-          "Longitude": 144.88697476974036
-        },
-        {
-          "Latitude": -37.83539881323418,
-          "Longitude": 144.8868501252645
-        },
-        {
-          "Latitude": -37.83541717529768,
-          "Longitude": 144.88675652953933
-        },
-        {
-          "Latitude": -37.83528610941945,
-          "Longitude": 144.88416917821633
+        "Location": {
+          "Latitude": -37.83465365431307,
+          "Longitude": 144.886051780603
         }
-      ]
-    ],
-    "LastUpdatedTime": "2026-08-09T01:10:22.506Z",
-    "FeedReceivedTime": "2026-08-08T22:49:19.204Z",
-    "History": null
+      }
+    ]
+  },
+  {
+    "PlannedStartTime": "2026-08-09T07:30:00",
+    "PlannedEndTime": "2026-08-09T16:30:00",
+    "EventId": "J.26.0144808",
+    "Type": "Planned",
+    "Status": "Complete",
+    "Cause": "Essential Maintenance",
+    "StartTime": "2026-08-09T08:29:16",
+    "RestorationTime": "2026-08-09T12:02:45",
+    "ImpactedCustomers": 40,
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-08-09T03:25:23.877Z",
+    "FeedReceivedTime": "2026-08-09T03:25:03.191Z",
+    "History": [
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "RESERVOIR",
+            "PostCode": 3073,
+            "Streets": [
+              "HIGH ST",
+              "HIGH STREET",
+              "HOWARD STREET"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 29,
+            "eventId": "J.26.0144808",
+            "startTime": "2026-08-09T08:29:16",
+            "restoreTime": "2026-08-09T12:02:45",
+            "suburbs": [
+              {
+                "suburbName": "RESERVOIR",
+                "postcode": 3073,
+                "streets": [
+                  "HIGH ST",
+                  "HIGH STREET",
+                  "HOWARD STREET"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  145.00402726621914,
+                  -37.72365941570512
+                ],
+                [
+                  145.0038433661494,
+                  -37.72363110788457
+                ],
+                [
+                  145.00375650509042,
+                  -37.723588049963034
+                ],
+                [
+                  145.00369710487402,
+                  -37.72352196795963
+                ],
+                [
+                  145.00367421784046,
+                  -37.72344293244481
+                ],
+                [
+                  145.00387740027796,
+                  -37.72247616037534
+                ],
+                [
+                  145.00424485158646,
+                  -37.72142416424242
+                ],
+                [
+                  145.0045825766667,
+                  -37.72076292713388
+                ],
+                [
+                  145.0051489566318,
+                  -37.719722808915094
+                ],
+                [
+                  145.00736293553703,
+                  -37.718102509570606
+                ],
+                [
+                  145.0075272210893,
+                  -37.718075530904414
+                ],
+                [
+                  145.00793911711773,
+                  -37.71811498231713
+                ],
+                [
+                  145.0080795195677,
+                  -37.71816421595874
+                ],
+                [
+                  145.0081427220669,
+                  -37.718228778289934
+                ],
+                [
+                  145.0084064619948,
+                  -37.718648732598986
+                ],
+                [
+                  145.00843323410797,
+                  -37.71875573195762
+                ],
+                [
+                  145.00839313866808,
+                  -37.71912984682506
+                ],
+                [
+                  145.00784459486823,
+                  -37.72119692356725
+                ],
+                [
+                  145.00781226853513,
+                  -37.72126178023647
+                ],
+                [
+                  145.00514275022132,
+                  -37.723703119145924
+                ],
+                [
+                  145.00505189171395,
+                  -37.7237394327725
+                ],
+                [
+                  145.00495040019362,
+                  -37.72374568537734
+                ],
+                [
+                  145.00402726621914,
+                  -37.72365941570512
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.72365941570512,
+              "Longitude": 145.00402726621914
+            },
+            {
+              "Latitude": -37.72363110788457,
+              "Longitude": 145.0038433661494
+            },
+            {
+              "Latitude": -37.723588049963034,
+              "Longitude": 145.00375650509042
+            },
+            {
+              "Latitude": -37.72352196795963,
+              "Longitude": 145.00369710487402
+            },
+            {
+              "Latitude": -37.72344293244481,
+              "Longitude": 145.00367421784046
+            },
+            {
+              "Latitude": -37.72247616037534,
+              "Longitude": 145.00387740027796
+            },
+            {
+              "Latitude": -37.72142416424242,
+              "Longitude": 145.00424485158646
+            },
+            {
+              "Latitude": -37.72076292713388,
+              "Longitude": 145.0045825766667
+            },
+            {
+              "Latitude": -37.719722808915094,
+              "Longitude": 145.0051489566318
+            },
+            {
+              "Latitude": -37.718102509570606,
+              "Longitude": 145.00736293553703
+            },
+            {
+              "Latitude": -37.718075530904414,
+              "Longitude": 145.0075272210893
+            },
+            {
+              "Latitude": -37.71811498231713,
+              "Longitude": 145.00793911711773
+            },
+            {
+              "Latitude": -37.71816421595874,
+              "Longitude": 145.0080795195677
+            },
+            {
+              "Latitude": -37.718228778289934,
+              "Longitude": 145.0081427220669
+            },
+            {
+              "Latitude": -37.718648732598986,
+              "Longitude": 145.0084064619948
+            },
+            {
+              "Latitude": -37.71875573195762,
+              "Longitude": 145.00843323410797
+            },
+            {
+              "Latitude": -37.71912984682506,
+              "Longitude": 145.00839313866808
+            },
+            {
+              "Latitude": -37.72119692356725,
+              "Longitude": 145.00784459486823
+            },
+            {
+              "Latitude": -37.72126178023647,
+              "Longitude": 145.00781226853513
+            },
+            {
+              "Latitude": -37.723703119145924,
+              "Longitude": 145.00514275022132
+            },
+            {
+              "Latitude": -37.7237394327725,
+              "Longitude": 145.00505189171395
+            },
+            {
+              "Latitude": -37.72374568537734,
+              "Longitude": 145.00495040019362
+            },
+            {
+              "Latitude": -37.72365941570512,
+              "Longitude": 145.00402726621914
+            }
+          ]
+        ],
+        "RestorationTime": "2026-08-09T12:02:45",
+        "ImpactedCustomers": 29,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 29,
+            "eventId": "J.26.0144808",
+            "startTime": "2026-08-09T08:29:16",
+            "restoreTime": "2026-08-09T12:02:45",
+            "suburbs": [
+              {
+                "suburbName": "RESERVOIR",
+                "postcode": 3073,
+                "streets": [
+                  "HIGH ST",
+                  "HIGH STREET",
+                  "HOWARD STREET"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              145.0060537259742,
+              -37.720910608140876
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.720910608140876,
+          "Longitude": 145.0060537259742
+        }
+      },
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "RESERVOIR",
+            "PostCode": 3073,
+            "Streets": [
+              "HIGH ST",
+              "HIGH STREET"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 9,
+            "eventId": "J.26.0144808",
+            "startTime": "2026-08-09T08:29:16",
+            "restoreTime": "2026-08-09T12:02:37",
+            "suburbs": [
+              {
+                "suburbName": "RESERVOIR",
+                "postcode": 3073,
+                "streets": [
+                  "HIGH ST",
+                  "HIGH STREET"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  145.00793528121307,
+                  -37.71832382486615
+                ],
+                [
+                  145.0079058821107,
+                  -37.71834324430261
+                ],
+                [
+                  145.0072389687307,
+                  -37.71830549095857
+                ],
+                [
+                  145.00723211636296,
+                  -37.71828593852022
+                ],
+                [
+                  145.0073490520573,
+                  -37.717852588147665
+                ],
+                [
+                  145.00773557949594,
+                  -37.71783630670332
+                ],
+                [
+                  145.00798553162457,
+                  -37.717917345963365
+                ],
+                [
+                  145.00799407802936,
+                  -37.71793603076324
+                ],
+                [
+                  145.00793528121307,
+                  -37.71832382486615
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.71832382486615,
+              "Longitude": 145.00793528121307
+            },
+            {
+              "Latitude": -37.71834324430261,
+              "Longitude": 145.0079058821107
+            },
+            {
+              "Latitude": -37.71830549095857,
+              "Longitude": 145.0072389687307
+            },
+            {
+              "Latitude": -37.71828593852022,
+              "Longitude": 145.00723211636296
+            },
+            {
+              "Latitude": -37.717852588147665,
+              "Longitude": 145.0073490520573
+            },
+            {
+              "Latitude": -37.71783630670332,
+              "Longitude": 145.00773557949594
+            },
+            {
+              "Latitude": -37.717917345963365,
+              "Longitude": 145.00798553162457
+            },
+            {
+              "Latitude": -37.71793603076324,
+              "Longitude": 145.00799407802936
+            },
+            {
+              "Latitude": -37.71832382486615,
+              "Longitude": 145.00793528121307
+            }
+          ]
+        ],
+        "RestorationTime": "2026-08-09T12:02:37",
+        "ImpactedCustomers": 9,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 9,
+            "eventId": "J.26.0144808",
+            "startTime": "2026-08-09T08:29:16",
+            "restoreTime": "2026-08-09T12:02:37",
+            "suburbs": [
+              {
+                "suburbName": "RESERVOIR",
+                "postcode": 3073,
+                "streets": [
+                  "HIGH ST",
+                  "HIGH STREET"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              145.00761309719616,
+              -37.71808977550296
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.71808977550296,
+          "Longitude": 145.00761309719616
+        }
+      }
+    ]
   }
 ]
