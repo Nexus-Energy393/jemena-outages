@@ -170,7 +170,7 @@
         }
       ]
     ],
-    "LastUpdatedTime": "2026-08-11T05:00:44.701Z",
+    "LastUpdatedTime": "2026-08-11T06:54:11.250Z",
     "FeedReceivedTime": "2026-08-10T01:33:32.804Z",
     "History": [
       {
@@ -1203,7 +1203,7 @@
         }
       ]
     ],
-    "LastUpdatedTime": "2026-08-11T05:00:44.701Z",
+    "LastUpdatedTime": "2026-08-11T06:54:11.250Z",
     "FeedReceivedTime": "2026-08-10T02:52:42.632Z",
     "History": [
       {
@@ -2461,7 +2461,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-11T05:00:44.701Z",
+    "LastUpdatedTime": "2026-08-11T06:54:11.250Z",
     "FeedReceivedTime": "2026-08-11T03:55:59.599Z",
     "History": [
       {
@@ -3050,7 +3050,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-11T05:00:44.701Z",
+    "LastUpdatedTime": "2026-08-11T06:54:11.250Z",
     "FeedReceivedTime": "2026-08-11T04:21:35.256Z",
     "History": [
       {
@@ -3757,20 +3757,217 @@
   {
     "PlannedStartTime": "2026-08-11T07:30:00",
     "PlannedEndTime": "2026-08-11T17:30:00",
+    "EventId": "J.26.0143352",
+    "Type": "Planned",
+    "Status": "Complete",
+    "Cause": "Essential Maintenance",
+    "StartTime": "2026-08-11T08:22:50",
+    "RestorationTime": "2026-08-11T14:07:41",
+    "ImpactedCustomers": 4,
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-08-11T06:54:11.250Z",
+    "FeedReceivedTime": "2026-08-11T04:36:39.580Z",
+    "History": [
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "MACLEOD",
+            "PostCode": 3085,
+            "Streets": [
+              "CHAPMAN ST"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 4,
+            "eventId": "J.26.0143352",
+            "startTime": "2026-08-11T08:22:50",
+            "restoreTime": "2026-08-11T14:07:41",
+            "suburbs": [
+              {
+                "suburbName": "MACLEOD",
+                "postcode": 3085,
+                "streets": [
+                  "CHAPMAN ST"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  145.0686429679208,
+                  -37.72996815454806
+                ],
+                [
+                  145.06855985923409,
+                  -37.73001849773423
+                ],
+                [
+                  145.0683317118526,
+                  -37.73002224226883
+                ],
+                [
+                  145.06825603675583,
+                  -37.72998595059219
+                ],
+                [
+                  145.06823241367425,
+                  -37.72991849512995
+                ],
+                [
+                  145.06917361412502,
+                  -37.72748167604752
+                ],
+                [
+                  145.06922286155273,
+                  -37.72744282103999
+                ],
+                [
+                  145.0692676044018,
+                  -37.727432108051985
+                ],
+                [
+                  145.06956283452692,
+                  -37.7274605389355
+                ],
+                [
+                  145.06962108422755,
+                  -37.72751663991375
+                ],
+                [
+                  145.06961387768675,
+                  -37.72764906210958
+                ],
+                [
+                  145.06936240100904,
+                  -37.72883368044999
+                ],
+                [
+                  145.0686429679208,
+                  -37.72996815454806
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.72996815454806,
+              "Longitude": 145.0686429679208
+            },
+            {
+              "Latitude": -37.73001849773423,
+              "Longitude": 145.06855985923409
+            },
+            {
+              "Latitude": -37.73002224226883,
+              "Longitude": 145.0683317118526
+            },
+            {
+              "Latitude": -37.72998595059219,
+              "Longitude": 145.06825603675583
+            },
+            {
+              "Latitude": -37.72991849512995,
+              "Longitude": 145.06823241367425
+            },
+            {
+              "Latitude": -37.72748167604752,
+              "Longitude": 145.06917361412502
+            },
+            {
+              "Latitude": -37.72744282103999,
+              "Longitude": 145.06922286155273
+            },
+            {
+              "Latitude": -37.727432108051985,
+              "Longitude": 145.0692676044018
+            },
+            {
+              "Latitude": -37.7274605389355,
+              "Longitude": 145.06956283452692
+            },
+            {
+              "Latitude": -37.72751663991375,
+              "Longitude": 145.06962108422755
+            },
+            {
+              "Latitude": -37.72764906210958,
+              "Longitude": 145.06961387768675
+            },
+            {
+              "Latitude": -37.72883368044999,
+              "Longitude": 145.06936240100904
+            },
+            {
+              "Latitude": -37.72996815454806,
+              "Longitude": 145.0686429679208
+            }
+          ]
+        ],
+        "RestorationTime": "2026-08-11T14:07:41",
+        "ImpactedCustomers": 4,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 4,
+            "eventId": "J.26.0143352",
+            "startTime": "2026-08-11T08:22:50",
+            "restoreTime": "2026-08-11T14:07:41",
+            "suburbs": [
+              {
+                "suburbName": "MACLEOD",
+                "postcode": 3085,
+                "streets": [
+                  "CHAPMAN ST"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              145.0689267489509,
+              -37.72872717516041
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.72872717516041,
+          "Longitude": 145.0689267489509
+        }
+      }
+    ]
+  },
+  {
+    "PlannedStartTime": "2026-08-11T07:30:00",
+    "PlannedEndTime": "2026-08-11T17:30:00",
     "EventId": "J.26.0142923",
     "Type": "Planned",
-    "Status": "Planned Outage Execution",
+    "Status": "Complete",
     "Cause": "Essential Maintenance",
-    "StartTime": "2026-08-11T08:30:58",
-    "RestorationTime": "2026-08-11T14:27:52",
+    "StartTime": "2026-08-11T08:16:58",
+    "RestorationTime": "2026-08-11T14:07:59",
     "ImpactedCustomers": 51,
     "LocationGeoJson": null,
     "Location": null,
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-11T05:00:44.701Z",
-    "FeedReceivedTime": "2026-08-11T04:31:34.558Z",
+    "LastUpdatedTime": "2026-08-11T06:54:11.250Z",
+    "FeedReceivedTime": "2026-08-11T05:12:13.866Z",
     "History": [
       {
         "ImpactedSuburbs": [
@@ -3789,8 +3986,8 @@
             "type": "Historical",
             "customersOff": 35,
             "eventId": "J.26.0142923",
-            "startTime": "2026-08-11T08:30:58",
-            "restoreTime": "2026-08-11T14:27:52",
+            "startTime": "2026-08-11T08:16:58",
+            "restoreTime": "2026-08-11T14:07:50",
             "suburbs": [
               {
                 "suburbName": "COOLAROO",
@@ -3918,7 +4115,7 @@
             }
           ]
         ],
-        "RestorationTime": "2026-08-11T14:27:52",
+        "RestorationTime": "2026-08-11T14:07:50",
         "ImpactedCustomers": 35,
         "LocationGeoJson": {
           "type": "Feature",
@@ -3926,8 +4123,8 @@
             "type": "Historical",
             "customersOff": 35,
             "eventId": "J.26.0142923",
-            "startTime": "2026-08-11T08:30:58",
-            "restoreTime": "2026-08-11T14:27:52",
+            "startTime": "2026-08-11T08:16:58",
+            "restoreTime": "2026-08-11T14:07:50",
             "suburbs": [
               {
                 "suburbName": "COOLAROO",
@@ -3969,8 +4166,8 @@
             "type": "Historical",
             "customersOff": 16,
             "eventId": "J.26.0142923",
-            "startTime": "2026-08-11T08:30:58",
-            "restoreTime": "2026-08-11T14:27:44",
+            "startTime": "2026-08-11T08:16:58",
+            "restoreTime": "2026-08-11T14:07:59",
             "suburbs": [
               {
                 "suburbName": "COOLAROO",
@@ -4330,7 +4527,7 @@
             }
           ]
         ],
-        "RestorationTime": "2026-08-11T14:27:44",
+        "RestorationTime": "2026-08-11T14:07:59",
         "ImpactedCustomers": 16,
         "LocationGeoJson": {
           "type": "Feature",
@@ -4338,8 +4535,8 @@
             "type": "Historical",
             "customersOff": 16,
             "eventId": "J.26.0142923",
-            "startTime": "2026-08-11T08:30:58",
-            "restoreTime": "2026-08-11T14:27:44",
+            "startTime": "2026-08-11T08:16:58",
+            "restoreTime": "2026-08-11T14:07:59",
             "suburbs": [
               {
                 "suburbName": "COOLAROO",
@@ -4362,203 +4559,6 @@
         "Location": {
           "Latitude": -37.653675533723415,
           "Longitude": 144.93012384885438
-        }
-      }
-    ]
-  },
-  {
-    "PlannedStartTime": "2026-08-11T07:30:00",
-    "PlannedEndTime": "2026-08-11T17:30:00",
-    "EventId": "J.26.0143352",
-    "Type": "Planned",
-    "Status": "Complete",
-    "Cause": "Essential Maintenance",
-    "StartTime": "2026-08-11T08:22:50",
-    "RestorationTime": "2026-08-11T14:07:41",
-    "ImpactedCustomers": 4,
-    "LocationGeoJson": null,
-    "Location": null,
-    "ImpactedSuburbs": [],
-    "ImpactedAreaGeoJson": null,
-    "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-11T05:00:44.701Z",
-    "FeedReceivedTime": "2026-08-11T04:36:39.580Z",
-    "History": [
-      {
-        "ImpactedSuburbs": [
-          {
-            "SuburbName": "MACLEOD",
-            "PostCode": 3085,
-            "Streets": [
-              "CHAPMAN ST"
-            ]
-          }
-        ],
-        "ImpactedAreaGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 4,
-            "eventId": "J.26.0143352",
-            "startTime": "2026-08-11T08:22:50",
-            "restoreTime": "2026-08-11T14:07:41",
-            "suburbs": [
-              {
-                "suburbName": "MACLEOD",
-                "postcode": 3085,
-                "streets": [
-                  "CHAPMAN ST"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-              [
-                [
-                  145.0686429679208,
-                  -37.72996815454806
-                ],
-                [
-                  145.06855985923409,
-                  -37.73001849773423
-                ],
-                [
-                  145.0683317118526,
-                  -37.73002224226883
-                ],
-                [
-                  145.06825603675583,
-                  -37.72998595059219
-                ],
-                [
-                  145.06823241367425,
-                  -37.72991849512995
-                ],
-                [
-                  145.06917361412502,
-                  -37.72748167604752
-                ],
-                [
-                  145.06922286155273,
-                  -37.72744282103999
-                ],
-                [
-                  145.0692676044018,
-                  -37.727432108051985
-                ],
-                [
-                  145.06956283452692,
-                  -37.7274605389355
-                ],
-                [
-                  145.06962108422755,
-                  -37.72751663991375
-                ],
-                [
-                  145.06961387768675,
-                  -37.72764906210958
-                ],
-                [
-                  145.06936240100904,
-                  -37.72883368044999
-                ],
-                [
-                  145.0686429679208,
-                  -37.72996815454806
-                ]
-              ]
-            ]
-          }
-        },
-        "ImpactedArea": [
-          [
-            {
-              "Latitude": -37.72996815454806,
-              "Longitude": 145.0686429679208
-            },
-            {
-              "Latitude": -37.73001849773423,
-              "Longitude": 145.06855985923409
-            },
-            {
-              "Latitude": -37.73002224226883,
-              "Longitude": 145.0683317118526
-            },
-            {
-              "Latitude": -37.72998595059219,
-              "Longitude": 145.06825603675583
-            },
-            {
-              "Latitude": -37.72991849512995,
-              "Longitude": 145.06823241367425
-            },
-            {
-              "Latitude": -37.72748167604752,
-              "Longitude": 145.06917361412502
-            },
-            {
-              "Latitude": -37.72744282103999,
-              "Longitude": 145.06922286155273
-            },
-            {
-              "Latitude": -37.727432108051985,
-              "Longitude": 145.0692676044018
-            },
-            {
-              "Latitude": -37.7274605389355,
-              "Longitude": 145.06956283452692
-            },
-            {
-              "Latitude": -37.72751663991375,
-              "Longitude": 145.06962108422755
-            },
-            {
-              "Latitude": -37.72764906210958,
-              "Longitude": 145.06961387768675
-            },
-            {
-              "Latitude": -37.72883368044999,
-              "Longitude": 145.06936240100904
-            },
-            {
-              "Latitude": -37.72996815454806,
-              "Longitude": 145.0686429679208
-            }
-          ]
-        ],
-        "RestorationTime": "2026-08-11T14:07:41",
-        "ImpactedCustomers": 4,
-        "LocationGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 4,
-            "eventId": "J.26.0143352",
-            "startTime": "2026-08-11T08:22:50",
-            "restoreTime": "2026-08-11T14:07:41",
-            "suburbs": [
-              {
-                "suburbName": "MACLEOD",
-                "postcode": 3085,
-                "streets": [
-                  "CHAPMAN ST"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [
-              145.0689267489509,
-              -37.72872717516041
-            ]
-          }
-        },
-        "Location": {
-          "Latitude": -37.72872717516041,
-          "Longitude": 145.0689267489509
         }
       }
     ]
