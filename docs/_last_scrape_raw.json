@@ -170,7 +170,7 @@
         }
       ]
     ],
-    "LastUpdatedTime": "2026-08-11T01:09:18.461Z",
+    "LastUpdatedTime": "2026-08-11T03:28:09.575Z",
     "FeedReceivedTime": "2026-08-10T01:33:32.804Z",
     "History": [
       {
@@ -1203,7 +1203,7 @@
         }
       ]
     ],
-    "LastUpdatedTime": "2026-08-11T01:09:18.461Z",
+    "LastUpdatedTime": "2026-08-11T03:28:09.575Z",
     "FeedReceivedTime": "2026-08-10T02:52:42.632Z",
     "History": [
       {
@@ -2461,7 +2461,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-11T01:09:18.461Z",
+    "LastUpdatedTime": "2026-08-11T03:28:09.575Z",
     "FeedReceivedTime": "2026-08-10T04:57:49.578Z",
     "History": [
       {
@@ -2669,7 +2669,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-11T01:09:18.461Z",
+    "LastUpdatedTime": "2026-08-11T03:28:09.575Z",
     "FeedReceivedTime": "2026-08-10T13:24:09.092Z",
     "History": [
       {
@@ -3560,7 +3560,7 @@
         }
       ]
     ],
-    "LastUpdatedTime": "2026-08-11T01:09:18.461Z",
+    "LastUpdatedTime": "2026-08-11T03:28:09.575Z",
     "FeedReceivedTime": "2026-08-10T22:25:33.049Z",
     "History": null
   },
@@ -3986,7 +3986,7 @@
         }
       ]
     ],
-    "LastUpdatedTime": "2026-08-11T01:09:18.461Z",
+    "LastUpdatedTime": "2026-08-11T03:28:09.575Z",
     "FeedReceivedTime": "2026-08-10T22:35:46.951Z",
     "History": null
   },
@@ -3998,238 +3998,585 @@
     "Status": "Planned Outage Execution",
     "Cause": "Essential Maintenance",
     "StartTime": "2026-08-11T09:52:03",
-    "RestorationTime": null,
+    "RestorationTime": "2026-08-11T13:09:42",
     "ImpactedCustomers": 21,
-    "LocationGeoJson": {
-      "type": "Feature",
-      "properties": {
-        "eventId": "J.26.0143765",
-        "customerReference": "J5221195",
-        "customersOff": "21",
-        "status": "Planned Outage Execution",
-        "type": "Planned",
-        "resolvedFlag": "false",
-        "showOutageFlag": "true",
-        "symptoms": [],
-        "cause": "Essential Maintenance",
-        "startTime": "2026-08-11T09:52:03",
-        "restoreTime": "",
-        "dispatchedTime": "",
-        "etr": "2026-08-11T17:30:00",
-        "plannedStartTime": "2026-08-11T09:00:00",
-        "plannedEndTime": "2026-08-11T17:30:00",
-        "lastUpdateTime": "2026-08-11T09:53:46"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          144.88555293338987,
-          -37.55524705221114
-        ]
-      }
-    },
-    "Location": {
-      "Latitude": -37.55524705221114,
-      "Longitude": 144.88555293338987
-    },
-    "ImpactedSuburbs": [
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-08-11T03:28:09.575Z",
+    "FeedReceivedTime": "2026-08-11T03:10:14.627Z",
+    "History": [
       {
-        "SuburbName": "MICKLEHAM",
-        "PostCode": 3064,
-        "Streets": [
-          "BROSSARD RD",
-          "RICEFLOWER ROAD",
-          "STORK STREET",
-          "VELLEIA WAY"
-        ]
-      }
-    ],
-    "ImpactedAreaGeoJson": {
-      "type": "Feature",
-      "properties": {
-        "eventId": "J.26.0143765",
-        "customerReference": "J5221195",
-        "customersOff": "21",
-        "status": "Planned Outage Execution",
-        "type": "Planned",
-        "resolvedFlag": "false",
-        "showOutageFlag": "true",
-        "symptoms": [],
-        "cause": "Essential Maintenance",
-        "startTime": "2026-08-11T09:52:03",
-        "restoreTime": "",
-        "dispatchedTime": "",
-        "etr": "2026-08-11T17:30:00",
-        "plannedStartTime": "2026-08-11T09:00:00",
-        "plannedEndTime": "2026-08-11T17:30:00",
-        "lastUpdateTime": "2026-08-11T09:53:46"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              144.88538033309004,
-              -37.55621633580343
-            ],
-            [
-              144.8852995123055,
-              -37.55618773210424
-            ],
-            [
-              144.8837606179067,
-              -37.55503015924286
-            ],
-            [
-              144.88373557519807,
-              -37.5549754686595
-            ],
-            [
-              144.88374129338305,
-              -37.554936663142556
-            ],
-            [
-              144.8838291175929,
-              -37.5548044063357
-            ],
-            [
-              144.8845336801552,
-              -37.554265038066
-            ],
-            [
-              144.88460660626092,
-              -37.554236630169164
-            ],
-            [
-              144.88531677475464,
-              -37.55426835001596
-            ],
-            [
-              144.8869103578471,
-              -37.55448450545604
-            ],
-            [
-              144.88722828388524,
-              -37.55456576123922
-            ],
-            [
-              144.88729091542362,
-              -37.55460015377552
-            ],
-            [
-              144.8873195821681,
-              -37.55465611574287
-            ],
-            [
-              144.88737029158168,
-              -37.555073035244604
-            ],
-            [
-              144.8873529242768,
-              -37.555136210948774
-            ],
-            [
-              144.8861241610909,
-              -37.556222791828986
-            ],
-            [
-              144.88608543080818,
-              -37.55624634467734
-            ],
-            [
-              144.8860140960207,
-              -37.55625747425313
-            ],
-            [
-              144.88538033309004,
-              -37.55621633580343
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "MICKLEHAM",
+            "PostCode": 3064,
+            "Streets": [
+              "STORK STREET"
             ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 7,
+            "eventId": "J.26.0143765",
+            "startTime": "2026-08-11T09:52:03",
+            "restoreTime": "2026-08-11T13:09:42",
+            "suburbs": [
+              {
+                "suburbName": "MICKLEHAM",
+                "postcode": 3064,
+                "streets": [
+                  "STORK STREET"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  144.8853861091302,
+                  -37.5561604131375
+                ],
+                [
+                  144.8853435343342,
+                  -37.55614310845869
+                ],
+                [
+                  144.88532903775075,
+                  -37.55611673342058
+                ],
+                [
+                  144.88525915385182,
+                  -37.55564485717237
+                ],
+                [
+                  144.8853067595899,
+                  -37.55521876311957
+                ],
+                [
+                  144.88532276341144,
+                  -37.55518989571533
+                ],
+                [
+                  144.88553153563913,
+                  -37.555007664739904
+                ],
+                [
+                  144.8860807589582,
+                  -37.55488491957922
+                ],
+                [
+                  144.88684977662848,
+                  -37.55484898126551
+                ],
+                [
+                  144.88690318499397,
+                  -37.55486836974332
+                ],
+                [
+                  144.88695535120547,
+                  -37.55536014056413
+                ],
+                [
+                  144.88694717725593,
+                  -37.55538818563543
+                ],
+                [
+                  144.88607215766407,
+                  -37.55618471412173
+                ],
+                [
+                  144.8860198720608,
+                  -37.556201551618074
+                ],
+                [
+                  144.8853861091302,
+                  -37.5561604131375
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.5561604131375,
+              "Longitude": 144.8853861091302
+            },
+            {
+              "Latitude": -37.55614310845869,
+              "Longitude": 144.8853435343342
+            },
+            {
+              "Latitude": -37.55611673342058,
+              "Longitude": 144.88532903775075
+            },
+            {
+              "Latitude": -37.55564485717237,
+              "Longitude": 144.88525915385182
+            },
+            {
+              "Latitude": -37.55521876311957,
+              "Longitude": 144.8853067595899
+            },
+            {
+              "Latitude": -37.55518989571533,
+              "Longitude": 144.88532276341144
+            },
+            {
+              "Latitude": -37.555007664739904,
+              "Longitude": 144.88553153563913
+            },
+            {
+              "Latitude": -37.55488491957922,
+              "Longitude": 144.8860807589582
+            },
+            {
+              "Latitude": -37.55484898126551,
+              "Longitude": 144.88684977662848
+            },
+            {
+              "Latitude": -37.55486836974332,
+              "Longitude": 144.88690318499397
+            },
+            {
+              "Latitude": -37.55536014056413,
+              "Longitude": 144.88695535120547
+            },
+            {
+              "Latitude": -37.55538818563543,
+              "Longitude": 144.88694717725593
+            },
+            {
+              "Latitude": -37.55618471412173,
+              "Longitude": 144.88607215766407
+            },
+            {
+              "Latitude": -37.556201551618074,
+              "Longitude": 144.8860198720608
+            },
+            {
+              "Latitude": -37.5561604131375,
+              "Longitude": 144.8853861091302
+            }
           ]
-        ]
-      }
-    },
-    "ImpactedArea": [
-      [
-        {
-          "Latitude": -37.55621633580343,
-          "Longitude": 144.88538033309004
+        ],
+        "RestorationTime": "2026-08-11T13:09:42",
+        "ImpactedCustomers": 7,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 7,
+            "eventId": "J.26.0143765",
+            "startTime": "2026-08-11T09:52:03",
+            "restoreTime": "2026-08-11T13:09:42",
+            "suburbs": [
+              {
+                "suburbName": "MICKLEHAM",
+                "postcode": 3064,
+                "streets": [
+                  "STORK STREET"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              144.88610725252863,
+              -37.55552526644179
+            ]
+          }
         },
-        {
-          "Latitude": -37.55618773210424,
-          "Longitude": 144.8852995123055
-        },
-        {
-          "Latitude": -37.55503015924286,
-          "Longitude": 144.8837606179067
-        },
-        {
-          "Latitude": -37.5549754686595,
-          "Longitude": 144.88373557519807
-        },
-        {
-          "Latitude": -37.554936663142556,
-          "Longitude": 144.88374129338305
-        },
-        {
-          "Latitude": -37.5548044063357,
-          "Longitude": 144.8838291175929
-        },
-        {
-          "Latitude": -37.554265038066,
-          "Longitude": 144.8845336801552
-        },
-        {
-          "Latitude": -37.554236630169164,
-          "Longitude": 144.88460660626092
-        },
-        {
-          "Latitude": -37.55426835001596,
-          "Longitude": 144.88531677475464
-        },
-        {
-          "Latitude": -37.55448450545604,
-          "Longitude": 144.8869103578471
-        },
-        {
-          "Latitude": -37.55456576123922,
-          "Longitude": 144.88722828388524
-        },
-        {
-          "Latitude": -37.55460015377552,
-          "Longitude": 144.88729091542362
-        },
-        {
-          "Latitude": -37.55465611574287,
-          "Longitude": 144.8873195821681
-        },
-        {
-          "Latitude": -37.555073035244604,
-          "Longitude": 144.88737029158168
-        },
-        {
-          "Latitude": -37.555136210948774,
-          "Longitude": 144.8873529242768
-        },
-        {
-          "Latitude": -37.556222791828986,
-          "Longitude": 144.8861241610909
-        },
-        {
-          "Latitude": -37.55624634467734,
-          "Longitude": 144.88608543080818
-        },
-        {
-          "Latitude": -37.55625747425313,
-          "Longitude": 144.8860140960207
-        },
-        {
-          "Latitude": -37.55621633580343,
-          "Longitude": 144.88538033309004
+        "Location": {
+          "Latitude": -37.55552526644179,
+          "Longitude": 144.88610725252863
         }
-      ]
-    ],
-    "LastUpdatedTime": "2026-08-11T01:09:18.461Z",
-    "FeedReceivedTime": "2026-08-10T23:57:03.658Z",
-    "History": null
+      },
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "MICKLEHAM",
+            "PostCode": 3064,
+            "Streets": [
+              "BROSSARD RD",
+              "RICEFLOWER ROAD",
+              "VELLEIA WAY"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 8,
+            "eventId": "J.26.0143765",
+            "startTime": "2026-08-11T09:52:03",
+            "restoreTime": "2026-08-11T13:09:25",
+            "suburbs": [
+              {
+                "suburbName": "MICKLEHAM",
+                "postcode": 3064,
+                "streets": [
+                  "BROSSARD RD",
+                  "RICEFLOWER ROAD",
+                  "VELLEIA WAY"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  144.88416777212993,
+                  -37.55513892031303
+                ],
+                [
+                  144.88382999115362,
+                  -37.55500813814015
+                ],
+                [
+                  144.88380819775256,
+                  -37.554983742051206
+                ],
+                [
+                  144.88380767109567,
+                  -37.55495385067222
+                ],
+                [
+                  144.88389152595698,
+                  -37.5548317712095
+                ],
+                [
+                  144.8845924102452,
+                  -37.55429852894556
+                ],
+                [
+                  144.8852980357618,
+                  -37.55432227116826
+                ],
+                [
+                  144.8854917112528,
+                  -37.55436498942935
+                ],
+                [
+                  144.88553027076435,
+                  -37.5543896815903
+                ],
+                [
+                  144.88553739372026,
+                  -37.55441896362728
+                ],
+                [
+                  144.88543329056122,
+                  -37.55516721139127
+                ],
+                [
+                  144.88540289440314,
+                  -37.55520486088312
+                ],
+                [
+                  144.88478739130178,
+                  -37.5552927714535
+                ],
+                [
+                  144.88416777212993,
+                  -37.55513892031303
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.55513892031303,
+              "Longitude": 144.88416777212993
+            },
+            {
+              "Latitude": -37.55500813814015,
+              "Longitude": 144.88382999115362
+            },
+            {
+              "Latitude": -37.554983742051206,
+              "Longitude": 144.88380819775256
+            },
+            {
+              "Latitude": -37.55495385067222,
+              "Longitude": 144.88380767109567
+            },
+            {
+              "Latitude": -37.5548317712095,
+              "Longitude": 144.88389152595698
+            },
+            {
+              "Latitude": -37.55429852894556,
+              "Longitude": 144.8845924102452
+            },
+            {
+              "Latitude": -37.55432227116826,
+              "Longitude": 144.8852980357618
+            },
+            {
+              "Latitude": -37.55436498942935,
+              "Longitude": 144.8854917112528
+            },
+            {
+              "Latitude": -37.5543896815903,
+              "Longitude": 144.88553027076435
+            },
+            {
+              "Latitude": -37.55441896362728,
+              "Longitude": 144.88553739372026
+            },
+            {
+              "Latitude": -37.55516721139127,
+              "Longitude": 144.88543329056122
+            },
+            {
+              "Latitude": -37.55520486088312,
+              "Longitude": 144.88540289440314
+            },
+            {
+              "Latitude": -37.5552927714535,
+              "Longitude": 144.88478739130178
+            },
+            {
+              "Latitude": -37.55513892031303,
+              "Longitude": 144.88416777212993
+            }
+          ]
+        ],
+        "RestorationTime": "2026-08-11T13:09:25",
+        "ImpactedCustomers": 8,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 8,
+            "eventId": "J.26.0143765",
+            "startTime": "2026-08-11T09:52:03",
+            "restoreTime": "2026-08-11T13:09:25",
+            "suburbs": [
+              {
+                "suburbName": "MICKLEHAM",
+                "postcode": 3064,
+                "streets": [
+                  "BROSSARD RD",
+                  "RICEFLOWER ROAD",
+                  "VELLEIA WAY"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              144.88467253240796,
+              -37.55479565019953
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.55479565019953,
+          "Longitude": 144.88467253240796
+        }
+      },
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "MICKLEHAM",
+            "PostCode": 3064,
+            "Streets": [
+              "RICEFLOWER ROAD"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 6,
+            "eventId": "J.26.0143765",
+            "startTime": "2026-08-11T09:52:03",
+            "restoreTime": "2026-08-11T13:09:17",
+            "suburbs": [
+              {
+                "suburbName": "MICKLEHAM",
+                "postcode": 3064,
+                "streets": [
+                  "RICEFLOWER ROAD"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  144.88608750917018,
+                  -37.55500799299281
+                ],
+                [
+                  144.88606317870793,
+                  -37.554989854435064
+                ],
+                [
+                  144.88600080536315,
+                  -37.554878652844195
+                ],
+                [
+                  144.88600874689214,
+                  -37.554678656463516
+                ],
+                [
+                  144.8860280145513,
+                  -37.55456043980608
+                ],
+                [
+                  144.88604694559407,
+                  -37.55453507096077
+                ],
+                [
+                  144.8862702774101,
+                  -37.55452452837436
+                ],
+                [
+                  144.8868904382299,
+                  -37.55455144990293
+                ],
+                [
+                  144.8872285416603,
+                  -37.55464894534531
+                ],
+                [
+                  144.88728436597566,
+                  -37.55508708742672
+                ],
+                [
+                  144.88724035522299,
+                  -37.555120458110984
+                ],
+                [
+                  144.88675785630903,
+                  -37.555142575372045
+                ],
+                [
+                  144.88632969877182,
+                  -37.55508637850294
+                ],
+                [
+                  144.88608750917018,
+                  -37.55500799299281
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.55500799299281,
+              "Longitude": 144.88608750917018
+            },
+            {
+              "Latitude": -37.554989854435064,
+              "Longitude": 144.88606317870793
+            },
+            {
+              "Latitude": -37.554878652844195,
+              "Longitude": 144.88600080536315
+            },
+            {
+              "Latitude": -37.554678656463516,
+              "Longitude": 144.88600874689214
+            },
+            {
+              "Latitude": -37.55456043980608,
+              "Longitude": 144.8860280145513
+            },
+            {
+              "Latitude": -37.55453507096077,
+              "Longitude": 144.88604694559407
+            },
+            {
+              "Latitude": -37.55452452837436,
+              "Longitude": 144.8862702774101
+            },
+            {
+              "Latitude": -37.55455144990293,
+              "Longitude": 144.8868904382299
+            },
+            {
+              "Latitude": -37.55464894534531,
+              "Longitude": 144.8872285416603
+            },
+            {
+              "Latitude": -37.55508708742672,
+              "Longitude": 144.88728436597566
+            },
+            {
+              "Latitude": -37.555120458110984,
+              "Longitude": 144.88724035522299
+            },
+            {
+              "Latitude": -37.555142575372045,
+              "Longitude": 144.88675785630903
+            },
+            {
+              "Latitude": -37.55508637850294,
+              "Longitude": 144.88632969877182
+            },
+            {
+              "Latitude": -37.55500799299281,
+              "Longitude": 144.88608750917018
+            }
+          ]
+        ],
+        "RestorationTime": "2026-08-11T13:09:17",
+        "ImpactedCustomers": 6,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 6,
+            "eventId": "J.26.0143765",
+            "startTime": "2026-08-11T09:52:03",
+            "restoreTime": "2026-08-11T13:09:17",
+            "suburbs": [
+              {
+                "suburbName": "MICKLEHAM",
+                "postcode": 3064,
+                "streets": [
+                  "RICEFLOWER ROAD"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              144.8866425856694,
+              -37.5548335518732
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.5548335518732,
+          "Longitude": 144.8866425856694
+        }
+      }
+    ]
   }
 ]
