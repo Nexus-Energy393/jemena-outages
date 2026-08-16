@@ -14,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-16T00:52:25.284Z",
+    "LastUpdatedTime": "2026-08-16T02:17:32.479Z",
     "FeedReceivedTime": "2026-08-15T04:58:09.532Z",
     "History": [
       {
@@ -561,7 +561,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-16T00:52:25.284Z",
+    "LastUpdatedTime": "2026-08-16T02:17:32.479Z",
     "FeedReceivedTime": "2026-08-15T10:41:39.819Z",
     "History": [
       {
@@ -979,7 +979,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-16T00:52:25.284Z",
+    "LastUpdatedTime": "2026-08-16T02:17:32.479Z",
     "FeedReceivedTime": "2026-08-15T11:07:03.800Z",
     "History": [
       {
@@ -1827,7 +1827,7 @@
         }
       ]
     ],
-    "LastUpdatedTime": "2026-08-16T00:52:25.284Z",
+    "LastUpdatedTime": "2026-08-16T02:17:32.479Z",
     "FeedReceivedTime": "2026-08-15T22:50:55.621Z",
     "History": null
   },
@@ -2052,8 +2052,176 @@
         }
       ]
     ],
-    "LastUpdatedTime": "2026-08-16T00:52:25.284Z",
+    "LastUpdatedTime": "2026-08-16T02:17:32.479Z",
     "FeedReceivedTime": "2026-08-15T23:46:51.847Z",
+    "History": null
+  },
+  {
+    "EstimatedRestorationTime": "2026-08-16T15:34:35",
+    "DispatchedTime": null,
+    "EventId": "J.26.0146622",
+    "Type": "Unplanned",
+    "Status": "Acknowledged",
+    "Cause": "Under Investigation",
+    "StartTime": "2026-08-16T11:34:29",
+    "RestorationTime": null,
+    "ImpactedCustomers": 11,
+    "LocationGeoJson": {
+      "type": "Feature",
+      "properties": {
+        "eventId": "J.26.0146622",
+        "customerReference": "",
+        "customersOff": "11",
+        "status": "Acknowledged",
+        "type": "Unplanned",
+        "resolvedFlag": "false",
+        "showOutageFlag": "true",
+        "symptoms": [],
+        "cause": "Under Investigation",
+        "startTime": "2026-08-16T11:34:29",
+        "restoreTime": "",
+        "dispatchedTime": "",
+        "etr": "2026-08-16T15:34:35",
+        "plannedStartTime": "",
+        "plannedEndTime": "",
+        "lastUpdateTime": "2026-08-16T11:39:25"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          145.03920432440887,
+          -37.75475849104545
+        ]
+      }
+    },
+    "Location": {
+      "Latitude": -37.75475849104545,
+      "Longitude": 145.03920432440887
+    },
+    "ImpactedSuburbs": [
+      {
+        "SuburbName": "BELLFIELD",
+        "PostCode": 3081,
+        "Streets": [
+          "ORIEL RD",
+          "PERKINS AV"
+        ]
+      }
+    ],
+    "ImpactedAreaGeoJson": {
+      "type": "Feature",
+      "properties": {
+        "eventId": "J.26.0146622",
+        "customerReference": "",
+        "customersOff": "11",
+        "status": "Acknowledged",
+        "type": "Unplanned",
+        "resolvedFlag": "false",
+        "showOutageFlag": "true",
+        "symptoms": [],
+        "cause": "Under Investigation",
+        "startTime": "2026-08-16T11:34:29",
+        "restoreTime": "",
+        "dispatchedTime": "",
+        "etr": "2026-08-16T15:34:35",
+        "plannedStartTime": "",
+        "plannedEndTime": "",
+        "lastUpdateTime": "2026-08-16T11:39:25"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              145.03892066414167,
+              -37.75484198405357
+            ],
+            [
+              145.03893028107527,
+              -37.754789296092895
+            ],
+            [
+              145.03907742945606,
+              -37.75458359052557
+            ],
+            [
+              145.03946930030253,
+              -37.75460224764745
+            ],
+            [
+              145.03948798467607,
+              -37.75461425276203
+            ],
+            [
+              145.03941555985148,
+              -37.754896927937125
+            ],
+            [
+              145.03938910242667,
+              -37.754933391565324
+            ],
+            [
+              145.03899349338414,
+              -37.75489567814839
+            ],
+            [
+              145.0389411663005,
+              -37.75487290817143
+            ],
+            [
+              145.03892066414167,
+              -37.75484198405357
+            ]
+          ]
+        ]
+      }
+    },
+    "ImpactedArea": [
+      [
+        {
+          "Latitude": -37.75484198405357,
+          "Longitude": 145.03892066414167
+        },
+        {
+          "Latitude": -37.754789296092895,
+          "Longitude": 145.03893028107527
+        },
+        {
+          "Latitude": -37.75458359052557,
+          "Longitude": 145.03907742945606
+        },
+        {
+          "Latitude": -37.75460224764745,
+          "Longitude": 145.03946930030253
+        },
+        {
+          "Latitude": -37.75461425276203,
+          "Longitude": 145.03948798467607
+        },
+        {
+          "Latitude": -37.754896927937125,
+          "Longitude": 145.03941555985148
+        },
+        {
+          "Latitude": -37.754933391565324,
+          "Longitude": 145.03938910242667
+        },
+        {
+          "Latitude": -37.75489567814839,
+          "Longitude": 145.03899349338414
+        },
+        {
+          "Latitude": -37.75487290817143,
+          "Longitude": 145.0389411663005
+        },
+        {
+          "Latitude": -37.75484198405357,
+          "Longitude": 145.03892066414167
+        }
+      ]
+    ],
+    "LastUpdatedTime": "2026-08-16T02:17:32.479Z",
+    "FeedReceivedTime": "2026-08-16T01:42:06.359Z",
     "History": null
   }
 ]
