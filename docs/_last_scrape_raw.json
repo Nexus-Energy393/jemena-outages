@@ -1,423 +1,5 @@
 [
   {
-    "PlannedStartTime": "2026-08-15T08:00:00",
-    "PlannedEndTime": "2026-08-15T17:30:00",
-    "EventId": "J.26.0144777",
-    "Type": "Planned",
-    "Status": "Complete",
-    "Cause": "Essential Maintenance",
-    "StartTime": "2026-08-15T08:05:34",
-    "RestorationTime": "2026-08-15T16:58:38",
-    "ImpactedCustomers": 47,
-    "LocationGeoJson": null,
-    "Location": null,
-    "ImpactedSuburbs": [],
-    "ImpactedAreaGeoJson": null,
-    "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-16T06:25:44.378Z",
-    "FeedReceivedTime": "2026-08-15T10:41:39.819Z",
-    "History": [
-      {
-        "ImpactedSuburbs": [
-          {
-            "SuburbName": "WEST FOOTSCRAY",
-            "PostCode": 3012,
-            "Streets": [
-              "CALA ST",
-              "INDWE ST",
-              "INDWE STREET",
-              "ROBERTS ST",
-              "ROBERTS STREET"
-            ]
-          }
-        ],
-        "ImpactedAreaGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 44,
-            "eventId": "J.26.0144777",
-            "startTime": "2026-08-15T08:05:34",
-            "restoreTime": "2026-08-15T16:58:38",
-            "suburbs": [
-              {
-                "suburbName": "WEST FOOTSCRAY",
-                "postcode": 3012,
-                "streets": [
-                  "CALA ST",
-                  "INDWE ST",
-                  "INDWE STREET",
-                  "ROBERTS ST",
-                  "ROBERTS STREET"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-              [
-                [
-                  144.8666864902614,
-                  -37.80397349224712
-                ],
-                [
-                  144.86659648839233,
-                  -37.803935585571416
-                ],
-                [
-                  144.86606735851973,
-                  -37.803566957692794
-                ],
-                [
-                  144.86600144396337,
-                  -37.803485090150026
-                ],
-                [
-                  144.8660010262002,
-                  -37.80338806150041
-                ],
-                [
-                  144.86616941013986,
-                  -37.802937403576564
-                ],
-                [
-                  144.86627425367004,
-                  -37.80286101028157
-                ],
-                [
-                  144.8678198737054,
-                  -37.802324269163215
-                ],
-                [
-                  144.86790123423415,
-                  -37.80232133416834
-                ],
-                [
-                  144.86839391205405,
-                  -37.802377528871205
-                ],
-                [
-                  144.87187147357298,
-                  -37.80313139945393
-                ],
-                [
-                  144.871984398053,
-                  -37.80318956996573
-                ],
-                [
-                  144.8720335332857,
-                  -37.80328875416474
-                ],
-                [
-                  144.87188146089989,
-                  -37.804146039512915
-                ],
-                [
-                  144.87185129836712,
-                  -37.804212123093166
-                ],
-                [
-                  144.87179061143274,
-                  -37.80426346356791
-                ],
-                [
-                  144.8709640338498,
-                  -37.8047267224575
-                ],
-                [
-                  144.87088688894733,
-                  -37.80475425211456
-                ],
-                [
-                  144.87057873633512,
-                  -37.80472879666787
-                ],
-                [
-                  144.8666864902614,
-                  -37.80397349224712
-                ]
-              ]
-            ]
-          }
-        },
-        "ImpactedArea": [
-          [
-            {
-              "Latitude": -37.80397349224712,
-              "Longitude": 144.8666864902614
-            },
-            {
-              "Latitude": -37.803935585571416,
-              "Longitude": 144.86659648839233
-            },
-            {
-              "Latitude": -37.803566957692794,
-              "Longitude": 144.86606735851973
-            },
-            {
-              "Latitude": -37.803485090150026,
-              "Longitude": 144.86600144396337
-            },
-            {
-              "Latitude": -37.80338806150041,
-              "Longitude": 144.8660010262002
-            },
-            {
-              "Latitude": -37.802937403576564,
-              "Longitude": 144.86616941013986
-            },
-            {
-              "Latitude": -37.80286101028157,
-              "Longitude": 144.86627425367004
-            },
-            {
-              "Latitude": -37.802324269163215,
-              "Longitude": 144.8678198737054
-            },
-            {
-              "Latitude": -37.80232133416834,
-              "Longitude": 144.86790123423415
-            },
-            {
-              "Latitude": -37.802377528871205,
-              "Longitude": 144.86839391205405
-            },
-            {
-              "Latitude": -37.80313139945393,
-              "Longitude": 144.87187147357298
-            },
-            {
-              "Latitude": -37.80318956996573,
-              "Longitude": 144.871984398053
-            },
-            {
-              "Latitude": -37.80328875416474,
-              "Longitude": 144.8720335332857
-            },
-            {
-              "Latitude": -37.804146039512915,
-              "Longitude": 144.87188146089989
-            },
-            {
-              "Latitude": -37.804212123093166,
-              "Longitude": 144.87185129836712
-            },
-            {
-              "Latitude": -37.80426346356791,
-              "Longitude": 144.87179061143274
-            },
-            {
-              "Latitude": -37.8047267224575,
-              "Longitude": 144.8709640338498
-            },
-            {
-              "Latitude": -37.80475425211456,
-              "Longitude": 144.87088688894733
-            },
-            {
-              "Latitude": -37.80472879666787,
-              "Longitude": 144.87057873633512
-            },
-            {
-              "Latitude": -37.80397349224712,
-              "Longitude": 144.8666864902614
-            }
-          ]
-        ],
-        "RestorationTime": "2026-08-15T16:58:38",
-        "ImpactedCustomers": 44,
-        "LocationGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 44,
-            "eventId": "J.26.0144777",
-            "startTime": "2026-08-15T08:05:34",
-            "restoreTime": "2026-08-15T16:58:38",
-            "suburbs": [
-              {
-                "suburbName": "WEST FOOTSCRAY",
-                "postcode": 3012,
-                "streets": [
-                  "CALA ST",
-                  "INDWE ST",
-                  "INDWE STREET",
-                  "ROBERTS ST",
-                  "ROBERTS STREET"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [
-              144.86901727974293,
-              -37.80353779314145
-            ]
-          }
-        },
-        "Location": {
-          "Latitude": -37.80353779314145,
-          "Longitude": 144.86901727974293
-        }
-      },
-      {
-        "ImpactedSuburbs": [
-          {
-            "SuburbName": "WEST FOOTSCRAY",
-            "PostCode": 3012,
-            "Streets": [
-              "ROBERTS STREET"
-            ]
-          }
-        ],
-        "ImpactedAreaGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 2,
-            "eventId": "J.26.0144777",
-            "startTime": "2026-08-15T08:05:34",
-            "restoreTime": "2026-08-15T16:57:30",
-            "suburbs": [
-              {
-                "suburbName": "WEST FOOTSCRAY",
-                "postcode": 3012,
-                "streets": [
-                  "ROBERTS STREET"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-              [
-                [
-                  144.87060592326648,
-                  -37.803440665776506
-                ],
-                [
-                  144.87057853383055,
-                  -37.80341934622464
-                ],
-                [
-                  144.87047600904378,
-                  -37.803146245246836
-                ],
-                [
-                  144.87050457308789,
-                  -37.802664698854386
-                ],
-                [
-                  144.87054291229944,
-                  -37.80264662405584
-                ],
-                [
-                  144.8711421173223,
-                  -37.802681438158714
-                ],
-                [
-                  144.87117510379318,
-                  -37.80315868208477
-                ],
-                [
-                  144.87094891960257,
-                  -37.8034916079829
-                ],
-                [
-                  144.8709030568151,
-                  -37.803506885110316
-                ],
-                [
-                  144.87060592326648,
-                  -37.803440665776506
-                ]
-              ]
-            ]
-          }
-        },
-        "ImpactedArea": [
-          [
-            {
-              "Latitude": -37.803440665776506,
-              "Longitude": 144.87060592326648
-            },
-            {
-              "Latitude": -37.80341934622464,
-              "Longitude": 144.87057853383055
-            },
-            {
-              "Latitude": -37.803146245246836,
-              "Longitude": 144.87047600904378
-            },
-            {
-              "Latitude": -37.802664698854386,
-              "Longitude": 144.87050457308789
-            },
-            {
-              "Latitude": -37.80264662405584,
-              "Longitude": 144.87054291229944
-            },
-            {
-              "Latitude": -37.802681438158714,
-              "Longitude": 144.8711421173223
-            },
-            {
-              "Latitude": -37.80315868208477,
-              "Longitude": 144.87117510379318
-            },
-            {
-              "Latitude": -37.8034916079829,
-              "Longitude": 144.87094891960257
-            },
-            {
-              "Latitude": -37.803506885110316,
-              "Longitude": 144.8709030568151
-            },
-            {
-              "Latitude": -37.803440665776506,
-              "Longitude": 144.87060592326648
-            }
-          ]
-        ],
-        "RestorationTime": "2026-08-15T16:57:30",
-        "ImpactedCustomers": 2,
-        "LocationGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 2,
-            "eventId": "J.26.0144777",
-            "startTime": "2026-08-15T08:05:34",
-            "restoreTime": "2026-08-15T16:57:30",
-            "suburbs": [
-              {
-                "suburbName": "WEST FOOTSCRAY",
-                "postcode": 3012,
-                "streets": [
-                  "ROBERTS STREET"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [
-              144.87082555641848,
-              -37.803076754583074
-            ]
-          }
-        },
-        "Location": {
-          "Latitude": -37.803076754583074,
-          "Longitude": 144.87082555641848
-        }
-      }
-    ]
-  },
-  {
     "PlannedStartTime": "2026-08-15T07:30:00",
     "PlannedEndTime": "2026-08-15T22:30:00",
     "EventId": "J.26.0144838",
@@ -432,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-16T06:25:44.378Z",
+    "LastUpdatedTime": "2026-08-16T07:22:32.412Z",
     "FeedReceivedTime": "2026-08-15T11:07:03.800Z",
     "History": [
       {
@@ -1322,230 +904,9 @@
         }
       ]
     ],
-    "LastUpdatedTime": "2026-08-16T06:25:44.378Z",
+    "LastUpdatedTime": "2026-08-16T07:22:32.412Z",
     "FeedReceivedTime": "2026-08-15T23:46:51.847Z",
     "History": null
-  },
-  {
-    "PlannedStartTime": "2026-08-16T07:30:00",
-    "PlannedEndTime": "2026-08-16T17:30:00",
-    "EventId": "J.26.0145381",
-    "Type": "Planned",
-    "Status": "Planned Outage Execution",
-    "Cause": "Essential Maintenance",
-    "StartTime": "2026-08-16T08:46:48",
-    "RestorationTime": "2026-08-16T14:31:59",
-    "ImpactedCustomers": 37,
-    "LocationGeoJson": null,
-    "Location": null,
-    "ImpactedSuburbs": [],
-    "ImpactedAreaGeoJson": null,
-    "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-16T06:25:44.378Z",
-    "FeedReceivedTime": "2026-08-16T04:36:36.446Z",
-    "History": [
-      {
-        "ImpactedSuburbs": [
-          {
-            "SuburbName": "PRESTON",
-            "PostCode": 3072,
-            "Streets": [
-              "MILTON CR"
-            ]
-          }
-        ],
-        "ImpactedAreaGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 35,
-            "eventId": "J.26.0145381",
-            "startTime": "2026-08-16T08:46:48",
-            "restoreTime": "2026-08-16T14:31:59",
-            "suburbs": [
-              {
-                "suburbName": "PRESTON",
-                "postcode": 3072,
-                "streets": [
-                  "MILTON CR"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-              [
-                [
-                  145.00413291583885,
-                  -37.75081006448945
-                ],
-                [
-                  145.00398127278905,
-                  -37.750790124344405
-                ],
-                [
-                  145.00394585544257,
-                  -37.750770143292065
-                ],
-                [
-                  145.00392913209285,
-                  -37.750738384604105
-                ],
-                [
-                  145.00396594366313,
-                  -37.750303254295645
-                ],
-                [
-                  145.0040158469944,
-                  -37.7500292541837
-                ],
-                [
-                  145.00446447948582,
-                  -37.74948828872918
-                ],
-                [
-                  145.004520068958,
-                  -37.74947720353706
-                ],
-                [
-                  145.0047333577262,
-                  -37.749498233633005
-                ],
-                [
-                  145.00602523836022,
-                  -37.74965451065614
-                ],
-                [
-                  145.00608485129683,
-                  -37.74968963562068
-                ],
-                [
-                  145.0060805744843,
-                  -37.7497855019225
-                ],
-                [
-                  145.00605112767016,
-                  -37.74982572716354
-                ],
-                [
-                  145.00511625873835,
-                  -37.75040623579072
-                ],
-                [
-                  145.00433594889788,
-                  -37.750825364734126
-                ],
-                [
-                  145.00413291583885,
-                  -37.75081006448945
-                ]
-              ]
-            ]
-          }
-        },
-        "ImpactedArea": [
-          [
-            {
-              "Latitude": -37.75081006448945,
-              "Longitude": 145.00413291583885
-            },
-            {
-              "Latitude": -37.750790124344405,
-              "Longitude": 145.00398127278905
-            },
-            {
-              "Latitude": -37.750770143292065,
-              "Longitude": 145.00394585544257
-            },
-            {
-              "Latitude": -37.750738384604105,
-              "Longitude": 145.00392913209285
-            },
-            {
-              "Latitude": -37.750303254295645,
-              "Longitude": 145.00396594366313
-            },
-            {
-              "Latitude": -37.7500292541837,
-              "Longitude": 145.0040158469944
-            },
-            {
-              "Latitude": -37.74948828872918,
-              "Longitude": 145.00446447948582
-            },
-            {
-              "Latitude": -37.74947720353706,
-              "Longitude": 145.004520068958
-            },
-            {
-              "Latitude": -37.749498233633005,
-              "Longitude": 145.0047333577262
-            },
-            {
-              "Latitude": -37.74965451065614,
-              "Longitude": 145.00602523836022
-            },
-            {
-              "Latitude": -37.74968963562068,
-              "Longitude": 145.00608485129683
-            },
-            {
-              "Latitude": -37.7497855019225,
-              "Longitude": 145.0060805744843
-            },
-            {
-              "Latitude": -37.74982572716354,
-              "Longitude": 145.00605112767016
-            },
-            {
-              "Latitude": -37.75040623579072,
-              "Longitude": 145.00511625873835
-            },
-            {
-              "Latitude": -37.750825364734126,
-              "Longitude": 145.00433594889788
-            },
-            {
-              "Latitude": -37.75081006448945,
-              "Longitude": 145.00413291583885
-            }
-          ]
-        ],
-        "RestorationTime": "2026-08-16T14:31:59",
-        "ImpactedCustomers": 35,
-        "LocationGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 35,
-            "eventId": "J.26.0145381",
-            "startTime": "2026-08-16T08:46:48",
-            "restoreTime": "2026-08-16T14:31:59",
-            "suburbs": [
-              {
-                "suburbName": "PRESTON",
-                "postcode": 3072,
-                "streets": [
-                  "MILTON CR"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [
-              145.00500699169484,
-              -37.7501512841356
-            ]
-          }
-        },
-        "Location": {
-          "Latitude": -37.7501512841356,
-          "Longitude": 145.00500699169484
-        }
-      }
-    ]
   },
   {
     "EstimatedRestorationTime": "2026-08-16T19:34:00",
@@ -1711,8 +1072,229 @@
         }
       ]
     ],
-    "LastUpdatedTime": "2026-08-16T06:25:44.378Z",
+    "LastUpdatedTime": "2026-08-16T07:22:32.412Z",
     "FeedReceivedTime": "2026-08-16T06:11:34.904Z",
     "History": null
+  },
+  {
+    "PlannedStartTime": "2026-08-16T07:30:00",
+    "PlannedEndTime": "2026-08-16T17:30:00",
+    "EventId": "J.26.0145381",
+    "Type": "Planned",
+    "Status": "Complete",
+    "Cause": "Essential Maintenance",
+    "StartTime": "2026-08-16T09:04:06",
+    "RestorationTime": "2026-08-16T14:29:59",
+    "ImpactedCustomers": 37,
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-08-16T07:22:32.412Z",
+    "FeedReceivedTime": "2026-08-16T06:33:25.779Z",
+    "History": [
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "PRESTON",
+            "PostCode": 3072,
+            "Streets": [
+              "MILTON CR"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 35,
+            "eventId": "J.26.0145381",
+            "startTime": "2026-08-16T09:04:06",
+            "restoreTime": "2026-08-16T14:29:59",
+            "suburbs": [
+              {
+                "suburbName": "PRESTON",
+                "postcode": 3072,
+                "streets": [
+                  "MILTON CR"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  145.00413291583885,
+                  -37.75081006448945
+                ],
+                [
+                  145.00398127278905,
+                  -37.750790124344405
+                ],
+                [
+                  145.00394585544257,
+                  -37.750770143292065
+                ],
+                [
+                  145.00392913209285,
+                  -37.750738384604105
+                ],
+                [
+                  145.00396594366313,
+                  -37.750303254295645
+                ],
+                [
+                  145.0040158469944,
+                  -37.7500292541837
+                ],
+                [
+                  145.00446447948582,
+                  -37.74948828872918
+                ],
+                [
+                  145.004520068958,
+                  -37.74947720353706
+                ],
+                [
+                  145.0047333577262,
+                  -37.749498233633005
+                ],
+                [
+                  145.00602523836022,
+                  -37.74965451065614
+                ],
+                [
+                  145.00608485129683,
+                  -37.74968963562068
+                ],
+                [
+                  145.0060805744843,
+                  -37.7497855019225
+                ],
+                [
+                  145.00605112767016,
+                  -37.74982572716354
+                ],
+                [
+                  145.00511625873835,
+                  -37.75040623579072
+                ],
+                [
+                  145.00433594889788,
+                  -37.750825364734126
+                ],
+                [
+                  145.00413291583885,
+                  -37.75081006448945
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.75081006448945,
+              "Longitude": 145.00413291583885
+            },
+            {
+              "Latitude": -37.750790124344405,
+              "Longitude": 145.00398127278905
+            },
+            {
+              "Latitude": -37.750770143292065,
+              "Longitude": 145.00394585544257
+            },
+            {
+              "Latitude": -37.750738384604105,
+              "Longitude": 145.00392913209285
+            },
+            {
+              "Latitude": -37.750303254295645,
+              "Longitude": 145.00396594366313
+            },
+            {
+              "Latitude": -37.7500292541837,
+              "Longitude": 145.0040158469944
+            },
+            {
+              "Latitude": -37.74948828872918,
+              "Longitude": 145.00446447948582
+            },
+            {
+              "Latitude": -37.74947720353706,
+              "Longitude": 145.004520068958
+            },
+            {
+              "Latitude": -37.749498233633005,
+              "Longitude": 145.0047333577262
+            },
+            {
+              "Latitude": -37.74965451065614,
+              "Longitude": 145.00602523836022
+            },
+            {
+              "Latitude": -37.74968963562068,
+              "Longitude": 145.00608485129683
+            },
+            {
+              "Latitude": -37.7497855019225,
+              "Longitude": 145.0060805744843
+            },
+            {
+              "Latitude": -37.74982572716354,
+              "Longitude": 145.00605112767016
+            },
+            {
+              "Latitude": -37.75040623579072,
+              "Longitude": 145.00511625873835
+            },
+            {
+              "Latitude": -37.750825364734126,
+              "Longitude": 145.00433594889788
+            },
+            {
+              "Latitude": -37.75081006448945,
+              "Longitude": 145.00413291583885
+            }
+          ]
+        ],
+        "RestorationTime": "2026-08-16T14:29:59",
+        "ImpactedCustomers": 35,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 35,
+            "eventId": "J.26.0145381",
+            "startTime": "2026-08-16T09:04:06",
+            "restoreTime": "2026-08-16T14:29:59",
+            "suburbs": [
+              {
+                "suburbName": "PRESTON",
+                "postcode": 3072,
+                "streets": [
+                  "MILTON CR"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              145.00500699169484,
+              -37.7501512841356
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.7501512841356,
+          "Longitude": 145.00500699169484
+        }
+      }
+    ]
   }
 ]
