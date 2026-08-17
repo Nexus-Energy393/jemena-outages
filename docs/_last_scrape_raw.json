@@ -14,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-17T21:16:56.505Z",
+    "LastUpdatedTime": "2026-08-17T22:17:06.847Z",
     "FeedReceivedTime": "2026-08-17T02:58:14.609Z",
     "History": [
       {
@@ -239,7 +239,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-17T21:16:56.505Z",
+    "LastUpdatedTime": "2026-08-17T22:17:06.847Z",
     "FeedReceivedTime": "2026-08-17T07:32:57.822Z",
     "History": [
       {
@@ -994,7 +994,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-17T21:16:56.505Z",
+    "LastUpdatedTime": "2026-08-17T22:17:06.847Z",
     "FeedReceivedTime": "2026-08-17T14:51:48.654Z",
     "History": [
       {
@@ -4858,7 +4858,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-17T21:16:56.505Z",
+    "LastUpdatedTime": "2026-08-17T22:17:06.847Z",
     "FeedReceivedTime": "2026-08-17T20:25:40.899Z",
     "History": [
       {
@@ -5047,5 +5047,188 @@
         }
       }
     ]
+  },
+  {
+    "PlannedStartTime": "2026-08-18T07:30:00",
+    "PlannedEndTime": "2026-08-18T15:00:00",
+    "EventId": "J.26.0145396",
+    "Type": "Planned",
+    "Status": "Planned Outage Execution",
+    "Cause": "Essential Maintenance",
+    "StartTime": "2026-08-18T07:59:36",
+    "RestorationTime": null,
+    "ImpactedCustomers": 3,
+    "LocationGeoJson": {
+      "type": "Feature",
+      "properties": {
+        "eventId": "J.26.0145396",
+        "customerReference": " J5223617",
+        "customersOff": "3",
+        "status": "Planned Outage Execution",
+        "type": "Planned",
+        "resolvedFlag": "false",
+        "showOutageFlag": "false",
+        "symptoms": [],
+        "cause": "Essential Maintenance",
+        "startTime": "2026-08-18T07:59:36",
+        "restoreTime": "",
+        "dispatchedTime": "",
+        "etr": "2026-08-18T15:00:00",
+        "plannedStartTime": "2026-08-18T07:30:00",
+        "plannedEndTime": "2026-08-18T15:00:00",
+        "lastUpdateTime": "2026-08-18T07:59:42"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          145.06637903860272,
+          -37.76990234632213
+        ]
+      }
+    },
+    "Location": {
+      "Latitude": -37.76990234632213,
+      "Longitude": 145.06637903860272
+    },
+    "ImpactedSuburbs": [
+      {
+        "SuburbName": "IVANHOE EAST",
+        "PostCode": 3079,
+        "Streets": [
+          "KEAM ST"
+        ]
+      }
+    ],
+    "ImpactedAreaGeoJson": {
+      "type": "Feature",
+      "properties": {
+        "eventId": "J.26.0145396",
+        "customerReference": " J5223617",
+        "customersOff": "3",
+        "status": "Planned Outage Execution",
+        "type": "Planned",
+        "resolvedFlag": "false",
+        "showOutageFlag": "false",
+        "symptoms": [],
+        "cause": "Essential Maintenance",
+        "startTime": "2026-08-18T07:59:36",
+        "restoreTime": "",
+        "dispatchedTime": "",
+        "etr": "2026-08-18T15:00:00",
+        "plannedStartTime": "2026-08-18T07:30:00",
+        "plannedEndTime": "2026-08-18T15:00:00",
+        "lastUpdateTime": "2026-08-18T07:59:42"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              145.0662291410697,
+              -37.77010763232262
+            ],
+            [
+              145.0657530457186,
+              -37.76953793590571
+            ],
+            [
+              145.065761244074,
+              -37.769497309202166
+            ],
+            [
+              145.06592079838316,
+              -37.76934945820655
+            ],
+            [
+              145.06597099067235,
+              -37.76935093381713
+            ],
+            [
+              145.066679870401,
+              -37.769693594857436
+            ],
+            [
+              145.06700503148684,
+              -37.77005199628348
+            ],
+            [
+              145.06699344449305,
+              -37.77008055750238
+            ],
+            [
+              145.0666188234353,
+              -37.77044052927997
+            ],
+            [
+              145.06658294387256,
+              -37.770455234437705
+            ],
+            [
+              145.0665377482731,
+              -37.77043881352471
+            ],
+            [
+              145.0662291410697,
+              -37.77010763232262
+            ]
+          ]
+        ]
+      }
+    },
+    "ImpactedArea": [
+      [
+        {
+          "Latitude": -37.77010763232262,
+          "Longitude": 145.0662291410697
+        },
+        {
+          "Latitude": -37.76953793590571,
+          "Longitude": 145.0657530457186
+        },
+        {
+          "Latitude": -37.769497309202166,
+          "Longitude": 145.065761244074
+        },
+        {
+          "Latitude": -37.76934945820655,
+          "Longitude": 145.06592079838316
+        },
+        {
+          "Latitude": -37.76935093381713,
+          "Longitude": 145.06597099067235
+        },
+        {
+          "Latitude": -37.769693594857436,
+          "Longitude": 145.066679870401
+        },
+        {
+          "Latitude": -37.77005199628348,
+          "Longitude": 145.06700503148684
+        },
+        {
+          "Latitude": -37.77008055750238,
+          "Longitude": 145.06699344449305
+        },
+        {
+          "Latitude": -37.77044052927997,
+          "Longitude": 145.0666188234353
+        },
+        {
+          "Latitude": -37.770455234437705,
+          "Longitude": 145.06658294387256
+        },
+        {
+          "Latitude": -37.77043881352471,
+          "Longitude": 145.0665377482731
+        },
+        {
+          "Latitude": -37.77010763232262,
+          "Longitude": 145.0662291410697
+        }
+      ]
+    ],
+    "LastUpdatedTime": "2026-08-17T22:17:06.847Z",
+    "FeedReceivedTime": "2026-08-17T22:02:22.763Z",
+    "History": null
   }
 ]
