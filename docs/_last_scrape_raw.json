@@ -14,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-16T23:06:49.984Z",
+    "LastUpdatedTime": "2026-08-17T00:49:25.444Z",
     "FeedReceivedTime": "2026-08-16T06:33:25.779Z",
     "History": [
       {
@@ -235,7 +235,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-16T23:06:49.984Z",
+    "LastUpdatedTime": "2026-08-17T00:49:25.444Z",
     "FeedReceivedTime": "2026-08-16T08:19:23.204Z",
     "History": [
       {
@@ -411,7 +411,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-16T23:06:49.984Z",
+    "LastUpdatedTime": "2026-08-17T00:49:25.444Z",
     "FeedReceivedTime": "2026-08-16T10:22:07.655Z",
     "History": [
       {
@@ -1354,17 +1354,314 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-16T23:06:49.984Z",
+    "LastUpdatedTime": "2026-08-17T00:49:25.444Z",
     "FeedReceivedTime": "2026-08-16T11:18:00.868Z",
     "History": []
+  },
+  {
+    "PlannedStartTime": "2026-08-17T07:45:00",
+    "PlannedEndTime": "2026-08-17T17:30:00",
+    "EventId": "J.26.0145353",
+    "Type": "Planned",
+    "Status": "Planned Outage Execution",
+    "Cause": "Essential Maintenance",
+    "StartTime": "2026-08-17T08:27:38",
+    "RestorationTime": null,
+    "ImpactedCustomers": 238,
+    "LocationGeoJson": {
+      "type": "Feature",
+      "properties": {
+        "eventId": "J.26.0145353",
+        "customerReference": "J5210742",
+        "customersOff": "238",
+        "status": "Planned Outage Execution",
+        "type": "Planned",
+        "resolvedFlag": "false",
+        "showOutageFlag": "true",
+        "symptoms": [],
+        "cause": "Essential Maintenance",
+        "startTime": "2026-08-17T08:27:38",
+        "restoreTime": "",
+        "dispatchedTime": "",
+        "etr": "2026-08-17T17:30:00",
+        "plannedStartTime": "2026-08-17T07:45:00",
+        "plannedEndTime": "2026-08-17T17:30:00",
+        "lastUpdateTime": "2026-08-17T08:29:29"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          144.87807312003855,
+          -37.725904367139094
+        ]
+      }
+    },
+    "Location": {
+      "Latitude": -37.725904367139094,
+      "Longitude": 144.87807312003855
+    },
+    "ImpactedSuburbs": [
+      {
+        "SuburbName": "AIRPORT WEST",
+        "PostCode": 3042,
+        "Streets": [
+          "CHANCELLOR RD",
+          "CLYDESDALE RD",
+          "IAN CR",
+          "KITSON CR",
+          "LOCK ST",
+          "MIRIAM CT",
+          "OLIVE GR",
+          "PARKVIEW ST",
+          "ROBERTS RD",
+          "ROBERTS ROAD",
+          "TREVALYAN CT"
+        ]
+      }
+    ],
+    "ImpactedAreaGeoJson": {
+      "type": "Feature",
+      "properties": {
+        "eventId": "J.26.0145353",
+        "customerReference": "J5210742",
+        "customersOff": "238",
+        "status": "Planned Outage Execution",
+        "type": "Planned",
+        "resolvedFlag": "false",
+        "showOutageFlag": "true",
+        "symptoms": [],
+        "cause": "Essential Maintenance",
+        "startTime": "2026-08-17T08:27:38",
+        "restoreTime": "",
+        "dispatchedTime": "",
+        "etr": "2026-08-17T17:30:00",
+        "plannedStartTime": "2026-08-17T07:45:00",
+        "plannedEndTime": "2026-08-17T17:30:00",
+        "lastUpdateTime": "2026-08-17T08:29:29"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              144.87962288948444,
+              -37.72918825713402
+            ],
+            [
+              144.87479806080063,
+              -37.72701168480852
+            ],
+            [
+              144.87470280170405,
+              -37.72694630565215
+            ],
+            [
+              144.87466902543835,
+              -37.72690390128395
+            ],
+            [
+              144.87463559270856,
+              -37.72680771441427
+            ],
+            [
+              144.87463721563796,
+              -37.726757612752685
+            ],
+            [
+              144.87517646930442,
+              -37.72338480237071
+            ],
+            [
+              144.87537847770636,
+              -37.72260905399122
+            ],
+            [
+              144.87542453737692,
+              -37.72252077453604
+            ],
+            [
+              144.87550826920946,
+              -37.72245196957451
+            ],
+            [
+              144.87561803980216,
+              -37.7224121986867
+            ],
+            [
+              144.87573859802075,
+              -37.7224069875466
+            ],
+            [
+              144.88123031490534,
+              -37.72298916591766
+            ],
+            [
+              144.88135558077525,
+              -37.723024392915384
+            ],
+            [
+              144.8814087175299,
+              -37.72305645203531
+            ],
+            [
+              144.8814847855948,
+              -37.723142696248864
+            ],
+            [
+              144.88151064736851,
+              -37.72324584558166
+            ],
+            [
+              144.8814746733539,
+              -37.725853625528195
+            ],
+            [
+              144.88138635712622,
+              -37.72904751395501
+            ],
+            [
+              144.8813392512179,
+              -37.72913614091668
+            ],
+            [
+              144.88125415818126,
+              -37.72920479467632
+            ],
+            [
+              144.8807673509592,
+              -37.72938071899925
+            ],
+            [
+              144.88066469191378,
+              -37.72940174673159
+            ],
+            [
+              144.8801906066305,
+              -37.729373529650296
+            ],
+            [
+              144.87962288948444,
+              -37.72918825713402
+            ]
+          ]
+        ]
+      }
+    },
+    "ImpactedArea": [
+      [
+        {
+          "Latitude": -37.72918825713402,
+          "Longitude": 144.87962288948444
+        },
+        {
+          "Latitude": -37.72701168480852,
+          "Longitude": 144.87479806080063
+        },
+        {
+          "Latitude": -37.72694630565215,
+          "Longitude": 144.87470280170405
+        },
+        {
+          "Latitude": -37.72690390128395,
+          "Longitude": 144.87466902543835
+        },
+        {
+          "Latitude": -37.72680771441427,
+          "Longitude": 144.87463559270856
+        },
+        {
+          "Latitude": -37.726757612752685,
+          "Longitude": 144.87463721563796
+        },
+        {
+          "Latitude": -37.72338480237071,
+          "Longitude": 144.87517646930442
+        },
+        {
+          "Latitude": -37.72260905399122,
+          "Longitude": 144.87537847770636
+        },
+        {
+          "Latitude": -37.72252077453604,
+          "Longitude": 144.87542453737692
+        },
+        {
+          "Latitude": -37.72245196957451,
+          "Longitude": 144.87550826920946
+        },
+        {
+          "Latitude": -37.7224121986867,
+          "Longitude": 144.87561803980216
+        },
+        {
+          "Latitude": -37.7224069875466,
+          "Longitude": 144.87573859802075
+        },
+        {
+          "Latitude": -37.72298916591766,
+          "Longitude": 144.88123031490534
+        },
+        {
+          "Latitude": -37.723024392915384,
+          "Longitude": 144.88135558077525
+        },
+        {
+          "Latitude": -37.72305645203531,
+          "Longitude": 144.8814087175299
+        },
+        {
+          "Latitude": -37.723142696248864,
+          "Longitude": 144.8814847855948
+        },
+        {
+          "Latitude": -37.72324584558166,
+          "Longitude": 144.88151064736851
+        },
+        {
+          "Latitude": -37.725853625528195,
+          "Longitude": 144.8814746733539
+        },
+        {
+          "Latitude": -37.72904751395501,
+          "Longitude": 144.88138635712622
+        },
+        {
+          "Latitude": -37.72913614091668,
+          "Longitude": 144.8813392512179
+        },
+        {
+          "Latitude": -37.72920479467632,
+          "Longitude": 144.88125415818126
+        },
+        {
+          "Latitude": -37.72938071899925,
+          "Longitude": 144.8807673509592
+        },
+        {
+          "Latitude": -37.72940174673159,
+          "Longitude": 144.88066469191378
+        },
+        {
+          "Latitude": -37.729373529650296,
+          "Longitude": 144.8801906066305
+        },
+        {
+          "Latitude": -37.72918825713402,
+          "Longitude": 144.87962288948444
+        }
+      ]
+    ],
+    "LastUpdatedTime": "2026-08-17T00:49:25.444Z",
+    "FeedReceivedTime": "2026-08-16T22:30:10.415Z",
+    "History": null
   },
   {
     "EstimatedRestorationTime": "2026-08-17T01:49:05",
     "DispatchedTime": null,
     "EventId": "J.26.0146632",
     "Type": "Unplanned",
-    "Status": "Acknowledged",
-    "Cause": "Under Investigation",
+    "Status": "Completed",
+    "Cause": "Animal impact",
     "StartTime": "2026-08-16T21:48:58",
     "RestorationTime": "2026-08-16T22:27:23",
     "ImpactedCustomers": 0,
@@ -1373,8 +1670,8 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-16T23:06:49.984Z",
-    "FeedReceivedTime": "2026-08-16T12:35:06.782Z",
+    "LastUpdatedTime": "2026-08-17T00:49:25.444Z",
+    "FeedReceivedTime": "2026-08-16T23:38:40.436Z",
     "History": [
       {
         "ImpactedSuburbs": [
@@ -1920,302 +2217,5 @@
         }
       }
     ]
-  },
-  {
-    "PlannedStartTime": "2026-08-17T07:45:00",
-    "PlannedEndTime": "2026-08-17T17:30:00",
-    "EventId": "J.26.0145353",
-    "Type": "Planned",
-    "Status": "Planned Outage Execution",
-    "Cause": "Essential Maintenance",
-    "StartTime": "2026-08-17T08:27:38",
-    "RestorationTime": null,
-    "ImpactedCustomers": 238,
-    "LocationGeoJson": {
-      "type": "Feature",
-      "properties": {
-        "eventId": "J.26.0145353",
-        "customerReference": "J5210742",
-        "customersOff": "238",
-        "status": "Planned Outage Execution",
-        "type": "Planned",
-        "resolvedFlag": "false",
-        "showOutageFlag": "true",
-        "symptoms": [],
-        "cause": "Essential Maintenance",
-        "startTime": "2026-08-17T08:27:38",
-        "restoreTime": "",
-        "dispatchedTime": "",
-        "etr": "2026-08-17T17:30:00",
-        "plannedStartTime": "2026-08-17T07:45:00",
-        "plannedEndTime": "2026-08-17T17:30:00",
-        "lastUpdateTime": "2026-08-17T08:29:29"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          144.87807312003855,
-          -37.725904367139094
-        ]
-      }
-    },
-    "Location": {
-      "Latitude": -37.725904367139094,
-      "Longitude": 144.87807312003855
-    },
-    "ImpactedSuburbs": [
-      {
-        "SuburbName": "AIRPORT WEST",
-        "PostCode": 3042,
-        "Streets": [
-          "CHANCELLOR RD",
-          "CLYDESDALE RD",
-          "IAN CR",
-          "KITSON CR",
-          "LOCK ST",
-          "MIRIAM CT",
-          "OLIVE GR",
-          "PARKVIEW ST",
-          "ROBERTS RD",
-          "ROBERTS ROAD",
-          "TREVALYAN CT"
-        ]
-      }
-    ],
-    "ImpactedAreaGeoJson": {
-      "type": "Feature",
-      "properties": {
-        "eventId": "J.26.0145353",
-        "customerReference": "J5210742",
-        "customersOff": "238",
-        "status": "Planned Outage Execution",
-        "type": "Planned",
-        "resolvedFlag": "false",
-        "showOutageFlag": "true",
-        "symptoms": [],
-        "cause": "Essential Maintenance",
-        "startTime": "2026-08-17T08:27:38",
-        "restoreTime": "",
-        "dispatchedTime": "",
-        "etr": "2026-08-17T17:30:00",
-        "plannedStartTime": "2026-08-17T07:45:00",
-        "plannedEndTime": "2026-08-17T17:30:00",
-        "lastUpdateTime": "2026-08-17T08:29:29"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              144.87962288948444,
-              -37.72918825713402
-            ],
-            [
-              144.87479806080063,
-              -37.72701168480852
-            ],
-            [
-              144.87470280170405,
-              -37.72694630565215
-            ],
-            [
-              144.87466902543835,
-              -37.72690390128395
-            ],
-            [
-              144.87463559270856,
-              -37.72680771441427
-            ],
-            [
-              144.87463721563796,
-              -37.726757612752685
-            ],
-            [
-              144.87517646930442,
-              -37.72338480237071
-            ],
-            [
-              144.87537847770636,
-              -37.72260905399122
-            ],
-            [
-              144.87542453737692,
-              -37.72252077453604
-            ],
-            [
-              144.87550826920946,
-              -37.72245196957451
-            ],
-            [
-              144.87561803980216,
-              -37.7224121986867
-            ],
-            [
-              144.87573859802075,
-              -37.7224069875466
-            ],
-            [
-              144.88123031490534,
-              -37.72298916591766
-            ],
-            [
-              144.88135558077525,
-              -37.723024392915384
-            ],
-            [
-              144.8814087175299,
-              -37.72305645203531
-            ],
-            [
-              144.8814847855948,
-              -37.723142696248864
-            ],
-            [
-              144.88151064736851,
-              -37.72324584558166
-            ],
-            [
-              144.8814746733539,
-              -37.725853625528195
-            ],
-            [
-              144.88138635712622,
-              -37.72904751395501
-            ],
-            [
-              144.8813392512179,
-              -37.72913614091668
-            ],
-            [
-              144.88125415818126,
-              -37.72920479467632
-            ],
-            [
-              144.8807673509592,
-              -37.72938071899925
-            ],
-            [
-              144.88066469191378,
-              -37.72940174673159
-            ],
-            [
-              144.8801906066305,
-              -37.729373529650296
-            ],
-            [
-              144.87962288948444,
-              -37.72918825713402
-            ]
-          ]
-        ]
-      }
-    },
-    "ImpactedArea": [
-      [
-        {
-          "Latitude": -37.72918825713402,
-          "Longitude": 144.87962288948444
-        },
-        {
-          "Latitude": -37.72701168480852,
-          "Longitude": 144.87479806080063
-        },
-        {
-          "Latitude": -37.72694630565215,
-          "Longitude": 144.87470280170405
-        },
-        {
-          "Latitude": -37.72690390128395,
-          "Longitude": 144.87466902543835
-        },
-        {
-          "Latitude": -37.72680771441427,
-          "Longitude": 144.87463559270856
-        },
-        {
-          "Latitude": -37.726757612752685,
-          "Longitude": 144.87463721563796
-        },
-        {
-          "Latitude": -37.72338480237071,
-          "Longitude": 144.87517646930442
-        },
-        {
-          "Latitude": -37.72260905399122,
-          "Longitude": 144.87537847770636
-        },
-        {
-          "Latitude": -37.72252077453604,
-          "Longitude": 144.87542453737692
-        },
-        {
-          "Latitude": -37.72245196957451,
-          "Longitude": 144.87550826920946
-        },
-        {
-          "Latitude": -37.7224121986867,
-          "Longitude": 144.87561803980216
-        },
-        {
-          "Latitude": -37.7224069875466,
-          "Longitude": 144.87573859802075
-        },
-        {
-          "Latitude": -37.72298916591766,
-          "Longitude": 144.88123031490534
-        },
-        {
-          "Latitude": -37.723024392915384,
-          "Longitude": 144.88135558077525
-        },
-        {
-          "Latitude": -37.72305645203531,
-          "Longitude": 144.8814087175299
-        },
-        {
-          "Latitude": -37.723142696248864,
-          "Longitude": 144.8814847855948
-        },
-        {
-          "Latitude": -37.72324584558166,
-          "Longitude": 144.88151064736851
-        },
-        {
-          "Latitude": -37.725853625528195,
-          "Longitude": 144.8814746733539
-        },
-        {
-          "Latitude": -37.72904751395501,
-          "Longitude": 144.88138635712622
-        },
-        {
-          "Latitude": -37.72913614091668,
-          "Longitude": 144.8813392512179
-        },
-        {
-          "Latitude": -37.72920479467632,
-          "Longitude": 144.88125415818126
-        },
-        {
-          "Latitude": -37.72938071899925,
-          "Longitude": 144.8807673509592
-        },
-        {
-          "Latitude": -37.72940174673159,
-          "Longitude": 144.88066469191378
-        },
-        {
-          "Latitude": -37.729373529650296,
-          "Longitude": 144.8801906066305
-        },
-        {
-          "Latitude": -37.72918825713402,
-          "Longitude": 144.87962288948444
-        }
-      ]
-    ],
-    "LastUpdatedTime": "2026-08-16T23:06:49.984Z",
-    "FeedReceivedTime": "2026-08-16T22:30:10.415Z",
-    "History": null
   }
 ]
