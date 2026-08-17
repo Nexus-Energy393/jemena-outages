@@ -14,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-17T02:14:15.049Z",
+    "LastUpdatedTime": "2026-08-17T03:42:53.908Z",
     "FeedReceivedTime": "2026-08-16T06:33:25.779Z",
     "History": [
       {
@@ -235,7 +235,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-17T02:14:15.049Z",
+    "LastUpdatedTime": "2026-08-17T03:42:53.908Z",
     "FeedReceivedTime": "2026-08-16T08:19:23.204Z",
     "History": [
       {
@@ -411,7 +411,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-17T02:14:15.049Z",
+    "LastUpdatedTime": "2026-08-17T03:42:53.908Z",
     "FeedReceivedTime": "2026-08-16T10:22:07.655Z",
     "History": [
       {
@@ -1354,7 +1354,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-17T02:14:15.049Z",
+    "LastUpdatedTime": "2026-08-17T03:42:53.908Z",
     "FeedReceivedTime": "2026-08-16T11:18:00.868Z",
     "History": []
   },
@@ -1651,7 +1651,7 @@
         }
       ]
     ],
-    "LastUpdatedTime": "2026-08-17T02:14:15.049Z",
+    "LastUpdatedTime": "2026-08-17T03:42:53.908Z",
     "FeedReceivedTime": "2026-08-16T22:30:10.415Z",
     "History": null
   },
@@ -1670,7 +1670,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-17T02:14:15.049Z",
+    "LastUpdatedTime": "2026-08-17T03:42:53.908Z",
     "FeedReceivedTime": "2026-08-16T23:38:40.436Z",
     "History": [
       {
@@ -2223,210 +2223,224 @@
     "PlannedEndTime": "2026-08-17T17:00:00",
     "EventId": "J.26.0144350",
     "Type": "Planned",
-    "Status": "Planned Outage Execution",
+    "Status": "Complete",
     "Cause": "Essential Maintenance",
-    "StartTime": "2026-08-17T11:26:07",
-    "RestorationTime": null,
+    "StartTime": "2026-08-17T11:21:07",
+    "RestorationTime": "2026-08-17T12:28:31",
     "ImpactedCustomers": 42,
-    "LocationGeoJson": {
-      "type": "Feature",
-      "properties": {
-        "eventId": "J.26.0144350",
-        "customerReference": "5221043",
-        "customersOff": "42",
-        "status": "Planned Outage Execution",
-        "type": "Planned",
-        "resolvedFlag": "false",
-        "showOutageFlag": "true",
-        "symptoms": [],
-        "cause": "Essential Maintenance",
-        "startTime": "2026-08-17T11:26:07",
-        "restoreTime": "",
-        "dispatchedTime": "",
-        "etr": "2026-08-17T17:00:00",
-        "plannedStartTime": "2026-08-17T08:00:00",
-        "plannedEndTime": "2026-08-17T17:00:00",
-        "lastUpdateTime": "2026-08-17T11:26:18"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          144.89301342814514,
-          -37.85724349507583
-        ]
-      }
-    },
-    "Location": {
-      "Latitude": -37.85724349507583,
-      "Longitude": 144.89301342814514
-    },
-    "ImpactedSuburbs": [
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-08-17T03:42:53.908Z",
+    "FeedReceivedTime": "2026-08-17T02:58:14.609Z",
+    "History": [
       {
-        "SuburbName": "WILLIAMSTOWN",
-        "PostCode": 3016,
-        "Streets": [
-          "FERGUSON ST",
-          "FERGUSON STREET",
-          "GALATEA CT",
-          "JOBSON ST",
-          "MELBOURNE RD"
-        ]
-      }
-    ],
-    "ImpactedAreaGeoJson": {
-      "type": "Feature",
-      "properties": {
-        "eventId": "J.26.0144350",
-        "customerReference": "5221043",
-        "customersOff": "42",
-        "status": "Planned Outage Execution",
-        "type": "Planned",
-        "resolvedFlag": "false",
-        "showOutageFlag": "true",
-        "symptoms": [],
-        "cause": "Essential Maintenance",
-        "startTime": "2026-08-17T11:26:07",
-        "restoreTime": "",
-        "dispatchedTime": "",
-        "etr": "2026-08-17T17:00:00",
-        "plannedStartTime": "2026-08-17T08:00:00",
-        "plannedEndTime": "2026-08-17T17:00:00",
-        "lastUpdateTime": "2026-08-17T11:26:18"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              144.89199621312852,
-              -37.85791639349776
-            ],
-            [
-              144.89194265742645,
-              -37.8578943125722
-            ],
-            [
-              144.89192135144404,
-              -37.85786695961619
-            ],
-            [
-              144.89171124426895,
-              -37.857377374402425
-            ],
-            [
-              144.89211744979738,
-              -37.85658159611844
-            ],
-            [
-              144.89239100503025,
-              -37.85642527411717
-            ],
-            [
-              144.89320905685474,
-              -37.85638811849599
-            ],
-            [
-              144.8932672536684,
-              -37.856396606825186
-            ],
-            [
-              144.89331215210933,
-              -37.85642369728915
-            ],
-            [
-              144.8936254455825,
-              -37.85677243062326
-            ],
-            [
-              144.89398869828636,
-              -37.85726044084973
-            ],
-            [
-              144.8943156120213,
-              -37.8580295560521
-            ],
-            [
-              144.89428190928942,
-              -37.858081630155624
-            ],
-            [
-              144.89421113411305,
-              -37.85809887165566
-            ],
-            [
-              144.89199621312852,
-              -37.85791639349776
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "WILLIAMSTOWN",
+            "PostCode": 3016,
+            "Streets": [
+              "FERGUSON ST",
+              "FERGUSON STREET",
+              "GALATEA CT",
+              "JOBSON ST",
+              "MELBOURNE RD"
             ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 41,
+            "eventId": "J.26.0144350",
+            "startTime": "2026-08-17T11:21:07",
+            "restoreTime": "2026-08-17T12:28:31",
+            "suburbs": [
+              {
+                "suburbName": "WILLIAMSTOWN",
+                "postcode": 3016,
+                "streets": [
+                  "FERGUSON ST",
+                  "FERGUSON STREET",
+                  "GALATEA CT",
+                  "JOBSON ST",
+                  "MELBOURNE RD"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  144.89199621312852,
+                  -37.85791639349776
+                ],
+                [
+                  144.89194265742645,
+                  -37.8578943125722
+                ],
+                [
+                  144.89192135144404,
+                  -37.85786695961619
+                ],
+                [
+                  144.89171124426895,
+                  -37.857377374402425
+                ],
+                [
+                  144.89211744979738,
+                  -37.85658159611844
+                ],
+                [
+                  144.89239100503025,
+                  -37.85642527411717
+                ],
+                [
+                  144.89320905685474,
+                  -37.85638811849599
+                ],
+                [
+                  144.8932672536684,
+                  -37.856396606825186
+                ],
+                [
+                  144.89331215210933,
+                  -37.85642369728915
+                ],
+                [
+                  144.8936254455825,
+                  -37.85677243062326
+                ],
+                [
+                  144.89398869828636,
+                  -37.85726044084973
+                ],
+                [
+                  144.8943156120213,
+                  -37.8580295560521
+                ],
+                [
+                  144.89428190928942,
+                  -37.858081630155624
+                ],
+                [
+                  144.89421113411305,
+                  -37.85809887165566
+                ],
+                [
+                  144.89199621312852,
+                  -37.85791639349776
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.85791639349776,
+              "Longitude": 144.89199621312852
+            },
+            {
+              "Latitude": -37.8578943125722,
+              "Longitude": 144.89194265742645
+            },
+            {
+              "Latitude": -37.85786695961619,
+              "Longitude": 144.89192135144404
+            },
+            {
+              "Latitude": -37.857377374402425,
+              "Longitude": 144.89171124426895
+            },
+            {
+              "Latitude": -37.85658159611844,
+              "Longitude": 144.89211744979738
+            },
+            {
+              "Latitude": -37.85642527411717,
+              "Longitude": 144.89239100503025
+            },
+            {
+              "Latitude": -37.85638811849599,
+              "Longitude": 144.89320905685474
+            },
+            {
+              "Latitude": -37.856396606825186,
+              "Longitude": 144.8932672536684
+            },
+            {
+              "Latitude": -37.85642369728915,
+              "Longitude": 144.89331215210933
+            },
+            {
+              "Latitude": -37.85677243062326,
+              "Longitude": 144.8936254455825
+            },
+            {
+              "Latitude": -37.85726044084973,
+              "Longitude": 144.89398869828636
+            },
+            {
+              "Latitude": -37.8580295560521,
+              "Longitude": 144.8943156120213
+            },
+            {
+              "Latitude": -37.858081630155624,
+              "Longitude": 144.89428190928942
+            },
+            {
+              "Latitude": -37.85809887165566,
+              "Longitude": 144.89421113411305
+            },
+            {
+              "Latitude": -37.85791639349776,
+              "Longitude": 144.89199621312852
+            }
           ]
-        ]
-      }
-    },
-    "ImpactedArea": [
-      [
-        {
-          "Latitude": -37.85791639349776,
-          "Longitude": 144.89199621312852
+        ],
+        "RestorationTime": "2026-08-17T12:28:31",
+        "ImpactedCustomers": 41,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 41,
+            "eventId": "J.26.0144350",
+            "startTime": "2026-08-17T11:21:07",
+            "restoreTime": "2026-08-17T12:28:31",
+            "suburbs": [
+              {
+                "suburbName": "WILLIAMSTOWN",
+                "postcode": 3016,
+                "streets": [
+                  "FERGUSON ST",
+                  "FERGUSON STREET",
+                  "GALATEA CT",
+                  "JOBSON ST",
+                  "MELBOURNE RD"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              144.89301342814514,
+              -37.85724349507583
+            ]
+          }
         },
-        {
-          "Latitude": -37.8578943125722,
-          "Longitude": 144.89194265742645
-        },
-        {
-          "Latitude": -37.85786695961619,
-          "Longitude": 144.89192135144404
-        },
-        {
-          "Latitude": -37.857377374402425,
-          "Longitude": 144.89171124426895
-        },
-        {
-          "Latitude": -37.85658159611844,
-          "Longitude": 144.89211744979738
-        },
-        {
-          "Latitude": -37.85642527411717,
-          "Longitude": 144.89239100503025
-        },
-        {
-          "Latitude": -37.85638811849599,
-          "Longitude": 144.89320905685474
-        },
-        {
-          "Latitude": -37.856396606825186,
-          "Longitude": 144.8932672536684
-        },
-        {
-          "Latitude": -37.85642369728915,
-          "Longitude": 144.89331215210933
-        },
-        {
-          "Latitude": -37.85677243062326,
-          "Longitude": 144.8936254455825
-        },
-        {
-          "Latitude": -37.85726044084973,
-          "Longitude": 144.89398869828636
-        },
-        {
-          "Latitude": -37.8580295560521,
-          "Longitude": 144.8943156120213
-        },
-        {
-          "Latitude": -37.858081630155624,
-          "Longitude": 144.89428190928942
-        },
-        {
-          "Latitude": -37.85809887165566,
-          "Longitude": 144.89421113411305
-        },
-        {
-          "Latitude": -37.85791639349776,
-          "Longitude": 144.89199621312852
+        "Location": {
+          "Latitude": -37.85724349507583,
+          "Longitude": 144.89301342814514
         }
-      ]
-    ],
-    "LastUpdatedTime": "2026-08-17T02:14:15.049Z",
-    "FeedReceivedTime": "2026-08-17T01:26:45.422Z",
-    "History": null
+      }
+    ]
   }
 ]
