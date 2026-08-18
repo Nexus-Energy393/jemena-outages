@@ -14,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-18T04:26:32.773Z",
+    "LastUpdatedTime": "2026-08-18T05:19:33.113Z",
     "FeedReceivedTime": "2026-08-17T07:32:57.822Z",
     "History": [
       {
@@ -769,7 +769,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-18T04:26:32.773Z",
+    "LastUpdatedTime": "2026-08-18T05:19:33.113Z",
     "FeedReceivedTime": "2026-08-17T20:25:40.899Z",
     "History": [
       {
@@ -958,189 +958,6 @@
         }
       }
     ]
-  },
-  {
-    "PlannedStartTime": "2026-08-18T07:30:00",
-    "PlannedEndTime": "2026-08-18T15:00:00",
-    "EventId": "J.26.0145396",
-    "Type": "Planned",
-    "Status": "Planned Outage Execution",
-    "Cause": "Essential Maintenance",
-    "StartTime": "2026-08-18T07:59:36",
-    "RestorationTime": null,
-    "ImpactedCustomers": 3,
-    "LocationGeoJson": {
-      "type": "Feature",
-      "properties": {
-        "eventId": "J.26.0145396",
-        "customerReference": " J5223617",
-        "customersOff": "3",
-        "status": "Planned Outage Execution",
-        "type": "Planned",
-        "resolvedFlag": "false",
-        "showOutageFlag": "false",
-        "symptoms": [],
-        "cause": "Essential Maintenance",
-        "startTime": "2026-08-18T07:59:36",
-        "restoreTime": "",
-        "dispatchedTime": "",
-        "etr": "2026-08-18T15:00:00",
-        "plannedStartTime": "2026-08-18T07:30:00",
-        "plannedEndTime": "2026-08-18T15:00:00",
-        "lastUpdateTime": "2026-08-18T07:59:42"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          145.06637903860272,
-          -37.76990234632213
-        ]
-      }
-    },
-    "Location": {
-      "Latitude": -37.76990234632213,
-      "Longitude": 145.06637903860272
-    },
-    "ImpactedSuburbs": [
-      {
-        "SuburbName": "IVANHOE EAST",
-        "PostCode": 3079,
-        "Streets": [
-          "KEAM ST"
-        ]
-      }
-    ],
-    "ImpactedAreaGeoJson": {
-      "type": "Feature",
-      "properties": {
-        "eventId": "J.26.0145396",
-        "customerReference": " J5223617",
-        "customersOff": "3",
-        "status": "Planned Outage Execution",
-        "type": "Planned",
-        "resolvedFlag": "false",
-        "showOutageFlag": "false",
-        "symptoms": [],
-        "cause": "Essential Maintenance",
-        "startTime": "2026-08-18T07:59:36",
-        "restoreTime": "",
-        "dispatchedTime": "",
-        "etr": "2026-08-18T15:00:00",
-        "plannedStartTime": "2026-08-18T07:30:00",
-        "plannedEndTime": "2026-08-18T15:00:00",
-        "lastUpdateTime": "2026-08-18T07:59:42"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              145.0662291410697,
-              -37.77010763232262
-            ],
-            [
-              145.0657530457186,
-              -37.76953793590571
-            ],
-            [
-              145.065761244074,
-              -37.769497309202166
-            ],
-            [
-              145.06592079838316,
-              -37.76934945820655
-            ],
-            [
-              145.06597099067235,
-              -37.76935093381713
-            ],
-            [
-              145.066679870401,
-              -37.769693594857436
-            ],
-            [
-              145.06700503148684,
-              -37.77005199628348
-            ],
-            [
-              145.06699344449305,
-              -37.77008055750238
-            ],
-            [
-              145.0666188234353,
-              -37.77044052927997
-            ],
-            [
-              145.06658294387256,
-              -37.770455234437705
-            ],
-            [
-              145.0665377482731,
-              -37.77043881352471
-            ],
-            [
-              145.0662291410697,
-              -37.77010763232262
-            ]
-          ]
-        ]
-      }
-    },
-    "ImpactedArea": [
-      [
-        {
-          "Latitude": -37.77010763232262,
-          "Longitude": 145.0662291410697
-        },
-        {
-          "Latitude": -37.76953793590571,
-          "Longitude": 145.0657530457186
-        },
-        {
-          "Latitude": -37.769497309202166,
-          "Longitude": 145.065761244074
-        },
-        {
-          "Latitude": -37.76934945820655,
-          "Longitude": 145.06592079838316
-        },
-        {
-          "Latitude": -37.76935093381713,
-          "Longitude": 145.06597099067235
-        },
-        {
-          "Latitude": -37.769693594857436,
-          "Longitude": 145.066679870401
-        },
-        {
-          "Latitude": -37.77005199628348,
-          "Longitude": 145.06700503148684
-        },
-        {
-          "Latitude": -37.77008055750238,
-          "Longitude": 145.06699344449305
-        },
-        {
-          "Latitude": -37.77044052927997,
-          "Longitude": 145.0666188234353
-        },
-        {
-          "Latitude": -37.770455234437705,
-          "Longitude": 145.06658294387256
-        },
-        {
-          "Latitude": -37.77043881352471,
-          "Longitude": 145.0665377482731
-        },
-        {
-          "Latitude": -37.77010763232262,
-          "Longitude": 145.0662291410697
-        }
-      ]
-    ],
-    "LastUpdatedTime": "2026-08-18T04:26:32.773Z",
-    "FeedReceivedTime": "2026-08-17T22:02:22.763Z",
-    "History": null
   },
   {
     "PlannedStartTime": "2026-08-18T08:30:00",
@@ -1373,7 +1190,7 @@
         }
       ]
     ],
-    "LastUpdatedTime": "2026-08-18T04:26:32.773Z",
+    "LastUpdatedTime": "2026-08-18T05:19:33.113Z",
     "FeedReceivedTime": "2026-08-17T22:58:23.746Z",
     "History": null
   },
@@ -1392,7 +1209,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-18T04:26:32.773Z",
+    "LastUpdatedTime": "2026-08-18T05:19:33.113Z",
     "FeedReceivedTime": "2026-08-18T00:08:39.703Z",
     "History": [
       {
@@ -5243,290 +5060,6 @@
   },
   {
     "PlannedStartTime": "2026-08-18T07:30:00",
-    "PlannedEndTime": "2026-08-18T16:00:00",
-    "EventId": "J.26.0143973",
-    "Type": "Planned",
-    "Status": "Planned Outage Execution",
-    "Cause": "Essential Maintenance",
-    "StartTime": "2026-08-18T08:23:46",
-    "RestorationTime": "2026-08-18T10:42:20",
-    "ImpactedCustomers": 181,
-    "LocationGeoJson": null,
-    "Location": null,
-    "ImpactedSuburbs": [],
-    "ImpactedAreaGeoJson": null,
-    "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-18T04:26:32.773Z",
-    "FeedReceivedTime": "2026-08-18T00:45:24.275Z",
-    "History": [
-      {
-        "ImpactedSuburbs": [
-          {
-            "SuburbName": "RESERVOIR",
-            "PostCode": 3073,
-            "Streets": [
-              "CARROL ST",
-              "CUTHBERT RD",
-              "LANE CR",
-              "LANE CRESCENT",
-              "WHITELAW ST",
-              "WHITELAW STREET"
-            ]
-          }
-        ],
-        "ImpactedAreaGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 169,
-            "eventId": "J.26.0143973",
-            "startTime": "2026-08-18T08:23:46",
-            "restoreTime": "2026-08-18T10:42:20",
-            "suburbs": [
-              {
-                "suburbName": "RESERVOIR",
-                "postcode": 3073,
-                "streets": [
-                  "CARROL ST",
-                  "CUTHBERT RD",
-                  "LANE CR",
-                  "LANE CRESCENT",
-                  "WHITELAW ST",
-                  "WHITELAW STREET"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-              [
-                [
-                  145.01309564144086,
-                  -37.71701674045249
-                ],
-                [
-                  145.01302672429387,
-                  -37.716997207505855
-                ],
-                [
-                  145.0129718540216,
-                  -37.716958872101124
-                ],
-                [
-                  145.01195578278262,
-                  -37.71591815186091
-                ],
-                [
-                  145.01192142392486,
-                  -37.71586256044729
-                ],
-                [
-                  145.01191759450697,
-                  -37.71580075453045
-                ],
-                [
-                  145.0119449164365,
-                  -37.715742771553025
-                ],
-                [
-                  145.0123723579897,
-                  -37.715203062240384
-                ],
-                [
-                  145.0124262285675,
-                  -37.71515840920926
-                ],
-                [
-                  145.01273906567832,
-                  -37.71498710849233
-                ],
-                [
-                  145.01549674566934,
-                  -37.71365983266302
-                ],
-                [
-                  145.01557482348804,
-                  -37.71363852453724
-                ],
-                [
-                  145.01569498841127,
-                  -37.713658167467685
-                ],
-                [
-                  145.0171199685328,
-                  -37.714311630156395
-                ],
-                [
-                  145.01719421095117,
-                  -37.714372690692926
-                ],
-                [
-                  145.0172162189859,
-                  -37.714455603895715
-                ],
-                [
-                  145.01713616683222,
-                  -37.71529120269985
-                ],
-                [
-                  145.0159642032146,
-                  -37.717255826719295
-                ],
-                [
-                  145.01592283315782,
-                  -37.717301165216185
-                ],
-                [
-                  145.01586368345903,
-                  -37.717331779713795
-                ],
-                [
-                  145.0157591732364,
-                  -37.7173418863059
-                ],
-                [
-                  145.01309564144086,
-                  -37.71701674045249
-                ]
-              ]
-            ]
-          }
-        },
-        "ImpactedArea": [
-          [
-            {
-              "Latitude": -37.71701674045249,
-              "Longitude": 145.01309564144086
-            },
-            {
-              "Latitude": -37.716997207505855,
-              "Longitude": 145.01302672429387
-            },
-            {
-              "Latitude": -37.716958872101124,
-              "Longitude": 145.0129718540216
-            },
-            {
-              "Latitude": -37.71591815186091,
-              "Longitude": 145.01195578278262
-            },
-            {
-              "Latitude": -37.71586256044729,
-              "Longitude": 145.01192142392486
-            },
-            {
-              "Latitude": -37.71580075453045,
-              "Longitude": 145.01191759450697
-            },
-            {
-              "Latitude": -37.715742771553025,
-              "Longitude": 145.0119449164365
-            },
-            {
-              "Latitude": -37.715203062240384,
-              "Longitude": 145.0123723579897
-            },
-            {
-              "Latitude": -37.71515840920926,
-              "Longitude": 145.0124262285675
-            },
-            {
-              "Latitude": -37.71498710849233,
-              "Longitude": 145.01273906567832
-            },
-            {
-              "Latitude": -37.71365983266302,
-              "Longitude": 145.01549674566934
-            },
-            {
-              "Latitude": -37.71363852453724,
-              "Longitude": 145.01557482348804
-            },
-            {
-              "Latitude": -37.713658167467685,
-              "Longitude": 145.01569498841127
-            },
-            {
-              "Latitude": -37.714311630156395,
-              "Longitude": 145.0171199685328
-            },
-            {
-              "Latitude": -37.714372690692926,
-              "Longitude": 145.01719421095117
-            },
-            {
-              "Latitude": -37.714455603895715,
-              "Longitude": 145.0172162189859
-            },
-            {
-              "Latitude": -37.71529120269985,
-              "Longitude": 145.01713616683222
-            },
-            {
-              "Latitude": -37.717255826719295,
-              "Longitude": 145.0159642032146
-            },
-            {
-              "Latitude": -37.717301165216185,
-              "Longitude": 145.01592283315782
-            },
-            {
-              "Latitude": -37.717331779713795,
-              "Longitude": 145.01586368345903
-            },
-            {
-              "Latitude": -37.7173418863059,
-              "Longitude": 145.0157591732364
-            },
-            {
-              "Latitude": -37.71701674045249,
-              "Longitude": 145.01309564144086
-            }
-          ]
-        ],
-        "RestorationTime": "2026-08-18T10:42:20",
-        "ImpactedCustomers": 169,
-        "LocationGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 169,
-            "eventId": "J.26.0143973",
-            "startTime": "2026-08-18T08:23:46",
-            "restoreTime": "2026-08-18T10:42:20",
-            "suburbs": [
-              {
-                "suburbName": "RESERVOIR",
-                "postcode": 3073,
-                "streets": [
-                  "CARROL ST",
-                  "CUTHBERT RD",
-                  "LANE CR",
-                  "LANE CRESCENT",
-                  "WHITELAW ST",
-                  "WHITELAW STREET"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [
-              145.01456690674644,
-              -37.715490205421574
-            ]
-          }
-        },
-        "Location": {
-          "Latitude": -37.715490205421574,
-          "Longitude": 145.01456690674644
-        }
-      }
-    ]
-  },
-  {
-    "PlannedStartTime": "2026-08-18T07:30:00",
     "PlannedEndTime": "2026-08-18T16:30:00",
     "EventId": "J.26.0144402",
     "Type": "Planned",
@@ -5540,7 +5073,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-18T04:26:32.773Z",
+    "LastUpdatedTime": "2026-08-18T05:19:33.113Z",
     "FeedReceivedTime": "2026-08-18T04:03:41.017Z",
     "History": [
       {
@@ -5767,7 +5300,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-18T04:26:32.773Z",
+    "LastUpdatedTime": "2026-08-18T05:19:33.113Z",
     "FeedReceivedTime": "2026-08-18T04:18:55.577Z",
     "History": [
       {
@@ -5994,6 +5527,479 @@
         "Location": {
           "Latitude": -37.69615128740904,
           "Longitude": 144.88329121479438
+        }
+      }
+    ]
+  },
+  {
+    "PlannedStartTime": "2026-08-18T07:30:00",
+    "PlannedEndTime": "2026-08-18T15:00:00",
+    "EventId": "J.26.0145396",
+    "Type": "Planned",
+    "Status": "Planned Outage Execution",
+    "Cause": "Essential Maintenance",
+    "StartTime": "2026-08-18T07:59:36",
+    "RestorationTime": "2026-08-18T14:55:31",
+    "ImpactedCustomers": 3,
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-08-18T05:19:33.113Z",
+    "FeedReceivedTime": "2026-08-18T04:59:36.792Z",
+    "History": [
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "IVANHOE EAST",
+            "PostCode": 3079,
+            "Streets": [
+              "KEAM ST"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 3,
+            "eventId": "J.26.0145396",
+            "startTime": "2026-08-18T07:59:36",
+            "restoreTime": "2026-08-18T14:55:31",
+            "suburbs": [
+              {
+                "suburbName": "IVANHOE EAST",
+                "postcode": 3079,
+                "streets": [
+                  "KEAM ST"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  145.0662291410697,
+                  -37.77010763232262
+                ],
+                [
+                  145.0657530457186,
+                  -37.76953793590571
+                ],
+                [
+                  145.065761244074,
+                  -37.769497309202166
+                ],
+                [
+                  145.06592079838316,
+                  -37.76934945820655
+                ],
+                [
+                  145.06597099067235,
+                  -37.76935093381713
+                ],
+                [
+                  145.066679870401,
+                  -37.769693594857436
+                ],
+                [
+                  145.06700503148684,
+                  -37.77005199628348
+                ],
+                [
+                  145.06699344449305,
+                  -37.77008055750238
+                ],
+                [
+                  145.0666188234353,
+                  -37.77044052927997
+                ],
+                [
+                  145.06658294387256,
+                  -37.770455234437705
+                ],
+                [
+                  145.0665377482731,
+                  -37.77043881352471
+                ],
+                [
+                  145.0662291410697,
+                  -37.77010763232262
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.77010763232262,
+              "Longitude": 145.0662291410697
+            },
+            {
+              "Latitude": -37.76953793590571,
+              "Longitude": 145.0657530457186
+            },
+            {
+              "Latitude": -37.769497309202166,
+              "Longitude": 145.065761244074
+            },
+            {
+              "Latitude": -37.76934945820655,
+              "Longitude": 145.06592079838316
+            },
+            {
+              "Latitude": -37.76935093381713,
+              "Longitude": 145.06597099067235
+            },
+            {
+              "Latitude": -37.769693594857436,
+              "Longitude": 145.066679870401
+            },
+            {
+              "Latitude": -37.77005199628348,
+              "Longitude": 145.06700503148684
+            },
+            {
+              "Latitude": -37.77008055750238,
+              "Longitude": 145.06699344449305
+            },
+            {
+              "Latitude": -37.77044052927997,
+              "Longitude": 145.0666188234353
+            },
+            {
+              "Latitude": -37.770455234437705,
+              "Longitude": 145.06658294387256
+            },
+            {
+              "Latitude": -37.77043881352471,
+              "Longitude": 145.0665377482731
+            },
+            {
+              "Latitude": -37.77010763232262,
+              "Longitude": 145.0662291410697
+            }
+          ]
+        ],
+        "RestorationTime": "2026-08-18T14:55:31",
+        "ImpactedCustomers": 3,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 3,
+            "eventId": "J.26.0145396",
+            "startTime": "2026-08-18T07:59:36",
+            "restoreTime": "2026-08-18T14:55:31",
+            "suburbs": [
+              {
+                "suburbName": "IVANHOE EAST",
+                "postcode": 3079,
+                "streets": [
+                  "KEAM ST"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              145.06637903860272,
+              -37.76990234632213
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.76990234632213,
+          "Longitude": 145.06637903860272
+        }
+      }
+    ]
+  },
+  {
+    "PlannedStartTime": "2026-08-18T07:30:00",
+    "PlannedEndTime": "2026-08-18T16:00:00",
+    "EventId": "J.26.0143973",
+    "Type": "Planned",
+    "Status": "Complete",
+    "Cause": "Essential Maintenance",
+    "StartTime": "2026-08-18T08:59:22",
+    "RestorationTime": "2026-08-18T10:46:00",
+    "ImpactedCustomers": 170,
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-08-18T05:19:33.113Z",
+    "FeedReceivedTime": "2026-08-18T04:59:37.774Z",
+    "History": [
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "RESERVOIR",
+            "PostCode": 3073,
+            "Streets": [
+              "CARROL ST",
+              "CUTHBERT RD",
+              "LANE CR",
+              "LANE CRESCENT",
+              "WHITELAW ST",
+              "WHITELAW STREET"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 169,
+            "eventId": "J.26.0143973",
+            "startTime": "2026-08-18T08:59:22",
+            "restoreTime": "2026-08-18T10:46:00",
+            "suburbs": [
+              {
+                "suburbName": "RESERVOIR",
+                "postcode": 3073,
+                "streets": [
+                  "CARROL ST",
+                  "CUTHBERT RD",
+                  "LANE CR",
+                  "LANE CRESCENT",
+                  "WHITELAW ST",
+                  "WHITELAW STREET"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  145.01309564144086,
+                  -37.71701674045249
+                ],
+                [
+                  145.01302672429387,
+                  -37.716997207505855
+                ],
+                [
+                  145.0129718540216,
+                  -37.716958872101124
+                ],
+                [
+                  145.01195578278262,
+                  -37.71591815186091
+                ],
+                [
+                  145.01192142392486,
+                  -37.71586256044729
+                ],
+                [
+                  145.01191759450697,
+                  -37.71580075453045
+                ],
+                [
+                  145.0119449164365,
+                  -37.715742771553025
+                ],
+                [
+                  145.0123723579897,
+                  -37.715203062240384
+                ],
+                [
+                  145.0124262285675,
+                  -37.71515840920926
+                ],
+                [
+                  145.01273906567832,
+                  -37.71498710849233
+                ],
+                [
+                  145.01549674566934,
+                  -37.71365983266302
+                ],
+                [
+                  145.01557482348804,
+                  -37.71363852453724
+                ],
+                [
+                  145.01569498841127,
+                  -37.713658167467685
+                ],
+                [
+                  145.0171199685328,
+                  -37.714311630156395
+                ],
+                [
+                  145.01719421095117,
+                  -37.714372690692926
+                ],
+                [
+                  145.0172162189859,
+                  -37.714455603895715
+                ],
+                [
+                  145.01713616683222,
+                  -37.71529120269985
+                ],
+                [
+                  145.0159642032146,
+                  -37.717255826719295
+                ],
+                [
+                  145.01592283315782,
+                  -37.717301165216185
+                ],
+                [
+                  145.01586368345903,
+                  -37.717331779713795
+                ],
+                [
+                  145.0157591732364,
+                  -37.7173418863059
+                ],
+                [
+                  145.01309564144086,
+                  -37.71701674045249
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.71701674045249,
+              "Longitude": 145.01309564144086
+            },
+            {
+              "Latitude": -37.716997207505855,
+              "Longitude": 145.01302672429387
+            },
+            {
+              "Latitude": -37.716958872101124,
+              "Longitude": 145.0129718540216
+            },
+            {
+              "Latitude": -37.71591815186091,
+              "Longitude": 145.01195578278262
+            },
+            {
+              "Latitude": -37.71586256044729,
+              "Longitude": 145.01192142392486
+            },
+            {
+              "Latitude": -37.71580075453045,
+              "Longitude": 145.01191759450697
+            },
+            {
+              "Latitude": -37.715742771553025,
+              "Longitude": 145.0119449164365
+            },
+            {
+              "Latitude": -37.715203062240384,
+              "Longitude": 145.0123723579897
+            },
+            {
+              "Latitude": -37.71515840920926,
+              "Longitude": 145.0124262285675
+            },
+            {
+              "Latitude": -37.71498710849233,
+              "Longitude": 145.01273906567832
+            },
+            {
+              "Latitude": -37.71365983266302,
+              "Longitude": 145.01549674566934
+            },
+            {
+              "Latitude": -37.71363852453724,
+              "Longitude": 145.01557482348804
+            },
+            {
+              "Latitude": -37.713658167467685,
+              "Longitude": 145.01569498841127
+            },
+            {
+              "Latitude": -37.714311630156395,
+              "Longitude": 145.0171199685328
+            },
+            {
+              "Latitude": -37.714372690692926,
+              "Longitude": 145.01719421095117
+            },
+            {
+              "Latitude": -37.714455603895715,
+              "Longitude": 145.0172162189859
+            },
+            {
+              "Latitude": -37.71529120269985,
+              "Longitude": 145.01713616683222
+            },
+            {
+              "Latitude": -37.717255826719295,
+              "Longitude": 145.0159642032146
+            },
+            {
+              "Latitude": -37.717301165216185,
+              "Longitude": 145.01592283315782
+            },
+            {
+              "Latitude": -37.717331779713795,
+              "Longitude": 145.01586368345903
+            },
+            {
+              "Latitude": -37.7173418863059,
+              "Longitude": 145.0157591732364
+            },
+            {
+              "Latitude": -37.71701674045249,
+              "Longitude": 145.01309564144086
+            }
+          ]
+        ],
+        "RestorationTime": "2026-08-18T10:46:00",
+        "ImpactedCustomers": 169,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 169,
+            "eventId": "J.26.0143973",
+            "startTime": "2026-08-18T08:59:22",
+            "restoreTime": "2026-08-18T10:46:00",
+            "suburbs": [
+              {
+                "suburbName": "RESERVOIR",
+                "postcode": 3073,
+                "streets": [
+                  "CARROL ST",
+                  "CUTHBERT RD",
+                  "LANE CR",
+                  "LANE CRESCENT",
+                  "WHITELAW ST",
+                  "WHITELAW STREET"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              145.01456690674644,
+              -37.715490205421574
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.715490205421574,
+          "Longitude": 145.01456690674644
         }
       }
     ]
