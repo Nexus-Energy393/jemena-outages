@@ -14,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-18T06:28:31.336Z",
+    "LastUpdatedTime": "2026-08-18T07:28:39.180Z",
     "FeedReceivedTime": "2026-08-17T20:25:40.899Z",
     "History": [
       {
@@ -205,241 +205,6 @@
     ]
   },
   {
-    "PlannedStartTime": "2026-08-18T08:30:00",
-    "PlannedEndTime": "2026-08-18T17:30:00",
-    "EventId": "J.26.0145347",
-    "Type": "Planned",
-    "Status": "Planned Outage Execution",
-    "Cause": "Essential Maintenance",
-    "StartTime": "2026-08-18T08:57:45",
-    "RestorationTime": null,
-    "ImpactedCustomers": 100,
-    "LocationGeoJson": {
-      "type": "Feature",
-      "properties": {
-        "eventId": "J.26.0145347",
-        "customerReference": "J5222244",
-        "customersOff": "100",
-        "status": "Planned Outage Execution",
-        "type": "Planned",
-        "resolvedFlag": "false",
-        "showOutageFlag": "true",
-        "symptoms": [],
-        "cause": "Essential Maintenance",
-        "startTime": "2026-08-18T08:57:45",
-        "restoreTime": "",
-        "dispatchedTime": "",
-        "etr": "2026-08-18T17:30:00",
-        "plannedStartTime": "2026-08-18T08:30:00",
-        "plannedEndTime": "2026-08-18T17:30:00",
-        "lastUpdateTime": "2026-08-18T08:57:52"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          144.8686467941493,
-          -37.804858916978446
-        ]
-      }
-    },
-    "Location": {
-      "Latitude": -37.804858916978446,
-      "Longitude": 144.8686467941493
-    },
-    "ImpactedSuburbs": [
-      {
-        "SuburbName": "WEST FOOTSCRAY",
-        "PostCode": 3012,
-        "Streets": [
-          "ACACIA CT",
-          "BANKSIA CT",
-          "CLARENDON PDE",
-          "INDWE ST",
-          "WAIORA PDE"
-        ]
-      }
-    ],
-    "ImpactedAreaGeoJson": {
-      "type": "Feature",
-      "properties": {
-        "eventId": "J.26.0145347",
-        "customerReference": "J5222244",
-        "customersOff": "100",
-        "status": "Planned Outage Execution",
-        "type": "Planned",
-        "resolvedFlag": "false",
-        "showOutageFlag": "true",
-        "symptoms": [],
-        "cause": "Essential Maintenance",
-        "startTime": "2026-08-18T08:57:45",
-        "restoreTime": "",
-        "dispatchedTime": "",
-        "etr": "2026-08-18T17:30:00",
-        "plannedStartTime": "2026-08-18T08:30:00",
-        "plannedEndTime": "2026-08-18T17:30:00",
-        "lastUpdateTime": "2026-08-18T08:57:52"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              144.86818356465113,
-              -37.806148387074856
-            ],
-            [
-              144.86808643857918,
-              -37.80610552075815
-            ],
-            [
-              144.86649855252924,
-              -37.80463461490554
-            ],
-            [
-              144.86646692575036,
-              -37.80458860612061
-            ],
-            [
-              144.86646161310193,
-              -37.804536417832026
-            ],
-            [
-              144.86659157845168,
-              -37.80376303828048
-            ],
-            [
-              144.86662542494378,
-              -37.80371862135625
-            ],
-            [
-              144.866827119603,
-              -37.803550472597074
-            ],
-            [
-              144.8669435066043,
-              -37.803527424185255
-            ],
-            [
-              144.87023186522205,
-              -37.80389376063066
-            ],
-            [
-              144.8702888380583,
-              -37.80392220564304
-            ],
-            [
-              144.87082019730093,
-              -37.80434662305214
-            ],
-            [
-              144.8708319751967,
-              -37.80441690638126
-            ],
-            [
-              144.87077657595242,
-              -37.80461144903023
-            ],
-            [
-              144.87021494844143,
-              -37.805235959639305
-            ],
-            [
-              144.86861899698016,
-              -37.80617963039894
-            ],
-            [
-              144.86852564167253,
-              -37.80619040977164
-            ],
-            [
-              144.86818356465113,
-              -37.806148387074856
-            ]
-          ]
-        ]
-      }
-    },
-    "ImpactedArea": [
-      [
-        {
-          "Latitude": -37.806148387074856,
-          "Longitude": 144.86818356465113
-        },
-        {
-          "Latitude": -37.80610552075815,
-          "Longitude": 144.86808643857918
-        },
-        {
-          "Latitude": -37.80463461490554,
-          "Longitude": 144.86649855252924
-        },
-        {
-          "Latitude": -37.80458860612061,
-          "Longitude": 144.86646692575036
-        },
-        {
-          "Latitude": -37.804536417832026,
-          "Longitude": 144.86646161310193
-        },
-        {
-          "Latitude": -37.80376303828048,
-          "Longitude": 144.86659157845168
-        },
-        {
-          "Latitude": -37.80371862135625,
-          "Longitude": 144.86662542494378
-        },
-        {
-          "Latitude": -37.803550472597074,
-          "Longitude": 144.866827119603
-        },
-        {
-          "Latitude": -37.803527424185255,
-          "Longitude": 144.8669435066043
-        },
-        {
-          "Latitude": -37.80389376063066,
-          "Longitude": 144.87023186522205
-        },
-        {
-          "Latitude": -37.80392220564304,
-          "Longitude": 144.8702888380583
-        },
-        {
-          "Latitude": -37.80434662305214,
-          "Longitude": 144.87082019730093
-        },
-        {
-          "Latitude": -37.80441690638126,
-          "Longitude": 144.8708319751967
-        },
-        {
-          "Latitude": -37.80461144903023,
-          "Longitude": 144.87077657595242
-        },
-        {
-          "Latitude": -37.805235959639305,
-          "Longitude": 144.87021494844143
-        },
-        {
-          "Latitude": -37.80617963039894,
-          "Longitude": 144.86861899698016
-        },
-        {
-          "Latitude": -37.80619040977164,
-          "Longitude": 144.86852564167253
-        },
-        {
-          "Latitude": -37.806148387074856,
-          "Longitude": 144.86818356465113
-        }
-      ]
-    ],
-    "LastUpdatedTime": "2026-08-18T06:28:31.336Z",
-    "FeedReceivedTime": "2026-08-17T22:58:23.746Z",
-    "History": null
-  },
-  {
     "EstimatedRestorationTime": "2026-08-18T02:08:41",
     "DispatchedTime": "2026-08-18T00:05:28",
     "EventId": "J.26.0146710",
@@ -454,7 +219,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-18T06:28:31.336Z",
+    "LastUpdatedTime": "2026-08-18T07:28:39.180Z",
     "FeedReceivedTime": "2026-08-18T00:08:39.703Z",
     "History": [
       {
@@ -4318,7 +4083,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-18T06:28:31.336Z",
+    "LastUpdatedTime": "2026-08-18T07:28:39.180Z",
     "FeedReceivedTime": "2026-08-18T04:03:41.017Z",
     "History": [
       {
@@ -4545,7 +4310,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-18T06:28:31.336Z",
+    "LastUpdatedTime": "2026-08-18T07:28:39.180Z",
     "FeedReceivedTime": "2026-08-18T04:18:55.577Z",
     "History": [
       {
@@ -4778,195 +4543,6 @@
   },
   {
     "PlannedStartTime": "2026-08-18T07:30:00",
-    "PlannedEndTime": "2026-08-18T15:00:00",
-    "EventId": "J.26.0145396",
-    "Type": "Planned",
-    "Status": "Planned Outage Execution",
-    "Cause": "Essential Maintenance",
-    "StartTime": "2026-08-18T07:59:36",
-    "RestorationTime": "2026-08-18T14:55:31",
-    "ImpactedCustomers": 3,
-    "LocationGeoJson": null,
-    "Location": null,
-    "ImpactedSuburbs": [],
-    "ImpactedAreaGeoJson": null,
-    "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-18T06:28:31.336Z",
-    "FeedReceivedTime": "2026-08-18T04:59:36.792Z",
-    "History": [
-      {
-        "ImpactedSuburbs": [
-          {
-            "SuburbName": "IVANHOE EAST",
-            "PostCode": 3079,
-            "Streets": [
-              "KEAM ST"
-            ]
-          }
-        ],
-        "ImpactedAreaGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 3,
-            "eventId": "J.26.0145396",
-            "startTime": "2026-08-18T07:59:36",
-            "restoreTime": "2026-08-18T14:55:31",
-            "suburbs": [
-              {
-                "suburbName": "IVANHOE EAST",
-                "postcode": 3079,
-                "streets": [
-                  "KEAM ST"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-              [
-                [
-                  145.0662291410697,
-                  -37.77010763232262
-                ],
-                [
-                  145.0657530457186,
-                  -37.76953793590571
-                ],
-                [
-                  145.065761244074,
-                  -37.769497309202166
-                ],
-                [
-                  145.06592079838316,
-                  -37.76934945820655
-                ],
-                [
-                  145.06597099067235,
-                  -37.76935093381713
-                ],
-                [
-                  145.066679870401,
-                  -37.769693594857436
-                ],
-                [
-                  145.06700503148684,
-                  -37.77005199628348
-                ],
-                [
-                  145.06699344449305,
-                  -37.77008055750238
-                ],
-                [
-                  145.0666188234353,
-                  -37.77044052927997
-                ],
-                [
-                  145.06658294387256,
-                  -37.770455234437705
-                ],
-                [
-                  145.0665377482731,
-                  -37.77043881352471
-                ],
-                [
-                  145.0662291410697,
-                  -37.77010763232262
-                ]
-              ]
-            ]
-          }
-        },
-        "ImpactedArea": [
-          [
-            {
-              "Latitude": -37.77010763232262,
-              "Longitude": 145.0662291410697
-            },
-            {
-              "Latitude": -37.76953793590571,
-              "Longitude": 145.0657530457186
-            },
-            {
-              "Latitude": -37.769497309202166,
-              "Longitude": 145.065761244074
-            },
-            {
-              "Latitude": -37.76934945820655,
-              "Longitude": 145.06592079838316
-            },
-            {
-              "Latitude": -37.76935093381713,
-              "Longitude": 145.06597099067235
-            },
-            {
-              "Latitude": -37.769693594857436,
-              "Longitude": 145.066679870401
-            },
-            {
-              "Latitude": -37.77005199628348,
-              "Longitude": 145.06700503148684
-            },
-            {
-              "Latitude": -37.77008055750238,
-              "Longitude": 145.06699344449305
-            },
-            {
-              "Latitude": -37.77044052927997,
-              "Longitude": 145.0666188234353
-            },
-            {
-              "Latitude": -37.770455234437705,
-              "Longitude": 145.06658294387256
-            },
-            {
-              "Latitude": -37.77043881352471,
-              "Longitude": 145.0665377482731
-            },
-            {
-              "Latitude": -37.77010763232262,
-              "Longitude": 145.0662291410697
-            }
-          ]
-        ],
-        "RestorationTime": "2026-08-18T14:55:31",
-        "ImpactedCustomers": 3,
-        "LocationGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 3,
-            "eventId": "J.26.0145396",
-            "startTime": "2026-08-18T07:59:36",
-            "restoreTime": "2026-08-18T14:55:31",
-            "suburbs": [
-              {
-                "suburbName": "IVANHOE EAST",
-                "postcode": 3079,
-                "streets": [
-                  "KEAM ST"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [
-              145.06637903860272,
-              -37.76990234632213
-            ]
-          }
-        },
-        "Location": {
-          "Latitude": -37.76990234632213,
-          "Longitude": 145.06637903860272
-        }
-      }
-    ]
-  },
-  {
-    "PlannedStartTime": "2026-08-18T07:30:00",
     "PlannedEndTime": "2026-08-18T16:00:00",
     "EventId": "J.26.0143973",
     "Type": "Planned",
@@ -4980,7 +4556,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-18T06:28:31.336Z",
+    "LastUpdatedTime": "2026-08-18T07:28:39.180Z",
     "FeedReceivedTime": "2026-08-18T04:59:37.774Z",
     "History": [
       {
@@ -5245,6 +4821,452 @@
         "Location": {
           "Latitude": -37.715490205421574,
           "Longitude": 145.01456690674644
+        }
+      }
+    ]
+  },
+  {
+    "PlannedStartTime": "2026-08-18T08:30:00",
+    "PlannedEndTime": "2026-08-18T17:30:00",
+    "EventId": "J.26.0145347",
+    "Type": "Planned",
+    "Status": "Complete",
+    "Cause": "Essential Maintenance",
+    "StartTime": "2026-08-18T08:33:45",
+    "RestorationTime": "2026-08-18T16:28:11",
+    "ImpactedCustomers": 101,
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-08-18T07:28:39.180Z",
+    "FeedReceivedTime": "2026-08-18T06:46:27.298Z",
+    "History": [
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "WEST FOOTSCRAY",
+            "PostCode": 3012,
+            "Streets": [
+              "ACACIA CT",
+              "BANKSIA CT",
+              "CLARENDON PDE",
+              "INDWE ST",
+              "WAIORA PDE"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 99,
+            "eventId": "J.26.0145347",
+            "startTime": "2026-08-18T08:33:45",
+            "restoreTime": "2026-08-18T16:28:11",
+            "suburbs": [
+              {
+                "suburbName": "WEST FOOTSCRAY",
+                "postcode": 3012,
+                "streets": [
+                  "ACACIA CT",
+                  "BANKSIA CT",
+                  "CLARENDON PDE",
+                  "INDWE ST",
+                  "WAIORA PDE"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  144.86818356465113,
+                  -37.806148387074856
+                ],
+                [
+                  144.86808643857918,
+                  -37.80610552075815
+                ],
+                [
+                  144.86649855252924,
+                  -37.80463461490554
+                ],
+                [
+                  144.86646692575036,
+                  -37.80458860612061
+                ],
+                [
+                  144.86646161310193,
+                  -37.804536417832026
+                ],
+                [
+                  144.86659157845168,
+                  -37.80376303828048
+                ],
+                [
+                  144.86662542494378,
+                  -37.80371862135625
+                ],
+                [
+                  144.866827119603,
+                  -37.803550472597074
+                ],
+                [
+                  144.8669435066043,
+                  -37.803527424185255
+                ],
+                [
+                  144.87023186522205,
+                  -37.80389376063066
+                ],
+                [
+                  144.8702888380583,
+                  -37.80392220564304
+                ],
+                [
+                  144.87082019730093,
+                  -37.80434662305214
+                ],
+                [
+                  144.8708319751967,
+                  -37.80441690638126
+                ],
+                [
+                  144.87077253838854,
+                  -37.80461796493681
+                ],
+                [
+                  144.87047497184574,
+                  -37.80506520174313
+                ],
+                [
+                  144.8704300351584,
+                  -37.80510709836148
+                ],
+                [
+                  144.86861899698016,
+                  -37.80617963039894
+                ],
+                [
+                  144.86852564167253,
+                  -37.80619040977164
+                ],
+                [
+                  144.86818356465113,
+                  -37.806148387074856
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.806148387074856,
+              "Longitude": 144.86818356465113
+            },
+            {
+              "Latitude": -37.80610552075815,
+              "Longitude": 144.86808643857918
+            },
+            {
+              "Latitude": -37.80463461490554,
+              "Longitude": 144.86649855252924
+            },
+            {
+              "Latitude": -37.80458860612061,
+              "Longitude": 144.86646692575036
+            },
+            {
+              "Latitude": -37.804536417832026,
+              "Longitude": 144.86646161310193
+            },
+            {
+              "Latitude": -37.80376303828048,
+              "Longitude": 144.86659157845168
+            },
+            {
+              "Latitude": -37.80371862135625,
+              "Longitude": 144.86662542494378
+            },
+            {
+              "Latitude": -37.803550472597074,
+              "Longitude": 144.866827119603
+            },
+            {
+              "Latitude": -37.803527424185255,
+              "Longitude": 144.8669435066043
+            },
+            {
+              "Latitude": -37.80389376063066,
+              "Longitude": 144.87023186522205
+            },
+            {
+              "Latitude": -37.80392220564304,
+              "Longitude": 144.8702888380583
+            },
+            {
+              "Latitude": -37.80434662305214,
+              "Longitude": 144.87082019730093
+            },
+            {
+              "Latitude": -37.80441690638126,
+              "Longitude": 144.8708319751967
+            },
+            {
+              "Latitude": -37.80461796493681,
+              "Longitude": 144.87077253838854
+            },
+            {
+              "Latitude": -37.80506520174313,
+              "Longitude": 144.87047497184574
+            },
+            {
+              "Latitude": -37.80510709836148,
+              "Longitude": 144.8704300351584
+            },
+            {
+              "Latitude": -37.80617963039894,
+              "Longitude": 144.86861899698016
+            },
+            {
+              "Latitude": -37.80619040977164,
+              "Longitude": 144.86852564167253
+            },
+            {
+              "Latitude": -37.806148387074856,
+              "Longitude": 144.86818356465113
+            }
+          ]
+        ],
+        "RestorationTime": "2026-08-18T16:28:11",
+        "ImpactedCustomers": 99,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 99,
+            "eventId": "J.26.0145347",
+            "startTime": "2026-08-18T08:33:45",
+            "restoreTime": "2026-08-18T16:28:11",
+            "suburbs": [
+              {
+                "suburbName": "WEST FOOTSCRAY",
+                "postcode": 3012,
+                "streets": [
+                  "ACACIA CT",
+                  "BANKSIA CT",
+                  "CLARENDON PDE",
+                  "INDWE ST",
+                  "WAIORA PDE"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              144.8686467941493,
+              -37.804858916978446
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.804858916978446,
+          "Longitude": 144.8686467941493
+        }
+      }
+    ]
+  },
+  {
+    "PlannedStartTime": "2026-08-18T07:30:00",
+    "PlannedEndTime": "2026-08-18T15:00:00",
+    "EventId": "J.26.0145396",
+    "Type": "Planned",
+    "Status": "Complete",
+    "Cause": "Essential Maintenance",
+    "StartTime": "2026-08-18T07:49:36",
+    "RestorationTime": "2026-08-18T14:51:31",
+    "ImpactedCustomers": 3,
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-08-18T07:28:39.180Z",
+    "FeedReceivedTime": "2026-08-18T07:22:03.766Z",
+    "History": [
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "IVANHOE EAST",
+            "PostCode": 3079,
+            "Streets": [
+              "KEAM ST"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 3,
+            "eventId": "J.26.0145396",
+            "startTime": "2026-08-18T07:49:36",
+            "restoreTime": "2026-08-18T14:51:31",
+            "suburbs": [
+              {
+                "suburbName": "IVANHOE EAST",
+                "postcode": 3079,
+                "streets": [
+                  "KEAM ST"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  145.0662291410697,
+                  -37.77010763232262
+                ],
+                [
+                  145.0657530457186,
+                  -37.76953793590571
+                ],
+                [
+                  145.065761244074,
+                  -37.769497309202166
+                ],
+                [
+                  145.06592079838316,
+                  -37.76934945820655
+                ],
+                [
+                  145.06597099067235,
+                  -37.76935093381713
+                ],
+                [
+                  145.066679870401,
+                  -37.769693594857436
+                ],
+                [
+                  145.06700503148684,
+                  -37.77005199628348
+                ],
+                [
+                  145.06699344449305,
+                  -37.77008055750238
+                ],
+                [
+                  145.0666188234353,
+                  -37.77044052927997
+                ],
+                [
+                  145.06658294387256,
+                  -37.770455234437705
+                ],
+                [
+                  145.0665377482731,
+                  -37.77043881352471
+                ],
+                [
+                  145.0662291410697,
+                  -37.77010763232262
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.77010763232262,
+              "Longitude": 145.0662291410697
+            },
+            {
+              "Latitude": -37.76953793590571,
+              "Longitude": 145.0657530457186
+            },
+            {
+              "Latitude": -37.769497309202166,
+              "Longitude": 145.065761244074
+            },
+            {
+              "Latitude": -37.76934945820655,
+              "Longitude": 145.06592079838316
+            },
+            {
+              "Latitude": -37.76935093381713,
+              "Longitude": 145.06597099067235
+            },
+            {
+              "Latitude": -37.769693594857436,
+              "Longitude": 145.066679870401
+            },
+            {
+              "Latitude": -37.77005199628348,
+              "Longitude": 145.06700503148684
+            },
+            {
+              "Latitude": -37.77008055750238,
+              "Longitude": 145.06699344449305
+            },
+            {
+              "Latitude": -37.77044052927997,
+              "Longitude": 145.0666188234353
+            },
+            {
+              "Latitude": -37.770455234437705,
+              "Longitude": 145.06658294387256
+            },
+            {
+              "Latitude": -37.77043881352471,
+              "Longitude": 145.0665377482731
+            },
+            {
+              "Latitude": -37.77010763232262,
+              "Longitude": 145.0662291410697
+            }
+          ]
+        ],
+        "RestorationTime": "2026-08-18T14:51:31",
+        "ImpactedCustomers": 3,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 3,
+            "eventId": "J.26.0145396",
+            "startTime": "2026-08-18T07:49:36",
+            "restoreTime": "2026-08-18T14:51:31",
+            "suburbs": [
+              {
+                "suburbName": "IVANHOE EAST",
+                "postcode": 3079,
+                "streets": [
+                  "KEAM ST"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              145.06637903860272,
+              -37.76990234632213
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.76990234632213,
+          "Longitude": 145.06637903860272
         }
       }
     ]
