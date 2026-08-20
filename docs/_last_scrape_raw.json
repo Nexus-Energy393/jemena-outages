@@ -1,310 +1,5 @@
 [
   {
-    "PlannedStartTime": "2026-08-19T19:30:00",
-    "PlannedEndTime": "2026-08-20T05:30:00",
-    "EventId": "J.26.0145023",
-    "Type": "Planned",
-    "Status": "Complete",
-    "Cause": "Essential Maintenance",
-    "StartTime": "2026-08-19T19:40:13",
-    "RestorationTime": "2026-08-20T02:30:39",
-    "ImpactedCustomers": 30,
-    "LocationGeoJson": null,
-    "Location": null,
-    "ImpactedSuburbs": [],
-    "ImpactedAreaGeoJson": null,
-    "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-20T08:29:45.344Z",
-    "FeedReceivedTime": "2026-08-19T16:47:43.463Z",
-    "History": [
-      {
-        "ImpactedSuburbs": [
-          {
-            "SuburbName": "FAIRFIELD",
-            "PostCode": 3078,
-            "Streets": [
-              "STATION ST",
-              "STATION STREET"
-            ]
-          }
-        ],
-        "ImpactedAreaGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 23,
-            "eventId": "J.26.0145023",
-            "startTime": "2026-08-19T19:40:13",
-            "restoreTime": "2026-08-20T02:17:50",
-            "suburbs": [
-              {
-                "suburbName": "FAIRFIELD",
-                "postcode": 3078,
-                "streets": [
-                  "STATION ST",
-                  "STATION STREET"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-              [
-                [
-                  145.01876305848637,
-                  -37.77884815560527
-                ],
-                [
-                  145.01875039758113,
-                  -37.778869037949434
-                ],
-                [
-                  145.0187150012664,
-                  -37.7788811825045
-                ],
-                [
-                  145.01753791030814,
-                  -37.778876395307755
-                ],
-                [
-                  145.01751582264723,
-                  -37.778838930547884
-                ],
-                [
-                  145.0176212563957,
-                  -37.77821674077211
-                ],
-                [
-                  145.01765449134425,
-                  -37.77819203296669
-                ],
-                [
-                  145.01840338836172,
-                  -37.77803063274203
-                ],
-                [
-                  145.01854114701402,
-                  -37.778054300610435
-                ],
-                [
-                  145.01884221179424,
-                  -37.77836939447334
-                ],
-                [
-                  145.01876305848637,
-                  -37.77884815560527
-                ]
-              ]
-            ]
-          }
-        },
-        "ImpactedArea": [
-          [
-            {
-              "Latitude": -37.77884815560527,
-              "Longitude": 145.01876305848637
-            },
-            {
-              "Latitude": -37.778869037949434,
-              "Longitude": 145.01875039758113
-            },
-            {
-              "Latitude": -37.7788811825045,
-              "Longitude": 145.0187150012664
-            },
-            {
-              "Latitude": -37.778876395307755,
-              "Longitude": 145.01753791030814
-            },
-            {
-              "Latitude": -37.778838930547884,
-              "Longitude": 145.01751582264723
-            },
-            {
-              "Latitude": -37.77821674077211,
-              "Longitude": 145.0176212563957
-            },
-            {
-              "Latitude": -37.77819203296669,
-              "Longitude": 145.01765449134425
-            },
-            {
-              "Latitude": -37.77803063274203,
-              "Longitude": 145.01840338836172
-            },
-            {
-              "Latitude": -37.778054300610435,
-              "Longitude": 145.01854114701402
-            },
-            {
-              "Latitude": -37.77836939447334,
-              "Longitude": 145.01884221179424
-            },
-            {
-              "Latitude": -37.77884815560527,
-              "Longitude": 145.01876305848637
-            }
-          ]
-        ],
-        "RestorationTime": "2026-08-20T02:17:50",
-        "ImpactedCustomers": 23,
-        "LocationGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 23,
-            "eventId": "J.26.0145023",
-            "startTime": "2026-08-19T19:40:13",
-            "restoreTime": "2026-08-20T02:17:50",
-            "suburbs": [
-              {
-                "suburbName": "FAIRFIELD",
-                "postcode": 3078,
-                "streets": [
-                  "STATION ST",
-                  "STATION STREET"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [
-              145.01817901722075,
-              -37.77845590762327
-            ]
-          }
-        },
-        "Location": {
-          "Latitude": -37.77845590762327,
-          "Longitude": 145.01817901722075
-        }
-      },
-      {
-        "ImpactedSuburbs": [
-          {
-            "SuburbName": "FAIRFIELD",
-            "PostCode": 3078,
-            "Streets": [
-              "WINGROVE ST"
-            ]
-          }
-        ],
-        "ImpactedAreaGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 3,
-            "eventId": "J.26.0145023",
-            "startTime": "2026-08-19T19:40:13",
-            "restoreTime": "2026-08-20T02:30:39",
-            "suburbs": [
-              {
-                "suburbName": "FAIRFIELD",
-                "postcode": 3078,
-                "streets": [
-                  "WINGROVE ST"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-              [
-                [
-                  145.0192026316318,
-                  -37.77884379592638
-                ],
-                [
-                  145.0191843110488,
-                  -37.7788565125946
-                ],
-                [
-                  145.0187419700888,
-                  -37.77885324356162
-                ],
-                [
-                  145.0187858730974,
-                  -37.77855379762672
-                ],
-                [
-                  145.01923605419904,
-                  -37.7785947546237
-                ],
-                [
-                  145.0192026316318,
-                  -37.77884379592638
-                ]
-              ]
-            ]
-          }
-        },
-        "ImpactedArea": [
-          [
-            {
-              "Latitude": -37.77884379592638,
-              "Longitude": 145.0192026316318
-            },
-            {
-              "Latitude": -37.7788565125946,
-              "Longitude": 145.0191843110488
-            },
-            {
-              "Latitude": -37.77885324356162,
-              "Longitude": 145.0187419700888
-            },
-            {
-              "Latitude": -37.77855379762672,
-              "Longitude": 145.0187858730974
-            },
-            {
-              "Latitude": -37.7785947546237,
-              "Longitude": 145.01923605419904
-            },
-            {
-              "Latitude": -37.77884379592638,
-              "Longitude": 145.0192026316318
-            }
-          ]
-        ],
-        "RestorationTime": "2026-08-20T02:30:39",
-        "ImpactedCustomers": 3,
-        "LocationGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 3,
-            "eventId": "J.26.0145023",
-            "startTime": "2026-08-19T19:40:13",
-            "restoreTime": "2026-08-20T02:30:39",
-            "suburbs": [
-              {
-                "suburbName": "FAIRFIELD",
-                "postcode": 3078,
-                "streets": [
-                  "WINGROVE ST"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [
-              145.01898901214392,
-              -37.77870515511066
-            ]
-          }
-        },
-        "Location": {
-          "Latitude": -37.77870515511066,
-          "Longitude": 145.01898901214392
-        }
-      }
-    ]
-  },
-  {
     "PlannedStartTime": "2026-08-20T07:30:00",
     "PlannedEndTime": "2026-08-20T16:30:00",
     "EventId": "J.26.0143224",
@@ -319,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-20T08:29:45.344Z",
+    "LastUpdatedTime": "2026-08-20T21:18:30.898Z",
     "FeedReceivedTime": "2026-08-20T03:01:58.868Z",
     "History": [
       {
@@ -535,7 +230,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-20T08:29:45.344Z",
+    "LastUpdatedTime": "2026-08-20T21:18:30.898Z",
     "FeedReceivedTime": "2026-08-20T04:13:18.636Z",
     "History": [
       {
@@ -802,7 +497,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-20T08:29:45.344Z",
+    "LastUpdatedTime": "2026-08-20T21:18:30.898Z",
     "FeedReceivedTime": "2026-08-20T04:13:18.814Z",
     "History": []
   },
@@ -821,7 +516,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-20T08:29:45.344Z",
+    "LastUpdatedTime": "2026-08-20T21:18:30.898Z",
     "FeedReceivedTime": "2026-08-20T04:23:27.195Z",
     "History": [
       {
@@ -1085,7 +780,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-20T08:29:45.344Z",
+    "LastUpdatedTime": "2026-08-20T21:18:30.898Z",
     "FeedReceivedTime": "2026-08-20T04:53:59.361Z",
     "History": [
       {
@@ -1369,7 +1064,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-20T08:29:45.344Z",
+    "LastUpdatedTime": "2026-08-20T21:18:30.898Z",
     "FeedReceivedTime": "2026-08-20T07:47:07.125Z",
     "History": [
       {
