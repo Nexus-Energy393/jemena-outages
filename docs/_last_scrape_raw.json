@@ -14,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-22T08:18:14.359Z",
+    "LastUpdatedTime": "2026-08-22T21:12:16.938Z",
     "FeedReceivedTime": "2026-08-22T00:37:41.318Z",
     "History": [
       {
@@ -276,7 +276,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-22T08:18:14.359Z",
+    "LastUpdatedTime": "2026-08-22T21:12:16.938Z",
     "FeedReceivedTime": "2026-08-22T04:50:41.909Z",
     "History": [
       {
@@ -1075,5 +1075,255 @@
         }
       }
     ]
+  },
+  {
+    "EstimatedRestorationTime": "2026-08-23T10:45:46",
+    "DispatchedTime": null,
+    "EventId": "J.26.0147096",
+    "Type": "Unplanned",
+    "Status": "Unacknowledged",
+    "Cause": "Under Investigation",
+    "StartTime": "2026-08-23T06:45:40",
+    "RestorationTime": null,
+    "ImpactedCustomers": 82,
+    "LocationGeoJson": {
+      "type": "Feature",
+      "properties": {
+        "eventId": "J.26.0147096",
+        "customerReference": "",
+        "customersOff": "82",
+        "status": "Unacknowledged",
+        "type": "Unplanned",
+        "resolvedFlag": "false",
+        "showOutageFlag": "true",
+        "symptoms": [],
+        "cause": "Under Investigation",
+        "startTime": "2026-08-23T06:45:40",
+        "restoreTime": "",
+        "dispatchedTime": "",
+        "etr": "2026-08-23T10:45:46",
+        "plannedStartTime": "",
+        "plannedEndTime": "",
+        "lastUpdateTime": "2026-08-23T06:47:00"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          144.8852627540761,
+          -37.69850950332526
+        ]
+      }
+    },
+    "Location": {
+      "Latitude": -37.69850950332526,
+      "Longitude": 144.8852627540761
+    },
+    "ImpactedSuburbs": [
+      {
+        "SuburbName": "TULLAMARINE",
+        "PostCode": 3043,
+        "Streets": [
+          "BRUNTON CR",
+          "ELRAY CT",
+          "HANDSWORTH CR",
+          "LACKENHEATH DR"
+        ]
+      }
+    ],
+    "ImpactedAreaGeoJson": {
+      "type": "Feature",
+      "properties": {
+        "eventId": "J.26.0147096",
+        "customerReference": "",
+        "customersOff": "82",
+        "status": "Unacknowledged",
+        "type": "Unplanned",
+        "resolvedFlag": "false",
+        "showOutageFlag": "true",
+        "symptoms": [],
+        "cause": "Under Investigation",
+        "startTime": "2026-08-23T06:45:40",
+        "restoreTime": "",
+        "dispatchedTime": "",
+        "etr": "2026-08-23T10:45:46",
+        "plannedStartTime": "",
+        "plannedEndTime": "",
+        "lastUpdateTime": "2026-08-23T06:47:00"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              144.88342684161952,
+              -37.69986442634867
+            ],
+            [
+              144.8830215131274,
+              -37.69981350559552
+            ],
+            [
+              144.88294095322908,
+              -37.69976578462125
+            ],
+            [
+              144.88290775949199,
+              -37.69969061520947
+            ],
+            [
+              144.88291834921176,
+              -37.69963775718958
+            ],
+            [
+              144.88309176103903,
+              -37.6992744538605
+            ],
+            [
+              144.88341499983446,
+              -37.698865315919264
+            ],
+            [
+              144.8860701870697,
+              -37.69691749130272
+            ],
+            [
+              144.88618742253843,
+              -37.696897192727405
+            ],
+            [
+              144.88678336985117,
+              -37.69696358152796
+            ],
+            [
+              144.88685206908795,
+              -37.69698365820348
+            ],
+            [
+              144.8869040499055,
+              -37.69702447792356
+            ],
+            [
+              144.88716806576568,
+              -37.69757037448444
+            ],
+            [
+              144.88751112465295,
+              -37.6985929069239
+            ],
+            [
+              144.88761774866023,
+              -37.69902564812095
+            ],
+            [
+              144.88760564897674,
+              -37.69907670633174
+            ],
+            [
+              144.88757031370554,
+              -37.69912048895917
+            ],
+            [
+              144.88583941322065,
+              -37.70010034499714
+            ],
+            [
+              144.8857801801854,
+              -37.70012181392312
+            ],
+            [
+              144.88342684161952,
+              -37.69986442634867
+            ]
+          ]
+        ]
+      }
+    },
+    "ImpactedArea": [
+      [
+        {
+          "Latitude": -37.69986442634867,
+          "Longitude": 144.88342684161952
+        },
+        {
+          "Latitude": -37.69981350559552,
+          "Longitude": 144.8830215131274
+        },
+        {
+          "Latitude": -37.69976578462125,
+          "Longitude": 144.88294095322908
+        },
+        {
+          "Latitude": -37.69969061520947,
+          "Longitude": 144.88290775949199
+        },
+        {
+          "Latitude": -37.69963775718958,
+          "Longitude": 144.88291834921176
+        },
+        {
+          "Latitude": -37.6992744538605,
+          "Longitude": 144.88309176103903
+        },
+        {
+          "Latitude": -37.698865315919264,
+          "Longitude": 144.88341499983446
+        },
+        {
+          "Latitude": -37.69691749130272,
+          "Longitude": 144.8860701870697
+        },
+        {
+          "Latitude": -37.696897192727405,
+          "Longitude": 144.88618742253843
+        },
+        {
+          "Latitude": -37.69696358152796,
+          "Longitude": 144.88678336985117
+        },
+        {
+          "Latitude": -37.69698365820348,
+          "Longitude": 144.88685206908795
+        },
+        {
+          "Latitude": -37.69702447792356,
+          "Longitude": 144.8869040499055
+        },
+        {
+          "Latitude": -37.69757037448444,
+          "Longitude": 144.88716806576568
+        },
+        {
+          "Latitude": -37.6985929069239,
+          "Longitude": 144.88751112465295
+        },
+        {
+          "Latitude": -37.69902564812095,
+          "Longitude": 144.88761774866023
+        },
+        {
+          "Latitude": -37.69907670633174,
+          "Longitude": 144.88760564897674
+        },
+        {
+          "Latitude": -37.69912048895917,
+          "Longitude": 144.88757031370554
+        },
+        {
+          "Latitude": -37.70010034499714,
+          "Longitude": 144.88583941322065
+        },
+        {
+          "Latitude": -37.70012181392312,
+          "Longitude": 144.8857801801854
+        },
+        {
+          "Latitude": -37.69986442634867,
+          "Longitude": 144.88342684161952
+        }
+      ]
+    ],
+    "LastUpdatedTime": "2026-08-22T21:12:16.938Z",
+    "FeedReceivedTime": "2026-08-22T20:47:33.570Z",
+    "History": null
   }
 ]
