@@ -1,216 +1,5 @@
 [
   {
-    "EstimatedRestorationTime": "2026-08-23T16:44:30",
-    "DispatchedTime": "2026-08-23T02:46:42",
-    "EventId": "J.26.0147102",
-    "Type": "Unplanned",
-    "Status": "Completed",
-    "Cause": "Network equipment fault",
-    "StartTime": "2026-08-23T12:44:24",
-    "RestorationTime": "2026-08-23T14:15:18",
-    "ImpactedCustomers": 0,
-    "LocationGeoJson": null,
-    "Location": null,
-    "ImpactedSuburbs": [],
-    "ImpactedAreaGeoJson": null,
-    "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-23T08:21:09.047Z",
-    "FeedReceivedTime": "2026-08-23T05:19:02.763Z",
-    "History": [
-      {
-        "ImpactedSuburbs": [
-          {
-            "SuburbName": "MICKLEHAM",
-            "PostCode": 3064,
-            "Streets": [
-              "CHEVERY ST",
-              "SUDBURY ST",
-              "SUDBURY STREET"
-            ]
-          }
-        ],
-        "ImpactedAreaGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 21,
-            "eventId": "J.26.0147102",
-            "startTime": "2026-08-23T12:44:24",
-            "restoreTime": "2026-08-23T14:15:18",
-            "suburbs": [
-              {
-                "suburbName": "MICKLEHAM",
-                "postcode": 3064,
-                "streets": [
-                  "CHEVERY ST",
-                  "SUDBURY ST",
-                  "SUDBURY STREET"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-              [
-                [
-                  144.89654829316314,
-                  -37.541598960976394
-                ],
-                [
-                  144.8963371332143,
-                  -37.541574846820545
-                ],
-                [
-                  144.8962872103128,
-                  -37.54153388833988
-                ],
-                [
-                  144.89635685092338,
-                  -37.5408578375755
-                ],
-                [
-                  144.89674927623696,
-                  -37.5402424158693
-                ],
-                [
-                  144.89717435185915,
-                  -37.54000213103887
-                ],
-                [
-                  144.89774362201916,
-                  -37.53995115691747
-                ],
-                [
-                  144.89781099397223,
-                  -37.539971742067344
-                ],
-                [
-                  144.89783063363717,
-                  -37.54001549455182
-                ],
-                [
-                  144.897782676337,
-                  -37.54094840366138
-                ],
-                [
-                  144.897770755294,
-                  -37.54097891143039
-                ],
-                [
-                  144.89702718873863,
-                  -37.54163297463154
-                ],
-                [
-                  144.89696952030042,
-                  -37.54164480387188
-                ],
-                [
-                  144.89654829316314,
-                  -37.541598960976394
-                ]
-              ]
-            ]
-          }
-        },
-        "ImpactedArea": [
-          [
-            {
-              "Latitude": -37.541598960976394,
-              "Longitude": 144.89654829316314
-            },
-            {
-              "Latitude": -37.541574846820545,
-              "Longitude": 144.8963371332143
-            },
-            {
-              "Latitude": -37.54153388833988,
-              "Longitude": 144.8962872103128
-            },
-            {
-              "Latitude": -37.5408578375755,
-              "Longitude": 144.89635685092338
-            },
-            {
-              "Latitude": -37.5402424158693,
-              "Longitude": 144.89674927623696
-            },
-            {
-              "Latitude": -37.54000213103887,
-              "Longitude": 144.89717435185915
-            },
-            {
-              "Latitude": -37.53995115691747,
-              "Longitude": 144.89774362201916
-            },
-            {
-              "Latitude": -37.539971742067344,
-              "Longitude": 144.89781099397223
-            },
-            {
-              "Latitude": -37.54001549455182,
-              "Longitude": 144.89783063363717
-            },
-            {
-              "Latitude": -37.54094840366138,
-              "Longitude": 144.897782676337
-            },
-            {
-              "Latitude": -37.54097891143039,
-              "Longitude": 144.897770755294
-            },
-            {
-              "Latitude": -37.54163297463154,
-              "Longitude": 144.89702718873863
-            },
-            {
-              "Latitude": -37.54164480387188,
-              "Longitude": 144.89696952030042
-            },
-            {
-              "Latitude": -37.541598960976394,
-              "Longitude": 144.89654829316314
-            }
-          ]
-        ],
-        "RestorationTime": "2026-08-23T14:15:18",
-        "ImpactedCustomers": 21,
-        "LocationGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 21,
-            "eventId": "J.26.0147102",
-            "startTime": "2026-08-23T12:44:24",
-            "restoreTime": "2026-08-23T14:15:18",
-            "suburbs": [
-              {
-                "suburbName": "MICKLEHAM",
-                "postcode": 3064,
-                "streets": [
-                  "CHEVERY ST",
-                  "SUDBURY ST",
-                  "SUDBURY STREET"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [
-              144.89705892197497,
-              -37.54079798039467
-            ]
-          }
-        },
-        "Location": {
-          "Latitude": -37.54079798039467,
-          "Longitude": 144.89705892197497
-        }
-      }
-    ]
-  },
-  {
     "PlannedStartTime": "2026-08-23T07:30:00",
     "PlannedEndTime": "2026-08-23T16:00:00",
     "EventId": "J.26.0144829",
@@ -225,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-23T08:21:09.047Z",
+    "LastUpdatedTime": "2026-08-23T21:11:25.808Z",
     "FeedReceivedTime": "2026-08-23T05:20:30.604Z",
     "History": [
       {
@@ -702,7 +491,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-23T08:21:09.047Z",
+    "LastUpdatedTime": "2026-08-23T21:11:25.808Z",
     "FeedReceivedTime": "2026-08-23T05:20:31.312Z",
     "History": [
       {
@@ -1106,7 +895,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-23T08:21:09.047Z",
+    "LastUpdatedTime": "2026-08-23T21:11:25.808Z",
     "FeedReceivedTime": "2026-08-23T05:20:33.394Z",
     "History": [
       {
@@ -1298,7 +1087,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-23T08:21:09.047Z",
+    "LastUpdatedTime": "2026-08-23T21:11:25.808Z",
     "FeedReceivedTime": "2026-08-23T05:20:37.392Z",
     "History": [
       {
@@ -1735,7 +1524,7 @@
     "PlannedEndTime": "2026-08-23T16:00:00",
     "EventId": "J.26.0143561",
     "Type": "Planned",
-    "Status": "Planned Outage Execution",
+    "Status": "Complete",
     "Cause": "Essential Maintenance",
     "StartTime": "2026-08-23T07:51:29",
     "RestorationTime": "2026-08-23T15:29:24",
@@ -1745,8 +1534,8 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-23T08:21:09.047Z",
-    "FeedReceivedTime": "2026-08-23T05:30:52.119Z",
+    "LastUpdatedTime": "2026-08-23T21:11:25.808Z",
+    "FeedReceivedTime": "2026-08-23T20:03:41.860Z",
     "History": [
       {
         "ImpactedSuburbs": [
@@ -1999,6 +1788,217 @@
         "Location": {
           "Latitude": -37.695921459720616,
           "Longitude": 145.01512077549228
+        }
+      }
+    ]
+  },
+  {
+    "EstimatedRestorationTime": "2026-08-23T16:44:30",
+    "DispatchedTime": "2026-08-23T02:46:42",
+    "EventId": "J.26.0147102",
+    "Type": "Unplanned",
+    "Status": "Completed",
+    "Cause": "Network equipment fault",
+    "StartTime": "2026-08-23T12:44:24",
+    "RestorationTime": "2026-08-23T13:59:21",
+    "ImpactedCustomers": 0,
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-08-23T21:11:25.808Z",
+    "FeedReceivedTime": "2026-08-23T20:21:58.028Z",
+    "History": [
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "MICKLEHAM",
+            "PostCode": 3064,
+            "Streets": [
+              "CHEVERY ST",
+              "SUDBURY ST",
+              "SUDBURY STREET"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 21,
+            "eventId": "J.26.0147102",
+            "startTime": "2026-08-23T12:44:24",
+            "restoreTime": "2026-08-23T13:59:21",
+            "suburbs": [
+              {
+                "suburbName": "MICKLEHAM",
+                "postcode": 3064,
+                "streets": [
+                  "CHEVERY ST",
+                  "SUDBURY ST",
+                  "SUDBURY STREET"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  144.89654829316314,
+                  -37.541598960976394
+                ],
+                [
+                  144.8963371332143,
+                  -37.541574846820545
+                ],
+                [
+                  144.8962872103128,
+                  -37.54153388833988
+                ],
+                [
+                  144.89635685092338,
+                  -37.5408578375755
+                ],
+                [
+                  144.89674927623696,
+                  -37.5402424158693
+                ],
+                [
+                  144.89717435185915,
+                  -37.54000213103887
+                ],
+                [
+                  144.89774362201916,
+                  -37.53995115691747
+                ],
+                [
+                  144.89781099397223,
+                  -37.539971742067344
+                ],
+                [
+                  144.89783063363717,
+                  -37.54001549455182
+                ],
+                [
+                  144.897782676337,
+                  -37.54094840366138
+                ],
+                [
+                  144.897770755294,
+                  -37.54097891143039
+                ],
+                [
+                  144.89702718873863,
+                  -37.54163297463154
+                ],
+                [
+                  144.89696952030042,
+                  -37.54164480387188
+                ],
+                [
+                  144.89654829316314,
+                  -37.541598960976394
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.541598960976394,
+              "Longitude": 144.89654829316314
+            },
+            {
+              "Latitude": -37.541574846820545,
+              "Longitude": 144.8963371332143
+            },
+            {
+              "Latitude": -37.54153388833988,
+              "Longitude": 144.8962872103128
+            },
+            {
+              "Latitude": -37.5408578375755,
+              "Longitude": 144.89635685092338
+            },
+            {
+              "Latitude": -37.5402424158693,
+              "Longitude": 144.89674927623696
+            },
+            {
+              "Latitude": -37.54000213103887,
+              "Longitude": 144.89717435185915
+            },
+            {
+              "Latitude": -37.53995115691747,
+              "Longitude": 144.89774362201916
+            },
+            {
+              "Latitude": -37.539971742067344,
+              "Longitude": 144.89781099397223
+            },
+            {
+              "Latitude": -37.54001549455182,
+              "Longitude": 144.89783063363717
+            },
+            {
+              "Latitude": -37.54094840366138,
+              "Longitude": 144.897782676337
+            },
+            {
+              "Latitude": -37.54097891143039,
+              "Longitude": 144.897770755294
+            },
+            {
+              "Latitude": -37.54163297463154,
+              "Longitude": 144.89702718873863
+            },
+            {
+              "Latitude": -37.54164480387188,
+              "Longitude": 144.89696952030042
+            },
+            {
+              "Latitude": -37.541598960976394,
+              "Longitude": 144.89654829316314
+            }
+          ]
+        ],
+        "RestorationTime": "2026-08-23T13:59:21",
+        "ImpactedCustomers": 21,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 21,
+            "eventId": "J.26.0147102",
+            "startTime": "2026-08-23T12:44:24",
+            "restoreTime": "2026-08-23T13:59:21",
+            "suburbs": [
+              {
+                "suburbName": "MICKLEHAM",
+                "postcode": 3064,
+                "streets": [
+                  "CHEVERY ST",
+                  "SUDBURY ST",
+                  "SUDBURY STREET"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              144.89705892197497,
+              -37.54079798039467
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.54079798039467,
+          "Longitude": 144.89705892197497
         }
       }
     ]
