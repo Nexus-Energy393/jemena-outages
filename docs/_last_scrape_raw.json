@@ -1,208 +1,5 @@
 [
   {
-    "EstimatedRestorationTime": "2026-08-25T10:15:26",
-    "DispatchedTime": "2026-08-24T21:24:21",
-    "EventId": "J.26.0147174",
-    "Type": "Unplanned",
-    "Status": "Completed",
-    "Cause": "Network equipment fault",
-    "StartTime": "2026-08-25T06:15:18",
-    "RestorationTime": "2026-08-25T08:30:49",
-    "ImpactedCustomers": 0,
-    "LocationGeoJson": null,
-    "Location": null,
-    "ImpactedSuburbs": [],
-    "ImpactedAreaGeoJson": null,
-    "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-25T22:18:26.804Z",
-    "FeedReceivedTime": "2026-08-24T22:43:19.047Z",
-    "History": [
-      {
-        "ImpactedSuburbs": [
-          {
-            "SuburbName": "YARRAVILLE",
-            "PostCode": 3013,
-            "Streets": [
-              "LENNOX ST",
-              "MAGGIE ST",
-              "WILLIS ST"
-            ]
-          }
-        ],
-        "ImpactedAreaGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 34,
-            "eventId": "J.26.0147174",
-            "startTime": "2026-08-25T06:15:18",
-            "restoreTime": "2026-08-25T08:30:49",
-            "suburbs": [
-              {
-                "suburbName": "YARRAVILLE",
-                "postcode": 3013,
-                "streets": [
-                  "LENNOX ST",
-                  "MAGGIE ST",
-                  "WILLIS ST"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-              [
-                [
-                  144.8926901513403,
-                  -37.816483056588126
-                ],
-                [
-                  144.89265142090952,
-                  -37.81646724346807
-                ],
-                [
-                  144.89224835069737,
-                  -37.816122780497174
-                ],
-                [
-                  144.8923727210784,
-                  -37.81549147997213
-                ],
-                [
-                  144.89308305806483,
-                  -37.81518724027408
-                ],
-                [
-                  144.8940230050616,
-                  -37.815296441930656
-                ],
-                [
-                  144.89406796068326,
-                  -37.81531901118746
-                ],
-                [
-                  144.89407950769353,
-                  -37.81534963068877
-                ],
-                [
-                  144.8940640741418,
-                  -37.81603996303422
-                ],
-                [
-                  144.89400907143624,
-                  -37.81631667024546
-                ],
-                [
-                  144.89383604721064,
-                  -37.81658707717823
-                ],
-                [
-                  144.8937742429647,
-                  -37.81660645000661
-                ],
-                [
-                  144.8926901513403,
-                  -37.816483056588126
-                ]
-              ]
-            ]
-          }
-        },
-        "ImpactedArea": [
-          [
-            {
-              "Latitude": -37.816483056588126,
-              "Longitude": 144.8926901513403
-            },
-            {
-              "Latitude": -37.81646724346807,
-              "Longitude": 144.89265142090952
-            },
-            {
-              "Latitude": -37.816122780497174,
-              "Longitude": 144.89224835069737
-            },
-            {
-              "Latitude": -37.81549147997213,
-              "Longitude": 144.8923727210784
-            },
-            {
-              "Latitude": -37.81518724027408,
-              "Longitude": 144.89308305806483
-            },
-            {
-              "Latitude": -37.815296441930656,
-              "Longitude": 144.8940230050616
-            },
-            {
-              "Latitude": -37.81531901118746,
-              "Longitude": 144.89406796068326
-            },
-            {
-              "Latitude": -37.81534963068877,
-              "Longitude": 144.89407950769353
-            },
-            {
-              "Latitude": -37.81603996303422,
-              "Longitude": 144.8940640741418
-            },
-            {
-              "Latitude": -37.81631667024546,
-              "Longitude": 144.89400907143624
-            },
-            {
-              "Latitude": -37.81658707717823,
-              "Longitude": 144.89383604721064
-            },
-            {
-              "Latitude": -37.81660645000661,
-              "Longitude": 144.8937742429647
-            },
-            {
-              "Latitude": -37.816483056588126,
-              "Longitude": 144.8926901513403
-            }
-          ]
-        ],
-        "RestorationTime": "2026-08-25T08:30:49",
-        "ImpactedCustomers": 34,
-        "LocationGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 34,
-            "eventId": "J.26.0147174",
-            "startTime": "2026-08-25T06:15:18",
-            "restoreTime": "2026-08-25T08:30:49",
-            "suburbs": [
-              {
-                "suburbName": "YARRAVILLE",
-                "postcode": 3013,
-                "streets": [
-                  "LENNOX ST",
-                  "MAGGIE ST",
-                  "WILLIS ST"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [
-              144.89316392919545,
-              -37.815896845140344
-            ]
-          }
-        },
-        "Location": {
-          "Latitude": -37.815896845140344,
-          "Longitude": 144.89316392919545
-        }
-      }
-    ]
-  },
-  {
     "PlannedStartTime": "2026-08-25T07:30:00",
     "PlannedEndTime": "2026-08-25T17:30:00",
     "EventId": "J.26.0144382",
@@ -217,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-25T22:18:26.804Z",
+    "LastUpdatedTime": "2026-08-25T23:18:42.119Z",
     "FeedReceivedTime": "2026-08-25T01:13:34.744Z",
     "History": [
       {
@@ -571,7 +368,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-25T22:18:26.804Z",
+    "LastUpdatedTime": "2026-08-25T23:18:42.119Z",
     "FeedReceivedTime": "2026-08-25T02:19:40.124Z",
     "History": [
       {
@@ -715,7 +512,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-25T22:18:26.804Z",
+    "LastUpdatedTime": "2026-08-25T23:18:42.119Z",
     "FeedReceivedTime": "2026-08-25T02:40:02.258Z",
     "History": [
       {
@@ -883,7 +680,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-25T22:18:26.804Z",
+    "LastUpdatedTime": "2026-08-25T23:18:42.119Z",
     "FeedReceivedTime": "2026-08-25T02:45:07.702Z",
     "History": [
       {
@@ -1120,7 +917,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-25T22:18:26.804Z",
+    "LastUpdatedTime": "2026-08-25T23:18:42.119Z",
     "FeedReceivedTime": "2026-08-25T03:35:59.359Z",
     "History": [
       {
@@ -1615,7 +1412,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-25T22:18:26.804Z",
+    "LastUpdatedTime": "2026-08-25T23:18:42.119Z",
     "FeedReceivedTime": "2026-08-25T04:11:36.195Z",
     "History": [
       {
@@ -1893,228 +1690,6 @@
     ]
   },
   {
-    "EstimatedRestorationTime": "2026-08-25T11:13:56",
-    "DispatchedTime": "2026-08-24T21:45:13",
-    "EventId": "J.26.0147177",
-    "Type": "Unplanned",
-    "Status": "Completed",
-    "Cause": "Animal impact",
-    "StartTime": "2026-08-25T07:13:48",
-    "RestorationTime": "2026-08-25T08:37:08",
-    "ImpactedCustomers": 0,
-    "LocationGeoJson": null,
-    "Location": null,
-    "ImpactedSuburbs": [],
-    "ImpactedAreaGeoJson": null,
-    "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-25T22:18:26.804Z",
-    "FeedReceivedTime": "2026-08-25T05:01:42.978Z",
-    "History": [
-      {
-        "ImpactedSuburbs": [
-          {
-            "SuburbName": "CAMPBELLFIELD",
-            "PostCode": 3061,
-            "Streets": [
-              "SYDNEY RD",
-              "SYDNEY ROAD",
-              "THOMPSON ST",
-              "THOMPSON STREET"
-            ]
-          }
-        ],
-        "ImpactedAreaGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 11,
-            "eventId": "J.26.0147177",
-            "startTime": "2026-08-25T07:13:48",
-            "restoreTime": "2026-08-25T08:37:08",
-            "suburbs": [
-              {
-                "suburbName": "CAMPBELLFIELD",
-                "postcode": 3061,
-                "streets": [
-                  "SYDNEY RD",
-                  "SYDNEY ROAD",
-                  "THOMPSON ST",
-                  "THOMPSON STREET"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-              [
-                [
-                  144.95602416466946,
-                  -37.6853274011389
-                ],
-                [
-                  144.95597687298581,
-                  -37.6852735264831
-                ],
-                [
-                  144.9558999572022,
-                  -37.68502223812119
-                ],
-                [
-                  144.9559682779612,
-                  -37.6847570812459
-                ],
-                [
-                  144.9560012512214,
-                  -37.68471075989461
-                ],
-                [
-                  144.95603876355457,
-                  -37.684690921441515
-                ],
-                [
-                  144.95789776571127,
-                  -37.68436920854973
-                ],
-                [
-                  144.9588577040385,
-                  -37.68428546535639
-                ],
-                [
-                  144.95891694561183,
-                  -37.684315441880074
-                ],
-                [
-                  144.9589451355307,
-                  -37.68436642154083
-                ],
-                [
-                  144.9591994399807,
-                  -37.686204862743544
-                ],
-                [
-                  144.95916151765155,
-                  -37.686251264339596
-                ],
-                [
-                  144.95909751745776,
-                  -37.68627336724136
-                ],
-                [
-                  144.9579210814866,
-                  -37.68637816339583
-                ],
-                [
-                  144.95602416466946,
-                  -37.6853274011389
-                ]
-              ]
-            ]
-          }
-        },
-        "ImpactedArea": [
-          [
-            {
-              "Latitude": -37.6853274011389,
-              "Longitude": 144.95602416466946
-            },
-            {
-              "Latitude": -37.6852735264831,
-              "Longitude": 144.95597687298581
-            },
-            {
-              "Latitude": -37.68502223812119,
-              "Longitude": 144.9558999572022
-            },
-            {
-              "Latitude": -37.6847570812459,
-              "Longitude": 144.9559682779612
-            },
-            {
-              "Latitude": -37.68471075989461,
-              "Longitude": 144.9560012512214
-            },
-            {
-              "Latitude": -37.684690921441515,
-              "Longitude": 144.95603876355457
-            },
-            {
-              "Latitude": -37.68436920854973,
-              "Longitude": 144.95789776571127
-            },
-            {
-              "Latitude": -37.68428546535639,
-              "Longitude": 144.9588577040385
-            },
-            {
-              "Latitude": -37.684315441880074,
-              "Longitude": 144.95891694561183
-            },
-            {
-              "Latitude": -37.68436642154083,
-              "Longitude": 144.9589451355307
-            },
-            {
-              "Latitude": -37.686204862743544,
-              "Longitude": 144.9591994399807
-            },
-            {
-              "Latitude": -37.686251264339596,
-              "Longitude": 144.95916151765155
-            },
-            {
-              "Latitude": -37.68627336724136,
-              "Longitude": 144.95909751745776
-            },
-            {
-              "Latitude": -37.68637816339583,
-              "Longitude": 144.9579210814866
-            },
-            {
-              "Latitude": -37.6853274011389,
-              "Longitude": 144.95602416466946
-            }
-          ]
-        ],
-        "RestorationTime": "2026-08-25T08:37:08",
-        "ImpactedCustomers": 11,
-        "LocationGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 11,
-            "eventId": "J.26.0147177",
-            "startTime": "2026-08-25T07:13:48",
-            "restoreTime": "2026-08-25T08:37:08",
-            "suburbs": [
-              {
-                "suburbName": "CAMPBELLFIELD",
-                "postcode": 3061,
-                "streets": [
-                  "SYDNEY RD",
-                  "SYDNEY ROAD",
-                  "THOMPSON ST",
-                  "THOMPSON STREET"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [
-              144.95754969859144,
-              -37.68533181437611
-            ]
-          }
-        },
-        "Location": {
-          "Latitude": -37.68533181437611,
-          "Longitude": 144.95754969859144
-        }
-      }
-    ]
-  },
-  {
     "PlannedStartTime": "2026-08-25T07:30:00",
     "PlannedEndTime": "2026-08-25T16:30:00",
     "EventId": "J.26.0144433",
@@ -2129,7 +1704,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-25T22:18:26.804Z",
+    "LastUpdatedTime": "2026-08-25T23:18:42.119Z",
     "FeedReceivedTime": "2026-08-25T05:07:33.884Z",
     "History": [
       {
@@ -2340,7 +1915,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-25T22:18:26.804Z",
+    "LastUpdatedTime": "2026-08-25T23:18:42.119Z",
     "FeedReceivedTime": "2026-08-25T05:47:43.325Z",
     "History": [
       {
@@ -2647,7 +2222,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-08-25T22:18:26.804Z",
+    "LastUpdatedTime": "2026-08-25T23:18:42.119Z",
     "FeedReceivedTime": "2026-08-25T10:12:56.934Z",
     "History": [
       {
@@ -3159,7 +2734,7 @@
         }
       ]
     ],
-    "LastUpdatedTime": "2026-08-25T22:18:26.804Z",
+    "LastUpdatedTime": "2026-08-25T23:18:42.119Z",
     "FeedReceivedTime": "2026-08-25T21:21:53.150Z",
     "History": null
   }
