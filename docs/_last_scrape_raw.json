@@ -1,216 +1,5 @@
 [
   {
-    "EstimatedRestorationTime": "2026-09-03T22:37:57",
-    "DispatchedTime": "2026-09-02T23:06:35",
-    "EventId": "J.26.0147892",
-    "Type": "Unplanned",
-    "Status": "Completed",
-    "Cause": "Network equipment fault",
-    "StartTime": "2026-09-03T09:03:02",
-    "RestorationTime": "2026-09-03T21:31:48",
-    "ImpactedCustomers": 0,
-    "LocationGeoJson": null,
-    "Location": null,
-    "ImpactedSuburbs": [],
-    "ImpactedAreaGeoJson": null,
-    "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-04T10:19:25.028Z",
-    "FeedReceivedTime": "2026-09-03T20:24:54.765Z",
-    "History": [
-      {
-        "ImpactedSuburbs": [
-          {
-            "SuburbName": "SUNBURY",
-            "PostCode": 3429,
-            "Streets": [
-              "ARDCLONEY DR",
-              "CUMING PL",
-              "SHERWOOD CT"
-            ]
-          }
-        ],
-        "ImpactedAreaGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 23,
-            "eventId": "J.26.0147892",
-            "startTime": "2026-09-03T09:03:02",
-            "restoreTime": "2026-09-03T19:57:31",
-            "suburbs": [
-              {
-                "suburbName": "SUNBURY",
-                "postcode": 3429,
-                "streets": [
-                  "ARDCLONEY DR",
-                  "CUMING PL",
-                  "SHERWOOD CT"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-              [
-                [
-                  144.73378380301875,
-                  -37.576341166456025
-                ],
-                [
-                  144.73258640533868,
-                  -37.575462629387395
-                ],
-                [
-                  144.73255719145243,
-                  -37.57541320285601
-                ],
-                [
-                  144.732569277262,
-                  -37.57537294553542
-                ],
-                [
-                  144.7331086532928,
-                  -37.57462883789452
-                ],
-                [
-                  144.73316546678686,
-                  -37.574594562810375
-                ],
-                [
-                  144.73483088291803,
-                  -37.57478395727438
-                ],
-                [
-                  144.73488068828303,
-                  -37.574803156690905
-                ],
-                [
-                  144.73490938690085,
-                  -37.574856309628416
-                ],
-                [
-                  144.73490267245268,
-                  -37.575524963602874
-                ],
-                [
-                  144.73477530614483,
-                  -37.576540854959575
-                ],
-                [
-                  144.734701348147,
-                  -37.576578972249294
-                ],
-                [
-                  144.73425550269127,
-                  -37.57653329478209
-                ],
-                [
-                  144.73378380301875,
-                  -37.576341166456025
-                ]
-              ]
-            ]
-          }
-        },
-        "ImpactedArea": [
-          [
-            {
-              "Latitude": -37.576341166456025,
-              "Longitude": 144.73378380301875
-            },
-            {
-              "Latitude": -37.575462629387395,
-              "Longitude": 144.73258640533868
-            },
-            {
-              "Latitude": -37.57541320285601,
-              "Longitude": 144.73255719145243
-            },
-            {
-              "Latitude": -37.57537294553542,
-              "Longitude": 144.732569277262
-            },
-            {
-              "Latitude": -37.57462883789452,
-              "Longitude": 144.7331086532928
-            },
-            {
-              "Latitude": -37.574594562810375,
-              "Longitude": 144.73316546678686
-            },
-            {
-              "Latitude": -37.57478395727438,
-              "Longitude": 144.73483088291803
-            },
-            {
-              "Latitude": -37.574803156690905,
-              "Longitude": 144.73488068828303
-            },
-            {
-              "Latitude": -37.574856309628416,
-              "Longitude": 144.73490938690085
-            },
-            {
-              "Latitude": -37.575524963602874,
-              "Longitude": 144.73490267245268
-            },
-            {
-              "Latitude": -37.576540854959575,
-              "Longitude": 144.73477530614483
-            },
-            {
-              "Latitude": -37.576578972249294,
-              "Longitude": 144.734701348147
-            },
-            {
-              "Latitude": -37.57653329478209,
-              "Longitude": 144.73425550269127
-            },
-            {
-              "Latitude": -37.576341166456025,
-              "Longitude": 144.73378380301875
-            }
-          ]
-        ],
-        "RestorationTime": "2026-09-03T19:57:31",
-        "ImpactedCustomers": 23,
-        "LocationGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 23,
-            "eventId": "J.26.0147892",
-            "startTime": "2026-09-03T09:03:02",
-            "restoreTime": "2026-09-03T19:57:31",
-            "suburbs": [
-              {
-                "suburbName": "SUNBURY",
-                "postcode": 3429,
-                "streets": [
-                  "ARDCLONEY DR",
-                  "CUMING PL",
-                  "SHERWOOD CT"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [
-              144.73373328917666,
-              -37.575586767529835
-            ]
-          }
-        },
-        "Location": {
-          "Latitude": -37.575586767529835,
-          "Longitude": 144.73373328917666
-        }
-      }
-    ]
-  },
-  {
     "EstimatedRestorationTime": "2026-09-04T10:00:42",
     "DispatchedTime": "2026-09-03T22:09:04",
     "EventId": "J.26.0147898",
@@ -225,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-04T10:19:25.028Z",
+    "LastUpdatedTime": "2026-09-04T22:38:38.150Z",
     "FeedReceivedTime": "2026-09-03T23:11:09.067Z",
     "History": [
       {
@@ -544,7 +333,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-04T10:19:25.028Z",
+    "LastUpdatedTime": "2026-09-04T22:38:38.150Z",
     "FeedReceivedTime": "2026-09-04T02:10:27.002Z",
     "History": [
       {
@@ -797,7 +586,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-04T10:19:25.028Z",
+    "LastUpdatedTime": "2026-09-04T22:38:38.150Z",
     "FeedReceivedTime": "2026-09-04T02:15:51.572Z",
     "History": [
       {
@@ -1220,7 +1009,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-04T10:19:25.028Z",
+    "LastUpdatedTime": "2026-09-04T22:38:38.150Z",
     "FeedReceivedTime": "2026-09-04T02:41:17.314Z",
     "History": [
       {
@@ -1487,7 +1276,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-04T10:19:25.028Z",
+    "LastUpdatedTime": "2026-09-04T22:38:38.150Z",
     "FeedReceivedTime": "2026-09-04T03:47:24.017Z",
     "History": [
       {
@@ -1765,7 +1554,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-04T10:19:25.028Z",
+    "LastUpdatedTime": "2026-09-04T22:38:38.150Z",
     "FeedReceivedTime": "2026-09-04T03:52:30.521Z",
     "History": [
       {
@@ -1952,7 +1741,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-04T10:19:25.028Z",
+    "LastUpdatedTime": "2026-09-04T22:38:38.150Z",
     "FeedReceivedTime": "2026-09-04T06:04:45.464Z",
     "History": [
       {
@@ -2187,7 +1976,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-04T10:19:25.028Z",
+    "LastUpdatedTime": "2026-09-04T22:38:38.150Z",
     "FeedReceivedTime": "2026-09-04T06:35:24.909Z",
     "History": [
       {
@@ -2835,6 +2624,560 @@
         "Location": {
           "Latitude": -37.704360117503086,
           "Longitude": 144.87365722865553
+        }
+      }
+    ]
+  },
+  {
+    "EstimatedRestorationTime": "2026-09-05T06:27:26",
+    "DispatchedTime": "2026-09-04T16:52:17",
+    "EventId": "J.26.0147976",
+    "Type": "Unplanned",
+    "Status": "Completed",
+    "Cause": "Network equipment fault",
+    "StartTime": "2026-09-05T01:17:18",
+    "RestorationTime": "2026-09-05T04:44:26",
+    "ImpactedCustomers": 0,
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-09-04T22:38:38.150Z",
+    "FeedReceivedTime": "2026-09-04T18:59:06.354Z",
+    "History": [
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "FAWKNER",
+            "PostCode": 3060,
+            "Streets": [
+              "BONWICK ST",
+              "CO-OP LANE",
+              "JUKES RD",
+              "MARGARET ST",
+              "MCDOUGALL ST"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 79,
+            "eventId": "J.26.0147976",
+            "startTime": "2026-09-05T01:17:18",
+            "restoreTime": "2026-09-05T04:44:26",
+            "suburbs": [
+              {
+                "suburbName": "FAWKNER",
+                "postcode": 3060,
+                "streets": [
+                  "BONWICK ST",
+                  "CO-OP LANE",
+                  "JUKES RD",
+                  "MARGARET ST",
+                  "MCDOUGALL ST"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  144.96327332563845,
+                  -37.704974036079186
+                ],
+                [
+                  144.96317207840156,
+                  -37.70493759906053
+                ],
+                [
+                  144.9631122537707,
+                  -37.70486340997916
+                ],
+                [
+                  144.96212401217028,
+                  -37.70214304703226
+                ],
+                [
+                  144.96211826193172,
+                  -37.702078904830806
+                ],
+                [
+                  144.9621773324892,
+                  -37.70174300676727
+                ],
+                [
+                  144.96219895874194,
+                  -37.70169077686441
+                ],
+                [
+                  144.96224227273055,
+                  -37.70164780833565
+                ],
+                [
+                  144.9633070517317,
+                  -37.700910092684985
+                ],
+                [
+                  144.9633789639144,
+                  -37.70087845243325
+                ],
+                [
+                  144.96346095625992,
+                  -37.70087298346596
+                ],
+                [
+                  144.96486240378317,
+                  -37.701018941277425
+                ],
+                [
+                  144.96561269594554,
+                  -37.70110412461277
+                ],
+                [
+                  144.9657154838491,
+                  -37.70114205012364
+                ],
+                [
+                  144.96576128981914,
+                  -37.701190250507786
+                ],
+                [
+                  144.96578036402522,
+                  -37.70124863722245
+                ],
+                [
+                  144.9657172616878,
+                  -37.70162342246822
+                ],
+                [
+                  144.96563582294647,
+                  -37.701907807128144
+                ],
+                [
+                  144.96462020508537,
+                  -37.70501571986067
+                ],
+                [
+                  144.96453643585622,
+                  -37.705083844713
+                ],
+                [
+                  144.9644181505425,
+                  -37.70510044416264
+                ],
+                [
+                  144.96327332563845,
+                  -37.704974036079186
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.704974036079186,
+              "Longitude": 144.96327332563845
+            },
+            {
+              "Latitude": -37.70493759906053,
+              "Longitude": 144.96317207840156
+            },
+            {
+              "Latitude": -37.70486340997916,
+              "Longitude": 144.9631122537707
+            },
+            {
+              "Latitude": -37.70214304703226,
+              "Longitude": 144.96212401217028
+            },
+            {
+              "Latitude": -37.702078904830806,
+              "Longitude": 144.96211826193172
+            },
+            {
+              "Latitude": -37.70174300676727,
+              "Longitude": 144.9621773324892
+            },
+            {
+              "Latitude": -37.70169077686441,
+              "Longitude": 144.96219895874194
+            },
+            {
+              "Latitude": -37.70164780833565,
+              "Longitude": 144.96224227273055
+            },
+            {
+              "Latitude": -37.700910092684985,
+              "Longitude": 144.9633070517317
+            },
+            {
+              "Latitude": -37.70087845243325,
+              "Longitude": 144.9633789639144
+            },
+            {
+              "Latitude": -37.70087298346596,
+              "Longitude": 144.96346095625992
+            },
+            {
+              "Latitude": -37.701018941277425,
+              "Longitude": 144.96486240378317
+            },
+            {
+              "Latitude": -37.70110412461277,
+              "Longitude": 144.96561269594554
+            },
+            {
+              "Latitude": -37.70114205012364,
+              "Longitude": 144.9657154838491
+            },
+            {
+              "Latitude": -37.701190250507786,
+              "Longitude": 144.96576128981914
+            },
+            {
+              "Latitude": -37.70124863722245,
+              "Longitude": 144.96578036402522
+            },
+            {
+              "Latitude": -37.70162342246822,
+              "Longitude": 144.9657172616878
+            },
+            {
+              "Latitude": -37.701907807128144,
+              "Longitude": 144.96563582294647
+            },
+            {
+              "Latitude": -37.70501571986067,
+              "Longitude": 144.96462020508537
+            },
+            {
+              "Latitude": -37.705083844713,
+              "Longitude": 144.96453643585622
+            },
+            {
+              "Latitude": -37.70510044416264,
+              "Longitude": 144.9644181505425
+            },
+            {
+              "Latitude": -37.704974036079186,
+              "Longitude": 144.96327332563845
+            }
+          ]
+        ],
+        "RestorationTime": "2026-09-05T04:44:26",
+        "ImpactedCustomers": 79,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 79,
+            "eventId": "J.26.0147976",
+            "startTime": "2026-09-05T01:17:18",
+            "restoreTime": "2026-09-05T04:44:26",
+            "suburbs": [
+              {
+                "suburbName": "FAWKNER",
+                "postcode": 3060,
+                "streets": [
+                  "BONWICK ST",
+                  "CO-OP LANE",
+                  "JUKES RD",
+                  "MARGARET ST",
+                  "MCDOUGALL ST"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              144.96394931297846,
+              -37.7029867138143
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.7029867138143,
+          "Longitude": 144.96394931297846
+        }
+      }
+    ]
+  },
+  {
+    "EstimatedRestorationTime": "2026-09-05T11:30:00",
+    "DispatchedTime": "2026-09-04T16:53:27",
+    "EventId": "J.26.0147975",
+    "Type": "Unplanned",
+    "Status": "Acknowledged",
+    "Cause": "Under Investigation",
+    "StartTime": "2026-09-05T01:37:08",
+    "RestorationTime": "2026-09-05T06:00:44",
+    "ImpactedCustomers": 0,
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-09-04T22:38:38.150Z",
+    "FeedReceivedTime": "2026-09-04T21:27:54.380Z",
+    "History": [
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "STRATHMORE HEIGHTS",
+            "PostCode": 3041,
+            "Streets": [
+              "CARAVELLE CR",
+              "MASCOMA ST",
+              "MASCOMA STREET",
+              "NORTHROP CT",
+              "PALAGIA CT"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 69,
+            "eventId": "J.26.0147975",
+            "startTime": "2026-09-05T01:37:08",
+            "restoreTime": "2026-09-05T06:00:44",
+            "suburbs": [
+              {
+                "suburbName": "STRATHMORE HEIGHTS",
+                "postcode": 3041,
+                "streets": [
+                  "CARAVELLE CR",
+                  "MASCOMA ST",
+                  "MASCOMA STREET",
+                  "NORTHROP CT",
+                  "PALAGIA CT"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  144.89205443715275,
+                  -37.71021179292538
+                ],
+                [
+                  144.89201661952058,
+                  -37.710058921212266
+                ],
+                [
+                  144.89201814496184,
+                  -37.710010457759914
+                ],
+                [
+                  144.89206368416615,
+                  -37.70994798545554
+                ],
+                [
+                  144.89211594186975,
+                  -37.709922667293185
+                ],
+                [
+                  144.8930163041502,
+                  -37.70981477201026
+                ],
+                [
+                  144.89381475648548,
+                  -37.70973706241434
+                ],
+                [
+                  144.89388049972735,
+                  -37.70974189015702
+                ],
+                [
+                  144.89393771726012,
+                  -37.709767955918444
+                ],
+                [
+                  144.89533832034556,
+                  -37.710774454087385
+                ],
+                [
+                  144.89538778019352,
+                  -37.710849576129334
+                ],
+                [
+                  144.89558413476058,
+                  -37.71206599892199
+                ],
+                [
+                  144.89553943425707,
+                  -37.71264168728828
+                ],
+                [
+                  144.89545972201665,
+                  -37.71298021289348
+                ],
+                [
+                  144.89543711426109,
+                  -37.71302456106864
+                ],
+                [
+                  144.89536809928427,
+                  -37.71307018571169
+                ],
+                [
+                  144.89527866820467,
+                  -37.713077748252104
+                ],
+                [
+                  144.89434478906594,
+                  -37.71293694696044
+                ],
+                [
+                  144.89348923898817,
+                  -37.712668698060774
+                ],
+                [
+                  144.89286472588162,
+                  -37.71175371737668
+                ],
+                [
+                  144.89205443715275,
+                  -37.71021179292538
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.71021179292538,
+              "Longitude": 144.89205443715275
+            },
+            {
+              "Latitude": -37.710058921212266,
+              "Longitude": 144.89201661952058
+            },
+            {
+              "Latitude": -37.710010457759914,
+              "Longitude": 144.89201814496184
+            },
+            {
+              "Latitude": -37.70994798545554,
+              "Longitude": 144.89206368416615
+            },
+            {
+              "Latitude": -37.709922667293185,
+              "Longitude": 144.89211594186975
+            },
+            {
+              "Latitude": -37.70981477201026,
+              "Longitude": 144.8930163041502
+            },
+            {
+              "Latitude": -37.70973706241434,
+              "Longitude": 144.89381475648548
+            },
+            {
+              "Latitude": -37.70974189015702,
+              "Longitude": 144.89388049972735
+            },
+            {
+              "Latitude": -37.709767955918444,
+              "Longitude": 144.89393771726012
+            },
+            {
+              "Latitude": -37.710774454087385,
+              "Longitude": 144.89533832034556
+            },
+            {
+              "Latitude": -37.710849576129334,
+              "Longitude": 144.89538778019352
+            },
+            {
+              "Latitude": -37.71206599892199,
+              "Longitude": 144.89558413476058
+            },
+            {
+              "Latitude": -37.71264168728828,
+              "Longitude": 144.89553943425707
+            },
+            {
+              "Latitude": -37.71298021289348,
+              "Longitude": 144.89545972201665
+            },
+            {
+              "Latitude": -37.71302456106864,
+              "Longitude": 144.89543711426109
+            },
+            {
+              "Latitude": -37.71307018571169,
+              "Longitude": 144.89536809928427
+            },
+            {
+              "Latitude": -37.713077748252104,
+              "Longitude": 144.89527866820467
+            },
+            {
+              "Latitude": -37.71293694696044,
+              "Longitude": 144.89434478906594
+            },
+            {
+              "Latitude": -37.712668698060774,
+              "Longitude": 144.89348923898817
+            },
+            {
+              "Latitude": -37.71175371737668,
+              "Longitude": 144.89286472588162
+            },
+            {
+              "Latitude": -37.71021179292538,
+              "Longitude": 144.89205443715275
+            }
+          ]
+        ],
+        "RestorationTime": "2026-09-05T06:00:44",
+        "ImpactedCustomers": 69,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 69,
+            "eventId": "J.26.0147975",
+            "startTime": "2026-09-05T01:37:08",
+            "restoreTime": "2026-09-05T06:00:44",
+            "suburbs": [
+              {
+                "suburbName": "STRATHMORE HEIGHTS",
+                "postcode": 3041,
+                "streets": [
+                  "CARAVELLE CR",
+                  "MASCOMA ST",
+                  "MASCOMA STREET",
+                  "NORTHROP CT",
+                  "PALAGIA CT"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              144.89380037714056,
+              -37.71140740533322
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.71140740533322,
+          "Longitude": 144.89380037714056
         }
       }
     ]
