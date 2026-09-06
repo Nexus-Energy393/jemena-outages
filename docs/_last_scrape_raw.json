@@ -14,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-06T10:02:09.799Z",
+    "LastUpdatedTime": "2026-09-06T22:36:20.440Z",
     "FeedReceivedTime": "2026-09-06T01:54:11.749Z",
     "History": [
       {
@@ -525,7 +525,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-06T10:02:09.799Z",
+    "LastUpdatedTime": "2026-09-06T22:36:20.440Z",
     "FeedReceivedTime": "2026-09-06T04:06:27.106Z",
     "History": [
       {
@@ -757,7 +757,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-06T10:02:09.799Z",
+    "LastUpdatedTime": "2026-09-06T22:36:20.440Z",
     "FeedReceivedTime": "2026-09-06T05:17:37.097Z",
     "History": [
       {
@@ -1022,7 +1022,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-06T10:02:09.799Z",
+    "LastUpdatedTime": "2026-09-06T22:36:20.440Z",
     "FeedReceivedTime": "2026-09-06T06:23:47.608Z",
     "History": [
       {
@@ -1271,6 +1271,257 @@
         "Location": {
           "Latitude": -37.736878721444555,
           "Longitude": 144.8865928768327
+        }
+      }
+    ]
+  },
+  {
+    "PlannedStartTime": "2026-09-06T21:00:00",
+    "PlannedEndTime": "2026-09-07T05:00:00",
+    "EventId": "J.26.0146723",
+    "Type": "Planned",
+    "Status": "Complete",
+    "Cause": "Essential Maintenance",
+    "StartTime": "2026-09-06T21:15:00",
+    "RestorationTime": "2026-09-07T03:35:36",
+    "ImpactedCustomers": 21,
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-09-06T22:36:20.440Z",
+    "FeedReceivedTime": "2026-09-06T20:08:22.335Z",
+    "History": [
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "HEIDELBERG WEST",
+            "PostCode": 3081,
+            "Streets": [
+              "ORIEL RD",
+              "SOUTHERN RD",
+              "SOUTHERN ROAD"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 21,
+            "eventId": "J.26.0146723",
+            "startTime": "2026-09-06T21:15:00",
+            "restoreTime": "2026-09-07T03:35:36",
+            "suburbs": [
+              {
+                "suburbName": "HEIDELBERG WEST",
+                "postcode": 3081,
+                "streets": [
+                  "ORIEL RD",
+                  "SOUTHERN RD",
+                  "SOUTHERN ROAD"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  145.04229144930773,
+                  -37.741785055663144
+                ],
+                [
+                  145.04019071978178,
+                  -37.74139315652472
+                ],
+                [
+                  145.04011471502858,
+                  -37.74136476424016
+                ],
+                [
+                  145.04004359601336,
+                  -37.74128353821644
+                ],
+                [
+                  145.04003673475023,
+                  -37.74121728801782
+                ],
+                [
+                  145.0401428817654,
+                  -37.740639791184506
+                ],
+                [
+                  145.04026625412695,
+                  -37.74049480948151
+                ],
+                [
+                  145.0403689215895,
+                  -37.740440215447265
+                ],
+                [
+                  145.04045192430485,
+                  -37.74043539125554
+                ],
+                [
+                  145.04091405990116,
+                  -37.74048531640868
+                ],
+                [
+                  145.04539737379378,
+                  -37.74128706965556
+                ],
+                [
+                  145.04549452515835,
+                  -37.741329029141625
+                ],
+                [
+                  145.04553700857298,
+                  -37.74137725916281
+                ],
+                [
+                  145.0455545626765,
+                  -37.741434373671275
+                ],
+                [
+                  145.04548891612126,
+                  -37.74182209828812
+                ],
+                [
+                  145.04544673516074,
+                  -37.741877708552174
+                ],
+                [
+                  145.04534089432326,
+                  -37.7419255879452
+                ],
+                [
+                  145.0433611049842,
+                  -37.74194257975724
+                ],
+                [
+                  145.04229144930773,
+                  -37.741785055663144
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.741785055663144,
+              "Longitude": 145.04229144930773
+            },
+            {
+              "Latitude": -37.74139315652472,
+              "Longitude": 145.04019071978178
+            },
+            {
+              "Latitude": -37.74136476424016,
+              "Longitude": 145.04011471502858
+            },
+            {
+              "Latitude": -37.74128353821644,
+              "Longitude": 145.04004359601336
+            },
+            {
+              "Latitude": -37.74121728801782,
+              "Longitude": 145.04003673475023
+            },
+            {
+              "Latitude": -37.740639791184506,
+              "Longitude": 145.0401428817654
+            },
+            {
+              "Latitude": -37.74049480948151,
+              "Longitude": 145.04026625412695
+            },
+            {
+              "Latitude": -37.740440215447265,
+              "Longitude": 145.0403689215895
+            },
+            {
+              "Latitude": -37.74043539125554,
+              "Longitude": 145.04045192430485
+            },
+            {
+              "Latitude": -37.74048531640868,
+              "Longitude": 145.04091405990116
+            },
+            {
+              "Latitude": -37.74128706965556,
+              "Longitude": 145.04539737379378
+            },
+            {
+              "Latitude": -37.741329029141625,
+              "Longitude": 145.04549452515835
+            },
+            {
+              "Latitude": -37.74137725916281,
+              "Longitude": 145.04553700857298
+            },
+            {
+              "Latitude": -37.741434373671275,
+              "Longitude": 145.0455545626765
+            },
+            {
+              "Latitude": -37.74182209828812,
+              "Longitude": 145.04548891612126
+            },
+            {
+              "Latitude": -37.741877708552174,
+              "Longitude": 145.04544673516074
+            },
+            {
+              "Latitude": -37.7419255879452,
+              "Longitude": 145.04534089432326
+            },
+            {
+              "Latitude": -37.74194257975724,
+              "Longitude": 145.0433611049842
+            },
+            {
+              "Latitude": -37.741785055663144,
+              "Longitude": 145.04229144930773
+            }
+          ]
+        ],
+        "RestorationTime": "2026-09-07T03:35:36",
+        "ImpactedCustomers": 21,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 21,
+            "eventId": "J.26.0146723",
+            "startTime": "2026-09-06T21:15:00",
+            "restoreTime": "2026-09-07T03:35:36",
+            "suburbs": [
+              {
+                "suburbName": "HEIDELBERG WEST",
+                "postcode": 3081,
+                "streets": [
+                  "ORIEL RD",
+                  "SOUTHERN RD",
+                  "SOUTHERN ROAD"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              145.04279564871337,
+              -37.74118898550639
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.74118898550639,
+          "Longitude": 145.04279564871337
         }
       }
     ]
