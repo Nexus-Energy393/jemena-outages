@@ -14,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-06T22:36:20.440Z",
+    "LastUpdatedTime": "2026-09-07T00:33:04.601Z",
     "FeedReceivedTime": "2026-09-06T01:54:11.749Z",
     "History": [
       {
@@ -525,7 +525,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-06T22:36:20.440Z",
+    "LastUpdatedTime": "2026-09-07T00:33:04.601Z",
     "FeedReceivedTime": "2026-09-06T04:06:27.106Z",
     "History": [
       {
@@ -757,7 +757,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-06T22:36:20.440Z",
+    "LastUpdatedTime": "2026-09-07T00:33:04.601Z",
     "FeedReceivedTime": "2026-09-06T05:17:37.097Z",
     "History": [
       {
@@ -1022,7 +1022,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-06T22:36:20.440Z",
+    "LastUpdatedTime": "2026-09-07T00:33:04.601Z",
     "FeedReceivedTime": "2026-09-06T06:23:47.608Z",
     "History": [
       {
@@ -1290,7 +1290,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-06T22:36:20.440Z",
+    "LastUpdatedTime": "2026-09-07T00:33:04.601Z",
     "FeedReceivedTime": "2026-09-06T20:08:22.335Z",
     "History": [
       {
@@ -1522,6 +1522,409 @@
         "Location": {
           "Latitude": -37.74118898550639,
           "Longitude": 145.04279564871337
+        }
+      }
+    ]
+  },
+  {
+    "PlannedStartTime": "2026-09-07T08:00:00",
+    "PlannedEndTime": "2026-09-07T17:30:00",
+    "EventId": "J.26.0146458",
+    "Type": "Planned",
+    "Status": "Planned Outage Execution",
+    "Cause": "Essential Maintenance",
+    "StartTime": "2026-09-07T09:33:04",
+    "RestorationTime": null,
+    "ImpactedCustomers": 6,
+    "LocationGeoJson": {
+      "type": "Feature",
+      "properties": {
+        "eventId": "J.26.0146458",
+        "customerReference": "J5221708",
+        "customersOff": "6",
+        "status": "Planned Outage Execution",
+        "type": "Planned",
+        "resolvedFlag": "false",
+        "showOutageFlag": "false",
+        "symptoms": [],
+        "cause": "Essential Maintenance",
+        "startTime": "2026-09-07T09:33:04",
+        "restoreTime": "",
+        "dispatchedTime": "",
+        "etr": "2026-09-07T17:30:00",
+        "plannedStartTime": "2026-09-07T08:00:00",
+        "plannedEndTime": "2026-09-07T17:30:00",
+        "lastUpdateTime": "2026-09-07T09:33:12"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          144.8799563458537,
+          -37.700605304466904
+        ]
+      }
+    },
+    "Location": {
+      "Latitude": -37.700605304466904,
+      "Longitude": 144.8799563458537
+    },
+    "ImpactedSuburbs": [
+      {
+        "SuburbName": "TULLAMARINE",
+        "PostCode": 3043,
+        "Streets": [
+          "BROADMEADOWS RD",
+          "THERESA ST"
+        ]
+      }
+    ],
+    "ImpactedAreaGeoJson": {
+      "type": "Feature",
+      "properties": {
+        "eventId": "J.26.0146458",
+        "customerReference": "J5221708",
+        "customersOff": "6",
+        "status": "Planned Outage Execution",
+        "type": "Planned",
+        "resolvedFlag": "false",
+        "showOutageFlag": "false",
+        "symptoms": [],
+        "cause": "Essential Maintenance",
+        "startTime": "2026-09-07T09:33:04",
+        "restoreTime": "",
+        "dispatchedTime": "",
+        "etr": "2026-09-07T17:30:00",
+        "plannedStartTime": "2026-09-07T08:00:00",
+        "plannedEndTime": "2026-09-07T17:30:00",
+        "lastUpdateTime": "2026-09-07T09:33:12"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              144.87949730236733,
+              -37.701006342173514
+            ],
+            [
+              144.87946921313946,
+              -37.70098015519217
+            ],
+            [
+              144.87939122226302,
+              -37.70080328447132
+            ],
+            [
+              144.87944954026142,
+              -37.70048471139599
+            ],
+            [
+              144.8797279365882,
+              -37.69994427552092
+            ],
+            [
+              144.87978215423098,
+              -37.69992942789788
+            ],
+            [
+              144.88001283126394,
+              -37.69995910079497
+            ],
+            [
+              144.88004160113638,
+              -37.69998717439152
+            ],
+            [
+              144.88050141247768,
+              -37.70113104715092
+            ],
+            [
+              144.8805214694444,
+              -37.70125042109883
+            ],
+            [
+              144.88049965546404,
+              -37.70127246870902
+            ],
+            [
+              144.88045429128076,
+              -37.701281181035924
+            ],
+            [
+              144.87999637064473,
+              -37.70122784391285
+            ],
+            [
+              144.87949730236733,
+              -37.701006342173514
+            ]
+          ]
+        ]
+      }
+    },
+    "ImpactedArea": [
+      [
+        {
+          "Latitude": -37.701006342173514,
+          "Longitude": 144.87949730236733
+        },
+        {
+          "Latitude": -37.70098015519217,
+          "Longitude": 144.87946921313946
+        },
+        {
+          "Latitude": -37.70080328447132,
+          "Longitude": 144.87939122226302
+        },
+        {
+          "Latitude": -37.70048471139599,
+          "Longitude": 144.87944954026142
+        },
+        {
+          "Latitude": -37.69994427552092,
+          "Longitude": 144.8797279365882
+        },
+        {
+          "Latitude": -37.69992942789788,
+          "Longitude": 144.87978215423098
+        },
+        {
+          "Latitude": -37.69995910079497,
+          "Longitude": 144.88001283126394
+        },
+        {
+          "Latitude": -37.69998717439152,
+          "Longitude": 144.88004160113638
+        },
+        {
+          "Latitude": -37.70113104715092,
+          "Longitude": 144.88050141247768
+        },
+        {
+          "Latitude": -37.70125042109883,
+          "Longitude": 144.8805214694444
+        },
+        {
+          "Latitude": -37.70127246870902,
+          "Longitude": 144.88049965546404
+        },
+        {
+          "Latitude": -37.701281181035924,
+          "Longitude": 144.88045429128076
+        },
+        {
+          "Latitude": -37.70122784391285,
+          "Longitude": 144.87999637064473
+        },
+        {
+          "Latitude": -37.701006342173514,
+          "Longitude": 144.87949730236733
+        }
+      ]
+    ],
+    "LastUpdatedTime": "2026-09-07T00:33:04.601Z",
+    "FeedReceivedTime": "2026-09-06T23:37:40.574Z",
+    "History": null
+  },
+  {
+    "PlannedStartTime": "2026-09-07T07:30:00",
+    "PlannedEndTime": "2026-09-07T15:30:00",
+    "EventId": "J.26.0145391",
+    "Type": "Planned",
+    "Status": "Planned Outage Execution",
+    "Cause": "Essential Maintenance",
+    "StartTime": "2026-09-07T09:14:56",
+    "RestorationTime": "2026-09-07T10:27:22",
+    "ImpactedCustomers": 12,
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-09-07T00:33:04.601Z",
+    "FeedReceivedTime": "2026-09-07T00:28:34.049Z",
+    "History": [
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "BRAYBROOK",
+            "PostCode": 3019,
+            "Streets": [
+              "DARNLEY ST",
+              "MENZIES ST",
+              "MENZIES STREET"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 12,
+            "eventId": "J.26.0145391",
+            "startTime": "2026-09-07T09:14:56",
+            "restoreTime": "2026-09-07T10:27:22",
+            "suburbs": [
+              {
+                "suburbName": "BRAYBROOK",
+                "postcode": 3019,
+                "streets": [
+                  "DARNLEY ST",
+                  "MENZIES ST",
+                  "MENZIES STREET"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  144.85181274287072,
+                  -37.78240716417798
+                ],
+                [
+                  144.85176626180024,
+                  -37.782370089926744
+                ],
+                [
+                  144.85163312762762,
+                  -37.78189617258591
+                ],
+                [
+                  144.8516526899447,
+                  -37.78176157200458
+                ],
+                [
+                  144.8516742277671,
+                  -37.781731424002075
+                ],
+                [
+                  144.85273527540667,
+                  -37.781447807739276
+                ],
+                [
+                  144.85322017860227,
+                  -37.78152461053318
+                ],
+                [
+                  144.85326074762094,
+                  -37.78154746308413
+                ],
+                [
+                  144.8533224941917,
+                  -37.78193398042911
+                ],
+                [
+                  144.8531409251082,
+                  -37.78213341863176
+                ],
+                [
+                  144.85250591734294,
+                  -37.782474223416415
+                ],
+                [
+                  144.85204193492467,
+                  -37.78244851196557
+                ],
+                [
+                  144.85181274287072,
+                  -37.78240716417798
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.78240716417798,
+              "Longitude": 144.85181274287072
+            },
+            {
+              "Latitude": -37.782370089926744,
+              "Longitude": 144.85176626180024
+            },
+            {
+              "Latitude": -37.78189617258591,
+              "Longitude": 144.85163312762762
+            },
+            {
+              "Latitude": -37.78176157200458,
+              "Longitude": 144.8516526899447
+            },
+            {
+              "Latitude": -37.781731424002075,
+              "Longitude": 144.8516742277671
+            },
+            {
+              "Latitude": -37.781447807739276,
+              "Longitude": 144.85273527540667
+            },
+            {
+              "Latitude": -37.78152461053318,
+              "Longitude": 144.85322017860227
+            },
+            {
+              "Latitude": -37.78154746308413,
+              "Longitude": 144.85326074762094
+            },
+            {
+              "Latitude": -37.78193398042911,
+              "Longitude": 144.8533224941917
+            },
+            {
+              "Latitude": -37.78213341863176,
+              "Longitude": 144.8531409251082
+            },
+            {
+              "Latitude": -37.782474223416415,
+              "Longitude": 144.85250591734294
+            },
+            {
+              "Latitude": -37.78244851196557,
+              "Longitude": 144.85204193492467
+            },
+            {
+              "Latitude": -37.78240716417798,
+              "Longitude": 144.85181274287072
+            }
+          ]
+        ],
+        "RestorationTime": "2026-09-07T10:27:22",
+        "ImpactedCustomers": 12,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 12,
+            "eventId": "J.26.0145391",
+            "startTime": "2026-09-07T09:14:56",
+            "restoreTime": "2026-09-07T10:27:22",
+            "suburbs": [
+              {
+                "suburbName": "BRAYBROOK",
+                "postcode": 3019,
+                "streets": [
+                  "DARNLEY ST",
+                  "MENZIES ST",
+                  "MENZIES STREET"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              144.85247781090965,
+              -37.78196101557785
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.78196101557785,
+          "Longitude": 144.85247781090965
         }
       }
     ]
