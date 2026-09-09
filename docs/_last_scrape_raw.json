@@ -1,280 +1,5 @@
 [
   {
-    "PlannedStartTime": "2026-09-09T08:00:00",
-    "PlannedEndTime": "2026-09-09T17:30:00",
-    "EventId": "J.26.0146938",
-    "Type": "Planned",
-    "Status": "Planned Outage Execution",
-    "Cause": "Essential Maintenance",
-    "StartTime": "2026-09-09T09:17:02",
-    "RestorationTime": null,
-    "ImpactedCustomers": 103,
-    "LocationGeoJson": {
-      "type": "Feature",
-      "properties": {
-        "eventId": "J.26.0146938",
-        "customerReference": "J5216879",
-        "customersOff": "103",
-        "status": "Planned Outage Execution",
-        "type": "Planned",
-        "resolvedFlag": "false",
-        "showOutageFlag": "true",
-        "symptoms": [],
-        "cause": "Essential Maintenance",
-        "startTime": "2026-09-09T09:17:02",
-        "etr": "2026-09-09T17:30:00",
-        "plannedStartTime": "2026-09-09T08:00:00",
-        "plannedEndTime": "2026-09-09T17:30:00",
-        "lastUpdateTime": "2026-09-09T09:17:31"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          144.90470625972526,
-          -37.52036948939221
-        ]
-      }
-    },
-    "Location": {
-      "Latitude": -37.52036948939221,
-      "Longitude": 144.90470625972526
-    },
-    "ImpactedSuburbs": [
-      {
-        "SuburbName": "MICKLEHAM",
-        "PostCode": 3064,
-        "Streets": [
-          "COOLANGATTA DR",
-          "ERROL BVD",
-          "GIBDON WAY",
-          "HELM DR",
-          "LANGRIDGE WAY",
-          "MARGARETTA CCT",
-          "RAVIDA WAY",
-          "SACKVILLE WAY",
-          "SEACOMBE DR"
-        ]
-      }
-    ],
-    "ImpactedAreaGeoJson": {
-      "type": "Feature",
-      "properties": {
-        "eventId": "J.26.0146938",
-        "customerReference": "J5216879",
-        "customersOff": "103",
-        "status": "Planned Outage Execution",
-        "type": "Planned",
-        "resolvedFlag": "false",
-        "showOutageFlag": "true",
-        "symptoms": [],
-        "cause": "Essential Maintenance",
-        "startTime": "2026-09-09T09:17:02",
-        "etr": "2026-09-09T17:30:00",
-        "plannedStartTime": "2026-09-09T08:00:00",
-        "plannedEndTime": "2026-09-09T17:30:00",
-        "lastUpdateTime": "2026-09-09T09:17:31"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              144.90334079504973,
-              -37.522323259671076
-            ],
-            [
-              144.901087121171,
-              -37.520801994902456
-            ],
-            [
-              144.90102353458423,
-              -37.520738988494
-            ],
-            [
-              144.90099350713092,
-              -37.52066187769534
-            ],
-            [
-              144.9010012220586,
-              -37.520581405101765
-            ],
-            [
-              144.90116094076785,
-              -37.52031134663803
-            ],
-            [
-              144.90154625530664,
-              -37.51995461865656
-            ],
-            [
-              144.90165472781865,
-              -37.51989556724994
-            ],
-            [
-              144.9071691283018,
-              -37.5182601683867
-            ],
-            [
-              144.90730609142054,
-              -37.518248991251035
-            ],
-            [
-              144.90807536500236,
-              -37.51834296139816
-            ],
-            [
-              144.90817488645482,
-              -37.518371621790685
-            ],
-            [
-              144.90825313562567,
-              -37.51842819396348
-            ],
-            [
-              144.90828041610837,
-              -37.51846441322498
-            ],
-            [
-              144.90830613540945,
-              -37.51854587601756
-            ],
-            [
-              144.9084190123196,
-              -37.52033712406335
-            ],
-            [
-              144.90838021712958,
-              -37.52056757282465
-            ],
-            [
-              144.90831593903994,
-              -37.52067726817815
-            ],
-            [
-              144.90823521783238,
-              -37.520727289754724
-            ],
-            [
-              144.90396134659477,
-              -37.52246726457377
-            ],
-            [
-              144.90386479505648,
-              -37.522489987533376
-            ],
-            [
-              144.9037644299524,
-              -37.52248335733489
-            ],
-            [
-              144.90334079504973,
-              -37.522323259671076
-            ]
-          ]
-        ]
-      }
-    },
-    "ImpactedArea": [
-      [
-        {
-          "Latitude": -37.522323259671076,
-          "Longitude": 144.90334079504973
-        },
-        {
-          "Latitude": -37.520801994902456,
-          "Longitude": 144.901087121171
-        },
-        {
-          "Latitude": -37.520738988494,
-          "Longitude": 144.90102353458423
-        },
-        {
-          "Latitude": -37.52066187769534,
-          "Longitude": 144.90099350713092
-        },
-        {
-          "Latitude": -37.520581405101765,
-          "Longitude": 144.9010012220586
-        },
-        {
-          "Latitude": -37.52031134663803,
-          "Longitude": 144.90116094076785
-        },
-        {
-          "Latitude": -37.51995461865656,
-          "Longitude": 144.90154625530664
-        },
-        {
-          "Latitude": -37.51989556724994,
-          "Longitude": 144.90165472781865
-        },
-        {
-          "Latitude": -37.5182601683867,
-          "Longitude": 144.9071691283018
-        },
-        {
-          "Latitude": -37.518248991251035,
-          "Longitude": 144.90730609142054
-        },
-        {
-          "Latitude": -37.51834296139816,
-          "Longitude": 144.90807536500236
-        },
-        {
-          "Latitude": -37.518371621790685,
-          "Longitude": 144.90817488645482
-        },
-        {
-          "Latitude": -37.51842819396348,
-          "Longitude": 144.90825313562567
-        },
-        {
-          "Latitude": -37.51846441322498,
-          "Longitude": 144.90828041610837
-        },
-        {
-          "Latitude": -37.51854587601756,
-          "Longitude": 144.90830613540945
-        },
-        {
-          "Latitude": -37.52033712406335,
-          "Longitude": 144.9084190123196
-        },
-        {
-          "Latitude": -37.52056757282465,
-          "Longitude": 144.90838021712958
-        },
-        {
-          "Latitude": -37.52067726817815,
-          "Longitude": 144.90831593903994
-        },
-        {
-          "Latitude": -37.520727289754724,
-          "Longitude": 144.90823521783238
-        },
-        {
-          "Latitude": -37.52246726457377,
-          "Longitude": 144.90396134659477
-        },
-        {
-          "Latitude": -37.522489987533376,
-          "Longitude": 144.90386479505648
-        },
-        {
-          "Latitude": -37.52248335733489,
-          "Longitude": 144.9037644299524
-        },
-        {
-          "Latitude": -37.522323259671076,
-          "Longitude": 144.90334079504973
-        }
-      ]
-    ],
-    "LastUpdatedTime": "2026-09-09T07:41:46.571Z",
-    "FeedReceivedTime": "2026-09-08T23:18:44.469Z",
-    "History": null
-  },
-  {
     "EstimatedRestorationTime": "2026-09-09T13:46:46",
     "DispatchedTime": "2026-09-08T23:53:35",
     "EventId": "J.26.0148200",
@@ -289,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-09T07:41:46.571Z",
+    "LastUpdatedTime": "2026-09-09T12:31:32.699Z",
     "FeedReceivedTime": "2026-09-09T02:30:50.520Z",
     "History": [
       {
@@ -559,7 +284,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-09T07:41:46.571Z",
+    "LastUpdatedTime": "2026-09-09T12:31:32.699Z",
     "FeedReceivedTime": "2026-09-09T03:33:05.198Z",
     "History": [
       {
@@ -1036,7 +761,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-09T07:41:46.571Z",
+    "LastUpdatedTime": "2026-09-09T12:31:32.699Z",
     "FeedReceivedTime": "2026-09-09T03:53:24.903Z",
     "History": [
       {
@@ -1249,7 +974,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-09T07:41:46.571Z",
+    "LastUpdatedTime": "2026-09-09T12:31:32.699Z",
     "FeedReceivedTime": "2026-09-09T04:34:04.730Z",
     "History": [
       {
@@ -1685,7 +1410,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-09T07:41:46.571Z",
+    "LastUpdatedTime": "2026-09-09T12:31:32.699Z",
     "FeedReceivedTime": "2026-09-09T05:29:59.745Z",
     "History": [
       {
@@ -2288,6 +2013,764 @@
         "Location": {
           "Latitude": -37.77732458414789,
           "Longitude": 144.918661750065
+        }
+      }
+    ]
+  },
+  {
+    "PlannedStartTime": "2026-09-09T08:00:00",
+    "PlannedEndTime": "2026-09-09T17:30:00",
+    "EventId": "J.26.0146938",
+    "Type": "Planned",
+    "Status": "Complete",
+    "Cause": "Essential Maintenance",
+    "StartTime": "2026-09-09T08:39:02",
+    "RestorationTime": "2026-09-09T15:19:48",
+    "ImpactedCustomers": 103,
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-09-09T12:31:32.699Z",
+    "FeedReceivedTime": "2026-09-09T08:48:31.014Z",
+    "History": [
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "MICKLEHAM",
+            "PostCode": 3064,
+            "Streets": [
+              "COOLANGATTA DR",
+              "HELM DR",
+              "LANGRIDGE WAY",
+              "MARGARETTA CCT",
+              "SEACOMBE DR"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 57,
+            "eventId": "J.26.0146938",
+            "startTime": "2026-09-09T08:39:02",
+            "restoreTime": "2026-09-09T15:19:28",
+            "suburbs": [
+              {
+                "suburbName": "MICKLEHAM",
+                "postcode": 3064,
+                "streets": [
+                  "COOLANGATTA DR",
+                  "HELM DR",
+                  "LANGRIDGE WAY",
+                  "MARGARETTA CCT",
+                  "SEACOMBE DR"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  144.9062825622411,
+                  -37.52068076915318
+                ],
+                [
+                  144.90576153830114,
+                  -37.5204560948274
+                ],
+                [
+                  144.90572436550056,
+                  -37.52041399736372
+                ],
+                [
+                  144.90572094390268,
+                  -37.52036267399838
+                ],
+                [
+                  144.9061949249032,
+                  -37.51949926416711
+                ],
+                [
+                  144.9067616553972,
+                  -37.51857658742054
+                ],
+                [
+                  144.90725759225197,
+                  -37.51836957697122
+                ],
+                [
+                  144.90805176534224,
+                  -37.51846446559378
+                ],
+                [
+                  144.90811309235693,
+                  -37.51848772261987
+                ],
+                [
+                  144.9081513310378,
+                  -37.518552012858635
+                ],
+                [
+                  144.90826420794795,
+                  -37.52034326075713
+                ],
+                [
+                  144.90821227452258,
+                  -37.520581998996235
+                ],
+                [
+                  144.90814405107076,
+                  -37.52062439497327
+                ],
+                [
+                  144.906915751642,
+                  -37.520910563270505
+                ],
+                [
+                  144.90685214778813,
+                  -37.52090157089166
+                ],
+                [
+                  144.9062825622411,
+                  -37.52068076915318
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.52068076915318,
+              "Longitude": 144.9062825622411
+            },
+            {
+              "Latitude": -37.5204560948274,
+              "Longitude": 144.90576153830114
+            },
+            {
+              "Latitude": -37.52041399736372,
+              "Longitude": 144.90572436550056
+            },
+            {
+              "Latitude": -37.52036267399838,
+              "Longitude": 144.90572094390268
+            },
+            {
+              "Latitude": -37.51949926416711,
+              "Longitude": 144.9061949249032
+            },
+            {
+              "Latitude": -37.51857658742054,
+              "Longitude": 144.9067616553972
+            },
+            {
+              "Latitude": -37.51836957697122,
+              "Longitude": 144.90725759225197
+            },
+            {
+              "Latitude": -37.51846446559378,
+              "Longitude": 144.90805176534224
+            },
+            {
+              "Latitude": -37.51848772261987,
+              "Longitude": 144.90811309235693
+            },
+            {
+              "Latitude": -37.518552012858635,
+              "Longitude": 144.9081513310378
+            },
+            {
+              "Latitude": -37.52034326075713,
+              "Longitude": 144.90826420794795
+            },
+            {
+              "Latitude": -37.520581998996235,
+              "Longitude": 144.90821227452258
+            },
+            {
+              "Latitude": -37.52062439497327,
+              "Longitude": 144.90814405107076
+            },
+            {
+              "Latitude": -37.520910563270505,
+              "Longitude": 144.906915751642
+            },
+            {
+              "Latitude": -37.52090157089166,
+              "Longitude": 144.90685214778813
+            },
+            {
+              "Latitude": -37.52068076915318,
+              "Longitude": 144.9062825622411
+            }
+          ]
+        ],
+        "RestorationTime": "2026-09-09T15:19:28",
+        "ImpactedCustomers": 57,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 57,
+            "eventId": "J.26.0146938",
+            "startTime": "2026-09-09T08:39:02",
+            "restoreTime": "2026-09-09T15:19:28",
+            "suburbs": [
+              {
+                "suburbName": "MICKLEHAM",
+                "postcode": 3064,
+                "streets": [
+                  "COOLANGATTA DR",
+                  "HELM DR",
+                  "LANGRIDGE WAY",
+                  "MARGARETTA CCT",
+                  "SEACOMBE DR"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              144.9069925759253,
+              -37.51964007012086
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.51964007012086,
+          "Longitude": 144.9069925759253
+        }
+      },
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "MICKLEHAM",
+            "PostCode": 3064,
+            "Streets": [
+              "ERROL BVD",
+              "GIBDON WAY",
+              "RAVIDA WAY",
+              "SACKVILLE WAY"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 46,
+            "eventId": "J.26.0146938",
+            "startTime": "2026-09-09T08:39:02",
+            "restoreTime": "2026-09-09T15:19:48",
+            "suburbs": [
+              {
+                "suburbName": "MICKLEHAM",
+                "postcode": 3064,
+                "streets": [
+                  "ERROL BVD",
+                  "GIBDON WAY",
+                  "RAVIDA WAY",
+                  "SACKVILLE WAY"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  144.90337548842675,
+                  -37.522266969546024
+                ],
+                [
+                  144.9011132634395,
+                  -37.52073371119666
+                ],
+                [
+                  144.90107201267014,
+                  -37.520654885211236
+                ],
+                [
+                  144.90107749197813,
+                  -37.52059773184357
+                ],
+                [
+                  144.9012614092847,
+                  -37.520303756431026
+                ],
+                [
+                  144.90160535613626,
+                  -37.519996195730286
+                ],
+                [
+                  144.90171910890743,
+                  -37.519946523506675
+                ],
+                [
+                  144.9049915603966,
+                  -37.519524160526394
+                ],
+                [
+                  144.9058372106473,
+                  -37.51957501712701
+                ],
+                [
+                  144.90623741664749,
+                  -37.51972715543195
+                ],
+                [
+                  144.9063196057317,
+                  -37.51978770763561
+                ],
+                [
+                  144.9063442071647,
+                  -37.519844227115804
+                ],
+                [
+                  144.90632662318652,
+                  -37.51993209903414
+                ],
+                [
+                  144.90598395693323,
+                  -37.52048224682489
+                ],
+                [
+                  144.90398524126607,
+                  -37.52237355220505
+                ],
+                [
+                  144.90389483263334,
+                  -37.52242142404149
+                ],
+                [
+                  144.90378614763253,
+                  -37.52242311194147
+                ],
+                [
+                  144.90337548842675,
+                  -37.522266969546024
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.522266969546024,
+              "Longitude": 144.90337548842675
+            },
+            {
+              "Latitude": -37.52073371119666,
+              "Longitude": 144.9011132634395
+            },
+            {
+              "Latitude": -37.520654885211236,
+              "Longitude": 144.90107201267014
+            },
+            {
+              "Latitude": -37.52059773184357,
+              "Longitude": 144.90107749197813
+            },
+            {
+              "Latitude": -37.520303756431026,
+              "Longitude": 144.9012614092847
+            },
+            {
+              "Latitude": -37.519996195730286,
+              "Longitude": 144.90160535613626
+            },
+            {
+              "Latitude": -37.519946523506675,
+              "Longitude": 144.90171910890743
+            },
+            {
+              "Latitude": -37.519524160526394,
+              "Longitude": 144.9049915603966
+            },
+            {
+              "Latitude": -37.51957501712701,
+              "Longitude": 144.9058372106473
+            },
+            {
+              "Latitude": -37.51972715543195,
+              "Longitude": 144.90623741664749
+            },
+            {
+              "Latitude": -37.51978770763561,
+              "Longitude": 144.9063196057317
+            },
+            {
+              "Latitude": -37.519844227115804,
+              "Longitude": 144.9063442071647
+            },
+            {
+              "Latitude": -37.51993209903414,
+              "Longitude": 144.90632662318652
+            },
+            {
+              "Latitude": -37.52048224682489,
+              "Longitude": 144.90598395693323
+            },
+            {
+              "Latitude": -37.52237355220505,
+              "Longitude": 144.90398524126607
+            },
+            {
+              "Latitude": -37.52242142404149,
+              "Longitude": 144.90389483263334
+            },
+            {
+              "Latitude": -37.52242311194147,
+              "Longitude": 144.90378614763253
+            },
+            {
+              "Latitude": -37.522266969546024,
+              "Longitude": 144.90337548842675
+            }
+          ]
+        ],
+        "RestorationTime": "2026-09-09T15:19:48",
+        "ImpactedCustomers": 46,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 46,
+            "eventId": "J.26.0146938",
+            "startTime": "2026-09-09T08:39:02",
+            "restoreTime": "2026-09-09T15:19:48",
+            "suburbs": [
+              {
+                "suburbName": "MICKLEHAM",
+                "postcode": 3064,
+                "streets": [
+                  "ERROL BVD",
+                  "GIBDON WAY",
+                  "RAVIDA WAY",
+                  "SACKVILLE WAY"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              144.90370810991743,
+              -37.52097363623393
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.52097363623393,
+          "Longitude": 144.90370810991743
+        }
+      }
+    ]
+  },
+  {
+    "EstimatedRestorationTime": "2026-09-09T23:43:03",
+    "DispatchedTime": null,
+    "EventId": "J.26.0148259",
+    "Type": "Unplanned",
+    "Status": "Acknowledged",
+    "Cause": "Under Investigation",
+    "StartTime": "2026-09-09T19:42:54",
+    "RestorationTime": "2026-09-09T22:34:20",
+    "ImpactedCustomers": 45,
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-09-09T22:35:04",
+    "FeedReceivedTime": "2026-09-09T12:35:05.052Z",
+    "History": [
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "PASCOE VALE",
+            "PostCode": 3044,
+            "Streets": [
+              "BURGUNDY ST",
+              "GAFFNEY ST",
+              "RAILWAY PDE"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 43,
+            "eventId": "J.26.0148259",
+            "startTime": "2026-09-09T19:42:54",
+            "restoreTime": "2026-09-09T22:34:20",
+            "suburbs": [
+              {
+                "suburbName": "PASCOE VALE",
+                "postcode": 3044,
+                "streets": [
+                  "BURGUNDY ST",
+                  "GAFFNEY ST",
+                  "RAILWAY PDE"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  144.92756193490095,
+                  -37.7305250556618
+                ],
+                [
+                  144.92748746533186,
+                  -37.73046391379959
+                ],
+                [
+                  144.92743185399064,
+                  -37.73039129977862
+                ],
+                [
+                  144.92229936233994,
+                  -37.721622155164475
+                ],
+                [
+                  144.92225488793653,
+                  -37.72147544644021
+                ],
+                [
+                  144.9222854783067,
+                  -37.72132653165447
+                ],
+                [
+                  144.92238638873326,
+                  -37.7211985082778
+                ],
+                [
+                  144.9224586927149,
+                  -37.72114875274784
+                ],
+                [
+                  144.92263295211612,
+                  -37.721087419846796
+                ],
+                [
+                  144.9227280836071,
+                  -37.72107824428058
+                ],
+                [
+                  144.92321801180228,
+                  -37.721139537217915
+                ],
+                [
+                  144.9234019524359,
+                  -37.721198005483096
+                ],
+                [
+                  144.92354086717577,
+                  -37.7213098709588
+                ],
+                [
+                  144.9310129336038,
+                  -37.73052365881279
+                ],
+                [
+                  144.93107834265084,
+                  -37.73064840452797
+                ],
+                [
+                  144.93108494614611,
+                  -37.73078335019875
+                ],
+                [
+                  144.93100642773362,
+                  -37.731177457186405
+                ],
+                [
+                  144.9309141989396,
+                  -37.731304087675994
+                ],
+                [
+                  144.93076871686242,
+                  -37.73139418227579
+                ],
+                [
+                  144.93050921458735,
+                  -37.73149904554093
+                ],
+                [
+                  144.93042325407194,
+                  -37.73152594539875
+                ],
+                [
+                  144.93023995345783,
+                  -37.731539028957826
+                ],
+                [
+                  144.92920180840088,
+                  -37.73144817152543
+                ],
+                [
+                  144.92883980898455,
+                  -37.73135514484311
+                ],
+                [
+                  144.92756193490095,
+                  -37.7305250556618
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.7305250556618,
+              "Longitude": 144.92756193490095
+            },
+            {
+              "Latitude": -37.73046391379959,
+              "Longitude": 144.92748746533186
+            },
+            {
+              "Latitude": -37.73039129977862,
+              "Longitude": 144.92743185399064
+            },
+            {
+              "Latitude": -37.721622155164475,
+              "Longitude": 144.92229936233994
+            },
+            {
+              "Latitude": -37.72147544644021,
+              "Longitude": 144.92225488793653
+            },
+            {
+              "Latitude": -37.72132653165447,
+              "Longitude": 144.9222854783067
+            },
+            {
+              "Latitude": -37.7211985082778,
+              "Longitude": 144.92238638873326
+            },
+            {
+              "Latitude": -37.72114875274784,
+              "Longitude": 144.9224586927149
+            },
+            {
+              "Latitude": -37.721087419846796,
+              "Longitude": 144.92263295211612
+            },
+            {
+              "Latitude": -37.72107824428058,
+              "Longitude": 144.9227280836071
+            },
+            {
+              "Latitude": -37.721139537217915,
+              "Longitude": 144.92321801180228
+            },
+            {
+              "Latitude": -37.721198005483096,
+              "Longitude": 144.9234019524359
+            },
+            {
+              "Latitude": -37.7213098709588,
+              "Longitude": 144.92354086717577
+            },
+            {
+              "Latitude": -37.73052365881279,
+              "Longitude": 144.9310129336038
+            },
+            {
+              "Latitude": -37.73064840452797,
+              "Longitude": 144.93107834265084
+            },
+            {
+              "Latitude": -37.73078335019875,
+              "Longitude": 144.93108494614611
+            },
+            {
+              "Latitude": -37.731177457186405,
+              "Longitude": 144.93100642773362
+            },
+            {
+              "Latitude": -37.731304087675994,
+              "Longitude": 144.9309141989396
+            },
+            {
+              "Latitude": -37.73139418227579,
+              "Longitude": 144.93076871686242
+            },
+            {
+              "Latitude": -37.73149904554093,
+              "Longitude": 144.93050921458735
+            },
+            {
+              "Latitude": -37.73152594539875,
+              "Longitude": 144.93042325407194
+            },
+            {
+              "Latitude": -37.731539028957826,
+              "Longitude": 144.93023995345783
+            },
+            {
+              "Latitude": -37.73144817152543,
+              "Longitude": 144.92920180840088
+            },
+            {
+              "Latitude": -37.73135514484311,
+              "Longitude": 144.92883980898455
+            },
+            {
+              "Latitude": -37.7305250556618,
+              "Longitude": 144.92756193490095
+            }
+          ]
+        ],
+        "RestorationTime": "2026-09-09T22:34:20",
+        "ImpactedCustomers": 43,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 43,
+            "eventId": "J.26.0148259",
+            "startTime": "2026-09-09T19:42:54",
+            "restoreTime": "2026-09-09T22:34:20",
+            "suburbs": [
+              {
+                "suburbName": "PASCOE VALE",
+                "postcode": 3044,
+                "streets": [
+                  "BURGUNDY ST",
+                  "GAFFNEY ST",
+                  "RAILWAY PDE"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              144.92666991704132,
+              -37.7263086366192
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.7263086366192,
+          "Longitude": 144.92666991704132
         }
       }
     ]
