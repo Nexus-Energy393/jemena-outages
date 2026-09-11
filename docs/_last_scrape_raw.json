@@ -1,275 +1,5 @@
 [
   {
-    "EstimatedRestorationTime": "2026-09-10T23:00:00",
-    "DispatchedTime": "2026-09-09T21:25:41",
-    "EventId": "J.26.0148266",
-    "Type": "Unplanned",
-    "Status": "Completed",
-    "Cause": "Network equipment fault",
-    "StartTime": "2026-09-10T07:23:35",
-    "RestorationTime": "2026-09-10T21:00:23",
-    "ImpactedCustomers": 0,
-    "LocationGeoJson": null,
-    "Location": null,
-    "ImpactedSuburbs": [],
-    "ImpactedAreaGeoJson": null,
-    "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-11T10:23:30.324Z",
-    "FeedReceivedTime": "2026-09-10T21:16:57.865Z",
-    "History": [
-      {
-        "ImpactedSuburbs": [
-          {
-            "SuburbName": "KEILOR LODGE",
-            "PostCode": 3038,
-            "Streets": [
-              "PENRHYN CT",
-              "TRURO CR",
-              "TRURO CRESCENT",
-              "VERONA DR"
-            ]
-          },
-          {
-            "SuburbName": "TAYLORS LAKES",
-            "PostCode": 3038,
-            "Streets": [
-              "CLIFTON CT",
-              "VERONA DR"
-            ]
-          }
-        ],
-        "ImpactedAreaGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 41,
-            "eventId": "J.26.0148266",
-            "startTime": "2026-09-10T07:23:35",
-            "restoreTime": "2026-09-10T21:00:23",
-            "suburbs": [
-              {
-                "suburbName": "KEILOR LODGE",
-                "postcode": 3038,
-                "streets": [
-                  "PENRHYN CT",
-                  "TRURO CR",
-                  "TRURO CRESCENT",
-                  "VERONA DR"
-                ]
-              },
-              {
-                "suburbName": "TAYLORS LAKES",
-                "postcode": 3038,
-                "streets": [
-                  "CLIFTON CT",
-                  "VERONA DR"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-              [
-                [
-                  144.7946456134989,
-                  -37.69592322115647
-                ],
-                [
-                  144.79458229348606,
-                  -37.69588481145681
-                ],
-                [
-                  144.79456094719754,
-                  -37.69584586381143
-                ],
-                [
-                  144.79427841225643,
-                  -37.69477693922482
-                ],
-                [
-                  144.79427899123158,
-                  -37.69473175098189
-                ],
-                [
-                  144.79430345968294,
-                  -37.694690918079516
-                ],
-                [
-                  144.7954560892522,
-                  -37.69351377198405
-                ],
-                [
-                  144.79551928833592,
-                  -37.69347836538694
-                ],
-                [
-                  144.79557093308608,
-                  -37.693473274558315
-                ],
-                [
-                  144.7956431783994,
-                  -37.693495329869165
-                ],
-                [
-                  144.7964931114268,
-                  -37.694024746026074
-                ],
-                [
-                  144.79709440997078,
-                  -37.69505107026221
-                ],
-                [
-                  144.79696819201286,
-                  -37.696251011178944
-                ],
-                [
-                  144.79694131049416,
-                  -37.696306084288615
-                ],
-                [
-                  144.79690391612718,
-                  -37.6963324858413
-                ],
-                [
-                  144.79683171369507,
-                  -37.696347369020245
-                ],
-                [
-                  144.79605389855675,
-                  -37.696327942061345
-                ],
-                [
-                  144.7946456134989,
-                  -37.69592322115647
-                ]
-              ]
-            ]
-          }
-        },
-        "ImpactedArea": [
-          [
-            {
-              "Latitude": -37.69592322115647,
-              "Longitude": 144.7946456134989
-            },
-            {
-              "Latitude": -37.69588481145681,
-              "Longitude": 144.79458229348606
-            },
-            {
-              "Latitude": -37.69584586381143,
-              "Longitude": 144.79456094719754
-            },
-            {
-              "Latitude": -37.69477693922482,
-              "Longitude": 144.79427841225643
-            },
-            {
-              "Latitude": -37.69473175098189,
-              "Longitude": 144.79427899123158
-            },
-            {
-              "Latitude": -37.694690918079516,
-              "Longitude": 144.79430345968294
-            },
-            {
-              "Latitude": -37.69351377198405,
-              "Longitude": 144.7954560892522
-            },
-            {
-              "Latitude": -37.69347836538694,
-              "Longitude": 144.79551928833592
-            },
-            {
-              "Latitude": -37.693473274558315,
-              "Longitude": 144.79557093308608
-            },
-            {
-              "Latitude": -37.693495329869165,
-              "Longitude": 144.7956431783994
-            },
-            {
-              "Latitude": -37.694024746026074,
-              "Longitude": 144.7964931114268
-            },
-            {
-              "Latitude": -37.69505107026221,
-              "Longitude": 144.79709440997078
-            },
-            {
-              "Latitude": -37.696251011178944,
-              "Longitude": 144.79696819201286
-            },
-            {
-              "Latitude": -37.696306084288615,
-              "Longitude": 144.79694131049416
-            },
-            {
-              "Latitude": -37.6963324858413,
-              "Longitude": 144.79690391612718
-            },
-            {
-              "Latitude": -37.696347369020245,
-              "Longitude": 144.79683171369507
-            },
-            {
-              "Latitude": -37.696327942061345,
-              "Longitude": 144.79605389855675
-            },
-            {
-              "Latitude": -37.69592322115647,
-              "Longitude": 144.7946456134989
-            }
-          ]
-        ],
-        "RestorationTime": "2026-09-10T21:00:23",
-        "ImpactedCustomers": 41,
-        "LocationGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 41,
-            "eventId": "J.26.0148266",
-            "startTime": "2026-09-10T07:23:35",
-            "restoreTime": "2026-09-10T21:00:23",
-            "suburbs": [
-              {
-                "suburbName": "KEILOR LODGE",
-                "postcode": 3038,
-                "streets": [
-                  "PENRHYN CT",
-                  "TRURO CR",
-                  "TRURO CRESCENT",
-                  "VERONA DR"
-                ]
-              },
-              {
-                "suburbName": "TAYLORS LAKES",
-                "postcode": 3038,
-                "streets": [
-                  "CLIFTON CT",
-                  "VERONA DR"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [
-              144.7956864111136,
-              -37.69491032178928
-            ]
-          }
-        },
-        "Location": {
-          "Latitude": -37.69491032178928,
-          "Longitude": 144.7956864111136
-        }
-      }
-    ]
-  },
-  {
     "PlannedStartTime": "2026-09-11T09:00:00",
     "PlannedEndTime": "2026-09-11T10:00:00",
     "EventId": "J.26.0146480",
@@ -284,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-11T10:23:30.324Z",
+    "LastUpdatedTime": "2026-09-11T22:51:46.314Z",
     "FeedReceivedTime": "2026-09-10T23:37:15.416Z",
     "History": []
   },
@@ -303,7 +33,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-11T10:23:30.324Z",
+    "LastUpdatedTime": "2026-09-11T22:51:46.314Z",
     "FeedReceivedTime": "2026-09-11T00:42:47.685Z",
     "History": [
       {
@@ -527,7 +257,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-11T10:23:30.324Z",
+    "LastUpdatedTime": "2026-09-11T22:51:46.314Z",
     "FeedReceivedTime": "2026-09-11T00:58:36.423Z",
     "History": []
   },
@@ -546,7 +276,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-11T10:23:30.324Z",
+    "LastUpdatedTime": "2026-09-11T22:51:46.314Z",
     "FeedReceivedTime": "2026-09-11T01:39:20.248Z",
     "History": [
       {
@@ -743,7 +473,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-11T10:23:30.324Z",
+    "LastUpdatedTime": "2026-09-11T22:51:46.314Z",
     "FeedReceivedTime": "2026-09-11T02:09:50.342Z",
     "History": [
       {
@@ -948,7 +678,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-11T10:23:30.324Z",
+    "LastUpdatedTime": "2026-09-11T22:51:46.314Z",
     "FeedReceivedTime": "2026-09-11T02:14:54.764Z",
     "History": [
       {
@@ -1249,7 +979,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-11T10:23:30.324Z",
+    "LastUpdatedTime": "2026-09-11T22:51:46.314Z",
     "FeedReceivedTime": "2026-09-11T04:27:07.962Z",
     "History": [
       {
