@@ -14,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-13T10:53:16.496Z",
+    "LastUpdatedTime": "2026-09-13T22:44:13.912Z",
     "FeedReceivedTime": "2026-09-13T05:56:52.124Z",
     "History": [
       {
@@ -259,7 +259,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-13T10:53:16.496Z",
+    "LastUpdatedTime": "2026-09-13T22:44:13.912Z",
     "FeedReceivedTime": "2026-09-13T06:12:07.082Z",
     "History": [
       {
@@ -503,7 +503,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-13T10:53:16.496Z",
+    "LastUpdatedTime": "2026-09-13T22:44:13.912Z",
     "FeedReceivedTime": "2026-09-13T06:12:08.264Z",
     "History": [
       {
@@ -896,22 +896,41 @@
     ]
   },
   {
+    "PlannedStartTime": "2026-09-13T09:00:00",
+    "PlannedEndTime": "2026-09-13T14:00:00",
+    "EventId": "J.26.0145932",
+    "Type": "Planned",
+    "Status": "Complete",
+    "Cause": "Essential Maintenance",
+    "StartTime": "2026-09-13T09:19:30",
+    "RestorationTime": "2026-09-13T14:24:36",
+    "ImpactedCustomers": 1,
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-09-13T22:44:13.912Z",
+    "FeedReceivedTime": "2026-09-13T10:06:12.264Z",
+    "History": []
+  },
+  {
     "EstimatedRestorationTime": "2026-09-13T22:32:34",
-    "DispatchedTime": null,
+    "DispatchedTime": "2026-09-13T07:46:37",
     "EventId": "J.26.0148430",
     "Type": "Unplanned",
-    "Status": "Unacknowledged",
-    "Cause": "Under Investigation",
+    "Status": "Completed",
+    "Cause": "Animal impact",
     "StartTime": "2026-09-13T18:32:24",
-    "RestorationTime": "2026-09-13T19:06:07",
+    "RestorationTime": "2026-09-13T18:50:03",
     "ImpactedCustomers": 0,
     "LocationGeoJson": null,
     "Location": null,
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-13T10:53:16.496Z",
-    "FeedReceivedTime": "2026-09-13T09:10:55.750Z",
+    "LastUpdatedTime": "2026-09-13T22:44:13.912Z",
+    "FeedReceivedTime": "2026-09-13T12:35:57.584Z",
     "History": [
       {
         "ImpactedSuburbs": [
@@ -932,7 +951,7 @@
             "customersOff": 77,
             "eventId": "J.26.0148430",
             "startTime": "2026-09-13T18:32:24",
-            "restoreTime": "2026-09-13T19:06:07",
+            "restoreTime": "2026-09-13T18:50:03",
             "suburbs": [
               {
                 "suburbName": "FAWKNER",
@@ -1093,7 +1112,7 @@
             }
           ]
         ],
-        "RestorationTime": "2026-09-13T19:06:07",
+        "RestorationTime": "2026-09-13T18:50:03",
         "ImpactedCustomers": 77,
         "LocationGeoJson": {
           "type": "Feature",
@@ -1102,7 +1121,7 @@
             "customersOff": 77,
             "eventId": "J.26.0148430",
             "startTime": "2026-09-13T18:32:24",
-            "restoreTime": "2026-09-13T19:06:07",
+            "restoreTime": "2026-09-13T18:50:03",
             "suburbs": [
               {
                 "suburbName": "FAWKNER",
@@ -1145,7 +1164,7 @@
             "customersOff": 35,
             "eventId": "J.26.0148430",
             "startTime": "2026-09-13T18:32:24",
-            "restoreTime": "2026-09-13T19:05:22",
+            "restoreTime": "2026-09-13T18:40:30",
             "suburbs": [
               {
                 "suburbName": "FAWKNER",
@@ -1296,7 +1315,7 @@
             }
           ]
         ],
-        "RestorationTime": "2026-09-13T19:05:22",
+        "RestorationTime": "2026-09-13T18:40:30",
         "ImpactedCustomers": 35,
         "LocationGeoJson": {
           "type": "Feature",
@@ -1305,7 +1324,7 @@
             "customersOff": 35,
             "eventId": "J.26.0148430",
             "startTime": "2026-09-13T18:32:24",
-            "restoreTime": "2026-09-13T19:05:22",
+            "restoreTime": "2026-09-13T18:40:30",
             "suburbs": [
               {
                 "suburbName": "FAWKNER",
@@ -1330,24 +1349,5 @@
         }
       }
     ]
-  },
-  {
-    "PlannedStartTime": "2026-09-13T09:00:00",
-    "PlannedEndTime": "2026-09-13T14:00:00",
-    "EventId": "J.26.0145932",
-    "Type": "Planned",
-    "Status": "Complete",
-    "Cause": "Essential Maintenance",
-    "StartTime": "2026-09-13T09:19:30",
-    "RestorationTime": "2026-09-13T14:24:36",
-    "ImpactedCustomers": 1,
-    "LocationGeoJson": null,
-    "Location": null,
-    "ImpactedSuburbs": [],
-    "ImpactedAreaGeoJson": null,
-    "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-13T10:53:16.496Z",
-    "FeedReceivedTime": "2026-09-13T10:06:12.264Z",
-    "History": []
   }
 ]
