@@ -14,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-20T05:28:34.731Z",
+    "LastUpdatedTime": "2026-09-20T10:21:54.050Z",
     "FeedReceivedTime": "2026-09-20T03:24:47.323Z",
     "History": [
       {
@@ -578,7 +578,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-20T05:28:34.731Z",
+    "LastUpdatedTime": "2026-09-20T10:21:54.050Z",
     "FeedReceivedTime": "2026-09-20T04:01:50.278Z",
     "History": [
       {
@@ -776,395 +776,21 @@
   },
   {
     "PlannedStartTime": "2026-09-20T07:30:00",
-    "PlannedEndTime": "2026-09-20T17:00:00",
-    "EventId": "J.26.0146027",
-    "Type": "Planned",
-    "Status": "Planned Outage Execution",
-    "Cause": "Essential Maintenance",
-    "StartTime": "2026-09-20T08:08:09",
-    "RestorationTime": "2026-09-20T14:41:35",
-    "ImpactedCustomers": 10,
-    "LocationGeoJson": null,
-    "Location": null,
-    "ImpactedSuburbs": [],
-    "ImpactedAreaGeoJson": null,
-    "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-20T05:28:34.731Z",
-    "FeedReceivedTime": "2026-09-20T04:42:32.978Z",
-    "History": [
-      {
-        "ImpactedSuburbs": [
-          {
-            "SuburbName": "PRESTON",
-            "PostCode": 3072,
-            "Streets": [
-              "CHIFLEY DR"
-            ]
-          }
-        ],
-        "ImpactedAreaGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 2,
-            "eventId": "J.26.0146027",
-            "startTime": "2026-09-20T08:08:09",
-            "restoreTime": "2026-09-20T14:41:35",
-            "suburbs": [
-              {
-                "suburbName": "PRESTON",
-                "postcode": 3072,
-                "streets": [
-                  "CHIFLEY DR"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-              [
-                [
-                  145.0318675212039,
-                  -37.75251356623166
-                ],
-                [
-                  145.0318446218758,
-                  -37.75257431766738
-                ],
-                [
-                  145.0317527354731,
-                  -37.75260276690931
-                ],
-                [
-                  145.02912966454048,
-                  -37.75232297776359
-                ],
-                [
-                  145.0290891663876,
-                  -37.75228881445523
-                ],
-                [
-                  145.02907946739776,
-                  -37.75224262315514
-                ],
-                [
-                  145.02925221855685,
-                  -37.75120846128079
-                ],
-                [
-                  145.02930368011386,
-                  -37.75116196996364
-                ],
-                [
-                  145.0293621508123,
-                  -37.751154289207534
-                ],
-                [
-                  145.03081596327735,
-                  -37.75131202403346
-                ],
-                [
-                  145.03169599058197,
-                  -37.75200386703279
-                ],
-                [
-                  145.0317638840619,
-                  -37.752170741636725
-                ],
-                [
-                  145.0318675212039,
-                  -37.75251356623166
-                ]
-              ]
-            ]
-          }
-        },
-        "ImpactedArea": [
-          [
-            {
-              "Latitude": -37.75251356623166,
-              "Longitude": 145.0318675212039
-            },
-            {
-              "Latitude": -37.75257431766738,
-              "Longitude": 145.0318446218758
-            },
-            {
-              "Latitude": -37.75260276690931,
-              "Longitude": 145.0317527354731
-            },
-            {
-              "Latitude": -37.75232297776359,
-              "Longitude": 145.02912966454048
-            },
-            {
-              "Latitude": -37.75228881445523,
-              "Longitude": 145.0290891663876
-            },
-            {
-              "Latitude": -37.75224262315514,
-              "Longitude": 145.02907946739776
-            },
-            {
-              "Latitude": -37.75120846128079,
-              "Longitude": 145.02925221855685
-            },
-            {
-              "Latitude": -37.75116196996364,
-              "Longitude": 145.02930368011386
-            },
-            {
-              "Latitude": -37.751154289207534,
-              "Longitude": 145.0293621508123
-            },
-            {
-              "Latitude": -37.75131202403346,
-              "Longitude": 145.03081596327735
-            },
-            {
-              "Latitude": -37.75200386703279,
-              "Longitude": 145.03169599058197
-            },
-            {
-              "Latitude": -37.752170741636725,
-              "Longitude": 145.0317638840619
-            },
-            {
-              "Latitude": -37.75251356623166,
-              "Longitude": 145.0318675212039
-            }
-          ]
-        ],
-        "RestorationTime": "2026-09-20T14:41:35",
-        "ImpactedCustomers": 2,
-        "LocationGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 2,
-            "eventId": "J.26.0146027",
-            "startTime": "2026-09-20T08:08:09",
-            "restoreTime": "2026-09-20T14:41:35",
-            "suburbs": [
-              {
-                "suburbName": "PRESTON",
-                "postcode": 3072,
-                "streets": [
-                  "CHIFLEY DR"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [
-              145.03047349430085,
-              -37.75187852805843
-            ]
-          }
-        },
-        "Location": {
-          "Latitude": -37.75187852805843,
-          "Longitude": 145.03047349430085
-        }
-      },
-      {
-        "ImpactedSuburbs": [
-          {
-            "SuburbName": "PRESTON",
-            "PostCode": 3072,
-            "Streets": [
-              "CHIFLEY DR"
-            ]
-          }
-        ],
-        "ImpactedAreaGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 8,
-            "eventId": "J.26.0146027",
-            "startTime": "2026-09-20T08:08:09",
-            "restoreTime": "2026-09-20T14:11:45",
-            "suburbs": [
-              {
-                "suburbName": "PRESTON",
-                "postcode": 3072,
-                "streets": [
-                  "CHIFLEY DR"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-              [
-                [
-                  145.03083311298838,
-                  -37.75140426452612
-                ],
-                [
-                  145.03080616692566,
-                  -37.751430645254395
-                ],
-                [
-                  145.03075120317666,
-                  -37.751441349341505
-                ],
-                [
-                  145.0293388257595,
-                  -37.751295478028794
-                ],
-                [
-                  145.02928710965153,
-                  -37.7512719294405
-                ],
-                [
-                  145.02927159091166,
-                  -37.75122636601867
-                ],
-                [
-                  145.0294538548137,
-                  -37.75016144987767
-                ],
-                [
-                  145.02952226879714,
-                  -37.750131934450884
-                ],
-                [
-                  145.03077198190056,
-                  -37.750155711975964
-                ],
-                [
-                  145.0311909269121,
-                  -37.75019995891326
-                ],
-                [
-                  145.0313867484659,
-                  -37.75029405110465
-                ],
-                [
-                  145.03139568669198,
-                  -37.75035460169949
-                ],
-                [
-                  145.03083311298838,
-                  -37.75140426452612
-                ]
-              ]
-            ]
-          }
-        },
-        "ImpactedArea": [
-          [
-            {
-              "Latitude": -37.75140426452612,
-              "Longitude": 145.03083311298838
-            },
-            {
-              "Latitude": -37.751430645254395,
-              "Longitude": 145.03080616692566
-            },
-            {
-              "Latitude": -37.751441349341505,
-              "Longitude": 145.03075120317666
-            },
-            {
-              "Latitude": -37.751295478028794,
-              "Longitude": 145.0293388257595
-            },
-            {
-              "Latitude": -37.7512719294405,
-              "Longitude": 145.02928710965153
-            },
-            {
-              "Latitude": -37.75122636601867,
-              "Longitude": 145.02927159091166
-            },
-            {
-              "Latitude": -37.75016144987767,
-              "Longitude": 145.0294538548137
-            },
-            {
-              "Latitude": -37.750131934450884,
-              "Longitude": 145.02952226879714
-            },
-            {
-              "Latitude": -37.750155711975964,
-              "Longitude": 145.03077198190056
-            },
-            {
-              "Latitude": -37.75019995891326,
-              "Longitude": 145.0311909269121
-            },
-            {
-              "Latitude": -37.75029405110465,
-              "Longitude": 145.0313867484659
-            },
-            {
-              "Latitude": -37.75035460169949,
-              "Longitude": 145.03139568669198
-            },
-            {
-              "Latitude": -37.75140426452612,
-              "Longitude": 145.03083311298838
-            }
-          ]
-        ],
-        "RestorationTime": "2026-09-20T14:11:45",
-        "ImpactedCustomers": 8,
-        "LocationGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 8,
-            "eventId": "J.26.0146027",
-            "startTime": "2026-09-20T08:08:09",
-            "restoreTime": "2026-09-20T14:11:45",
-            "suburbs": [
-              {
-                "suburbName": "PRESTON",
-                "postcode": 3072,
-                "streets": [
-                  "CHIFLEY DR"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [
-              145.03033363880184,
-              -37.7507866418962
-            ]
-          }
-        },
-        "Location": {
-          "Latitude": -37.7507866418962,
-          "Longitude": 145.03033363880184
-        }
-      }
-    ]
-  },
-  {
-    "PlannedStartTime": "2026-09-20T07:30:00",
     "PlannedEndTime": "2026-09-20T17:30:00",
     "EventId": "J.26.0146827",
     "Type": "Planned",
-    "Status": "Planned Outage Execution",
+    "Status": "Complete",
     "Cause": "Essential Maintenance",
-    "StartTime": "2026-09-20T08:21:29",
-    "RestorationTime": "2026-09-20T15:19:33",
+    "StartTime": "2026-09-20T07:49:29",
+    "RestorationTime": "2026-09-20T15:23:33",
     "ImpactedCustomers": 15,
     "LocationGeoJson": null,
     "Location": null,
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-20T05:28:34.731Z",
-    "FeedReceivedTime": "2026-09-20T05:23:14.572Z",
+    "LastUpdatedTime": "2026-09-20T10:21:54.050Z",
+    "FeedReceivedTime": "2026-09-20T06:59:55.456Z",
     "History": [
       {
         "ImpactedSuburbs": [
@@ -1192,8 +818,8 @@
             "type": "Historical",
             "customersOff": 15,
             "eventId": "J.26.0146827",
-            "startTime": "2026-09-20T08:21:29",
-            "restoreTime": "2026-09-20T15:19:33",
+            "startTime": "2026-09-20T07:49:29",
+            "restoreTime": "2026-09-20T15:23:33",
             "suburbs": [
               {
                 "suburbName": "MELBOURNE AIRPORT",
@@ -1562,7 +1188,7 @@
             }
           ]
         ],
-        "RestorationTime": "2026-09-20T15:19:33",
+        "RestorationTime": "2026-09-20T15:23:33",
         "ImpactedCustomers": 15,
         "LocationGeoJson": {
           "type": "Feature",
@@ -1570,8 +1196,8 @@
             "type": "Historical",
             "customersOff": 15,
             "eventId": "J.26.0146827",
-            "startTime": "2026-09-20T08:21:29",
-            "restoreTime": "2026-09-20T15:19:33",
+            "startTime": "2026-09-20T07:49:29",
+            "restoreTime": "2026-09-20T15:23:33",
             "suburbs": [
               {
                 "suburbName": "MELBOURNE AIRPORT",
@@ -1603,6 +1229,380 @@
         "Location": {
           "Latitude": -37.67613558727369,
           "Longitude": 144.8583222417121
+        }
+      }
+    ]
+  },
+  {
+    "PlannedStartTime": "2026-09-20T07:30:00",
+    "PlannedEndTime": "2026-09-20T17:00:00",
+    "EventId": "J.26.0146027",
+    "Type": "Planned",
+    "Status": "Complete",
+    "Cause": "Essential Maintenance",
+    "StartTime": "2026-09-20T07:41:09",
+    "RestorationTime": "2026-09-20T14:41:35",
+    "ImpactedCustomers": 10,
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-09-20T10:21:54.050Z",
+    "FeedReceivedTime": "2026-09-20T06:59:56.437Z",
+    "History": [
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "PRESTON",
+            "PostCode": 3072,
+            "Streets": [
+              "CHIFLEY DR"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 2,
+            "eventId": "J.26.0146027",
+            "startTime": "2026-09-20T07:41:09",
+            "restoreTime": "2026-09-20T14:41:35",
+            "suburbs": [
+              {
+                "suburbName": "PRESTON",
+                "postcode": 3072,
+                "streets": [
+                  "CHIFLEY DR"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  145.0318675212039,
+                  -37.75251356623166
+                ],
+                [
+                  145.0318446218758,
+                  -37.75257431766738
+                ],
+                [
+                  145.0317527354731,
+                  -37.75260276690931
+                ],
+                [
+                  145.02912966454048,
+                  -37.75232297776359
+                ],
+                [
+                  145.0290891663876,
+                  -37.75228881445523
+                ],
+                [
+                  145.02907946739776,
+                  -37.75224262315514
+                ],
+                [
+                  145.02925221855685,
+                  -37.75120846128079
+                ],
+                [
+                  145.02930368011386,
+                  -37.75116196996364
+                ],
+                [
+                  145.0293621508123,
+                  -37.751154289207534
+                ],
+                [
+                  145.03081596327735,
+                  -37.75131202403346
+                ],
+                [
+                  145.03169599058197,
+                  -37.75200386703279
+                ],
+                [
+                  145.0317638840619,
+                  -37.752170741636725
+                ],
+                [
+                  145.0318675212039,
+                  -37.75251356623166
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.75251356623166,
+              "Longitude": 145.0318675212039
+            },
+            {
+              "Latitude": -37.75257431766738,
+              "Longitude": 145.0318446218758
+            },
+            {
+              "Latitude": -37.75260276690931,
+              "Longitude": 145.0317527354731
+            },
+            {
+              "Latitude": -37.75232297776359,
+              "Longitude": 145.02912966454048
+            },
+            {
+              "Latitude": -37.75228881445523,
+              "Longitude": 145.0290891663876
+            },
+            {
+              "Latitude": -37.75224262315514,
+              "Longitude": 145.02907946739776
+            },
+            {
+              "Latitude": -37.75120846128079,
+              "Longitude": 145.02925221855685
+            },
+            {
+              "Latitude": -37.75116196996364,
+              "Longitude": 145.02930368011386
+            },
+            {
+              "Latitude": -37.751154289207534,
+              "Longitude": 145.0293621508123
+            },
+            {
+              "Latitude": -37.75131202403346,
+              "Longitude": 145.03081596327735
+            },
+            {
+              "Latitude": -37.75200386703279,
+              "Longitude": 145.03169599058197
+            },
+            {
+              "Latitude": -37.752170741636725,
+              "Longitude": 145.0317638840619
+            },
+            {
+              "Latitude": -37.75251356623166,
+              "Longitude": 145.0318675212039
+            }
+          ]
+        ],
+        "RestorationTime": "2026-09-20T14:41:35",
+        "ImpactedCustomers": 2,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 2,
+            "eventId": "J.26.0146027",
+            "startTime": "2026-09-20T07:41:09",
+            "restoreTime": "2026-09-20T14:41:35",
+            "suburbs": [
+              {
+                "suburbName": "PRESTON",
+                "postcode": 3072,
+                "streets": [
+                  "CHIFLEY DR"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              145.03047349430085,
+              -37.75187852805843
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.75187852805843,
+          "Longitude": 145.03047349430085
+        }
+      },
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "PRESTON",
+            "PostCode": 3072,
+            "Streets": [
+              "CHIFLEY DR"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 6,
+            "eventId": "J.26.0146027",
+            "startTime": "2026-09-20T07:41:09",
+            "restoreTime": "2026-09-20T14:11:14",
+            "suburbs": [
+              {
+                "suburbName": "PRESTON",
+                "postcode": 3072,
+                "streets": [
+                  "CHIFLEY DR"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  145.02992597805553,
+                  -37.75052089338607
+                ],
+                [
+                  145.02943570487827,
+                  -37.75046053003664
+                ],
+                [
+                  145.02941149210767,
+                  -37.75040985815315
+                ],
+                [
+                  145.02945839179608,
+                  -37.7501636400205
+                ],
+                [
+                  145.02952214276516,
+                  -37.75013613633068
+                ],
+                [
+                  145.03077129699454,
+                  -37.75015988000189
+                ],
+                [
+                  145.03118922157455,
+                  -37.75020393981005
+                ],
+                [
+                  145.03137165299154,
+                  -37.75028723953738
+                ],
+                [
+                  145.03139632030883,
+                  -37.750325949963475
+                ],
+                [
+                  145.03138765155242,
+                  -37.750358096426105
+                ],
+                [
+                  145.0312091869,
+                  -37.75061631615918
+                ],
+                [
+                  145.03115052055577,
+                  -37.750646081021806
+                ],
+                [
+                  145.02992597805553,
+                  -37.75052089338607
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.75052089338607,
+              "Longitude": 145.02992597805553
+            },
+            {
+              "Latitude": -37.75046053003664,
+              "Longitude": 145.02943570487827
+            },
+            {
+              "Latitude": -37.75040985815315,
+              "Longitude": 145.02941149210767
+            },
+            {
+              "Latitude": -37.7501636400205,
+              "Longitude": 145.02945839179608
+            },
+            {
+              "Latitude": -37.75013613633068,
+              "Longitude": 145.02952214276516
+            },
+            {
+              "Latitude": -37.75015988000189,
+              "Longitude": 145.03077129699454
+            },
+            {
+              "Latitude": -37.75020393981005,
+              "Longitude": 145.03118922157455
+            },
+            {
+              "Latitude": -37.75028723953738,
+              "Longitude": 145.03137165299154
+            },
+            {
+              "Latitude": -37.750325949963475,
+              "Longitude": 145.03139632030883
+            },
+            {
+              "Latitude": -37.750358096426105,
+              "Longitude": 145.03138765155242
+            },
+            {
+              "Latitude": -37.75061631615918,
+              "Longitude": 145.0312091869
+            },
+            {
+              "Latitude": -37.750646081021806,
+              "Longitude": 145.03115052055577
+            },
+            {
+              "Latitude": -37.75052089338607,
+              "Longitude": 145.02992597805553
+            }
+          ]
+        ],
+        "RestorationTime": "2026-09-20T14:11:14",
+        "ImpactedCustomers": 6,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 6,
+            "eventId": "J.26.0146027",
+            "startTime": "2026-09-20T07:41:09",
+            "restoreTime": "2026-09-20T14:11:14",
+            "suburbs": [
+              {
+                "suburbName": "PRESTON",
+                "postcode": 3072,
+                "streets": [
+                  "CHIFLEY DR"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              145.03040390620825,
+              -37.75039110867624
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.75039110867624,
+          "Longitude": 145.03040390620825
         }
       }
     ]
