@@ -1,237 +1,5 @@
 [
   {
-    "PlannedStartTime": "2026-09-22T08:00:00",
-    "PlannedEndTime": "2026-09-22T17:00:00",
-    "EventId": "J.26.0147205",
-    "Type": "Planned",
-    "Status": "Planned Outage Execution",
-    "Cause": "Essential Maintenance",
-    "StartTime": "2026-09-22T09:06:41",
-    "RestorationTime": null,
-    "ImpactedCustomers": 44,
-    "LocationGeoJson": {
-      "type": "Feature",
-      "properties": {
-        "eventId": "J.26.0147205",
-        "customerReference": "J5220759",
-        "customersOff": "44",
-        "status": "Planned Outage Execution",
-        "type": "Planned",
-        "resolvedFlag": "false",
-        "showOutageFlag": "true",
-        "symptoms": [],
-        "cause": "Essential Maintenance",
-        "startTime": "2026-09-22T09:06:41",
-        "restoreTime": "",
-        "dispatchedTime": "",
-        "etr": "2026-09-22T17:00:00",
-        "plannedStartTime": "2026-09-22T08:00:00",
-        "plannedEndTime": "2026-09-22T17:00:00",
-        "lastUpdateTime": "2026-09-22T09:10:01"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          144.9933914028392,
-          -37.74546342088449
-        ]
-      }
-    },
-    "Location": {
-      "Latitude": -37.74546342088449,
-      "Longitude": 144.9933914028392
-    },
-    "ImpactedSuburbs": [
-      {
-        "SuburbName": "PRESTON",
-        "PostCode": 3072,
-        "Streets": [
-          "AUSTRAL AV",
-          "AUSTRAL AVENUE"
-        ]
-      }
-    ],
-    "ImpactedAreaGeoJson": {
-      "type": "Feature",
-      "properties": {
-        "eventId": "J.26.0147205",
-        "customerReference": "J5220759",
-        "customersOff": "44",
-        "status": "Planned Outage Execution",
-        "type": "Planned",
-        "resolvedFlag": "false",
-        "showOutageFlag": "true",
-        "symptoms": [],
-        "cause": "Essential Maintenance",
-        "startTime": "2026-09-22T09:06:41",
-        "restoreTime": "",
-        "dispatchedTime": "",
-        "etr": "2026-09-22T17:00:00",
-        "plannedStartTime": "2026-09-22T08:00:00",
-        "plannedEndTime": "2026-09-22T17:00:00",
-        "lastUpdateTime": "2026-09-22T09:10:01"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              144.993071393658,
-              -37.74671643840825
-            ],
-            [
-              144.99299215823763,
-              -37.74668156054144
-            ],
-            [
-              144.99264938401853,
-              -37.746347463479516
-            ],
-            [
-              144.99262249828195,
-              -37.74629394107101
-            ],
-            [
-              144.9929118179647,
-              -37.74451814956922
-            ],
-            [
-              144.99294810519,
-              -37.74447482178042
-            ],
-            [
-              144.99344043210448,
-              -37.744149336090196
-            ],
-            [
-              144.99367933565944,
-              -37.744165849111184
-            ],
-            [
-              144.99408422913785,
-              -37.74425511023993
-            ],
-            [
-              144.9941201658956,
-              -37.74427607062648
-            ],
-            [
-              144.99415055964954,
-              -37.74432284946871
-            ],
-            [
-              144.99416030739644,
-              -37.74475881203775
-            ],
-            [
-              144.9940955964433,
-              -37.745588840269114
-            ],
-            [
-              144.99393909191673,
-              -37.74631866824094
-            ],
-            [
-              144.99380610023152,
-              -37.74670674974286
-            ],
-            [
-              144.99376623376634,
-              -37.746755661844894
-            ],
-            [
-              144.99369802440165,
-              -37.74677750567878
-            ],
-            [
-              144.993071393658,
-              -37.74671643840825
-            ]
-          ]
-        ]
-      }
-    },
-    "ImpactedArea": [
-      [
-        {
-          "Latitude": -37.74671643840825,
-          "Longitude": 144.993071393658
-        },
-        {
-          "Latitude": -37.74668156054144,
-          "Longitude": 144.99299215823763
-        },
-        {
-          "Latitude": -37.746347463479516,
-          "Longitude": 144.99264938401853
-        },
-        {
-          "Latitude": -37.74629394107101,
-          "Longitude": 144.99262249828195
-        },
-        {
-          "Latitude": -37.74451814956922,
-          "Longitude": 144.9929118179647
-        },
-        {
-          "Latitude": -37.74447482178042,
-          "Longitude": 144.99294810519
-        },
-        {
-          "Latitude": -37.744149336090196,
-          "Longitude": 144.99344043210448
-        },
-        {
-          "Latitude": -37.744165849111184,
-          "Longitude": 144.99367933565944
-        },
-        {
-          "Latitude": -37.74425511023993,
-          "Longitude": 144.99408422913785
-        },
-        {
-          "Latitude": -37.74427607062648,
-          "Longitude": 144.9941201658956
-        },
-        {
-          "Latitude": -37.74432284946871,
-          "Longitude": 144.99415055964954
-        },
-        {
-          "Latitude": -37.74475881203775,
-          "Longitude": 144.99416030739644
-        },
-        {
-          "Latitude": -37.745588840269114,
-          "Longitude": 144.9940955964433
-        },
-        {
-          "Latitude": -37.74631866824094,
-          "Longitude": 144.99393909191673
-        },
-        {
-          "Latitude": -37.74670674974286,
-          "Longitude": 144.99380610023152
-        },
-        {
-          "Latitude": -37.746755661844894,
-          "Longitude": 144.99376623376634
-        },
-        {
-          "Latitude": -37.74677750567878,
-          "Longitude": 144.99369802440165
-        },
-        {
-          "Latitude": -37.74671643840825,
-          "Longitude": 144.993071393658
-        }
-      ]
-    ],
-    "LastUpdatedTime": "2026-09-22T02:44:54.429Z",
-    "FeedReceivedTime": "2026-09-21T23:11:30.800Z",
-    "History": null
-  },
-  {
     "PlannedStartTime": "2026-09-22T08:30:00",
     "PlannedEndTime": "2026-09-22T13:30:00",
     "EventId": "J.26.0147037",
@@ -246,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-22T02:44:54.429Z",
+    "LastUpdatedTime": "2026-09-22T08:06:19.242Z",
     "FeedReceivedTime": "2026-09-22T00:17:46.254Z",
     "History": [
       {
@@ -656,6 +424,246 @@
         "Location": {
           "Latitude": -37.6061972452012,
           "Longitude": 144.92492777522978
+        }
+      }
+    ]
+  },
+  {
+    "PlannedStartTime": "2026-09-22T08:00:00",
+    "PlannedEndTime": "2026-09-22T17:00:00",
+    "EventId": "J.26.0147205",
+    "Type": "Planned",
+    "Status": "Complete",
+    "Cause": "Essential Maintenance",
+    "StartTime": "2026-09-22T08:26:00",
+    "RestorationTime": "2026-09-22T12:37:00",
+    "ImpactedCustomers": 44,
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-09-22T08:06:19.242Z",
+    "FeedReceivedTime": "2026-09-22T05:43:22.243Z",
+    "History": [
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "PRESTON",
+            "PostCode": 3072,
+            "Streets": [
+              "AUSTRAL AV",
+              "AUSTRAL AVENUE"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 44,
+            "eventId": "J.26.0147205",
+            "startTime": "2026-09-22T08:26:00",
+            "restoreTime": "2026-09-22T12:37:00",
+            "suburbs": [
+              {
+                "suburbName": "PRESTON",
+                "postcode": 3072,
+                "streets": [
+                  "AUSTRAL AV",
+                  "AUSTRAL AVENUE"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  144.993071393658,
+                  -37.74671643840825
+                ],
+                [
+                  144.99299215823763,
+                  -37.74668156054144
+                ],
+                [
+                  144.99264938401853,
+                  -37.746347463479516
+                ],
+                [
+                  144.99262249828195,
+                  -37.74629394107101
+                ],
+                [
+                  144.9929118179647,
+                  -37.74451814956922
+                ],
+                [
+                  144.99294810519,
+                  -37.74447482178042
+                ],
+                [
+                  144.99344043210448,
+                  -37.744149336090196
+                ],
+                [
+                  144.99367933565944,
+                  -37.744165849111184
+                ],
+                [
+                  144.99408422913785,
+                  -37.74425511023993
+                ],
+                [
+                  144.9941201658956,
+                  -37.74427607062648
+                ],
+                [
+                  144.99415055964954,
+                  -37.74432284946871
+                ],
+                [
+                  144.99416030739644,
+                  -37.74475881203775
+                ],
+                [
+                  144.9940955964433,
+                  -37.745588840269114
+                ],
+                [
+                  144.99393909191673,
+                  -37.74631866824094
+                ],
+                [
+                  144.99380610023152,
+                  -37.74670674974286
+                ],
+                [
+                  144.99376623376634,
+                  -37.746755661844894
+                ],
+                [
+                  144.99369802440165,
+                  -37.74677750567878
+                ],
+                [
+                  144.993071393658,
+                  -37.74671643840825
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.74671643840825,
+              "Longitude": 144.993071393658
+            },
+            {
+              "Latitude": -37.74668156054144,
+              "Longitude": 144.99299215823763
+            },
+            {
+              "Latitude": -37.746347463479516,
+              "Longitude": 144.99264938401853
+            },
+            {
+              "Latitude": -37.74629394107101,
+              "Longitude": 144.99262249828195
+            },
+            {
+              "Latitude": -37.74451814956922,
+              "Longitude": 144.9929118179647
+            },
+            {
+              "Latitude": -37.74447482178042,
+              "Longitude": 144.99294810519
+            },
+            {
+              "Latitude": -37.744149336090196,
+              "Longitude": 144.99344043210448
+            },
+            {
+              "Latitude": -37.744165849111184,
+              "Longitude": 144.99367933565944
+            },
+            {
+              "Latitude": -37.74425511023993,
+              "Longitude": 144.99408422913785
+            },
+            {
+              "Latitude": -37.74427607062648,
+              "Longitude": 144.9941201658956
+            },
+            {
+              "Latitude": -37.74432284946871,
+              "Longitude": 144.99415055964954
+            },
+            {
+              "Latitude": -37.74475881203775,
+              "Longitude": 144.99416030739644
+            },
+            {
+              "Latitude": -37.745588840269114,
+              "Longitude": 144.9940955964433
+            },
+            {
+              "Latitude": -37.74631866824094,
+              "Longitude": 144.99393909191673
+            },
+            {
+              "Latitude": -37.74670674974286,
+              "Longitude": 144.99380610023152
+            },
+            {
+              "Latitude": -37.746755661844894,
+              "Longitude": 144.99376623376634
+            },
+            {
+              "Latitude": -37.74677750567878,
+              "Longitude": 144.99369802440165
+            },
+            {
+              "Latitude": -37.74671643840825,
+              "Longitude": 144.993071393658
+            }
+          ]
+        ],
+        "RestorationTime": "2026-09-22T12:37:00",
+        "ImpactedCustomers": 44,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 44,
+            "eventId": "J.26.0147205",
+            "startTime": "2026-09-22T08:26:00",
+            "restoreTime": "2026-09-22T12:37:00",
+            "suburbs": [
+              {
+                "suburbName": "PRESTON",
+                "postcode": 3072,
+                "streets": [
+                  "AUSTRAL AV",
+                  "AUSTRAL AVENUE"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              144.9933914028392,
+              -37.74546342088449
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.74546342088449,
+          "Longitude": 144.9933914028392
         }
       }
     ]
