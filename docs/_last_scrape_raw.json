@@ -1,758 +1,5 @@
 [
   {
-    "EstimatedRestorationTime": "2026-09-24T10:03:36",
-    "DispatchedTime": "2026-09-23T20:04:44",
-    "EventId": "J.26.0149104",
-    "Type": "Unplanned",
-    "Status": "Completed",
-    "Cause": "Animal impact",
-    "StartTime": "2026-09-24T06:03:27",
-    "RestorationTime": "2026-09-24T06:20:00",
-    "ImpactedCustomers": 0,
-    "LocationGeoJson": null,
-    "Location": null,
-    "ImpactedSuburbs": [],
-    "ImpactedAreaGeoJson": null,
-    "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-24T07:59:41.612Z",
-    "FeedReceivedTime": "2026-09-23T22:45:13.798Z",
-    "History": [
-      {
-        "ImpactedSuburbs": [
-          {
-            "SuburbName": "COBURG",
-            "PostCode": 3058,
-            "Streets": [
-              "ALFRED ST",
-              "CAMERON ST",
-              "CARRON ST",
-              "CARRON STREET",
-              "NORMAN ST",
-              "NORMAN STREET",
-              "SYDNEY RD",
-              "SYDNEY ROAD",
-              "THE AVENUE",
-              "THE AVENUE unset"
-            ]
-          }
-        ],
-        "ImpactedAreaGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 175,
-            "eventId": "J.26.0149104",
-            "startTime": "2026-09-24T06:03:27",
-            "restoreTime": "2026-09-24T06:20:00",
-            "suburbs": [
-              {
-                "suburbName": "COBURG",
-                "postcode": 3058,
-                "streets": [
-                  "ALFRED ST",
-                  "CAMERON ST",
-                  "CARRON ST",
-                  "CARRON STREET",
-                  "NORMAN ST",
-                  "NORMAN STREET",
-                  "SYDNEY RD",
-                  "SYDNEY ROAD",
-                  "THE AVENUE",
-                  "THE AVENUE unset"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-              [
-                [
-                  144.96392834595414,
-                  -37.75335189327182
-                ],
-                [
-                  144.96384781585235,
-                  -37.753326197102425
-                ],
-                [
-                  144.96210720221916,
-                  -37.75234306612159
-                ],
-                [
-                  144.96203927928363,
-                  -37.752270481240124
-                ],
-                [
-                  144.96203050180122,
-                  -37.75221013106855
-                ],
-                [
-                  144.9622583674691,
-                  -37.750372982511955
-                ],
-                [
-                  144.96239284303365,
-                  -37.749572163420495
-                ],
-                [
-                  144.9624385147327,
-                  -37.74949371441054
-                ],
-                [
-                  144.96249739197265,
-                  -37.74945902595846
-                ],
-                [
-                  144.96256869178268,
-                  -37.74944516021595
-                ],
-                [
-                  144.9637674237421,
-                  -37.74940574808959
-                ],
-                [
-                  144.96419531557936,
-                  -37.74944843639001
-                ],
-                [
-                  144.96470882640125,
-                  -37.74953597296695
-                ],
-                [
-                  144.96477197150304,
-                  -37.749572340548276
-                ],
-                [
-                  144.96481246304083,
-                  -37.74962208539782
-                ],
-                [
-                  144.96533860562357,
-                  -37.750444345365814
-                ],
-                [
-                  144.96537296448057,
-                  -37.751302820574715
-                ],
-                [
-                  144.96508112096663,
-                  -37.75253227973155
-                ],
-                [
-                  144.96456576512475,
-                  -37.75332605145238
-                ],
-                [
-                  144.96451776813467,
-                  -37.753372836657064
-                ],
-                [
-                  144.9644500059375,
-                  -37.75340037838344
-                ],
-                [
-                  144.96437395330605,
-                  -37.75340401276982
-                ],
-                [
-                  144.96392834595414,
-                  -37.75335189327182
-                ]
-              ]
-            ]
-          }
-        },
-        "ImpactedArea": [
-          [
-            {
-              "Latitude": -37.75335189327182,
-              "Longitude": 144.96392834595414
-            },
-            {
-              "Latitude": -37.753326197102425,
-              "Longitude": 144.96384781585235
-            },
-            {
-              "Latitude": -37.75234306612159,
-              "Longitude": 144.96210720221916
-            },
-            {
-              "Latitude": -37.752270481240124,
-              "Longitude": 144.96203927928363
-            },
-            {
-              "Latitude": -37.75221013106855,
-              "Longitude": 144.96203050180122
-            },
-            {
-              "Latitude": -37.750372982511955,
-              "Longitude": 144.9622583674691
-            },
-            {
-              "Latitude": -37.749572163420495,
-              "Longitude": 144.96239284303365
-            },
-            {
-              "Latitude": -37.74949371441054,
-              "Longitude": 144.9624385147327
-            },
-            {
-              "Latitude": -37.74945902595846,
-              "Longitude": 144.96249739197265
-            },
-            {
-              "Latitude": -37.74944516021595,
-              "Longitude": 144.96256869178268
-            },
-            {
-              "Latitude": -37.74940574808959,
-              "Longitude": 144.9637674237421
-            },
-            {
-              "Latitude": -37.74944843639001,
-              "Longitude": 144.96419531557936
-            },
-            {
-              "Latitude": -37.74953597296695,
-              "Longitude": 144.96470882640125
-            },
-            {
-              "Latitude": -37.749572340548276,
-              "Longitude": 144.96477197150304
-            },
-            {
-              "Latitude": -37.74962208539782,
-              "Longitude": 144.96481246304083
-            },
-            {
-              "Latitude": -37.750444345365814,
-              "Longitude": 144.96533860562357
-            },
-            {
-              "Latitude": -37.751302820574715,
-              "Longitude": 144.96537296448057
-            },
-            {
-              "Latitude": -37.75253227973155,
-              "Longitude": 144.96508112096663
-            },
-            {
-              "Latitude": -37.75332605145238,
-              "Longitude": 144.96456576512475
-            },
-            {
-              "Latitude": -37.753372836657064,
-              "Longitude": 144.96451776813467
-            },
-            {
-              "Latitude": -37.75340037838344,
-              "Longitude": 144.9644500059375
-            },
-            {
-              "Latitude": -37.75340401276982,
-              "Longitude": 144.96437395330605
-            },
-            {
-              "Latitude": -37.75335189327182,
-              "Longitude": 144.96392834595414
-            }
-          ]
-        ],
-        "RestorationTime": "2026-09-24T06:20:00",
-        "ImpactedCustomers": 175,
-        "LocationGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 175,
-            "eventId": "J.26.0149104",
-            "startTime": "2026-09-24T06:03:27",
-            "restoreTime": "2026-09-24T06:20:00",
-            "suburbs": [
-              {
-                "suburbName": "COBURG",
-                "postcode": 3058,
-                "streets": [
-                  "ALFRED ST",
-                  "CAMERON ST",
-                  "CARRON ST",
-                  "CARRON STREET",
-                  "NORMAN ST",
-                  "NORMAN STREET",
-                  "SYDNEY RD",
-                  "SYDNEY ROAD",
-                  "THE AVENUE",
-                  "THE AVENUE unset"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [
-              144.9637017331409,
-              -37.7514048804297
-            ]
-          }
-        },
-        "Location": {
-          "Latitude": -37.7514048804297,
-          "Longitude": 144.9637017331409
-        }
-      }
-    ]
-  },
-  {
-    "PlannedStartTime": "2026-09-24T08:30:00",
-    "PlannedEndTime": "2026-09-24T15:30:00",
-    "EventId": "J.26.0147381",
-    "Type": "Planned",
-    "Status": "Complete",
-    "Cause": "Essential Maintenance",
-    "StartTime": "2026-09-24T08:35:20",
-    "RestorationTime": "2026-09-24T09:12:05",
-    "ImpactedCustomers": 114,
-    "LocationGeoJson": null,
-    "Location": null,
-    "ImpactedSuburbs": [],
-    "ImpactedAreaGeoJson": null,
-    "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-24T07:59:41.612Z",
-    "FeedReceivedTime": "2026-09-23T23:13:09.040Z",
-    "History": [
-      {
-        "ImpactedSuburbs": [
-          {
-            "SuburbName": "COBURG",
-            "PostCode": 3058,
-            "Streets": [
-              "BASALT LANE",
-              "FARM RD",
-              "GOVERNORS RD",
-              "LYNN ST",
-              "WATCHTOWER RD"
-            ]
-          }
-        ],
-        "ImpactedAreaGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 46,
-            "eventId": "J.26.0147381",
-            "startTime": "2026-09-24T08:35:20",
-            "restoreTime": "2026-09-24T09:11:56",
-            "suburbs": [
-              {
-                "suburbName": "COBURG",
-                "postcode": 3058,
-                "streets": [
-                  "BASALT LANE",
-                  "FARM RD",
-                  "GOVERNORS RD",
-                  "LYNN ST",
-                  "WATCHTOWER RD"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-              [
-                [
-                  144.970625243269,
-                  -37.738859161253984
-                ],
-                [
-                  144.97037263855182,
-                  -37.73862491325844
-                ],
-                [
-                  144.97036179834222,
-                  -37.73856368502429
-                ],
-                [
-                  144.9708597253041,
-                  -37.737712084282364
-                ],
-                [
-                  144.97091263438716,
-                  -37.73768249794427
-                ],
-                [
-                  144.97157273551161,
-                  -37.7375198979712
-                ],
-                [
-                  144.9718466691148,
-                  -37.73749802982905
-                ],
-                [
-                  144.97194873736882,
-                  -37.737541429755574
-                ],
-                [
-                  144.9725527098707,
-                  -37.73820361235816
-                ],
-                [
-                  144.97295101704026,
-                  -37.738924593830006
-                ],
-                [
-                  144.9731443839293,
-                  -37.73946532600834
-                ],
-                [
-                  144.97303304909886,
-                  -37.73972258196328
-                ],
-                [
-                  144.97298556509924,
-                  -37.739756070483324
-                ],
-                [
-                  144.97292234649126,
-                  -37.73976174359128
-                ],
-                [
-                  144.97088244324775,
-                  -37.7390820819317
-                ],
-                [
-                  144.970625243269,
-                  -37.738859161253984
-                ]
-              ]
-            ]
-          }
-        },
-        "ImpactedArea": [
-          [
-            {
-              "Latitude": -37.738859161253984,
-              "Longitude": 144.970625243269
-            },
-            {
-              "Latitude": -37.73862491325844,
-              "Longitude": 144.97037263855182
-            },
-            {
-              "Latitude": -37.73856368502429,
-              "Longitude": 144.97036179834222
-            },
-            {
-              "Latitude": -37.737712084282364,
-              "Longitude": 144.9708597253041
-            },
-            {
-              "Latitude": -37.73768249794427,
-              "Longitude": 144.97091263438716
-            },
-            {
-              "Latitude": -37.7375198979712,
-              "Longitude": 144.97157273551161
-            },
-            {
-              "Latitude": -37.73749802982905,
-              "Longitude": 144.9718466691148
-            },
-            {
-              "Latitude": -37.737541429755574,
-              "Longitude": 144.97194873736882
-            },
-            {
-              "Latitude": -37.73820361235816,
-              "Longitude": 144.9725527098707
-            },
-            {
-              "Latitude": -37.738924593830006,
-              "Longitude": 144.97295101704026
-            },
-            {
-              "Latitude": -37.73946532600834,
-              "Longitude": 144.9731443839293
-            },
-            {
-              "Latitude": -37.73972258196328,
-              "Longitude": 144.97303304909886
-            },
-            {
-              "Latitude": -37.739756070483324,
-              "Longitude": 144.97298556509924
-            },
-            {
-              "Latitude": -37.73976174359128,
-              "Longitude": 144.97292234649126
-            },
-            {
-              "Latitude": -37.7390820819317,
-              "Longitude": 144.97088244324775
-            },
-            {
-              "Latitude": -37.738859161253984,
-              "Longitude": 144.970625243269
-            }
-          ]
-        ],
-        "RestorationTime": "2026-09-24T09:11:56",
-        "ImpactedCustomers": 46,
-        "LocationGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 46,
-            "eventId": "J.26.0147381",
-            "startTime": "2026-09-24T08:35:20",
-            "restoreTime": "2026-09-24T09:11:56",
-            "suburbs": [
-              {
-                "suburbName": "COBURG",
-                "postcode": 3058,
-                "streets": [
-                  "BASALT LANE",
-                  "FARM RD",
-                  "GOVERNORS RD",
-                  "LYNN ST",
-                  "WATCHTOWER RD"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [
-              144.97175309113578,
-              -37.738629886710164
-            ]
-          }
-        },
-        "Location": {
-          "Latitude": -37.738629886710164,
-          "Longitude": 144.97175309113578
-        }
-      },
-      {
-        "ImpactedSuburbs": [
-          {
-            "SuburbName": "COBURG",
-            "PostCode": 3058,
-            "Streets": [
-              "GOVERNORS RD",
-              "GRASSLAND AV",
-              "JIKA ST",
-              "LYNN ST",
-              "TANDERUM DR",
-              "WATCHTOWER RD"
-            ]
-          }
-        ],
-        "ImpactedAreaGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 68,
-            "eventId": "J.26.0147381",
-            "startTime": "2026-09-24T08:35:20",
-            "restoreTime": "2026-09-24T09:12:05",
-            "suburbs": [
-              {
-                "suburbName": "COBURG",
-                "postcode": 3058,
-                "streets": [
-                  "GOVERNORS RD",
-                  "GRASSLAND AV",
-                  "JIKA ST",
-                  "LYNN ST",
-                  "TANDERUM DR",
-                  "WATCHTOWER RD"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-              [
-                [
-                  144.9721469254479,
-                  -37.73855478593201
-                ],
-                [
-                  144.97212744846132,
-                  -37.738518347998976
-                ],
-                [
-                  144.97190519794026,
-                  -37.737565374691535
-                ],
-                [
-                  144.97192278921813,
-                  -37.737460773329964
-                ],
-                [
-                  144.97243187851615,
-                  -37.737021034976145
-                ],
-                [
-                  144.97317930200845,
-                  -37.73683739584293
-                ],
-                [
-                  144.97322615464722,
-                  -37.73683388803897
-                ],
-                [
-                  144.97329014196367,
-                  -37.73685629199475
-                ],
-                [
-                  144.9737576534648,
-                  -37.737644234803675
-                ],
-                [
-                  144.97367473972938,
-                  -37.738051373092446
-                ],
-                [
-                  144.9731490450756,
-                  -37.739261189806875
-                ],
-                [
-                  144.97305897227503,
-                  -37.73932693338194
-                ],
-                [
-                  144.97296284940603,
-                  -37.73933446772701
-                ],
-                [
-                  144.97290288326212,
-                  -37.739315850166626
-                ],
-                [
-                  144.9727581419954,
-                  -37.739228603876825
-                ],
-                [
-                  144.9721469254479,
-                  -37.73855478593201
-                ]
-              ]
-            ]
-          }
-        },
-        "ImpactedArea": [
-          [
-            {
-              "Latitude": -37.73855478593201,
-              "Longitude": 144.9721469254479
-            },
-            {
-              "Latitude": -37.738518347998976,
-              "Longitude": 144.97212744846132
-            },
-            {
-              "Latitude": -37.737565374691535,
-              "Longitude": 144.97190519794026
-            },
-            {
-              "Latitude": -37.737460773329964,
-              "Longitude": 144.97192278921813
-            },
-            {
-              "Latitude": -37.737021034976145,
-              "Longitude": 144.97243187851615
-            },
-            {
-              "Latitude": -37.73683739584293,
-              "Longitude": 144.97317930200845
-            },
-            {
-              "Latitude": -37.73683388803897,
-              "Longitude": 144.97322615464722
-            },
-            {
-              "Latitude": -37.73685629199475,
-              "Longitude": 144.97329014196367
-            },
-            {
-              "Latitude": -37.737644234803675,
-              "Longitude": 144.9737576534648
-            },
-            {
-              "Latitude": -37.738051373092446,
-              "Longitude": 144.97367473972938
-            },
-            {
-              "Latitude": -37.739261189806875,
-              "Longitude": 144.9731490450756
-            },
-            {
-              "Latitude": -37.73932693338194,
-              "Longitude": 144.97305897227503
-            },
-            {
-              "Latitude": -37.73933446772701,
-              "Longitude": 144.97296284940603
-            },
-            {
-              "Latitude": -37.739315850166626,
-              "Longitude": 144.97290288326212
-            },
-            {
-              "Latitude": -37.739228603876825,
-              "Longitude": 144.9727581419954
-            },
-            {
-              "Latitude": -37.73855478593201,
-              "Longitude": 144.9721469254479
-            }
-          ]
-        ],
-        "RestorationTime": "2026-09-24T09:12:05",
-        "ImpactedCustomers": 68,
-        "LocationGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 68,
-            "eventId": "J.26.0147381",
-            "startTime": "2026-09-24T08:35:20",
-            "restoreTime": "2026-09-24T09:12:05",
-            "suburbs": [
-              {
-                "suburbName": "COBURG",
-                "postcode": 3058,
-                "streets": [
-                  "GOVERNORS RD",
-                  "GRASSLAND AV",
-                  "JIKA ST",
-                  "LYNN ST",
-                  "TANDERUM DR",
-                  "WATCHTOWER RD"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [
-              144.9728314257025,
-              -37.738084177882996
-            ]
-          }
-        },
-        "Location": {
-          "Latitude": -37.738084177882996,
-          "Longitude": 144.9728314257025
-        }
-      }
-    ]
-  },
-  {
     "PlannedStartTime": "2026-09-24T07:30:00",
     "PlannedEndTime": "2026-09-24T16:30:00",
     "EventId": "J.26.0146540",
@@ -767,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-24T07:59:41.612Z",
+    "LastUpdatedTime": "2026-09-24T23:40:13.448Z",
     "FeedReceivedTime": "2026-09-24T01:30:31.550Z",
     "History": [
       {
@@ -999,7 +246,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-24T07:59:41.612Z",
+    "LastUpdatedTime": "2026-09-24T23:40:13.448Z",
     "FeedReceivedTime": "2026-09-24T01:55:57.250Z",
     "History": [
       {
@@ -1417,7 +664,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-24T07:59:41.612Z",
+    "LastUpdatedTime": "2026-09-24T23:40:13.448Z",
     "FeedReceivedTime": "2026-09-24T02:16:16.953Z",
     "History": [
       {
@@ -1799,7 +1046,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-24T07:59:41.612Z",
+    "LastUpdatedTime": "2026-09-24T23:40:13.448Z",
     "FeedReceivedTime": "2026-09-24T02:21:22.038Z",
     "History": [
       {
@@ -2079,7 +1326,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-24T07:59:41.612Z",
+    "LastUpdatedTime": "2026-09-24T23:40:13.448Z",
     "FeedReceivedTime": "2026-09-24T03:28:52.907Z",
     "History": [
       {
@@ -2269,18 +1516,18 @@
     "DispatchedTime": "2026-09-23T18:54:17",
     "EventId": "J.26.0149103",
     "Type": "Unplanned",
-    "Status": "In Progress (ZM10)",
+    "Status": "Completed",
     "Cause": "Third party asset damage",
     "StartTime": "2026-09-24T05:58:50",
-    "RestorationTime": "2026-09-24T16:12:00",
+    "RestorationTime": "2026-09-24T15:05:42",
     "ImpactedCustomers": 0,
     "LocationGeoJson": null,
     "Location": null,
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-24T07:59:41.612Z",
-    "FeedReceivedTime": "2026-09-24T06:17:18.784Z",
+    "LastUpdatedTime": "2026-09-24T23:40:13.448Z",
+    "FeedReceivedTime": "2026-09-24T14:33:31.195Z",
     "History": [
       {
         "ImpactedSuburbs": [
@@ -2303,7 +1550,7 @@
             "customersOff": 36,
             "eventId": "J.26.0149103",
             "startTime": "2026-09-24T05:58:50",
-            "restoreTime": "2026-09-24T16:12:00",
+            "restoreTime": "2026-09-24T15:05:42",
             "suburbs": [
               {
                 "suburbName": "ALPHINGTON",
@@ -2490,7 +1737,7 @@
             }
           ]
         ],
-        "RestorationTime": "2026-09-24T16:12:00",
+        "RestorationTime": "2026-09-24T15:05:42",
         "ImpactedCustomers": 36,
         "LocationGeoJson": {
           "type": "Feature",
@@ -2499,7 +1746,7 @@
             "customersOff": 36,
             "eventId": "J.26.0149103",
             "startTime": "2026-09-24T05:58:50",
-            "restoreTime": "2026-09-24T16:12:00",
+            "restoreTime": "2026-09-24T15:05:42",
             "suburbs": [
               {
                 "suburbName": "ALPHINGTON",
