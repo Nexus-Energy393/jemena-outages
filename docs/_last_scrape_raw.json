@@ -1,256 +1,5 @@
 [
   {
-    "EstimatedRestorationTime": "2026-09-27T03:35:55",
-    "DispatchedTime": null,
-    "EventId": "J.26.0149204",
-    "Type": "Unplanned",
-    "Status": "Completed",
-    "Cause": "Network equipment fault",
-    "StartTime": "2026-09-26T23:35:47",
-    "RestorationTime": "2026-09-26T23:40:51",
-    "ImpactedCustomers": 0,
-    "LocationGeoJson": null,
-    "Location": null,
-    "ImpactedSuburbs": [],
-    "ImpactedAreaGeoJson": null,
-    "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-27T09:39:12.341Z",
-    "FeedReceivedTime": "2026-09-26T13:53:12.800Z",
-    "History": [
-      {
-        "ImpactedSuburbs": [
-          {
-            "SuburbName": "ESSENDON",
-            "PostCode": 3040,
-            "Streets": [
-              "DEAKIN ST",
-              "GIBSON CT",
-              "MARKET ST"
-            ]
-          }
-        ],
-        "ImpactedAreaGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 63,
-            "eventId": "J.26.0149204",
-            "startTime": "2026-09-26T23:35:47",
-            "restoreTime": "2026-09-26T23:40:51",
-            "suburbs": [
-              {
-                "suburbName": "ESSENDON",
-                "postcode": 3040,
-                "streets": [
-                  "DEAKIN ST",
-                  "GIBSON CT",
-                  "MARKET ST"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-              [
-                [
-                  144.89197781565144,
-                  -37.74300881832451
-                ],
-                [
-                  144.89190731238313,
-                  -37.74294956279139
-                ],
-                [
-                  144.8917660787781,
-                  -37.74266921732879
-                ],
-                [
-                  144.89177281587115,
-                  -37.742120581464384
-                ],
-                [
-                  144.89184198198708,
-                  -37.74172009796009
-                ],
-                [
-                  144.89212871357907,
-                  -37.74058010625594
-                ],
-                [
-                  144.89238533932274,
-                  -37.74025849461897
-                ],
-                [
-                  144.8924818600033,
-                  -37.74022260698843
-                ],
-                [
-                  144.8930125299399,
-                  -37.740278867079404
-                ],
-                [
-                  144.89368009312264,
-                  -37.74055068601112
-                ],
-                [
-                  144.89371780136443,
-                  -37.74058855968374
-                ],
-                [
-                  144.89373211319918,
-                  -37.74063541600183
-                ],
-                [
-                  144.89376966828868,
-                  -37.74204923912807
-                ],
-                [
-                  144.8936290264158,
-                  -37.74271463895551
-                ],
-                [
-                  144.8932675598392,
-                  -37.74324941300278
-                ],
-                [
-                  144.89323070448614,
-                  -37.743284314575355
-                ],
-                [
-                  144.8931509315354,
-                  -37.74330867271598
-                ],
-                [
-                  144.89262092496753,
-                  -37.743251411623085
-                ],
-                [
-                  144.89197781565144,
-                  -37.74300881832451
-                ]
-              ]
-            ]
-          }
-        },
-        "ImpactedArea": [
-          [
-            {
-              "Latitude": -37.74300881832451,
-              "Longitude": 144.89197781565144
-            },
-            {
-              "Latitude": -37.74294956279139,
-              "Longitude": 144.89190731238313
-            },
-            {
-              "Latitude": -37.74266921732879,
-              "Longitude": 144.8917660787781
-            },
-            {
-              "Latitude": -37.742120581464384,
-              "Longitude": 144.89177281587115
-            },
-            {
-              "Latitude": -37.74172009796009,
-              "Longitude": 144.89184198198708
-            },
-            {
-              "Latitude": -37.74058010625594,
-              "Longitude": 144.89212871357907
-            },
-            {
-              "Latitude": -37.74025849461897,
-              "Longitude": 144.89238533932274
-            },
-            {
-              "Latitude": -37.74022260698843,
-              "Longitude": 144.8924818600033
-            },
-            {
-              "Latitude": -37.740278867079404,
-              "Longitude": 144.8930125299399
-            },
-            {
-              "Latitude": -37.74055068601112,
-              "Longitude": 144.89368009312264
-            },
-            {
-              "Latitude": -37.74058855968374,
-              "Longitude": 144.89371780136443
-            },
-            {
-              "Latitude": -37.74063541600183,
-              "Longitude": 144.89373211319918
-            },
-            {
-              "Latitude": -37.74204923912807,
-              "Longitude": 144.89376966828868
-            },
-            {
-              "Latitude": -37.74271463895551,
-              "Longitude": 144.8936290264158
-            },
-            {
-              "Latitude": -37.74324941300278,
-              "Longitude": 144.8932675598392
-            },
-            {
-              "Latitude": -37.743284314575355,
-              "Longitude": 144.89323070448614
-            },
-            {
-              "Latitude": -37.74330867271598,
-              "Longitude": 144.8931509315354
-            },
-            {
-              "Latitude": -37.743251411623085,
-              "Longitude": 144.89262092496753
-            },
-            {
-              "Latitude": -37.74300881832451,
-              "Longitude": 144.89197781565144
-            }
-          ]
-        ],
-        "RestorationTime": "2026-09-26T23:40:51",
-        "ImpactedCustomers": 63,
-        "LocationGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 63,
-            "eventId": "J.26.0149204",
-            "startTime": "2026-09-26T23:35:47",
-            "restoreTime": "2026-09-26T23:40:51",
-            "suburbs": [
-              {
-                "suburbName": "ESSENDON",
-                "postcode": 3040,
-                "streets": [
-                  "DEAKIN ST",
-                  "GIBSON CT",
-                  "MARKET ST"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [
-              144.8927678735334,
-              -37.741765639852204
-            ]
-          }
-        },
-        "Location": {
-          "Latitude": -37.741765639852204,
-          "Longitude": 144.8927678735334
-        }
-      }
-    ]
-  },
-  {
     "PlannedStartTime": "2026-09-27T07:30:00",
     "PlannedEndTime": "2026-09-27T17:30:00",
     "EventId": "J.26.0146196",
@@ -265,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-27T09:39:12.341Z",
+    "LastUpdatedTime": "2026-09-27T23:30:44.874Z",
     "FeedReceivedTime": "2026-09-27T03:25:08.873Z",
     "History": [
       {
@@ -446,7 +195,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-27T09:39:12.341Z",
+    "LastUpdatedTime": "2026-09-27T23:30:44.874Z",
     "FeedReceivedTime": "2026-09-27T06:13:02.704Z",
     "History": [
       {
@@ -812,7 +561,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-09-27T09:39:12.341Z",
+    "LastUpdatedTime": "2026-09-27T23:30:44.874Z",
     "FeedReceivedTime": "2026-09-27T06:13:03.236Z",
     "History": [
       {
