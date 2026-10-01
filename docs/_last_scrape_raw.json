@@ -1,470 +1,5 @@
 [
   {
-    "PlannedStartTime": "2026-09-30T08:00:00",
-    "PlannedEndTime": "2026-09-30T19:30:00",
-    "EventId": "J.26.0147263",
-    "Type": "Planned",
-    "Status": "Complete",
-    "Cause": "Essential Maintenance",
-    "StartTime": "2026-09-30T08:04:32",
-    "RestorationTime": "2026-09-30T19:11:29",
-    "ImpactedCustomers": 8,
-    "LocationGeoJson": null,
-    "Location": null,
-    "ImpactedSuburbs": [],
-    "ImpactedAreaGeoJson": null,
-    "ImpactedArea": null,
-    "LastUpdatedTime": "2026-10-01T06:43:30.123Z",
-    "FeedReceivedTime": "2026-09-30T10:10:44.284Z",
-    "History": [
-      {
-        "ImpactedSuburbs": [
-          {
-            "SuburbName": "CRAIGIEBURN",
-            "PostCode": 3064,
-            "Streets": [
-              "HUME HWY"
-            ]
-          },
-          {
-            "SuburbName": "SOMERTON",
-            "PostCode": 3062,
-            "Streets": [
-              "HUME HWY"
-            ]
-          }
-        ],
-        "ImpactedAreaGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 8,
-            "eventId": "J.26.0147263",
-            "startTime": "2026-09-30T08:04:32",
-            "restoreTime": "2026-09-30T19:11:29",
-            "suburbs": [
-              {
-                "suburbName": "CRAIGIEBURN",
-                "postcode": 3064,
-                "streets": [
-                  "HUME HWY"
-                ]
-              },
-              {
-                "suburbName": "SOMERTON",
-                "postcode": 3062,
-                "streets": [
-                  "HUME HWY"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-              [
-                [
-                  144.94861836676503,
-                  -37.624772794851516
-                ],
-                [
-                  144.9485213812642,
-                  -37.62474600424392
-                ],
-                [
-                  144.94844324690814,
-                  -37.62469319699858
-                ],
-                [
-                  144.94838356176953,
-                  -37.62458164460594
-                ],
-                [
-                  144.94769876345578,
-                  -37.620183164438096
-                ],
-                [
-                  144.9477079128149,
-                  -37.62009410515735
-                ],
-                [
-                  144.9477609014282,
-                  -37.62001522216483
-                ],
-                [
-                  144.94790193832148,
-                  -37.61994328612588
-                ],
-                [
-                  144.9480145284432,
-                  -37.61993771556036
-                ],
-                [
-                  144.95063455041972,
-                  -37.62023335115159
-                ],
-                [
-                  144.95075234080787,
-                  -37.62026956892319
-                ],
-                [
-                  144.95518418923524,
-                  -37.62408274105113
-                ],
-                [
-                  144.95528017160026,
-                  -37.62420190620674
-                ],
-                [
-                  144.95529598767766,
-                  -37.62428259780124
-                ],
-                [
-                  144.95528681998437,
-                  -37.62446706242885
-                ],
-                [
-                  144.95511807843516,
-                  -37.625370469173504
-                ],
-                [
-                  144.95502160051907,
-                  -37.625474059187745
-                ],
-                [
-                  144.9548685537219,
-                  -37.62551737691261
-                ],
-                [
-                  144.94861836676503,
-                  -37.624772794851516
-                ]
-              ]
-            ]
-          }
-        },
-        "ImpactedArea": [
-          [
-            {
-              "Latitude": -37.624772794851516,
-              "Longitude": 144.94861836676503
-            },
-            {
-              "Latitude": -37.62474600424392,
-              "Longitude": 144.9485213812642
-            },
-            {
-              "Latitude": -37.62469319699858,
-              "Longitude": 144.94844324690814
-            },
-            {
-              "Latitude": -37.62458164460594,
-              "Longitude": 144.94838356176953
-            },
-            {
-              "Latitude": -37.620183164438096,
-              "Longitude": 144.94769876345578
-            },
-            {
-              "Latitude": -37.62009410515735,
-              "Longitude": 144.9477079128149
-            },
-            {
-              "Latitude": -37.62001522216483,
-              "Longitude": 144.9477609014282
-            },
-            {
-              "Latitude": -37.61994328612588,
-              "Longitude": 144.94790193832148
-            },
-            {
-              "Latitude": -37.61993771556036,
-              "Longitude": 144.9480145284432
-            },
-            {
-              "Latitude": -37.62023335115159,
-              "Longitude": 144.95063455041972
-            },
-            {
-              "Latitude": -37.62026956892319,
-              "Longitude": 144.95075234080787
-            },
-            {
-              "Latitude": -37.62408274105113,
-              "Longitude": 144.95518418923524
-            },
-            {
-              "Latitude": -37.62420190620674,
-              "Longitude": 144.95528017160026
-            },
-            {
-              "Latitude": -37.62428259780124,
-              "Longitude": 144.95529598767766
-            },
-            {
-              "Latitude": -37.62446706242885,
-              "Longitude": 144.95528681998437
-            },
-            {
-              "Latitude": -37.625370469173504,
-              "Longitude": 144.95511807843516
-            },
-            {
-              "Latitude": -37.625474059187745,
-              "Longitude": 144.95502160051907
-            },
-            {
-              "Latitude": -37.62551737691261,
-              "Longitude": 144.9548685537219
-            },
-            {
-              "Latitude": -37.624772794851516,
-              "Longitude": 144.94861836676503
-            }
-          ]
-        ],
-        "RestorationTime": "2026-09-30T19:11:29",
-        "ImpactedCustomers": 8,
-        "LocationGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 8,
-            "eventId": "J.26.0147263",
-            "startTime": "2026-09-30T08:04:32",
-            "restoreTime": "2026-09-30T19:11:29",
-            "suburbs": [
-              {
-                "suburbName": "CRAIGIEBURN",
-                "postcode": 3064,
-                "streets": [
-                  "HUME HWY"
-                ]
-              },
-              {
-                "suburbName": "SOMERTON",
-                "postcode": 3062,
-                "streets": [
-                  "HUME HWY"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [
-              144.9514973755667,
-              -37.62272754623649
-            ]
-          }
-        },
-        "Location": {
-          "Latitude": -37.62272754623649,
-          "Longitude": 144.9514973755667
-        }
-      }
-    ]
-  },
-  {
-    "PlannedStartTime": "2026-10-01T07:30:00",
-    "PlannedEndTime": "2026-10-01T18:30:00",
-    "EventId": "J.26.0147267",
-    "Type": "Planned",
-    "Status": "Planned Outage Execution",
-    "Cause": "Essential Maintenance",
-    "StartTime": "2026-10-01T07:41:22",
-    "RestorationTime": null,
-    "ImpactedCustomers": 6,
-    "LocationGeoJson": {
-      "type": "Feature",
-      "properties": {
-        "eventId": "J.26.0147267",
-        "customerReference": "J5224109",
-        "customersOff": "6",
-        "status": "Planned Outage Execution",
-        "type": "Planned",
-        "resolvedFlag": "false",
-        "showOutageFlag": "false",
-        "symptoms": [],
-        "cause": "Essential Maintenance",
-        "startTime": "2026-10-01T07:41:22",
-        "restoreTime": "",
-        "dispatchedTime": "",
-        "etr": "2026-10-01T18:30:00",
-        "plannedStartTime": "2026-10-01T07:30:00",
-        "plannedEndTime": "2026-10-01T18:30:00",
-        "lastUpdateTime": "2026-10-01T07:41:43"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          144.94764429027595,
-          -37.61198526019348
-        ]
-      }
-    },
-    "Location": {
-      "Latitude": -37.61198526019348,
-      "Longitude": 144.94764429027595
-    },
-    "ImpactedSuburbs": [
-      {
-        "SuburbName": "CRAIGIEBURN",
-        "PostCode": 3064,
-        "Streets": [
-          "HUME HWY"
-        ]
-      }
-    ],
-    "ImpactedAreaGeoJson": {
-      "type": "Feature",
-      "properties": {
-        "eventId": "J.26.0147267",
-        "customerReference": "J5224109",
-        "customersOff": "6",
-        "status": "Planned Outage Execution",
-        "type": "Planned",
-        "resolvedFlag": "false",
-        "showOutageFlag": "false",
-        "symptoms": [],
-        "cause": "Essential Maintenance",
-        "startTime": "2026-10-01T07:41:22",
-        "restoreTime": "",
-        "dispatchedTime": "",
-        "etr": "2026-10-01T18:30:00",
-        "plannedStartTime": "2026-10-01T07:30:00",
-        "plannedEndTime": "2026-10-01T18:30:00",
-        "lastUpdateTime": "2026-10-01T07:41:43"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              144.94712520814824,
-              -37.613107549520585
-            ],
-            [
-              144.9470489609421,
-              -37.61308998315643
-            ],
-            [
-              144.94701063378278,
-              -37.613034893542576
-            ],
-            [
-              144.94671998725164,
-              -37.610967418964805
-            ],
-            [
-              144.94674240611928,
-              -37.6109229619907
-            ],
-            [
-              144.94679226041902,
-              -37.61089590442345
-            ],
-            [
-              144.94717006823558,
-              -37.61086297086638
-            ],
-            [
-              144.94724944586716,
-              -37.610900249364775
-            ],
-            [
-              144.94849093891293,
-              -37.61241585962374
-            ],
-            [
-              144.94850707735588,
-              -37.61245179216228
-            ],
-            [
-              144.94856859330025,
-              -37.612915844883155
-            ],
-            [
-              144.94854608396307,
-              -37.612960150749004
-            ],
-            [
-              144.9484763861087,
-              -37.612990415490025
-            ],
-            [
-              144.94712520814824,
-              -37.613107549520585
-            ]
-          ]
-        ]
-      }
-    },
-    "ImpactedArea": [
-      [
-        {
-          "Latitude": -37.613107549520585,
-          "Longitude": 144.94712520814824
-        },
-        {
-          "Latitude": -37.61308998315643,
-          "Longitude": 144.9470489609421
-        },
-        {
-          "Latitude": -37.613034893542576,
-          "Longitude": 144.94701063378278
-        },
-        {
-          "Latitude": -37.610967418964805,
-          "Longitude": 144.94671998725164
-        },
-        {
-          "Latitude": -37.6109229619907,
-          "Longitude": 144.94674240611928
-        },
-        {
-          "Latitude": -37.61089590442345,
-          "Longitude": 144.94679226041902
-        },
-        {
-          "Latitude": -37.61086297086638,
-          "Longitude": 144.94717006823558
-        },
-        {
-          "Latitude": -37.610900249364775,
-          "Longitude": 144.94724944586716
-        },
-        {
-          "Latitude": -37.61241585962374,
-          "Longitude": 144.94849093891293
-        },
-        {
-          "Latitude": -37.61245179216228,
-          "Longitude": 144.94850707735588
-        },
-        {
-          "Latitude": -37.612915844883155,
-          "Longitude": 144.94856859330025
-        },
-        {
-          "Latitude": -37.612960150749004,
-          "Longitude": 144.94854608396307
-        },
-        {
-          "Latitude": -37.612990415490025,
-          "Longitude": 144.9484763861087
-        },
-        {
-          "Latitude": -37.613107549520585,
-          "Longitude": 144.94712520814824
-        }
-      ]
-    ],
-    "LastUpdatedTime": "2026-10-01T06:43:30.123Z",
-    "FeedReceivedTime": "2026-09-30T21:43:49.031Z",
-    "History": null
-  },
-  {
     "PlannedStartTime": "2026-10-01T08:30:00",
     "PlannedEndTime": "2026-10-01T13:30:00",
     "EventId": "J.26.0147616",
@@ -479,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-10-01T06:43:30.123Z",
+    "LastUpdatedTime": "2026-10-01T14:03:48.020Z",
     "FeedReceivedTime": "2026-10-01T00:47:12.151Z",
     "History": []
   },
@@ -498,7 +33,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-10-01T06:43:30.123Z",
+    "LastUpdatedTime": "2026-10-01T14:03:48.020Z",
     "FeedReceivedTime": "2026-10-01T02:54:21.931Z",
     "History": [
       {
@@ -760,7 +295,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-10-01T06:43:30.123Z",
+    "LastUpdatedTime": "2026-10-01T14:03:48.020Z",
     "FeedReceivedTime": "2026-10-01T03:50:06.431Z",
     "History": [
       {
@@ -979,7 +514,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-10-01T06:43:30.123Z",
+    "LastUpdatedTime": "2026-10-01T14:03:48.020Z",
     "FeedReceivedTime": "2026-10-01T04:15:51.613Z",
     "History": [
       {
@@ -1190,7 +725,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-10-01T06:43:30.123Z",
+    "LastUpdatedTime": "2026-10-01T14:03:48.020Z",
     "FeedReceivedTime": "2026-10-01T04:51:36.966Z",
     "History": [
       {
@@ -1578,6 +1113,500 @@
         "Location": {
           "Latitude": -37.76187062895571,
           "Longitude": 145.0304211263602
+        }
+      }
+    ]
+  },
+  {
+    "PlannedStartTime": "2026-10-01T07:30:00",
+    "PlannedEndTime": "2026-10-01T18:30:00",
+    "EventId": "J.26.0147267",
+    "Type": "Planned",
+    "Status": "Complete",
+    "Cause": "Essential Maintenance",
+    "StartTime": "2026-10-01T08:17:10",
+    "RestorationTime": "2026-10-01T18:47:45",
+    "ImpactedCustomers": 11,
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-10-01T14:03:48.020Z",
+    "FeedReceivedTime": "2026-10-01T09:21:29.721Z",
+    "History": [
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "CRAIGIEBURN",
+            "PostCode": 3064,
+            "Streets": [
+              "HUME HWY"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 5,
+            "eventId": "J.26.0147267",
+            "startTime": "2026-10-01T08:17:10",
+            "restoreTime": "2026-10-01T18:47:45",
+            "suburbs": [
+              {
+                "suburbName": "CRAIGIEBURN",
+                "postcode": 3064,
+                "streets": [
+                  "HUME HWY"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  144.94580328479427,
+                  -37.608155988048026
+                ],
+                [
+                  144.9457231622732,
+                  -37.60601007050562
+                ],
+                [
+                  144.9460702961527,
+                  -37.603547838664845
+                ],
+                [
+                  144.94612110113076,
+                  -37.6034181749752
+                ],
+                [
+                  144.94622892413932,
+                  -37.60331264913899
+                ],
+                [
+                  144.94629968620518,
+                  -37.603273828412405
+                ],
+                [
+                  144.94646230074127,
+                  -37.603230989778616
+                ],
+                [
+                  144.94940158673143,
+                  -37.60292357205821
+                ],
+                [
+                  144.94957666354304,
+                  -37.602932329383755
+                ],
+                [
+                  144.9496593116338,
+                  -37.6029565663811
+                ],
+                [
+                  144.94979939127384,
+                  -37.60304023032212
+                ],
+                [
+                  144.94988901261772,
+                  -37.60315970642361
+                ],
+                [
+                  144.95136403616294,
+                  -37.60644333992795
+                ],
+                [
+                  144.95144956360014,
+                  -37.60664316762198
+                ],
+                [
+                  144.9514735167066,
+                  -37.60676526186495
+                ],
+                [
+                  144.95144392913653,
+                  -37.60688657807615
+                ],
+                [
+                  144.94880138286177,
+                  -37.61239156137519
+                ],
+                [
+                  144.9487648913988,
+                  -37.612450658731674
+                ],
+                [
+                  144.94865464538657,
+                  -37.612548336011734
+                ],
+                [
+                  144.94858457567685,
+                  -37.61258365122107
+                ],
+                [
+                  144.9484261745484,
+                  -37.61262137245887
+                ],
+                [
+                  144.9470420004751,
+                  -37.6127343041569
+                ],
+                [
+                  144.94687134423882,
+                  -37.612694687637266
+                ],
+                [
+                  144.94679663509592,
+                  -37.61265586459699
+                ],
+                [
+                  144.94667473612378,
+                  -37.612570229234244
+                ],
+                [
+                  144.94662674323234,
+                  -37.6125167164233
+                ],
+                [
+                  144.94657112973485,
+                  -37.6123936239418
+                ],
+                [
+                  144.94590163107122,
+                  -37.609128439978356
+                ],
+                [
+                  144.94580328479427,
+                  -37.608155988048026
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.608155988048026,
+              "Longitude": 144.94580328479427
+            },
+            {
+              "Latitude": -37.60601007050562,
+              "Longitude": 144.9457231622732
+            },
+            {
+              "Latitude": -37.603547838664845,
+              "Longitude": 144.9460702961527
+            },
+            {
+              "Latitude": -37.6034181749752,
+              "Longitude": 144.94612110113076
+            },
+            {
+              "Latitude": -37.60331264913899,
+              "Longitude": 144.94622892413932
+            },
+            {
+              "Latitude": -37.603273828412405,
+              "Longitude": 144.94629968620518
+            },
+            {
+              "Latitude": -37.603230989778616,
+              "Longitude": 144.94646230074127
+            },
+            {
+              "Latitude": -37.60292357205821,
+              "Longitude": 144.94940158673143
+            },
+            {
+              "Latitude": -37.602932329383755,
+              "Longitude": 144.94957666354304
+            },
+            {
+              "Latitude": -37.6029565663811,
+              "Longitude": 144.9496593116338
+            },
+            {
+              "Latitude": -37.60304023032212,
+              "Longitude": 144.94979939127384
+            },
+            {
+              "Latitude": -37.60315970642361,
+              "Longitude": 144.94988901261772
+            },
+            {
+              "Latitude": -37.60644333992795,
+              "Longitude": 144.95136403616294
+            },
+            {
+              "Latitude": -37.60664316762198,
+              "Longitude": 144.95144956360014
+            },
+            {
+              "Latitude": -37.60676526186495,
+              "Longitude": 144.9514735167066
+            },
+            {
+              "Latitude": -37.60688657807615,
+              "Longitude": 144.95144392913653
+            },
+            {
+              "Latitude": -37.61239156137519,
+              "Longitude": 144.94880138286177
+            },
+            {
+              "Latitude": -37.612450658731674,
+              "Longitude": 144.9487648913988
+            },
+            {
+              "Latitude": -37.612548336011734,
+              "Longitude": 144.94865464538657
+            },
+            {
+              "Latitude": -37.61258365122107,
+              "Longitude": 144.94858457567685
+            },
+            {
+              "Latitude": -37.61262137245887,
+              "Longitude": 144.9484261745484
+            },
+            {
+              "Latitude": -37.6127343041569,
+              "Longitude": 144.9470420004751
+            },
+            {
+              "Latitude": -37.612694687637266,
+              "Longitude": 144.94687134423882
+            },
+            {
+              "Latitude": -37.61265586459699,
+              "Longitude": 144.94679663509592
+            },
+            {
+              "Latitude": -37.612570229234244,
+              "Longitude": 144.94667473612378
+            },
+            {
+              "Latitude": -37.6125167164233,
+              "Longitude": 144.94662674323234
+            },
+            {
+              "Latitude": -37.6123936239418,
+              "Longitude": 144.94657112973485
+            },
+            {
+              "Latitude": -37.609128439978356,
+              "Longitude": 144.94590163107122
+            },
+            {
+              "Latitude": -37.608155988048026,
+              "Longitude": 144.94580328479427
+            }
+          ]
+        ],
+        "RestorationTime": "2026-10-01T18:47:45",
+        "ImpactedCustomers": 5,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 5,
+            "eventId": "J.26.0147267",
+            "startTime": "2026-10-01T08:17:10",
+            "restoreTime": "2026-10-01T18:47:45",
+            "suburbs": [
+              {
+                "suburbName": "CRAIGIEBURN",
+                "postcode": 3064,
+                "streets": [
+                  "HUME HWY"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              144.9485983394899,
+              -37.60782893810756
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.60782893810756,
+          "Longitude": 144.9485983394899
+        }
+      },
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "CRAIGIEBURN",
+            "PostCode": 3064,
+            "Streets": [
+              "HUME HWY"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 5,
+            "eventId": "J.26.0147267",
+            "startTime": "2026-10-01T08:17:10",
+            "restoreTime": "2026-10-01T18:47:11",
+            "suburbs": [
+              {
+                "suburbName": "CRAIGIEBURN",
+                "postcode": 3064,
+                "streets": [
+                  "HUME HWY"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  144.94695695658214,
+                  -37.611878603963945
+                ],
+                [
+                  144.94692413059258,
+                  -37.61187107474789
+                ],
+                [
+                  144.94690752408044,
+                  -37.611847414282465
+                ],
+                [
+                  144.94677881374906,
+                  -37.61097154673139
+                ],
+                [
+                  144.94681865108163,
+                  -37.61093908275294
+                ],
+                [
+                  144.94717438097248,
+                  -37.610910840390574
+                ],
+                [
+                  144.94720090983296,
+                  -37.6109269997722
+                ],
+                [
+                  144.94746148469898,
+                  -37.61127683832216
+                ],
+                [
+                  144.94748116771765,
+                  -37.61140978034848
+                ],
+                [
+                  144.94722408928578,
+                  -37.611840988310064
+                ],
+                [
+                  144.9471822741535,
+                  -37.611859085066605
+                ],
+                [
+                  144.94695695658214,
+                  -37.611878603963945
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.611878603963945,
+              "Longitude": 144.94695695658214
+            },
+            {
+              "Latitude": -37.61187107474789,
+              "Longitude": 144.94692413059258
+            },
+            {
+              "Latitude": -37.611847414282465,
+              "Longitude": 144.94690752408044
+            },
+            {
+              "Latitude": -37.61097154673139,
+              "Longitude": 144.94677881374906
+            },
+            {
+              "Latitude": -37.61093908275294,
+              "Longitude": 144.94681865108163
+            },
+            {
+              "Latitude": -37.610910840390574,
+              "Longitude": 144.94717438097248
+            },
+            {
+              "Latitude": -37.6109269997722,
+              "Longitude": 144.94720090983296
+            },
+            {
+              "Latitude": -37.61127683832216,
+              "Longitude": 144.94746148469898
+            },
+            {
+              "Latitude": -37.61140978034848,
+              "Longitude": 144.94748116771765
+            },
+            {
+              "Latitude": -37.611840988310064,
+              "Longitude": 144.94722408928578
+            },
+            {
+              "Latitude": -37.611859085066605,
+              "Longitude": 144.9471822741535
+            },
+            {
+              "Latitude": -37.611878603963945,
+              "Longitude": 144.94695695658214
+            }
+          ]
+        ],
+        "RestorationTime": "2026-10-01T18:47:11",
+        "ImpactedCustomers": 5,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 5,
+            "eventId": "J.26.0147267",
+            "startTime": "2026-10-01T08:17:10",
+            "restoreTime": "2026-10-01T18:47:11",
+            "suburbs": [
+              {
+                "suburbName": "CRAIGIEBURN",
+                "postcode": 3064,
+                "streets": [
+                  "HUME HWY"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              144.94712999073334,
+              -37.61139472217726
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.61139472217726,
+          "Longitude": 144.94712999073334
         }
       }
     ]
