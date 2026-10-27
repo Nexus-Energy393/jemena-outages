@@ -14,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-10-27T05:49:34.649Z",
+    "LastUpdatedTime": "2026-10-27T11:20:23.909Z",
     "FeedReceivedTime": "2026-10-26T15:18:31.357Z",
     "History": [
       {
@@ -267,7 +267,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-10-27T05:49:34.649Z",
+    "LastUpdatedTime": "2026-10-27T11:20:23.909Z",
     "FeedReceivedTime": "2026-10-26T18:47:20.453Z",
     "History": [
       {
@@ -1132,7 +1132,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-10-27T05:49:34.649Z",
+    "LastUpdatedTime": "2026-10-27T11:20:23.909Z",
     "FeedReceivedTime": "2026-10-27T00:03:22.693Z",
     "History": []
   },
@@ -1151,7 +1151,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-10-27T05:49:34.649Z",
+    "LastUpdatedTime": "2026-10-27T11:20:23.909Z",
     "FeedReceivedTime": "2026-10-27T00:44:04.829Z",
     "History": [
       {
@@ -1593,200 +1593,6 @@
     ]
   },
   {
-    "EstimatedRestorationTime": "2026-10-27T15:20:12",
-    "DispatchedTime": "2026-10-26T23:31:04",
-    "EventId": "J.26.0151201",
-    "Type": "Unplanned",
-    "Status": "Acknowledged",
-    "Cause": "Under Investigation",
-    "StartTime": "2026-10-27T11:19:59",
-    "RestorationTime": "2026-10-27T12:03:46",
-    "ImpactedCustomers": 0,
-    "LocationGeoJson": null,
-    "Location": null,
-    "ImpactedSuburbs": [],
-    "ImpactedAreaGeoJson": null,
-    "ImpactedArea": null,
-    "LastUpdatedTime": "2026-10-27T05:49:34.649Z",
-    "FeedReceivedTime": "2026-10-27T01:08:52.723Z",
-    "History": [
-      {
-        "ImpactedSuburbs": [
-          {
-            "SuburbName": "HEIDELBERG HEIGHTS",
-            "PostCode": 3081,
-            "Streets": [
-              "WATERDALE RD"
-            ]
-          },
-          {
-            "SuburbName": "HEIDELBERG WEST",
-            "PostCode": 3081,
-            "Streets": [
-              "WATERDALE RD"
-            ]
-          }
-        ],
-        "ImpactedAreaGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 22,
-            "eventId": "J.26.0151201",
-            "startTime": "2026-10-27T11:19:59",
-            "restoreTime": "2026-10-27T12:03:46",
-            "suburbs": [
-              {
-                "suburbName": "HEIDELBERG HEIGHTS",
-                "postcode": 3081,
-                "streets": [
-                  "WATERDALE RD"
-                ]
-              },
-              {
-                "suburbName": "HEIDELBERG WEST",
-                "postcode": 3081,
-                "streets": [
-                  "WATERDALE RD"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-              [
-                [
-                  145.0488333469768,
-                  -37.73691174180338
-                ],
-                [
-                  145.0482155418904,
-                  -37.73647084926029
-                ],
-                [
-                  145.04829382160975,
-                  -37.7359605032399
-                ],
-                [
-                  145.04831153536455,
-                  -37.735936332804165
-                ],
-                [
-                  145.04868841920407,
-                  -37.735965533182174
-                ],
-                [
-                  145.0492440181095,
-                  -37.736075039970764
-                ],
-                [
-                  145.04937041308517,
-                  -37.7362673098296
-                ],
-                [
-                  145.04928661439692,
-                  -37.73678815045346
-                ],
-                [
-                  145.04896576328537,
-                  -37.73692396923156
-                ],
-                [
-                  145.0488333469768,
-                  -37.73691174180338
-                ]
-              ]
-            ]
-          }
-        },
-        "ImpactedArea": [
-          [
-            {
-              "Latitude": -37.73691174180338,
-              "Longitude": 145.0488333469768
-            },
-            {
-              "Latitude": -37.73647084926029,
-              "Longitude": 145.0482155418904
-            },
-            {
-              "Latitude": -37.7359605032399,
-              "Longitude": 145.04829382160975
-            },
-            {
-              "Latitude": -37.735936332804165,
-              "Longitude": 145.04831153536455
-            },
-            {
-              "Latitude": -37.735965533182174,
-              "Longitude": 145.04868841920407
-            },
-            {
-              "Latitude": -37.736075039970764,
-              "Longitude": 145.0492440181095
-            },
-            {
-              "Latitude": -37.7362673098296,
-              "Longitude": 145.04937041308517
-            },
-            {
-              "Latitude": -37.73678815045346,
-              "Longitude": 145.04928661439692
-            },
-            {
-              "Latitude": -37.73692396923156,
-              "Longitude": 145.04896576328537
-            },
-            {
-              "Latitude": -37.73691174180338,
-              "Longitude": 145.0488333469768
-            }
-          ]
-        ],
-        "RestorationTime": "2026-10-27T12:03:46",
-        "ImpactedCustomers": 22,
-        "LocationGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 22,
-            "eventId": "J.26.0151201",
-            "startTime": "2026-10-27T11:19:59",
-            "restoreTime": "2026-10-27T12:03:46",
-            "suburbs": [
-              {
-                "suburbName": "HEIDELBERG HEIGHTS",
-                "postcode": 3081,
-                "streets": [
-                  "WATERDALE RD"
-                ]
-              },
-              {
-                "suburbName": "HEIDELBERG WEST",
-                "postcode": 3081,
-                "streets": [
-                  "WATERDALE RD"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [
-              145.04879297748778,
-              -37.73643015101786
-            ]
-          }
-        },
-        "Location": {
-          "Latitude": -37.73643015101786,
-          "Longitude": 145.04879297748778
-        }
-      }
-    ]
-  },
-  {
     "PlannedStartTime": "2026-10-27T07:30:00",
     "PlannedEndTime": "2026-10-27T16:00:00",
     "EventId": "J.26.0148686",
@@ -1801,7 +1607,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-10-27T05:49:34.649Z",
+    "LastUpdatedTime": "2026-10-27T11:20:23.909Z",
     "FeedReceivedTime": "2026-10-27T01:19:40.402Z",
     "History": [
       {
@@ -2135,7 +1941,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-10-27T05:49:34.649Z",
+    "LastUpdatedTime": "2026-10-27T11:20:23.909Z",
     "FeedReceivedTime": "2026-10-27T02:46:23.254Z",
     "History": [
       {
@@ -2308,7 +2114,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-10-27T05:49:34.649Z",
+    "LastUpdatedTime": "2026-10-27T11:20:23.909Z",
     "FeedReceivedTime": "2026-10-27T02:46:23.437Z",
     "History": [
       {
@@ -2591,7 +2397,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-10-27T05:49:34.649Z",
+    "LastUpdatedTime": "2026-10-27T11:20:23.909Z",
     "FeedReceivedTime": "2026-10-27T03:11:49.245Z",
     "History": [
       {
@@ -2884,230 +2690,6 @@
     ]
   },
   {
-    "EstimatedRestorationTime": "2026-10-27T19:08:43",
-    "DispatchedTime": null,
-    "EventId": "J.26.0151224",
-    "Type": "Unplanned",
-    "Status": "Unacknowledged",
-    "Cause": "Under Investigation",
-    "StartTime": "2026-10-27T15:08:32",
-    "RestorationTime": null,
-    "ImpactedCustomers": 54,
-    "LocationGeoJson": {
-      "type": "Feature",
-      "properties": {
-        "eventId": "J.26.0151224",
-        "customerReference": "",
-        "customersOff": "54",
-        "status": "Unacknowledged",
-        "type": "Unplanned",
-        "resolvedFlag": "false",
-        "showOutageFlag": "true",
-        "symptoms": [],
-        "cause": "Under Investigation",
-        "startTime": "2026-10-27T15:08:32",
-        "restoreTime": "",
-        "dispatchedTime": "",
-        "etr": "2026-10-27T19:08:43",
-        "plannedStartTime": "",
-        "plannedEndTime": "",
-        "lastUpdateTime": "2026-10-27T15:09:40"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          144.98768569073948,
-          -37.71130017990133
-        ]
-      }
-    },
-    "Location": {
-      "Latitude": -37.71130017990133,
-      "Longitude": 144.98768569073948
-    },
-    "ImpactedSuburbs": [
-      {
-        "SuburbName": "RESERVOIR",
-        "PostCode": 3073,
-        "Streets": [
-          "LAKESIDE AV",
-          "THROWER ST"
-        ]
-      }
-    ],
-    "ImpactedAreaGeoJson": {
-      "type": "Feature",
-      "properties": {
-        "eventId": "J.26.0151224",
-        "customerReference": "",
-        "customersOff": "54",
-        "status": "Unacknowledged",
-        "type": "Unplanned",
-        "resolvedFlag": "false",
-        "showOutageFlag": "true",
-        "symptoms": [],
-        "cause": "Under Investigation",
-        "startTime": "2026-10-27T15:08:32",
-        "restoreTime": "",
-        "dispatchedTime": "",
-        "etr": "2026-10-27T19:08:43",
-        "plannedStartTime": "",
-        "plannedEndTime": "",
-        "lastUpdateTime": "2026-10-27T15:09:40"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              144.9869095333675,
-              -37.71227032469467
-            ],
-            [
-              144.98685369579036,
-              -37.71224976327486
-            ],
-            [
-              144.98630899537017,
-              -37.71185757762963
-            ],
-            [
-              144.98627854054664,
-              -37.711817672384456
-            ],
-            [
-              144.9862761229395,
-              -37.71178641201611
-            ],
-            [
-              144.98631983730192,
-              -37.711549050096906
-            ],
-            [
-              144.98703630767073,
-              -37.71023919300557
-            ],
-            [
-              144.9870721637306,
-              -37.71020453922762
-            ],
-            [
-              144.98714479310865,
-              -37.71019064914794
-            ],
-            [
-              144.98794699023696,
-              -37.71028239670198
-            ],
-            [
-              144.9890863212757,
-              -37.711126729953016
-            ],
-            [
-              144.98909525853946,
-              -37.711172302006055
-            ],
-            [
-              144.98904241690587,
-              -37.71146528048822
-            ],
-            [
-              144.98862606271052,
-              -37.71225236040727
-            ],
-            [
-              144.98859051149844,
-              -37.71228747984887
-            ],
-            [
-              144.98824125157563,
-              -37.71240971065472
-            ],
-            [
-              144.9869095333675,
-              -37.71227032469467
-            ]
-          ]
-        ]
-      }
-    },
-    "ImpactedArea": [
-      [
-        {
-          "Latitude": -37.71227032469467,
-          "Longitude": 144.9869095333675
-        },
-        {
-          "Latitude": -37.71224976327486,
-          "Longitude": 144.98685369579036
-        },
-        {
-          "Latitude": -37.71185757762963,
-          "Longitude": 144.98630899537017
-        },
-        {
-          "Latitude": -37.711817672384456,
-          "Longitude": 144.98627854054664
-        },
-        {
-          "Latitude": -37.71178641201611,
-          "Longitude": 144.9862761229395
-        },
-        {
-          "Latitude": -37.711549050096906,
-          "Longitude": 144.98631983730192
-        },
-        {
-          "Latitude": -37.71023919300557,
-          "Longitude": 144.98703630767073
-        },
-        {
-          "Latitude": -37.71020453922762,
-          "Longitude": 144.9870721637306
-        },
-        {
-          "Latitude": -37.71019064914794,
-          "Longitude": 144.98714479310865
-        },
-        {
-          "Latitude": -37.71028239670198,
-          "Longitude": 144.98794699023696
-        },
-        {
-          "Latitude": -37.711126729953016,
-          "Longitude": 144.9890863212757
-        },
-        {
-          "Latitude": -37.711172302006055,
-          "Longitude": 144.98909525853946
-        },
-        {
-          "Latitude": -37.71146528048822,
-          "Longitude": 144.98904241690587
-        },
-        {
-          "Latitude": -37.71225236040727,
-          "Longitude": 144.98862606271052
-        },
-        {
-          "Latitude": -37.71228747984887,
-          "Longitude": 144.98859051149844
-        },
-        {
-          "Latitude": -37.71240971065472,
-          "Longitude": 144.98824125157563
-        },
-        {
-          "Latitude": -37.71227032469467,
-          "Longitude": 144.9869095333675
-        }
-      ]
-    ],
-    "LastUpdatedTime": "2026-10-27T05:49:34.649Z",
-    "FeedReceivedTime": "2026-10-27T04:09:52.906Z",
-    "History": null
-  },
-  {
     "PlannedStartTime": "2026-10-27T07:30:00",
     "PlannedEndTime": "2026-10-27T16:30:00",
     "EventId": "J.26.0147472",
@@ -3122,7 +2704,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-10-27T05:49:34.649Z",
+    "LastUpdatedTime": "2026-10-27T11:20:23.909Z",
     "FeedReceivedTime": "2026-10-27T04:18:03.980Z",
     "History": [
       {
@@ -3376,7 +2958,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-10-27T05:49:34.649Z",
+    "LastUpdatedTime": "2026-10-27T11:20:23.909Z",
     "FeedReceivedTime": "2026-10-27T04:38:24.065Z",
     "History": [
       {
@@ -3837,6 +3419,432 @@
         "Location": {
           "Latitude": -37.50478855878414,
           "Longitude": 144.74080303125822
+        }
+      }
+    ]
+  },
+  {
+    "EstimatedRestorationTime": "2026-10-27T20:00:00",
+    "DispatchedTime": "2026-10-27T04:24:54",
+    "EventId": "J.26.0151224",
+    "Type": "Unplanned",
+    "Status": "Completed",
+    "Cause": "Animal impact",
+    "StartTime": "2026-10-27T15:08:32",
+    "RestorationTime": "2026-10-27T19:16:22",
+    "ImpactedCustomers": 0,
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-10-27T11:20:23.909Z",
+    "FeedReceivedTime": "2026-10-27T08:25:54.173Z",
+    "History": [
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "RESERVOIR",
+            "PostCode": 3073,
+            "Streets": [
+              "LAKESIDE AV",
+              "THROWER ST"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 53,
+            "eventId": "J.26.0151224",
+            "startTime": "2026-10-27T15:08:32",
+            "restoreTime": "2026-10-27T19:16:22",
+            "suburbs": [
+              {
+                "suburbName": "RESERVOIR",
+                "postcode": 3073,
+                "streets": [
+                  "LAKESIDE AV",
+                  "THROWER ST"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  144.9869095333675,
+                  -37.71227032469467
+                ],
+                [
+                  144.98685369579036,
+                  -37.71224976327486
+                ],
+                [
+                  144.98630899537017,
+                  -37.71185757762963
+                ],
+                [
+                  144.98627854054664,
+                  -37.711817672384456
+                ],
+                [
+                  144.9862761229395,
+                  -37.71178641201611
+                ],
+                [
+                  144.98631983730192,
+                  -37.711549050096906
+                ],
+                [
+                  144.98703630767073,
+                  -37.71023919300557
+                ],
+                [
+                  144.9870721637306,
+                  -37.71020453922762
+                ],
+                [
+                  144.98714479310865,
+                  -37.71019064914794
+                ],
+                [
+                  144.98794699023696,
+                  -37.71028239670198
+                ],
+                [
+                  144.9890863212757,
+                  -37.711126729953016
+                ],
+                [
+                  144.98909525853946,
+                  -37.711172302006055
+                ],
+                [
+                  144.98904241690587,
+                  -37.71146528048822
+                ],
+                [
+                  144.98862606271052,
+                  -37.71225236040727
+                ],
+                [
+                  144.98859051149844,
+                  -37.71228747984887
+                ],
+                [
+                  144.98824125157563,
+                  -37.71240971065472
+                ],
+                [
+                  144.9869095333675,
+                  -37.71227032469467
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.71227032469467,
+              "Longitude": 144.9869095333675
+            },
+            {
+              "Latitude": -37.71224976327486,
+              "Longitude": 144.98685369579036
+            },
+            {
+              "Latitude": -37.71185757762963,
+              "Longitude": 144.98630899537017
+            },
+            {
+              "Latitude": -37.711817672384456,
+              "Longitude": 144.98627854054664
+            },
+            {
+              "Latitude": -37.71178641201611,
+              "Longitude": 144.9862761229395
+            },
+            {
+              "Latitude": -37.711549050096906,
+              "Longitude": 144.98631983730192
+            },
+            {
+              "Latitude": -37.71023919300557,
+              "Longitude": 144.98703630767073
+            },
+            {
+              "Latitude": -37.71020453922762,
+              "Longitude": 144.9870721637306
+            },
+            {
+              "Latitude": -37.71019064914794,
+              "Longitude": 144.98714479310865
+            },
+            {
+              "Latitude": -37.71028239670198,
+              "Longitude": 144.98794699023696
+            },
+            {
+              "Latitude": -37.711126729953016,
+              "Longitude": 144.9890863212757
+            },
+            {
+              "Latitude": -37.711172302006055,
+              "Longitude": 144.98909525853946
+            },
+            {
+              "Latitude": -37.71146528048822,
+              "Longitude": 144.98904241690587
+            },
+            {
+              "Latitude": -37.71225236040727,
+              "Longitude": 144.98862606271052
+            },
+            {
+              "Latitude": -37.71228747984887,
+              "Longitude": 144.98859051149844
+            },
+            {
+              "Latitude": -37.71240971065472,
+              "Longitude": 144.98824125157563
+            },
+            {
+              "Latitude": -37.71227032469467,
+              "Longitude": 144.9869095333675
+            }
+          ]
+        ],
+        "RestorationTime": "2026-10-27T19:16:22",
+        "ImpactedCustomers": 53,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 53,
+            "eventId": "J.26.0151224",
+            "startTime": "2026-10-27T15:08:32",
+            "restoreTime": "2026-10-27T19:16:22",
+            "suburbs": [
+              {
+                "suburbName": "RESERVOIR",
+                "postcode": 3073,
+                "streets": [
+                  "LAKESIDE AV",
+                  "THROWER ST"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              144.98768569073948,
+              -37.71130017990133
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.71130017990133,
+          "Longitude": 144.98768569073948
+        }
+      }
+    ]
+  },
+  {
+    "EstimatedRestorationTime": "2026-10-27T15:20:12",
+    "DispatchedTime": "2026-10-26T23:31:04",
+    "EventId": "J.26.0151201",
+    "Type": "Unplanned",
+    "Status": "Completed",
+    "Cause": "Third party asset damage",
+    "StartTime": "2026-10-27T11:19:59",
+    "RestorationTime": "2026-10-27T12:03:46",
+    "ImpactedCustomers": 0,
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-10-27T11:20:23.909Z",
+    "FeedReceivedTime": "2026-10-27T11:09:27.075Z",
+    "History": [
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "HEIDELBERG HEIGHTS",
+            "PostCode": 3081,
+            "Streets": [
+              "WATERDALE RD"
+            ]
+          },
+          {
+            "SuburbName": "HEIDELBERG WEST",
+            "PostCode": 3081,
+            "Streets": [
+              "WATERDALE RD"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 22,
+            "eventId": "J.26.0151201",
+            "startTime": "2026-10-27T11:19:59",
+            "restoreTime": "2026-10-27T12:03:46",
+            "suburbs": [
+              {
+                "suburbName": "HEIDELBERG HEIGHTS",
+                "postcode": 3081,
+                "streets": [
+                  "WATERDALE RD"
+                ]
+              },
+              {
+                "suburbName": "HEIDELBERG WEST",
+                "postcode": 3081,
+                "streets": [
+                  "WATERDALE RD"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  145.0488333469768,
+                  -37.73691174180338
+                ],
+                [
+                  145.0482155418904,
+                  -37.73647084926029
+                ],
+                [
+                  145.04829382160975,
+                  -37.7359605032399
+                ],
+                [
+                  145.04831153536455,
+                  -37.735936332804165
+                ],
+                [
+                  145.04868841920407,
+                  -37.735965533182174
+                ],
+                [
+                  145.0492440181095,
+                  -37.736075039970764
+                ],
+                [
+                  145.04937041308517,
+                  -37.7362673098296
+                ],
+                [
+                  145.04928661439692,
+                  -37.73678815045346
+                ],
+                [
+                  145.04896576328537,
+                  -37.73692396923156
+                ],
+                [
+                  145.0488333469768,
+                  -37.73691174180338
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.73691174180338,
+              "Longitude": 145.0488333469768
+            },
+            {
+              "Latitude": -37.73647084926029,
+              "Longitude": 145.0482155418904
+            },
+            {
+              "Latitude": -37.7359605032399,
+              "Longitude": 145.04829382160975
+            },
+            {
+              "Latitude": -37.735936332804165,
+              "Longitude": 145.04831153536455
+            },
+            {
+              "Latitude": -37.735965533182174,
+              "Longitude": 145.04868841920407
+            },
+            {
+              "Latitude": -37.736075039970764,
+              "Longitude": 145.0492440181095
+            },
+            {
+              "Latitude": -37.7362673098296,
+              "Longitude": 145.04937041308517
+            },
+            {
+              "Latitude": -37.73678815045346,
+              "Longitude": 145.04928661439692
+            },
+            {
+              "Latitude": -37.73692396923156,
+              "Longitude": 145.04896576328537
+            },
+            {
+              "Latitude": -37.73691174180338,
+              "Longitude": 145.0488333469768
+            }
+          ]
+        ],
+        "RestorationTime": "2026-10-27T12:03:46",
+        "ImpactedCustomers": 22,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 22,
+            "eventId": "J.26.0151201",
+            "startTime": "2026-10-27T11:19:59",
+            "restoreTime": "2026-10-27T12:03:46",
+            "suburbs": [
+              {
+                "suburbName": "HEIDELBERG HEIGHTS",
+                "postcode": 3081,
+                "streets": [
+                  "WATERDALE RD"
+                ]
+              },
+              {
+                "suburbName": "HEIDELBERG WEST",
+                "postcode": 3081,
+                "streets": [
+                  "WATERDALE RD"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              145.04879297748778,
+              -37.73643015101786
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.73643015101786,
+          "Longitude": 145.04879297748778
         }
       }
     ]
