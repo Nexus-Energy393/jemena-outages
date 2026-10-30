@@ -14,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-10-30T06:40:29.570Z",
+    "LastUpdatedTime": "2026-10-30T13:43:12.982Z",
     "FeedReceivedTime": "2026-10-30T00:41:12.831Z",
     "History": [
       {
@@ -456,7 +456,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-10-30T06:40:29.570Z",
+    "LastUpdatedTime": "2026-10-30T13:43:12.982Z",
     "FeedReceivedTime": "2026-10-30T00:41:13.014Z",
     "History": [
       {
@@ -694,7 +694,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-10-30T06:40:29.570Z",
+    "LastUpdatedTime": "2026-10-30T13:43:12.982Z",
     "FeedReceivedTime": "2026-10-30T02:58:36.974Z",
     "History": [
       {
@@ -1279,6 +1279,235 @@
         "Location": {
           "Latitude": -37.51686493170402,
           "Longitude": 144.77530229375566
+        }
+      }
+    ]
+  },
+  {
+    "EstimatedRestorationTime": "2026-10-31T00:13:39",
+    "DispatchedTime": "2026-10-30T09:18:21",
+    "EventId": "J.26.0151471",
+    "Type": "Unplanned",
+    "Status": "Completed",
+    "Cause": "Third party asset damage",
+    "StartTime": "2026-10-30T20:13:30",
+    "RestorationTime": "2026-10-30T20:35:40",
+    "ImpactedCustomers": 0,
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-10-30T13:43:12.982Z",
+    "FeedReceivedTime": "2026-10-30T10:01:55.523Z",
+    "History": [
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "VIEWBANK",
+            "PostCode": 3084,
+            "Streets": [
+              "JEDEM CL"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 12,
+            "eventId": "J.26.0151471",
+            "startTime": "2026-10-30T20:13:30",
+            "restoreTime": "2026-10-30T20:35:40",
+            "suburbs": [
+              {
+                "suburbName": "VIEWBANK",
+                "postcode": 3084,
+                "streets": [
+                  "JEDEM CL"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  145.10145058622803,
+                  -37.73107731213732
+                ],
+                [
+                  145.10140893781292,
+                  -37.731021201509854
+                ],
+                [
+                  145.10128226216668,
+                  -37.73049517293802
+                ],
+                [
+                  145.10132890882636,
+                  -37.73026395015045
+                ],
+                [
+                  145.1013591729948,
+                  -37.730214440672086
+                ],
+                [
+                  145.10219422699174,
+                  -37.72988675093662
+                ],
+                [
+                  145.10257019854868,
+                  -37.72993802933551
+                ],
+                [
+                  145.10262323309692,
+                  -37.729957829076156
+                ],
+                [
+                  145.10335472880922,
+                  -37.73042652611028
+                ],
+                [
+                  145.10339533295655,
+                  -37.73047453146749
+                ],
+                [
+                  145.1037395886174,
+                  -37.73138934424384
+                ],
+                [
+                  145.1039212616057,
+                  -37.73194157476395
+                ],
+                [
+                  145.10381447263745,
+                  -37.732502827199745
+                ],
+                [
+                  145.10374079239588,
+                  -37.73254720832467
+                ],
+                [
+                  145.10367058806483,
+                  -37.73254597913076
+                ],
+                [
+                  145.1036292507328,
+                  -37.73252799691895
+                ],
+                [
+                  145.10145058622803,
+                  -37.73107731213732
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.73107731213732,
+              "Longitude": 145.10145058622803
+            },
+            {
+              "Latitude": -37.731021201509854,
+              "Longitude": 145.10140893781292
+            },
+            {
+              "Latitude": -37.73049517293802,
+              "Longitude": 145.10128226216668
+            },
+            {
+              "Latitude": -37.73026395015045,
+              "Longitude": 145.10132890882636
+            },
+            {
+              "Latitude": -37.730214440672086,
+              "Longitude": 145.1013591729948
+            },
+            {
+              "Latitude": -37.72988675093662,
+              "Longitude": 145.10219422699174
+            },
+            {
+              "Latitude": -37.72993802933551,
+              "Longitude": 145.10257019854868
+            },
+            {
+              "Latitude": -37.729957829076156,
+              "Longitude": 145.10262323309692
+            },
+            {
+              "Latitude": -37.73042652611028,
+              "Longitude": 145.10335472880922
+            },
+            {
+              "Latitude": -37.73047453146749,
+              "Longitude": 145.10339533295655
+            },
+            {
+              "Latitude": -37.73138934424384,
+              "Longitude": 145.1037395886174
+            },
+            {
+              "Latitude": -37.73194157476395,
+              "Longitude": 145.1039212616057
+            },
+            {
+              "Latitude": -37.732502827199745,
+              "Longitude": 145.10381447263745
+            },
+            {
+              "Latitude": -37.73254720832467,
+              "Longitude": 145.10374079239588
+            },
+            {
+              "Latitude": -37.73254597913076,
+              "Longitude": 145.10367058806483
+            },
+            {
+              "Latitude": -37.73252799691895,
+              "Longitude": 145.1036292507328
+            },
+            {
+              "Latitude": -37.73107731213732,
+              "Longitude": 145.10145058622803
+            }
+          ]
+        ],
+        "RestorationTime": "2026-10-30T20:35:40",
+        "ImpactedCustomers": 12,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 12,
+            "eventId": "J.26.0151471",
+            "startTime": "2026-10-30T20:13:30",
+            "restoreTime": "2026-10-30T20:35:40",
+            "suburbs": [
+              {
+                "suburbName": "VIEWBANK",
+                "postcode": 3084,
+                "streets": [
+                  "JEDEM CL"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              145.1026017618862,
+              -37.731216979630645
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.731216979630645,
+          "Longitude": 145.1026017618862
         }
       }
     ]
