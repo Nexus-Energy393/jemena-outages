@@ -14,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-10-30T13:43:12.982Z",
+    "LastUpdatedTime": "2026-10-31T00:15:47.401Z",
     "FeedReceivedTime": "2026-10-30T00:41:12.831Z",
     "History": [
       {
@@ -456,7 +456,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-10-30T13:43:12.982Z",
+    "LastUpdatedTime": "2026-10-31T00:15:47.401Z",
     "FeedReceivedTime": "2026-10-30T00:41:13.014Z",
     "History": [
       {
@@ -694,7 +694,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-10-30T13:43:12.982Z",
+    "LastUpdatedTime": "2026-10-31T00:15:47.401Z",
     "FeedReceivedTime": "2026-10-30T02:58:36.974Z",
     "History": [
       {
@@ -1298,7 +1298,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-10-30T13:43:12.982Z",
+    "LastUpdatedTime": "2026-10-31T00:15:47.401Z",
     "FeedReceivedTime": "2026-10-30T10:01:55.523Z",
     "History": [
       {
@@ -1508,6 +1508,746 @@
         "Location": {
           "Latitude": -37.731216979630645,
           "Longitude": 145.1026017618862
+        }
+      }
+    ]
+  },
+  {
+    "PlannedStartTime": "2026-10-31T07:30:00",
+    "PlannedEndTime": "2026-10-31T16:30:00",
+    "EventId": "J.26.0148995",
+    "Type": "Planned",
+    "Status": "Planned Outage Execution",
+    "Cause": "Essential Maintenance",
+    "StartTime": "2026-10-31T09:09:49",
+    "RestorationTime": null,
+    "ImpactedCustomers": 9,
+    "LocationGeoJson": {
+      "type": "Feature",
+      "properties": {
+        "eventId": "J.26.0148995",
+        "customerReference": "J5221112",
+        "customersOff": "9",
+        "status": "Planned Outage Execution",
+        "type": "Planned",
+        "resolvedFlag": "false",
+        "showOutageFlag": "false",
+        "symptoms": [],
+        "cause": "Essential Maintenance",
+        "startTime": "2026-10-31T09:09:49",
+        "restoreTime": "",
+        "dispatchedTime": "",
+        "etr": "2026-10-31T16:30:00",
+        "plannedStartTime": "2026-10-31T07:30:00",
+        "plannedEndTime": "2026-10-31T16:30:00",
+        "lastUpdateTime": "2026-10-31T09:09:59"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          144.95540652797453,
+          -37.64505328373794
+        ]
+      }
+    },
+    "Location": {
+      "Latitude": -37.64505328373794,
+      "Longitude": 144.95540652797453
+    },
+    "ImpactedSuburbs": [
+      {
+        "SuburbName": "CAMPBELLFIELD",
+        "PostCode": 3061,
+        "Streets": [
+          "COOPER ST"
+        ]
+      }
+    ],
+    "ImpactedAreaGeoJson": {
+      "type": "Feature",
+      "properties": {
+        "eventId": "J.26.0148995",
+        "customerReference": "J5221112",
+        "customersOff": "9",
+        "status": "Planned Outage Execution",
+        "type": "Planned",
+        "resolvedFlag": "false",
+        "showOutageFlag": "false",
+        "symptoms": [],
+        "cause": "Essential Maintenance",
+        "startTime": "2026-10-31T09:09:49",
+        "restoreTime": "",
+        "dispatchedTime": "",
+        "etr": "2026-10-31T16:30:00",
+        "plannedStartTime": "2026-10-31T07:30:00",
+        "plannedEndTime": "2026-10-31T16:30:00",
+        "lastUpdateTime": "2026-10-31T09:09:59"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              144.95354370227707,
+              -37.645844627336274
+            ],
+            [
+              144.95345992736057,
+              -37.64580518249397
+            ],
+            [
+              144.95341893671286,
+              -37.6457351642024
+            ],
+            [
+              144.95315905529716,
+              -37.64420788365546
+            ],
+            [
+              144.95323508281894,
+              -37.64375244668504
+            ],
+            [
+              144.95329355878584,
+              -37.643690147889416
+            ],
+            [
+              144.95335351009086,
+              -37.643668465715265
+            ],
+            [
+              144.95341939673784,
+              -37.64366711421867
+            ],
+            [
+              144.95482404823477,
+              -37.643864198251414
+            ],
+            [
+              144.95579191013684,
+              -37.644043875494376
+            ],
+            [
+              144.95684082331326,
+              -37.64435970989226
+            ],
+            [
+              144.95757702936857,
+              -37.6447178750297
+            ],
+            [
+              144.95762356257026,
+              -37.64475178830817
+            ],
+            [
+              144.9576505435511,
+              -37.644797079480085
+            ],
+            [
+              144.9576540006519,
+              -37.64484708157215
+            ],
+            [
+              144.9573930515243,
+              -37.646331105294195
+            ],
+            [
+              144.95735286194474,
+              -37.6463999322113
+            ],
+            [
+              144.95727113162198,
+              -37.6464394532572
+            ],
+            [
+              144.9559313687103,
+              -37.64629995683476
+            ],
+            [
+              144.95354370227707,
+              -37.645844627336274
+            ]
+          ]
+        ]
+      }
+    },
+    "ImpactedArea": [
+      [
+        {
+          "Latitude": -37.645844627336274,
+          "Longitude": 144.95354370227707
+        },
+        {
+          "Latitude": -37.64580518249397,
+          "Longitude": 144.95345992736057
+        },
+        {
+          "Latitude": -37.6457351642024,
+          "Longitude": 144.95341893671286
+        },
+        {
+          "Latitude": -37.64420788365546,
+          "Longitude": 144.95315905529716
+        },
+        {
+          "Latitude": -37.64375244668504,
+          "Longitude": 144.95323508281894
+        },
+        {
+          "Latitude": -37.643690147889416,
+          "Longitude": 144.95329355878584
+        },
+        {
+          "Latitude": -37.643668465715265,
+          "Longitude": 144.95335351009086
+        },
+        {
+          "Latitude": -37.64366711421867,
+          "Longitude": 144.95341939673784
+        },
+        {
+          "Latitude": -37.643864198251414,
+          "Longitude": 144.95482404823477
+        },
+        {
+          "Latitude": -37.644043875494376,
+          "Longitude": 144.95579191013684
+        },
+        {
+          "Latitude": -37.64435970989226,
+          "Longitude": 144.95684082331326
+        },
+        {
+          "Latitude": -37.6447178750297,
+          "Longitude": 144.95757702936857
+        },
+        {
+          "Latitude": -37.64475178830817,
+          "Longitude": 144.95762356257026
+        },
+        {
+          "Latitude": -37.644797079480085,
+          "Longitude": 144.9576505435511
+        },
+        {
+          "Latitude": -37.64484708157215,
+          "Longitude": 144.9576540006519
+        },
+        {
+          "Latitude": -37.646331105294195,
+          "Longitude": 144.9573930515243
+        },
+        {
+          "Latitude": -37.6463999322113,
+          "Longitude": 144.95735286194474
+        },
+        {
+          "Latitude": -37.6464394532572,
+          "Longitude": 144.95727113162198
+        },
+        {
+          "Latitude": -37.64629995683476,
+          "Longitude": 144.9559313687103
+        },
+        {
+          "Latitude": -37.645844627336274,
+          "Longitude": 144.95354370227707
+        }
+      ]
+    ],
+    "LastUpdatedTime": "2026-10-31T00:15:47.401Z",
+    "FeedReceivedTime": "2026-10-30T22:11:17.859Z",
+    "History": null
+  },
+  {
+    "EstimatedRestorationTime": "2026-10-31T12:00:00",
+    "DispatchedTime": "2026-10-30T16:33:09",
+    "EventId": "J.26.0151476",
+    "Type": "Unplanned",
+    "Status": "Completed",
+    "Cause": "Third party asset damage",
+    "StartTime": "2026-10-31T06:20:07",
+    "RestorationTime": "2026-10-31T10:00:32",
+    "ImpactedCustomers": 0,
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-10-31T00:15:47.401Z",
+    "FeedReceivedTime": "2026-10-30T23:37:05.525Z",
+    "History": [
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "PASCOE VALE SOUTH",
+            "PostCode": 3044,
+            "Streets": [
+              "BELL ST",
+              "BELL STREET",
+              "WAVERLEY PDE"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 55,
+            "eventId": "J.26.0151476",
+            "startTime": "2026-10-31T06:20:07",
+            "restoreTime": "2026-10-31T10:00:32",
+            "suburbs": [
+              {
+                "suburbName": "PASCOE VALE SOUTH",
+                "postcode": 3044,
+                "streets": [
+                  "BELL ST",
+                  "BELL STREET",
+                  "WAVERLEY PDE"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  144.94249956742038,
+                  -37.73950068377621
+                ],
+                [
+                  144.94183293793478,
+                  -37.73941311948155
+                ],
+                [
+                  144.9417789416485,
+                  -37.73936638593988
+                ],
+                [
+                  144.94176543984045,
+                  -37.739325209496464
+                ],
+                [
+                  144.9417934993831,
+                  -37.73916300778881
+                ],
+                [
+                  144.94288003467207,
+                  -37.73818686709228
+                ],
+                [
+                  144.94294975258924,
+                  -37.73815344494219
+                ],
+                [
+                  144.94305791771012,
+                  -37.738158435724884
+                ],
+                [
+                  144.94542714093066,
+                  -37.73866997533022
+                ],
+                [
+                  144.94547697871874,
+                  -37.738689934817565
+                ],
+                [
+                  144.9455236429706,
+                  -37.73874429470034
+                ],
+                [
+                  144.9455586835235,
+                  -37.73910542669471
+                ],
+                [
+                  144.94539325013614,
+                  -37.73937240017055
+                ],
+                [
+                  144.94520999048984,
+                  -37.739627250022224
+                ],
+                [
+                  144.94513027302912,
+                  -37.739677882875306
+                ],
+                [
+                  144.94295423632303,
+                  -37.739554068855206
+                ],
+                [
+                  144.94249956742038,
+                  -37.73950068377621
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.73950068377621,
+              "Longitude": 144.94249956742038
+            },
+            {
+              "Latitude": -37.73941311948155,
+              "Longitude": 144.94183293793478
+            },
+            {
+              "Latitude": -37.73936638593988,
+              "Longitude": 144.9417789416485
+            },
+            {
+              "Latitude": -37.739325209496464,
+              "Longitude": 144.94176543984045
+            },
+            {
+              "Latitude": -37.73916300778881,
+              "Longitude": 144.9417934993831
+            },
+            {
+              "Latitude": -37.73818686709228,
+              "Longitude": 144.94288003467207
+            },
+            {
+              "Latitude": -37.73815344494219,
+              "Longitude": 144.94294975258924
+            },
+            {
+              "Latitude": -37.738158435724884,
+              "Longitude": 144.94305791771012
+            },
+            {
+              "Latitude": -37.73866997533022,
+              "Longitude": 144.94542714093066
+            },
+            {
+              "Latitude": -37.738689934817565,
+              "Longitude": 144.94547697871874
+            },
+            {
+              "Latitude": -37.73874429470034,
+              "Longitude": 144.9455236429706
+            },
+            {
+              "Latitude": -37.73910542669471,
+              "Longitude": 144.9455586835235
+            },
+            {
+              "Latitude": -37.73937240017055,
+              "Longitude": 144.94539325013614
+            },
+            {
+              "Latitude": -37.739627250022224,
+              "Longitude": 144.94520999048984
+            },
+            {
+              "Latitude": -37.739677882875306,
+              "Longitude": 144.94513027302912
+            },
+            {
+              "Latitude": -37.739554068855206,
+              "Longitude": 144.94295423632303
+            },
+            {
+              "Latitude": -37.73950068377621,
+              "Longitude": 144.94249956742038
+            }
+          ]
+        ],
+        "RestorationTime": "2026-10-31T10:00:32",
+        "ImpactedCustomers": 55,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 55,
+            "eventId": "J.26.0151476",
+            "startTime": "2026-10-31T06:20:07",
+            "restoreTime": "2026-10-31T10:00:32",
+            "suburbs": [
+              {
+                "suburbName": "PASCOE VALE SOUTH",
+                "postcode": 3044,
+                "streets": [
+                  "BELL ST",
+                  "BELL STREET",
+                  "WAVERLEY PDE"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              144.94366206168198,
+              -37.73891566390875
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.73891566390875,
+          "Longitude": 144.94366206168198
+        }
+      },
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "PASCOE VALE SOUTH",
+            "PostCode": 3044,
+            "Streets": [
+              "BELL ST",
+              "BREARLEY PDE",
+              "GRANDVIEW AV",
+              "SPRINGHALL PDE"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 73,
+            "eventId": "J.26.0151476",
+            "startTime": "2026-10-31T06:20:07",
+            "restoreTime": "2026-10-31T09:54:21",
+            "suburbs": [
+              {
+                "suburbName": "PASCOE VALE SOUTH",
+                "postcode": 3044,
+                "streets": [
+                  "BELL ST",
+                  "BREARLEY PDE",
+                  "GRANDVIEW AV",
+                  "SPRINGHALL PDE"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  144.94264286369634,
+                  -37.74391139908782
+                ],
+                [
+                  144.94215336304055,
+                  -37.74384993995764
+                ],
+                [
+                  144.94204398854507,
+                  -37.74378615550081
+                ],
+                [
+                  144.9419972645748,
+                  -37.74368524147263
+                ],
+                [
+                  144.9427518261029,
+                  -37.73929937248705
+                ],
+                [
+                  144.94278043715465,
+                  -37.73923251799031
+                ],
+                [
+                  144.94283840784948,
+                  -37.739178853955266
+                ],
+                [
+                  144.94355276957535,
+                  -37.7388786476546
+                ],
+                [
+                  144.94369768484162,
+                  -37.73885939254664
+                ],
+                [
+                  144.94397925400466,
+                  -37.73889641692515
+                ],
+                [
+                  144.944055380788,
+                  -37.73893132772803
+                ],
+                [
+                  144.94411003127402,
+                  -37.73898587314493
+                ],
+                [
+                  144.9442726048429,
+                  -37.739398050986125
+                ],
+                [
+                  144.94500781313516,
+                  -37.74140653085743
+                ],
+                [
+                  144.94501493089285,
+                  -37.74148373117731
+                ],
+                [
+                  144.9449912986014,
+                  -37.74161984690083
+                ],
+                [
+                  144.94496274480434,
+                  -37.74168655240374
+                ],
+                [
+                  144.94350839226317,
+                  -37.74370474717187
+                ],
+                [
+                  144.94316309122465,
+                  -37.74391592040052
+                ],
+                [
+                  144.94307924042255,
+                  -37.743947834215476
+                ],
+                [
+                  144.94298630586886,
+                  -37.743951622406655
+                ],
+                [
+                  144.94264286369634,
+                  -37.74391139908782
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.74391139908782,
+              "Longitude": 144.94264286369634
+            },
+            {
+              "Latitude": -37.74384993995764,
+              "Longitude": 144.94215336304055
+            },
+            {
+              "Latitude": -37.74378615550081,
+              "Longitude": 144.94204398854507
+            },
+            {
+              "Latitude": -37.74368524147263,
+              "Longitude": 144.9419972645748
+            },
+            {
+              "Latitude": -37.73929937248705,
+              "Longitude": 144.9427518261029
+            },
+            {
+              "Latitude": -37.73923251799031,
+              "Longitude": 144.94278043715465
+            },
+            {
+              "Latitude": -37.739178853955266,
+              "Longitude": 144.94283840784948
+            },
+            {
+              "Latitude": -37.7388786476546,
+              "Longitude": 144.94355276957535
+            },
+            {
+              "Latitude": -37.73885939254664,
+              "Longitude": 144.94369768484162
+            },
+            {
+              "Latitude": -37.73889641692515,
+              "Longitude": 144.94397925400466
+            },
+            {
+              "Latitude": -37.73893132772803,
+              "Longitude": 144.944055380788
+            },
+            {
+              "Latitude": -37.73898587314493,
+              "Longitude": 144.94411003127402
+            },
+            {
+              "Latitude": -37.739398050986125,
+              "Longitude": 144.9442726048429
+            },
+            {
+              "Latitude": -37.74140653085743,
+              "Longitude": 144.94500781313516
+            },
+            {
+              "Latitude": -37.74148373117731,
+              "Longitude": 144.94501493089285
+            },
+            {
+              "Latitude": -37.74161984690083,
+              "Longitude": 144.9449912986014
+            },
+            {
+              "Latitude": -37.74168655240374,
+              "Longitude": 144.94496274480434
+            },
+            {
+              "Latitude": -37.74370474717187,
+              "Longitude": 144.94350839226317
+            },
+            {
+              "Latitude": -37.74391592040052,
+              "Longitude": 144.94316309122465
+            },
+            {
+              "Latitude": -37.743947834215476,
+              "Longitude": 144.94307924042255
+            },
+            {
+              "Latitude": -37.743951622406655,
+              "Longitude": 144.94298630586886
+            },
+            {
+              "Latitude": -37.74391139908782,
+              "Longitude": 144.94264286369634
+            }
+          ]
+        ],
+        "RestorationTime": "2026-10-31T09:54:21",
+        "ImpactedCustomers": 73,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 73,
+            "eventId": "J.26.0151476",
+            "startTime": "2026-10-31T06:20:07",
+            "restoreTime": "2026-10-31T09:54:21",
+            "suburbs": [
+              {
+                "suburbName": "PASCOE VALE SOUTH",
+                "postcode": 3044,
+                "streets": [
+                  "BELL ST",
+                  "BREARLEY PDE",
+                  "GRANDVIEW AV",
+                  "SPRINGHALL PDE"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              144.94350609773383,
+              -37.74140550747664
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.74140550747664,
+          "Longitude": 144.94350609773383
         }
       }
     ]
