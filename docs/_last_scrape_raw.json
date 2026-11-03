@@ -14,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-11-03T02:42:51.966Z",
+    "LastUpdatedTime": "2026-11-03T10:20:32.284Z",
     "FeedReceivedTime": "2026-11-02T16:37:33.743Z",
     "History": [
       {
@@ -219,7 +219,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-11-03T02:42:51.966Z",
+    "LastUpdatedTime": "2026-11-03T10:20:32.284Z",
     "FeedReceivedTime": "2026-11-02T18:02:16.423Z",
     "History": [
       {
@@ -1396,6 +1396,754 @@
         "Location": {
           "Latitude": -37.68385831189528,
           "Longitude": 144.68899016878004
+        }
+      }
+    ]
+  },
+  {
+    "EstimatedRestorationTime": "2026-11-03T19:56:58",
+    "DispatchedTime": "2026-11-03T04:59:16",
+    "EventId": "J.26.0151582",
+    "Type": "Unplanned",
+    "Status": "Completed",
+    "Cause": "Third party asset damage",
+    "StartTime": "2026-11-03T15:56:53",
+    "RestorationTime": "2026-11-03T17:24:08",
+    "ImpactedCustomers": 0,
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-11-03T10:20:32.284Z",
+    "FeedReceivedTime": "2026-11-03T06:28:03.446Z",
+    "History": [
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "HEIDELBERG HEIGHTS",
+            "PostCode": 3081,
+            "Streets": [
+              "EDEN ST"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 29,
+            "eventId": "J.26.0151582",
+            "startTime": "2026-11-03T15:56:53",
+            "restoreTime": "2026-11-03T17:24:08",
+            "suburbs": [
+              {
+                "suburbName": "HEIDELBERG HEIGHTS",
+                "postcode": 3081,
+                "streets": [
+                  "EDEN ST"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  145.0469782484588,
+                  -37.75139541133537
+                ],
+                [
+                  145.04675917351653,
+                  -37.75131097193632
+                ],
+                [
+                  145.046749034602,
+                  -37.75129352217773
+                ],
+                [
+                  145.04693684605073,
+                  -37.75098933433109
+                ],
+                [
+                  145.04713006974654,
+                  -37.7510083267687
+                ],
+                [
+                  145.04713914696148,
+                  -37.75102355591609
+                ],
+                [
+                  145.04707445747044,
+                  -37.75136102977562
+                ],
+                [
+                  145.0470355295119,
+                  -37.75139537380938
+                ],
+                [
+                  145.0469782484588,
+                  -37.75139541133537
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.75139541133537,
+              "Longitude": 145.0469782484588
+            },
+            {
+              "Latitude": -37.75131097193632,
+              "Longitude": 145.04675917351653
+            },
+            {
+              "Latitude": -37.75129352217773,
+              "Longitude": 145.046749034602
+            },
+            {
+              "Latitude": -37.75098933433109,
+              "Longitude": 145.04693684605073
+            },
+            {
+              "Latitude": -37.7510083267687,
+              "Longitude": 145.04713006974654
+            },
+            {
+              "Latitude": -37.75102355591609,
+              "Longitude": 145.04713914696148
+            },
+            {
+              "Latitude": -37.75136102977562,
+              "Longitude": 145.04707445747044
+            },
+            {
+              "Latitude": -37.75139537380938,
+              "Longitude": 145.0470355295119
+            },
+            {
+              "Latitude": -37.75139541133537,
+              "Longitude": 145.0469782484588
+            }
+          ]
+        ],
+        "RestorationTime": "2026-11-03T17:24:08",
+        "ImpactedCustomers": 29,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 29,
+            "eventId": "J.26.0151582",
+            "startTime": "2026-11-03T15:56:53",
+            "restoreTime": "2026-11-03T17:24:08",
+            "suburbs": [
+              {
+                "suburbName": "HEIDELBERG HEIGHTS",
+                "postcode": 3081,
+                "streets": [
+                  "EDEN ST"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              145.04694409078172,
+              -37.75119237283323
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.75119237283323,
+          "Longitude": 145.04694409078172
+        }
+      }
+    ]
+  },
+  {
+    "EstimatedRestorationTime": "2026-11-04T00:02:19",
+    "DispatchedTime": "2026-11-03T07:46:20",
+    "EventId": "J.26.0151596",
+    "Type": "Unplanned",
+    "Status": "Completed",
+    "Cause": "Network equipment fault",
+    "StartTime": "2026-11-03T18:25:06",
+    "RestorationTime": "2026-11-03T19:30:17",
+    "ImpactedCustomers": 0,
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-11-03T10:20:32.284Z",
+    "FeedReceivedTime": "2026-11-03T10:17:01.886Z",
+    "History": [
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "FAWKNER",
+            "PostCode": 3060,
+            "Streets": [
+              "ALLAN ST",
+              "ALLAN STREET",
+              "ANDERSON RD",
+              "BASIL ST",
+              "BONWICK ST",
+              "BONWICK STREET",
+              "BOSTON ST",
+              "BOSTON STREET",
+              "BUNGAY ST",
+              "CNR SYDNEY ROAD",
+              "CO-OP LANE",
+              "DENYS ST",
+              "ELIZABETH ST",
+              "ELSA ST",
+              "FAY ST",
+              "GLYNDA ST",
+              "GLYNDA STREET",
+              "HUDSON ST",
+              "HUDSON STREET",
+              "HUME HIGHWAY",
+              "JUKES RD",
+              "JUKES ROAD",
+              "LANIGAN ST",
+              "LOVELY ST",
+              "LOWSON ST",
+              "MAHER ST",
+              "MAHER STREET",
+              "MAJOR RD",
+              "MARGARET ST",
+              "MARGARET STREET",
+              "MCBRYDE ST",
+              "MCBRYDE STREET",
+              "MCDOUGALL ST",
+              "MINONA ST",
+              "MINONA STREET",
+              "MURRAY ST",
+              "MURRAY STREET",
+              "NORFOLK CT",
+              "PENN CT",
+              "PRESTON ST",
+              "SHIRLEY ST",
+              "SHIRLEY STREET",
+              "SYDNEY RD",
+              "SYDNEY ROAD",
+              "WELCH ST",
+              "WILLIAM ST",
+              "WROXHAM CT"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 1353,
+            "eventId": "J.26.0151596",
+            "startTime": "2026-11-03T18:25:06",
+            "restoreTime": "2026-11-03T19:30:17",
+            "suburbs": [
+              {
+                "suburbName": "FAWKNER",
+                "postcode": 3060,
+                "streets": [
+                  "ALLAN ST",
+                  "ALLAN STREET",
+                  "ANDERSON RD",
+                  "BASIL ST",
+                  "BONWICK ST",
+                  "BONWICK STREET",
+                  "BOSTON ST",
+                  "BOSTON STREET",
+                  "BUNGAY ST",
+                  "CNR SYDNEY ROAD",
+                  "CO-OP LANE",
+                  "DENYS ST",
+                  "ELIZABETH ST",
+                  "ELSA ST",
+                  "FAY ST",
+                  "GLYNDA ST",
+                  "GLYNDA STREET",
+                  "HUDSON ST",
+                  "HUDSON STREET",
+                  "HUME HIGHWAY",
+                  "JUKES RD",
+                  "JUKES ROAD",
+                  "LANIGAN ST",
+                  "LOVELY ST",
+                  "LOWSON ST",
+                  "MAHER ST",
+                  "MAHER STREET",
+                  "MAJOR RD",
+                  "MARGARET ST",
+                  "MARGARET STREET",
+                  "MCBRYDE ST",
+                  "MCBRYDE STREET",
+                  "MCDOUGALL ST",
+                  "MINONA ST",
+                  "MINONA STREET",
+                  "MURRAY ST",
+                  "MURRAY STREET",
+                  "NORFOLK CT",
+                  "PENN CT",
+                  "PRESTON ST",
+                  "SHIRLEY ST",
+                  "SHIRLEY STREET",
+                  "SYDNEY RD",
+                  "SYDNEY ROAD",
+                  "WELCH ST",
+                  "WILLIAM ST",
+                  "WROXHAM CT"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  144.95846396312706,
+                  -37.70221902624257
+                ],
+                [
+                  144.95840199752902,
+                  -37.70210401970434
+                ],
+                [
+                  144.95837108151048,
+                  -37.7019814150954
+                ],
+                [
+                  144.9582251967604,
+                  -37.700755803371145
+                ],
+                [
+                  144.95822619473634,
+                  -37.7006339770219
+                ],
+                [
+                  144.95825787781328,
+                  -37.70051475489149
+                ],
+                [
+                  144.95831897324732,
+                  -37.700402926287474
+                ],
+                [
+                  144.9584070267678,
+                  -37.70030298353053
+                ],
+                [
+                  144.9591696937689,
+                  -37.699609195195094
+                ],
+                [
+                  144.9655981698299,
+                  -37.69515632048325
+                ],
+                [
+                  144.96573288189012,
+                  -37.695081539401066
+                ],
+                [
+                  144.96588463043776,
+                  -37.69503117486902
+                ],
+                [
+                  144.96604645307275,
+                  -37.69500753772182
+                ],
+                [
+                  144.966210925184,
+                  -37.695011712485
+                ],
+                [
+                  144.9674557686532,
+                  -37.69515095740963
+                ],
+                [
+                  144.9709104972969,
+                  -37.69570022272492
+                ],
+                [
+                  144.97243143338216,
+                  -37.69610054190585
+                ],
+                [
+                  144.97256971108936,
+                  -37.69614991072149
+                ],
+                [
+                  144.97269303268965,
+                  -37.6962198170398
+                ],
+                [
+                  144.9727965895078,
+                  -37.69630753495245
+                ],
+                [
+                  144.9783420096276,
+                  -37.70204985518292
+                ],
+                [
+                  144.97905670085572,
+                  -37.70303640433266
+                ],
+                [
+                  144.97916798004337,
+                  -37.70327748044887
+                ],
+                [
+                  144.97919836948165,
+                  -37.70341774514513
+                ],
+                [
+                  144.97919348850212,
+                  -37.703557679975276
+                ],
+                [
+                  144.9791590431144,
+                  -37.703671084527905
+                ],
+                [
+                  144.979097854611,
+                  -37.70377719579718
+                ],
+                [
+                  144.9790121759926,
+                  -37.70387210673602
+                ],
+                [
+                  144.9785994475847,
+                  -37.70414094219859
+                ],
+                [
+                  144.9784546265648,
+                  -37.70421141724446
+                ],
+                [
+                  144.97675104218658,
+                  -37.704844317975564
+                ],
+                [
+                  144.96778603686397,
+                  -37.707462836830615
+                ],
+                [
+                  144.96762230979715,
+                  -37.70749503518306
+                ],
+                [
+                  144.96611586091097,
+                  -37.70765523185466
+                ],
+                [
+                  144.96590793028176,
+                  -37.70765488105698
+                ],
+                [
+                  144.96535961002607,
+                  -37.70759458507316
+                ],
+                [
+                  144.9651895470293,
+                  -37.7075597756214
+                ],
+                [
+                  144.96503392436327,
+                  -37.70749531363153
+                ],
+                [
+                  144.9638938054385,
+                  -37.70688175487807
+                ],
+                [
+                  144.96081627411405,
+                  -37.70508462549269
+                ],
+                [
+                  144.96025810316945,
+                  -37.7047044148313
+                ],
+                [
+                  144.96016451018497,
+                  -37.70462791056822
+                ],
+                [
+                  144.96008922652393,
+                  -37.70453965873626
+                ],
+                [
+                  144.95846396312706,
+                  -37.70221902624257
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.70221902624257,
+              "Longitude": 144.95846396312706
+            },
+            {
+              "Latitude": -37.70210401970434,
+              "Longitude": 144.95840199752902
+            },
+            {
+              "Latitude": -37.7019814150954,
+              "Longitude": 144.95837108151048
+            },
+            {
+              "Latitude": -37.700755803371145,
+              "Longitude": 144.9582251967604
+            },
+            {
+              "Latitude": -37.7006339770219,
+              "Longitude": 144.95822619473634
+            },
+            {
+              "Latitude": -37.70051475489149,
+              "Longitude": 144.95825787781328
+            },
+            {
+              "Latitude": -37.700402926287474,
+              "Longitude": 144.95831897324732
+            },
+            {
+              "Latitude": -37.70030298353053,
+              "Longitude": 144.9584070267678
+            },
+            {
+              "Latitude": -37.699609195195094,
+              "Longitude": 144.9591696937689
+            },
+            {
+              "Latitude": -37.69515632048325,
+              "Longitude": 144.9655981698299
+            },
+            {
+              "Latitude": -37.695081539401066,
+              "Longitude": 144.96573288189012
+            },
+            {
+              "Latitude": -37.69503117486902,
+              "Longitude": 144.96588463043776
+            },
+            {
+              "Latitude": -37.69500753772182,
+              "Longitude": 144.96604645307275
+            },
+            {
+              "Latitude": -37.695011712485,
+              "Longitude": 144.966210925184
+            },
+            {
+              "Latitude": -37.69515095740963,
+              "Longitude": 144.9674557686532
+            },
+            {
+              "Latitude": -37.69570022272492,
+              "Longitude": 144.9709104972969
+            },
+            {
+              "Latitude": -37.69610054190585,
+              "Longitude": 144.97243143338216
+            },
+            {
+              "Latitude": -37.69614991072149,
+              "Longitude": 144.97256971108936
+            },
+            {
+              "Latitude": -37.6962198170398,
+              "Longitude": 144.97269303268965
+            },
+            {
+              "Latitude": -37.69630753495245,
+              "Longitude": 144.9727965895078
+            },
+            {
+              "Latitude": -37.70204985518292,
+              "Longitude": 144.9783420096276
+            },
+            {
+              "Latitude": -37.70303640433266,
+              "Longitude": 144.97905670085572
+            },
+            {
+              "Latitude": -37.70327748044887,
+              "Longitude": 144.97916798004337
+            },
+            {
+              "Latitude": -37.70341774514513,
+              "Longitude": 144.97919836948165
+            },
+            {
+              "Latitude": -37.703557679975276,
+              "Longitude": 144.97919348850212
+            },
+            {
+              "Latitude": -37.703671084527905,
+              "Longitude": 144.9791590431144
+            },
+            {
+              "Latitude": -37.70377719579718,
+              "Longitude": 144.979097854611
+            },
+            {
+              "Latitude": -37.70387210673602,
+              "Longitude": 144.9790121759926
+            },
+            {
+              "Latitude": -37.70414094219859,
+              "Longitude": 144.9785994475847
+            },
+            {
+              "Latitude": -37.70421141724446,
+              "Longitude": 144.9784546265648
+            },
+            {
+              "Latitude": -37.704844317975564,
+              "Longitude": 144.97675104218658
+            },
+            {
+              "Latitude": -37.707462836830615,
+              "Longitude": 144.96778603686397
+            },
+            {
+              "Latitude": -37.70749503518306,
+              "Longitude": 144.96762230979715
+            },
+            {
+              "Latitude": -37.70765523185466,
+              "Longitude": 144.96611586091097
+            },
+            {
+              "Latitude": -37.70765488105698,
+              "Longitude": 144.96590793028176
+            },
+            {
+              "Latitude": -37.70759458507316,
+              "Longitude": 144.96535961002607
+            },
+            {
+              "Latitude": -37.7075597756214,
+              "Longitude": 144.9651895470293
+            },
+            {
+              "Latitude": -37.70749531363153,
+              "Longitude": 144.96503392436327
+            },
+            {
+              "Latitude": -37.70688175487807,
+              "Longitude": 144.9638938054385
+            },
+            {
+              "Latitude": -37.70508462549269,
+              "Longitude": 144.96081627411405
+            },
+            {
+              "Latitude": -37.7047044148313,
+              "Longitude": 144.96025810316945
+            },
+            {
+              "Latitude": -37.70462791056822,
+              "Longitude": 144.96016451018497
+            },
+            {
+              "Latitude": -37.70453965873626,
+              "Longitude": 144.96008922652393
+            },
+            {
+              "Latitude": -37.70221902624257,
+              "Longitude": 144.95846396312706
+            }
+          ]
+        ],
+        "RestorationTime": "2026-11-03T19:30:17",
+        "ImpactedCustomers": 1353,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 1353,
+            "eventId": "J.26.0151596",
+            "startTime": "2026-11-03T18:25:06",
+            "restoreTime": "2026-11-03T19:30:17",
+            "suburbs": [
+              {
+                "suburbName": "FAWKNER",
+                "postcode": 3060,
+                "streets": [
+                  "ALLAN ST",
+                  "ALLAN STREET",
+                  "ANDERSON RD",
+                  "BASIL ST",
+                  "BONWICK ST",
+                  "BONWICK STREET",
+                  "BOSTON ST",
+                  "BOSTON STREET",
+                  "BUNGAY ST",
+                  "CNR SYDNEY ROAD",
+                  "CO-OP LANE",
+                  "DENYS ST",
+                  "ELIZABETH ST",
+                  "ELSA ST",
+                  "FAY ST",
+                  "GLYNDA ST",
+                  "GLYNDA STREET",
+                  "HUDSON ST",
+                  "HUDSON STREET",
+                  "HUME HIGHWAY",
+                  "JUKES RD",
+                  "JUKES ROAD",
+                  "LANIGAN ST",
+                  "LOVELY ST",
+                  "LOWSON ST",
+                  "MAHER ST",
+                  "MAHER STREET",
+                  "MAJOR RD",
+                  "MARGARET ST",
+                  "MARGARET STREET",
+                  "MCBRYDE ST",
+                  "MCBRYDE STREET",
+                  "MCDOUGALL ST",
+                  "MINONA ST",
+                  "MINONA STREET",
+                  "MURRAY ST",
+                  "MURRAY STREET",
+                  "NORFOLK CT",
+                  "PENN CT",
+                  "PRESTON ST",
+                  "SHIRLEY ST",
+                  "SHIRLEY STREET",
+                  "SYDNEY RD",
+                  "SYDNEY ROAD",
+                  "WELCH ST",
+                  "WILLIAM ST",
+                  "WROXHAM CT"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              144.96871178312102,
+              -37.70133138478824
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.70133138478824,
+          "Longitude": 144.96871178312102
         }
       }
     ]
