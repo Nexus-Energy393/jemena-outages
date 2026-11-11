@@ -14,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-11-11T07:29:12.101Z",
+    "LastUpdatedTime": "2026-11-11T15:43:46.860Z",
     "FeedReceivedTime": "2026-11-10T22:55:19.075Z",
     "History": [
       {
@@ -282,7 +282,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-11-11T07:29:12.101Z",
+    "LastUpdatedTime": "2026-11-11T15:43:46.860Z",
     "FeedReceivedTime": "2026-11-11T02:55:29.831Z",
     "History": [
       {
@@ -512,7 +512,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-11-11T07:29:12.101Z",
+    "LastUpdatedTime": "2026-11-11T15:43:46.860Z",
     "FeedReceivedTime": "2026-11-11T03:15:50.305Z",
     "History": [
       {
@@ -900,7 +900,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-11-11T07:29:12.101Z",
+    "LastUpdatedTime": "2026-11-11T15:43:46.860Z",
     "FeedReceivedTime": "2026-11-11T04:37:15.310Z",
     "History": [
       {
@@ -1151,7 +1151,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-11-11T07:29:12.101Z",
+    "LastUpdatedTime": "2026-11-11T15:43:46.860Z",
     "FeedReceivedTime": "2026-11-11T04:37:16.665Z",
     "History": [
       {
@@ -1659,6 +1659,222 @@
         "Location": {
           "Latitude": -37.76730216457862,
           "Longitude": 145.04772597976464
+        }
+      }
+    ]
+  },
+  {
+    "EstimatedRestorationTime": "2026-11-12T03:53:44",
+    "DispatchedTime": "2026-11-11T09:40:45",
+    "EventId": "J.26.0152075",
+    "Type": "Unplanned",
+    "Status": "Completed",
+    "Cause": "Network equipment fault",
+    "StartTime": "2026-11-11T23:53:37",
+    "RestorationTime": "2026-11-12T01:46:01",
+    "ImpactedCustomers": 0,
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-11-11T15:43:46.860Z",
+    "FeedReceivedTime": "2026-11-11T14:50:59.973Z",
+    "History": [
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "IVANHOE",
+            "PostCode": 3079,
+            "Streets": [
+              "UPPER HEIDELBERG RD",
+              "UPPER HEIDELBERG ROAD"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 39,
+            "eventId": "J.26.0152075",
+            "startTime": "2026-11-11T23:53:37",
+            "restoreTime": "2026-11-12T01:46:01",
+            "suburbs": [
+              {
+                "suburbName": "IVANHOE",
+                "postcode": 3079,
+                "streets": [
+                  "UPPER HEIDELBERG RD",
+                  "UPPER HEIDELBERG ROAD"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  145.04313284298928,
+                  -37.76840569402026
+                ],
+                [
+                  145.04307726751756,
+                  -37.7683720228964
+                ],
+                [
+                  145.04286235571138,
+                  -37.768003938052836
+                ],
+                [
+                  145.04286324188965,
+                  -37.76797164390628
+                ],
+                [
+                  145.04296577334796,
+                  -37.76772880995381
+                ],
+                [
+                  145.04390977073513,
+                  -37.76697195189236
+                ],
+                [
+                  145.0448344294484,
+                  -37.76682830111771
+                ],
+                [
+                  145.0448797297491,
+                  -37.76683259114388
+                ],
+                [
+                  145.04491363961634,
+                  -37.76685672033292
+                ],
+                [
+                  145.04492378500004,
+                  -37.76689188368896
+                ],
+                [
+                  145.04487219815317,
+                  -37.76737168436896
+                ],
+                [
+                  145.0447711753373,
+                  -37.7674831341811
+                ],
+                [
+                  145.0435683766795,
+                  -37.76844669352382
+                ],
+                [
+                  145.0435141806599,
+                  -37.768456594595584
+                ],
+                [
+                  145.04313284298928,
+                  -37.76840569402026
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.76840569402026,
+              "Longitude": 145.04313284298928
+            },
+            {
+              "Latitude": -37.7683720228964,
+              "Longitude": 145.04307726751756
+            },
+            {
+              "Latitude": -37.768003938052836,
+              "Longitude": 145.04286235571138
+            },
+            {
+              "Latitude": -37.76797164390628,
+              "Longitude": 145.04286324188965
+            },
+            {
+              "Latitude": -37.76772880995381,
+              "Longitude": 145.04296577334796
+            },
+            {
+              "Latitude": -37.76697195189236,
+              "Longitude": 145.04390977073513
+            },
+            {
+              "Latitude": -37.76682830111771,
+              "Longitude": 145.0448344294484
+            },
+            {
+              "Latitude": -37.76683259114388,
+              "Longitude": 145.0448797297491
+            },
+            {
+              "Latitude": -37.76685672033292,
+              "Longitude": 145.04491363961634
+            },
+            {
+              "Latitude": -37.76689188368896,
+              "Longitude": 145.04492378500004
+            },
+            {
+              "Latitude": -37.76737168436896,
+              "Longitude": 145.04487219815317
+            },
+            {
+              "Latitude": -37.7674831341811,
+              "Longitude": 145.0447711753373
+            },
+            {
+              "Latitude": -37.76844669352382,
+              "Longitude": 145.0435683766795
+            },
+            {
+              "Latitude": -37.768456594595584,
+              "Longitude": 145.0435141806599
+            },
+            {
+              "Latitude": -37.76840569402026,
+              "Longitude": 145.04313284298928
+            }
+          ]
+        ],
+        "RestorationTime": "2026-11-12T01:46:01",
+        "ImpactedCustomers": 39,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 39,
+            "eventId": "J.26.0152075",
+            "startTime": "2026-11-11T23:53:37",
+            "restoreTime": "2026-11-12T01:46:01",
+            "suburbs": [
+              {
+                "suburbName": "IVANHOE",
+                "postcode": 3079,
+                "streets": [
+                  "UPPER HEIDELBERG RD",
+                  "UPPER HEIDELBERG ROAD"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              145.0438930703557,
+              -37.767642447856645
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.767642447856645,
+          "Longitude": 145.0438930703557
         }
       }
     ]
