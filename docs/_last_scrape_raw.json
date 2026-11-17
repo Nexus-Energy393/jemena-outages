@@ -14,7 +14,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-11-16T17:44:41.823Z",
+    "LastUpdatedTime": "2026-11-17T03:14:31.833Z",
     "FeedReceivedTime": "2026-11-16T04:18:13.106Z",
     "History": [
       {
@@ -254,236 +254,6 @@
     ]
   },
   {
-    "EstimatedRestorationTime": "2026-11-17T01:45:33",
-    "DispatchedTime": null,
-    "EventId": "J.26.0152337",
-    "Type": "Unplanned",
-    "Status": "Completed",
-    "Cause": "Network equipment fault",
-    "StartTime": "2026-11-16T21:45:28",
-    "RestorationTime": "2026-11-17T00:25:35",
-    "ImpactedCustomers": 0,
-    "LocationGeoJson": null,
-    "Location": null,
-    "ImpactedSuburbs": [],
-    "ImpactedAreaGeoJson": null,
-    "ImpactedArea": null,
-    "LastUpdatedTime": "2026-11-16T17:44:41.823Z",
-    "FeedReceivedTime": "2026-11-16T13:31:17.603Z",
-    "History": [
-      {
-        "ImpactedSuburbs": [
-          {
-            "SuburbName": "CRAIGIEBURN",
-            "PostCode": 3064,
-            "Streets": [
-              "BEACON HILLS CR",
-              "BEACON HILLS CRESCENT",
-              "LEE ST",
-              "WOODLANDS CT"
-            ]
-          }
-        ],
-        "ImpactedAreaGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 58,
-            "eventId": "J.26.0152337",
-            "startTime": "2026-11-16T21:45:28",
-            "restoreTime": "2026-11-17T00:25:35",
-            "suburbs": [
-              {
-                "suburbName": "CRAIGIEBURN",
-                "postcode": 3064,
-                "streets": [
-                  "BEACON HILLS CR",
-                  "BEACON HILLS CRESCENT",
-                  "LEE ST",
-                  "WOODLANDS CT"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-              [
-                [
-                  144.92870240317416,
-                  -37.59355788701357
-                ],
-                [
-                  144.92864122262478,
-                  -37.59353626394883
-                ],
-                [
-                  144.92860429836193,
-                  -37.59349197417778
-                ],
-                [
-                  144.9284298900983,
-                  -37.59303776865865
-                ],
-                [
-                  144.9286437582124,
-                  -37.59177100962709
-                ],
-                [
-                  144.92868989881572,
-                  -37.59170827706317
-                ],
-                [
-                  144.9287785183479,
-                  -37.59168980549973
-                ],
-                [
-                  144.92921622545416,
-                  -37.59173716883137
-                ],
-                [
-                  144.93135006108983,
-                  -37.59200221584672
-                ],
-                [
-                  144.93139559655495,
-                  -37.59201580774278
-                ],
-                [
-                  144.93144213080464,
-                  -37.59205970593223
-                ],
-                [
-                  144.9316913066177,
-                  -37.59312022044549
-                ],
-                [
-                  144.9316547608848,
-                  -37.59329081129552
-                ],
-                [
-                  144.93116189197505,
-                  -37.593792540286174
-                ],
-                [
-                  144.9310685225137,
-                  -37.59381403525446
-                ],
-                [
-                  144.92870240317416,
-                  -37.59355788701357
-                ]
-              ]
-            ]
-          }
-        },
-        "ImpactedArea": [
-          [
-            {
-              "Latitude": -37.59355788701357,
-              "Longitude": 144.92870240317416
-            },
-            {
-              "Latitude": -37.59353626394883,
-              "Longitude": 144.92864122262478
-            },
-            {
-              "Latitude": -37.59349197417778,
-              "Longitude": 144.92860429836193
-            },
-            {
-              "Latitude": -37.59303776865865,
-              "Longitude": 144.9284298900983
-            },
-            {
-              "Latitude": -37.59177100962709,
-              "Longitude": 144.9286437582124
-            },
-            {
-              "Latitude": -37.59170827706317,
-              "Longitude": 144.92868989881572
-            },
-            {
-              "Latitude": -37.59168980549973,
-              "Longitude": 144.9287785183479
-            },
-            {
-              "Latitude": -37.59173716883137,
-              "Longitude": 144.92921622545416
-            },
-            {
-              "Latitude": -37.59200221584672,
-              "Longitude": 144.93135006108983
-            },
-            {
-              "Latitude": -37.59201580774278,
-              "Longitude": 144.93139559655495
-            },
-            {
-              "Latitude": -37.59205970593223,
-              "Longitude": 144.93144213080464
-            },
-            {
-              "Latitude": -37.59312022044549,
-              "Longitude": 144.9316913066177
-            },
-            {
-              "Latitude": -37.59329081129552,
-              "Longitude": 144.9316547608848
-            },
-            {
-              "Latitude": -37.593792540286174,
-              "Longitude": 144.93116189197505
-            },
-            {
-              "Latitude": -37.59381403525446,
-              "Longitude": 144.9310685225137
-            },
-            {
-              "Latitude": -37.59355788701357,
-              "Longitude": 144.92870240317416
-            }
-          ]
-        ],
-        "RestorationTime": "2026-11-17T00:25:35",
-        "ImpactedCustomers": 58,
-        "LocationGeoJson": {
-          "type": "Feature",
-          "properties": {
-            "type": "Historical",
-            "customersOff": 58,
-            "eventId": "J.26.0152337",
-            "startTime": "2026-11-16T21:45:28",
-            "restoreTime": "2026-11-17T00:25:35",
-            "suburbs": [
-              {
-                "suburbName": "CRAIGIEBURN",
-                "postcode": 3064,
-                "streets": [
-                  "BEACON HILLS CR",
-                  "BEACON HILLS CRESCENT",
-                  "LEE ST",
-                  "WOODLANDS CT"
-                ]
-              }
-            ]
-          },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [
-              144.930060598358,
-              -37.5927519203771
-            ]
-          }
-        },
-        "Location": {
-          "Latitude": -37.5927519203771,
-          "Longitude": 144.930060598358
-        }
-      }
-    ]
-  },
-  {
     "EstimatedRestorationTime": "2026-11-17T02:15:00",
     "DispatchedTime": "2026-11-16T09:27:04",
     "EventId": "J.26.0152332",
@@ -498,7 +268,7 @@
     "ImpactedSuburbs": [],
     "ImpactedAreaGeoJson": null,
     "ImpactedArea": null,
-    "LastUpdatedTime": "2026-11-16T17:44:41.823Z",
+    "LastUpdatedTime": "2026-11-17T03:14:31.833Z",
     "FeedReceivedTime": "2026-11-16T14:52:09.349Z",
     "History": [
       {
@@ -768,5 +538,432 @@
         }
       }
     ]
+  },
+  {
+    "EstimatedRestorationTime": "2026-11-17T01:45:33",
+    "DispatchedTime": null,
+    "EventId": "J.26.0152337",
+    "Type": "Unplanned",
+    "Status": "Completed",
+    "Cause": "Network equipment fault",
+    "StartTime": "2026-11-16T21:45:28",
+    "RestorationTime": "2026-11-17T00:23:21",
+    "ImpactedCustomers": 0,
+    "LocationGeoJson": null,
+    "Location": null,
+    "ImpactedSuburbs": [],
+    "ImpactedAreaGeoJson": null,
+    "ImpactedArea": null,
+    "LastUpdatedTime": "2026-11-17T03:14:31.833Z",
+    "FeedReceivedTime": "2026-11-16T19:37:20.932Z",
+    "History": [
+      {
+        "ImpactedSuburbs": [
+          {
+            "SuburbName": "CRAIGIEBURN",
+            "PostCode": 3064,
+            "Streets": [
+              "BEACON HILLS CR",
+              "BEACON HILLS CRESCENT",
+              "LEE ST",
+              "WOODLANDS CT"
+            ]
+          }
+        ],
+        "ImpactedAreaGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 58,
+            "eventId": "J.26.0152337",
+            "startTime": "2026-11-16T21:45:28",
+            "restoreTime": "2026-11-17T00:23:21",
+            "suburbs": [
+              {
+                "suburbName": "CRAIGIEBURN",
+                "postcode": 3064,
+                "streets": [
+                  "BEACON HILLS CR",
+                  "BEACON HILLS CRESCENT",
+                  "LEE ST",
+                  "WOODLANDS CT"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  144.92870240317416,
+                  -37.59355788701357
+                ],
+                [
+                  144.92864122262478,
+                  -37.59353626394883
+                ],
+                [
+                  144.92860429836193,
+                  -37.59349197417778
+                ],
+                [
+                  144.9284298900983,
+                  -37.59303776865865
+                ],
+                [
+                  144.9286437582124,
+                  -37.59177100962709
+                ],
+                [
+                  144.92868989881572,
+                  -37.59170827706317
+                ],
+                [
+                  144.9287785183479,
+                  -37.59168980549973
+                ],
+                [
+                  144.92921622545416,
+                  -37.59173716883137
+                ],
+                [
+                  144.93135006108983,
+                  -37.59200221584672
+                ],
+                [
+                  144.93139559655495,
+                  -37.59201580774278
+                ],
+                [
+                  144.93144213080464,
+                  -37.59205970593223
+                ],
+                [
+                  144.9316913066177,
+                  -37.59312022044549
+                ],
+                [
+                  144.9316547608848,
+                  -37.59329081129552
+                ],
+                [
+                  144.93116189197505,
+                  -37.593792540286174
+                ],
+                [
+                  144.9310685225137,
+                  -37.59381403525446
+                ],
+                [
+                  144.92870240317416,
+                  -37.59355788701357
+                ]
+              ]
+            ]
+          }
+        },
+        "ImpactedArea": [
+          [
+            {
+              "Latitude": -37.59355788701357,
+              "Longitude": 144.92870240317416
+            },
+            {
+              "Latitude": -37.59353626394883,
+              "Longitude": 144.92864122262478
+            },
+            {
+              "Latitude": -37.59349197417778,
+              "Longitude": 144.92860429836193
+            },
+            {
+              "Latitude": -37.59303776865865,
+              "Longitude": 144.9284298900983
+            },
+            {
+              "Latitude": -37.59177100962709,
+              "Longitude": 144.9286437582124
+            },
+            {
+              "Latitude": -37.59170827706317,
+              "Longitude": 144.92868989881572
+            },
+            {
+              "Latitude": -37.59168980549973,
+              "Longitude": 144.9287785183479
+            },
+            {
+              "Latitude": -37.59173716883137,
+              "Longitude": 144.92921622545416
+            },
+            {
+              "Latitude": -37.59200221584672,
+              "Longitude": 144.93135006108983
+            },
+            {
+              "Latitude": -37.59201580774278,
+              "Longitude": 144.93139559655495
+            },
+            {
+              "Latitude": -37.59205970593223,
+              "Longitude": 144.93144213080464
+            },
+            {
+              "Latitude": -37.59312022044549,
+              "Longitude": 144.9316913066177
+            },
+            {
+              "Latitude": -37.59329081129552,
+              "Longitude": 144.9316547608848
+            },
+            {
+              "Latitude": -37.593792540286174,
+              "Longitude": 144.93116189197505
+            },
+            {
+              "Latitude": -37.59381403525446,
+              "Longitude": 144.9310685225137
+            },
+            {
+              "Latitude": -37.59355788701357,
+              "Longitude": 144.92870240317416
+            }
+          ]
+        ],
+        "RestorationTime": "2026-11-17T00:23:21",
+        "ImpactedCustomers": 58,
+        "LocationGeoJson": {
+          "type": "Feature",
+          "properties": {
+            "type": "Historical",
+            "customersOff": 58,
+            "eventId": "J.26.0152337",
+            "startTime": "2026-11-16T21:45:28",
+            "restoreTime": "2026-11-17T00:23:21",
+            "suburbs": [
+              {
+                "suburbName": "CRAIGIEBURN",
+                "postcode": 3064,
+                "streets": [
+                  "BEACON HILLS CR",
+                  "BEACON HILLS CRESCENT",
+                  "LEE ST",
+                  "WOODLANDS CT"
+                ]
+              }
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              144.930060598358,
+              -37.5927519203771
+            ]
+          }
+        },
+        "Location": {
+          "Latitude": -37.5927519203771,
+          "Longitude": 144.930060598358
+        }
+      }
+    ]
+  },
+  {
+    "PlannedStartTime": "2026-11-17T07:30:00",
+    "PlannedEndTime": "2026-11-17T16:30:00",
+    "EventId": "J.26.0150735",
+    "Type": "Planned",
+    "Status": "Planned Outage Execution",
+    "Cause": "Essential Maintenance",
+    "StartTime": "2026-11-17T10:03:41",
+    "RestorationTime": null,
+    "ImpactedCustomers": 8,
+    "LocationGeoJson": {
+      "type": "Feature",
+      "properties": {
+        "eventId": "J.26.0150735",
+        "customerReference": "J5225342",
+        "customersOff": "8",
+        "status": "Planned Outage Execution",
+        "type": "Planned",
+        "resolvedFlag": "false",
+        "showOutageFlag": "false",
+        "symptoms": [],
+        "cause": "Essential Maintenance",
+        "startTime": "2026-11-17T10:03:41",
+        "etr": "2026-11-17T16:30:00",
+        "plannedStartTime": "2026-11-17T07:30:00",
+        "plannedEndTime": "2026-11-17T16:30:00",
+        "lastUpdateTime": "2026-11-17T10:03:49"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          145.04802579920238,
+          -37.76233415663229
+        ]
+      }
+    },
+    "Location": {
+      "Latitude": -37.76233415663229,
+      "Longitude": 145.04802579920238
+    },
+    "ImpactedSuburbs": [
+      {
+        "SuburbName": "IVANHOE",
+        "PostCode": 3079,
+        "Streets": [
+          "MELCOMBE RD",
+          "OXFORD CT",
+          "UPPER HEIDELBERG RD"
+        ]
+      }
+    ],
+    "ImpactedAreaGeoJson": {
+      "type": "Feature",
+      "properties": {
+        "eventId": "J.26.0150735",
+        "customerReference": "J5225342",
+        "customersOff": "8",
+        "status": "Planned Outage Execution",
+        "type": "Planned",
+        "resolvedFlag": "false",
+        "showOutageFlag": "false",
+        "symptoms": [],
+        "cause": "Essential Maintenance",
+        "startTime": "2026-11-17T10:03:41",
+        "etr": "2026-11-17T16:30:00",
+        "plannedStartTime": "2026-11-17T07:30:00",
+        "plannedEndTime": "2026-11-17T16:30:00",
+        "lastUpdateTime": "2026-11-17T10:03:49"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              145.04741298996984,
+              -37.76254731412462
+            ],
+            [
+              145.0473680275184,
+              -37.762497148581794
+            ],
+            [
+              145.04738869998772,
+              -37.76203566511156
+            ],
+            [
+              145.0474628643741,
+              -37.76183701330592
+            ],
+            [
+              145.04750621362152,
+              -37.76180980243954
+            ],
+            [
+              145.04789685407638,
+              -37.76185246714752
+            ],
+            [
+              145.04806633948598,
+              -37.76192672468933
+            ],
+            [
+              145.04825119431825,
+              -37.76205594872402
+            ],
+            [
+              145.0486835708864,
+              -37.762512273735354
+            ],
+            [
+              145.04866791865382,
+              -37.76254433907031
+            ],
+            [
+              145.04824501777884,
+              -37.76284853364624
+            ],
+            [
+              145.04821099334288,
+              -37.76285851082504
+            ],
+            [
+              145.04753052941155,
+              -37.76262715738242
+            ],
+            [
+              145.04741298996984,
+              -37.76254731412462
+            ]
+          ]
+        ]
+      }
+    },
+    "ImpactedArea": [
+      [
+        {
+          "Latitude": -37.76254731412462,
+          "Longitude": 145.04741298996984
+        },
+        {
+          "Latitude": -37.762497148581794,
+          "Longitude": 145.0473680275184
+        },
+        {
+          "Latitude": -37.76203566511156,
+          "Longitude": 145.04738869998772
+        },
+        {
+          "Latitude": -37.76183701330592,
+          "Longitude": 145.0474628643741
+        },
+        {
+          "Latitude": -37.76180980243954,
+          "Longitude": 145.04750621362152
+        },
+        {
+          "Latitude": -37.76185246714752,
+          "Longitude": 145.04789685407638
+        },
+        {
+          "Latitude": -37.76192672468933,
+          "Longitude": 145.04806633948598
+        },
+        {
+          "Latitude": -37.76205594872402,
+          "Longitude": 145.04825119431825
+        },
+        {
+          "Latitude": -37.762512273735354,
+          "Longitude": 145.0486835708864
+        },
+        {
+          "Latitude": -37.76254433907031,
+          "Longitude": 145.04866791865382
+        },
+        {
+          "Latitude": -37.76284853364624,
+          "Longitude": 145.04824501777884
+        },
+        {
+          "Latitude": -37.76285851082504,
+          "Longitude": 145.04821099334288
+        },
+        {
+          "Latitude": -37.76262715738242,
+          "Longitude": 145.04753052941155
+        },
+        {
+          "Latitude": -37.76254731412462,
+          "Longitude": 145.04741298996984
+        }
+      ]
+    ],
+    "LastUpdatedTime": "2026-11-17T14:15:23",
+    "FeedReceivedTime": "2026-11-17T03:15:23.897Z",
+    "History": null
   }
 ]
