@@ -1,0 +1,42 @@
+{
+  "extracted": "Wed 25 Nov 2026, 01:11 PM Melbourne time",
+  "sources": {
+    "jemena-map-feed": {
+      "ok": true,
+      "count": 2,
+      "detail": ""
+    },
+    "jemena-planned-table": {
+      "ok": true,
+      "count": 181,
+      "detail": ""
+    },
+    "ausnet": {
+      "ok": true,
+      "count": 235,
+      "detail": ""
+    },
+    "citipower-powercor-united-energy": {
+      "ok": true,
+      "count": 17,
+      "detail": "live outages only, none in advance"
+    }
+  },
+  "verify": {
+    "confirmed": 63,
+    "kept": 59,
+    "demoted": 8,
+    "rejected": 336,
+    "lookups": 53,
+    "lookup_errors": 0
+  },
+  "leads": {
+    "created": 92,
+    "updated": 123,
+    "cancelled": 0,
+    "retracted": 190,
+    "skipped": 9,
+    "errors": 0,
+    "configured": true
+  }
+}
