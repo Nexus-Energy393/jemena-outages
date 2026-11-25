@@ -4,7 +4,12 @@ on:
   schedule:
     # Hourly through the Melbourne business day: 7 am – 6 pm AEST
     # (= 21:00–08:00 UTC; during daylight saving this shifts to 8 am – 7 pm).
-    - cron: '0 21-23,0-8 * * *'
+    #
+    # Minute 23, not minute 0. GitHub sheds scheduled runs at the top of the
+    # hour, when every repo's cron fires at once: in Nov 2026 this workflow ran
+    # about twice a day instead of twelve times (Actions history, 16-25 Nov).
+    # An odd minute is what GitHub itself recommends for schedules that matter.
+    - cron: '23 21-23,0-8 * * *'
   workflow_dispatch:
     inputs:
       is_retry:
@@ -46,6 +51,9 @@ jobs:
 
       # Playwright no longer needed: Jemena's outage data now comes straight
       # from the poweroutages.jemena.com.au JSON feed (no browser, no DOM).
+
+      - name: Run the logic tests
+        run: python -m unittest discover -s tests
 
       - name: Run scraper and rebuild map
         id: scrape
@@ -91,7 +99,7 @@ jobs:
       - name: Fail the run if the scrape itself failed
         if: steps.scrape.outcome == 'failure'
         run: |
-          echo "::error::Scrape step failed. See docs/_last_scrape_raw.json for the raw Jemena feed."
+          echo "::error::Scrape step failed. See docs/health.json for each source and docs/_last_scrape_raw.json for the raw Jemena feed."
           exit 1
 
   retry:

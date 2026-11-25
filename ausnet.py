@@ -15,7 +15,7 @@ We filter early to avoid pulling polygons we'll discard:
 - Planned only (type: 'Planned'), not Cancelled
 - Within MAX_DISTANCE_KM of the operator base
 - Active (start/end in the future or now)
-- Customer count >= MIN_CUSTOMERS
+- Customer count >= MIN_CUSTOMERS (1 by default, see the note on the constant)
 - Duration >= MIN_HOURS
 
 Output format mirrors Jemena's `raw_outages`:
@@ -60,8 +60,28 @@ OPERATOR_BASE_LNG = 145.1833
 MAX_DISTANCE_KM = 200.0
 
 # Filters
-MIN_CUSTOMERS = 10
+# MIN_CUSTOMERS was 10 until Nov 2026. That dropped every outage affecting 1-9
+# customers, which is exactly what a single supermarket, factory or servo on
+# its own transformer looks like. Matching is against watched sites only, so a
+# small outage costs nothing unless one of our sites is in it.
+MIN_CUSTOMERS = int(_os.environ.get("AUSNET_MIN_CUSTOMERS", "1"))
 MIN_HOURS = 6.0
+
+# A boundary wider than this is not a real de-energised area: AusNet's hull
+# occasionally swallows one mis-located meter (Nov 2026: a Seaspray outage
+# drawn as a 193 km sliver to Ringwood, which put 283 unaffected sites "in
+# zone"). Such polygons are clipped for display and never trusted on their own.
+DEGENERATE_SPAN_KM = 40.0
+REPAIR_RADIUS_KM = 25.0
+# Outages with no published boundary (mostly 1-2 customer jobs) get a small
+# search circle around AusNet's incident point. A site in it only counts when
+# AusNet's own street search confirms the street.
+SYNTHETIC_RADIUS_M = 250.0
+
+AUSNET_SEARCH_PATH = "/api/v1/outages/search"
+BOUNDARY_CACHE_FILE = "ausnet_boundaries.json"
+STREET_SEARCH_CACHE_FILE = "ausnet_street_search.json"
+STREET_SEARCH_TTL_HOURS = 3.0
 
 # Network identity attached to each outage
 NETWORK = "Ausnet"
@@ -229,13 +249,12 @@ class AusnetClient:
 
         Returns [[lat, lng], ...] or None if not found.
         """
-        # Confirmed endpoint: /api/v1/outages/outageboundary/<incident-id>
+        # Confirmed endpoint (it is the one outagetracker.com.au itself calls,
+        # read from the site's outageTrackerSettings). Incidents with no
+        # boundary answer HTTP 500, so guessing other paths only tripled the
+        # failed requests.
         candidates = [
             f"{AUSNET_API_BASE}/api/v1/outages/outageboundary/{incident_id}",
-            # Older guesses, kept as fallbacks in case Ausnet ever renames
-            f"{AUSNET_API_BASE}/api/v1/outages/{incident_id}/polygon",
-            f"{AUSNET_API_BASE}/api/v1/outages/{incident_id}/boundary",
-            f"{AUSNET_API_BASE}/api/v1/outages/{incident_id}",
         ]
         result = self._try_endpoints(candidates)
         if not result:
@@ -431,6 +450,9 @@ def filter_and_normalise(
             "incident_id": incident_id,
             "centroid_lat": lat,
             "centroid_lng": lng,
+            "towns": _row_towns(row),
+            "last_updated": str(row.get("incidentLastUpdated") or row.get("statusLastUpdated") or ""),
+            "category_id": row.get("categoryId") or "",
             "customers": customers,
             "start_dt": start_dt,
             "end_dt": end_dt,
@@ -444,6 +466,191 @@ def filter_and_normalise(
 
 
 # ---------------------------------------------------------------------------
+# Towns, boundary hygiene, caches and AusNet's own street search
+# ---------------------------------------------------------------------------
+import json as _json
+from pathlib import Path as _Path
+
+_CACHE_DIR = _Path(__file__).parent / ".cache"
+
+
+def norm_town(name) -> str:
+    """'Mt. Eliza ' -> 'MOUNT ELIZA'. One spelling for our suburbs and theirs."""
+    s = re.sub(r"[^A-Za-z0-9 ]+", " ", str(name or "")).upper()
+    s = re.sub(r"\s+", " ", s).strip()
+    s = re.sub(r"^MT ", "MOUNT ", s)
+    return s
+
+
+def _row_towns(row: dict) -> list[dict]:
+    """details[] -> [{name, postcode, customers}], biggest first. AusNet lists
+    every locality with at least one affected meter, which makes it the
+    authority on WHERE an outage is (the boundary alone is not, see
+    DEGENERATE_SPAN_KM)."""
+    out = []
+    for d in row.get("details") or []:
+        if not isinstance(d, dict):
+            continue
+        name = norm_town(d.get("townName"))
+        if not name:
+            continue
+        pc = re.sub(r"\D", "", str(d.get("postCode") or ""))
+        try:
+            cc = int(d.get("customerCount") or 0)
+        except (TypeError, ValueError):
+            cc = 0
+        out.append({"name": name, "postcode": pc, "customers": cc})
+    out.sort(key=lambda t: -t["customers"])
+    return out
+
+
+def town_label(towns: list[dict], limit: int = 3) -> str:
+    names = [t["name"].title() for t in towns[:limit]]
+    extra = len(towns) - len(names)
+    return ", ".join(names) + (f" +{extra} more" if extra > 0 else "")
+
+
+def _span_km(polygon) -> float:
+    lats = [p[0] for p in polygon]
+    lngs = [p[1] for p in polygon]
+    return _haversine_km(min(lats), min(lngs), max(lats), max(lngs))
+
+
+def repair_polygon(polygon, anchor_lat, anchor_lng):
+    """Returns (display_polygon, degenerate). A sane boundary comes back
+    untouched. A degenerate one is clipped to the vertices near AusNet's own
+    incident point so the map shows the real area instead of a sliver across
+    the state; if too little survives, a circle stands in."""
+    if _span_km(polygon) <= DEGENERATE_SPAN_KM:
+        return polygon, False
+    near = [p for p in polygon if _haversine_km(anchor_lat, anchor_lng, p[0], p[1]) <= REPAIR_RADIUS_KM]
+    if len(near) >= 3:
+        return near, True
+    return circle_polygon(anchor_lat, anchor_lng, 2000.0), True
+
+
+def circle_polygon(lat, lng, radius_m, points: int = 16):
+    out = []
+    for i in range(points):
+        a = 2 * math.pi * i / points
+        out.append([
+            lat + (radius_m * math.sin(a)) / 110540.0,
+            lng + (radius_m * math.cos(a)) / (111320.0 * math.cos(math.radians(lat))),
+        ])
+    return out
+
+
+def _load_json_cache(name: str) -> dict:
+    f = _CACHE_DIR / name
+    try:
+        return _json.loads(f.read_text()) if f.exists() else {}
+    except Exception:
+        return {}
+
+
+def _save_json_cache(name: str, data: dict) -> None:
+    try:
+        _CACHE_DIR.mkdir(exist_ok=True)
+        (_CACHE_DIR / name).write_text(_json.dumps(data, sort_keys=True))
+    except Exception as e:  # noqa: BLE001 - a cache is never worth a failed run
+        print(f"[ausnet] could not save {name}: {e}", flush=True)
+
+
+def clean_street(address: str) -> str:
+    """'94/72-82 Princes Drive, Morwell' -> 'Princes Drive'. Returns '' unless
+    the address is a plain numbered street address, because the answer feeds a
+    yes/no question to AusNet and a garbled street reads as a false 'no'."""
+    s = (address or "").strip()
+    if not s or re.search(r"\b(cnr|corner)\b|&| and ", s, re.IGNORECASE):
+        return ""
+    s = re.sub(r"^(shop|unit|suite|level|lot|tenancy|kiosk)\s*[\w-]+\s*[,/]?\s*", "", s, flags=re.IGNORECASE)
+    s = re.sub(r"^[\w-]{1,6}\s*/\s*(?=\d)", "", s)  # "94/72-82 ..." -> "72-82 ..."
+    m = re.match(r"^\d+[A-Za-z]?(?:\s*[-–]\s*\d+[A-Za-z]?)?\s+([A-Za-z][A-Za-z'. -]*?)\s*(?:,|$)", s)
+    if not m:
+        return ""
+    street = re.sub(r"\s+", " ", m.group(1)).strip(" .-")
+    # One-word names ("Main") would prefix-match Main Road AND Main Street.
+    return street if len(street.split()) >= 2 else ""
+
+
+class StreetSearch:
+    """AusNet's own "is this street in an outage" lookup: the POST that the
+    outagetracker.com.au search box makes. It answers from AusNet's meter
+    database, so it is the street-level truth the boundary polygon only
+    approximates. Looked up once per street+suburb, a few at a time, and
+    remembered for STREET_SEARCH_TTL_HOURS so hourly runs stay polite."""
+
+    def __init__(self):
+        self.cache = _load_json_cache(STREET_SEARCH_CACHE_FILE)
+        self.calls = 0
+        self.errors = 0
+
+    @staticmethod
+    def key(street: str, suburb: str) -> str:
+        return f"{street.strip().upper()}|{suburb.strip().upper()}"
+
+    def _fresh(self, k: str):
+        hit = self.cache.get(k)
+        if not hit:
+            return None
+        try:
+            age_h = (datetime.now(timezone.utc) - datetime.fromisoformat(hit["at"])).total_seconds() / 3600.0
+        except Exception:
+            return None
+        return hit["incidents"] if age_h <= STREET_SEARCH_TTL_HOURS else None
+
+    def _fetch(self, street: str, suburb: str):
+        body = {"incidentId": "", "nmi": "", "streetName": street.strip(), "suburb": suburb.strip(), "postCode": ""}
+        for attempt in (1, 2):
+            try:
+                r = requests.post(
+                    AUSNET_API_BASE + AUSNET_SEARCH_PATH, json=body, timeout=30,
+                    headers={"User-Agent": USER_AGENT, "Accept": "application/json",
+                             "Origin": AUSNET_BASE, "Referer": AUSNET_BASE + "/"},
+                )
+                if r.status_code == 204:
+                    return []
+                r.raise_for_status()
+                data = r.json() if r.content else []
+                if not isinstance(data, list):
+                    raise ValueError("unexpected search response shape")
+                return sorted({str(x.get("incident") or x.get("id")) for x in data if isinstance(x, dict)})
+            except Exception as e:  # noqa: BLE001
+                if attempt == 2:
+                    print(f"[ausnet-search] {street}, {suburb}: {e}", flush=True)
+                time.sleep(1.5)
+        return None
+
+    def lookup_many(self, pairs) -> dict:
+        """pairs: iterable of (street, suburb). Returns {key: [incident ids]}
+        with None for a lookup that failed (unknown, never a 'no')."""
+        from concurrent.futures import ThreadPoolExecutor
+        todo, out = [], {}
+        for street, suburb in {(s, b) for s, b in pairs if s and b}:
+            k = self.key(street, suburb)
+            cached = self._fresh(k)
+            if cached is not None:
+                out[k] = cached
+            else:
+                todo.append((k, street, suburb))
+        if todo:
+            with ThreadPoolExecutor(max_workers=4) as pool:
+                results = list(pool.map(lambda t: (t[0], self._fetch(t[1], t[2])), todo))
+            now = datetime.now(timezone.utc).isoformat()
+            for k, incidents in results:
+                self.calls += 1
+                out[k] = incidents
+                if incidents is None:
+                    self.errors += 1
+                else:
+                    self.cache[k] = {"incidents": incidents, "at": now}
+            # Keep the file small: drop entries past their use-by.
+            self.cache = {k: v for k, v in self.cache.items() if self._fresh(k) is not None}
+            _save_json_cache(STREET_SEARCH_CACHE_FILE, self.cache)
+        return out
+
+
+# ---------------------------------------------------------------------------
 # Top-level entry — called from scrape.py
 # ---------------------------------------------------------------------------
 def scrape_ausnet(
@@ -454,16 +661,17 @@ def scrape_ausnet(
     """Returns a list of normalised Ausnet outages with polygons attached.
 
     Output dicts have:
-        suburb (or '' if unknown — Ausnet doesn't always provide names)
-        street (always '' for Ausnet — polygon-based)
-        start_dt, end_dt
-        start_display, end_display
-        status, duration_hours
+        suburb          the localities AusNet lists, biggest first ("Cowes")
+        towns           [{name, postcode, customers}] straight from details[]
+        street          always '' (polygon-based)
+        start_dt, end_dt, start_display, end_display, status, duration_hours
         network: 'Ausnet'
-        polygon: [[lat,lng],...]
+        polygon         the boundary used to FIND candidate sites (as published,
+                        or a small circle when AusNet publishes none)
+        polygon_display the boundary to draw (clipped when degenerate)
+        polygon_degenerate / polygon_synthetic   trust flags for verify.py
         polygon_centroid: (lat,lng)
-        customers
-        incident_id
+        customers, incident_id
     """
     client = AusnetClient()
 
@@ -478,27 +686,49 @@ def scrape_ausnet(
         print("[ausnet] no candidates passed the cheap filters; nothing to fetch", flush=True)
         return []
 
-    print(f"[ausnet] fetching polygons for {len(candidates)} incidents...", flush=True)
+    # Boundaries only change when AusNet touches the incident, so remember them
+    # against the incident's last-updated stamp instead of re-fetching ~200
+    # every run. "p": None records "AusNet publishes no boundary for this one".
+    cache = _load_json_cache(BOUNDARY_CACHE_FILE)
+    fresh_cache = {}
     out = []
-    failed = 0
-    for i, c in enumerate(candidates, 1):
-        polygon = client.fetch_polygon(c["incident_id"])
+    counts = {"published": 0, "synthetic": 0, "degenerate": 0}
+    polygons = {}
+    need = []
+    for c in candidates:
+        hit = cache.get(c["incident_id"])
+        if hit and hit.get("u") == c["last_updated"] and "p" in hit:
+            polygons[c["incident_id"]] = hit["p"]
+        else:
+            need.append(c["incident_id"])
+    reused, fetched = len(polygons), len(need)
+    if need:
+        # A few at a time: the first run after a cold cache has ~230 to fetch.
+        from concurrent.futures import ThreadPoolExecutor
+        with ThreadPoolExecutor(max_workers=4) as pool:
+            for iid, poly in zip(need, pool.map(client.fetch_polygon, need)):
+                polygons[iid] = poly
+    for c in candidates:
+        iid = c["incident_id"]
+        polygon = polygons.get(iid)
+        fresh_cache[iid] = {"u": c["last_updated"], "p": polygon}
+
+        synthetic = False
         if not polygon:
-            failed += 1
-            continue
-        # Be polite — small delay between polygon fetches
-        time.sleep(0.05)
-        if i % 25 == 0:
-            print(f"[ausnet]   fetched {i}/{len(candidates)} polygons "
-                  f"({failed} without geometry)", flush=True)
+            polygon = circle_polygon(c["centroid_lat"], c["centroid_lng"], SYNTHETIC_RADIUS_M)
+            synthetic = True
+        display, degenerate = repair_polygon(polygon, c["centroid_lat"], c["centroid_lng"])
+        counts["synthetic" if synthetic else "published"] += 1
+        if degenerate:
+            counts["degenerate"] += 1
+            print(f"[ausnet] {iid}: boundary spans {_span_km(polygon):.0f} km for {c['customers']} customers "
+                  f"({town_label(c['towns'])}); clipped for display, matches need town + street proof", flush=True)
 
-        # Compute polygon centroid (more accurate than the API-provided one
-        # for matching purposes).
-        plat = sum(p[0] for p in polygon) / len(polygon)
-        plng = sum(p[1] for p in polygon) / len(polygon)
-
+        plat = sum(p[0] for p in display) / len(display)
+        plng = sum(p[1] for p in display) / len(display)
         out.append({
-            "suburb": "",  # not in the per-incident or list response we've seen
+            "suburb": town_label(c["towns"]),
+            "towns": c["towns"],
             "street": "",  # polygon-based, no street list
             "street_raw": "",
             "start_dt": c["start_dt"],
@@ -509,13 +739,19 @@ def scrape_ausnet(
             "duration_hours": c["duration_hours"],
             "network": NETWORK,
             "polygon": polygon,
+            "polygon_display": display,
+            "polygon_degenerate": degenerate,
+            "polygon_synthetic": synthetic,
             "polygon_centroid": (plat, plng),
+            "anchor": (c["centroid_lat"], c["centroid_lng"]),
             "customers": c["customers"],
-            "incident_id": c["incident_id"],
+            "incident_id": iid,
         })
+    _save_json_cache(BOUNDARY_CACHE_FILE, fresh_cache)
 
-    print(f"[ausnet] done: {len(out)} outages with polygons "
-          f"({failed} skipped due to no polygon)", flush=True)
+    print(f"[ausnet] done: {len(out)} outages ({counts['published']} with a published boundary, "
+          f"{counts['synthetic']} point-only, {counts['degenerate']} degenerate); "
+          f"boundaries fetched {fetched}, reused from cache {reused}", flush=True)
     return out
 
 

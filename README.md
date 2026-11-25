@@ -1,14 +1,41 @@
-# Jemena planned outages — auto-updating map + client impact
+# Planned outages map and lead feed (Jemena, AusNet, CitiPower, Powercor, United Energy)
 
-A self-updating interactive map showing Jemena's planned electricity outages
-(Melbourne's north and west), with automatic identification of affected
-client sites.
+A self-updating map of planned electricity outages across Victoria, matched
+against the sites Nexus watches, published at outages.nexusenergy.au and pushed
+into the Nexy CRM Leads inbox.
 
-A GitHub Action scrapes Jemena's website once a day, matches each affected
-street to its OpenStreetMap geometry, identifies which of your tracked
-clients are in those areas, and publishes everything to GitHub Pages.
+## Where the data comes from
 
-The map URL stays the same forever; contents refresh every morning.
+Traced in Nov 2026 by reading what each distributor's own public outage pages
+load. Nothing here is behind a login.
+
+| Network | Forward view (days ahead) | On the day |
+|---|---|---|
+| Jemena | Planned-outages table: suburb, street, date, time, status (`jemena.com.au/api/ElectricityOutage/electricity-outage`). About 3 weeks ahead. | Outage-map feed adds the real boundary polygon, customers and an event id (read through the CRM relay, the feed is Australia-only). |
+| AusNet | Outage Tracker combined list plus a boundary per incident, 5+ days ahead. Checked against AusNet's town list and street search, see below. | Same feed. |
+| CitiPower, Powercor, United Energy | None published. Their feeds list an outage from the minute it starts. | Live feed with polygon, street, customers. |
+
+So advance leads come from Jemena and AusNet. The other three sharpen the map
+on the day but cannot warn anyone in advance.
+
+## How a site is matched
+
+- **Jemena, upcoming:** the site's street name and suburb appear in the table
+  (definite), or the site is within 100 m of a listed street (possible, amber
+  on the map; only raised as a lead within `NEXY_STREET_NEAR_M`, default 30 m).
+- **Any network with a boundary:** the site is inside it (definite) or within
+  100 m of its edge (possible).
+- **AusNet, verified (`verify.py`):** a boundary match must also survive
+  AusNet's own data. The site's suburb or postcode must be one AusNet lists
+  for the incident, and where the site has a plain street address AusNet's
+  street search is asked whether that street is in the outage. Confirmed
+  streets are marked "confirmed"; a site AusNet's data rules out is dropped
+  and any lead an earlier run opened for it is closed in the CRM.
+- **AusNet outages with no boundary** (mostly 1 or 2 customers) only match a
+  site when the street search confirms it.
+
+`docs/health.json` records what each source returned on the last run. A source
+that fails or comes back empty raises a warning on the Actions run.
 
 ---
 
@@ -74,19 +101,19 @@ A client appears in the affected list if either:
 
 - **Definitely affected**: their address's street name + suburb appears
   exactly in the day's outage list, OR
-- **Possibly affected**: they're within 200m of a shaded street segment
+- **Possibly affected**: they're within 100m of a shaded street segment
 
 Both are shown separately so the team can prioritise. Definite goes red on
 the map and gets a red chip on the affected page; possible goes amber.
 
-The 200m default is set by `BUFFER_METRES` near the top of `scrape.py`.
+The 100m default is set by `BUFFER_METRES` near the top of `scrape.py`.
 
 ---
 
 ## Operational stuff
 
 ### When the data changes
-- Daily run at 06:00 AEST (07:00 AEDT) — see `.github/workflows/update.yml`.
+- Hourly at 23 past, 7 am to 6 pm Melbourne time — see `.github/workflows/update.yml`.
 - The chain list refreshes weekly to avoid hammering OpenStreetMap.
 - Every run saves debug snapshots to `docs/_last_scrape.png` and
   `docs/_last_scrape_raw.json` so failures are diagnosable.
@@ -183,8 +210,8 @@ should rely on Jemena's own notifications, not this tool.
 
 ```
 pip install -r requirements.txt
-python -m playwright install chromium
-python scrape.py
+python -m unittest discover -s tests
+NEXY_DRY_RUN=true python scrape.py
 ```
 
 Output goes to `docs/`. Open `docs/index.html` in a browser to verify.

@@ -225,7 +225,7 @@ function buildAusnetPopup(ao) {
   let body = `<div>
     <h3>${esc(net)} outage zone</h3>
     ${where ? `<div style="font-size:12px;color:#444;margin-bottom:2px">${esc(where)}</div>` : ''}
-    <div style="font-size:11px;color:#888;margin-bottom:4px">${esc(ao.incident_id)}</div>
+    <div style="font-size:11px;color:#888;margin-bottom:4px">${esc(ao.incident_id)}${ao.point_only ? ' · approximate area (no boundary published)' : ''}</div>
     ${cust}
     <h4>Window</h4>
     <div class="outage">${esc(ao.start)} – ${esc(ao.end)} <span style="color:#999">${ao.duration_hours!=null?'('+ao.duration_hours.toFixed(1)+'h)':''}</span>${cancelled}</div>`;
@@ -239,9 +239,10 @@ function buildAusnetPopup(ao) {
       return (a.distance_m || 0) - (b.distance_m || 0);
     });
     body += sorted.slice(0, 12).map(c => {
+      // "confirmed" = the network's own street search lists this site's street.
       const chip = c.match === 'definite'
-        ? '<span class="chip definite">in zone</span>'
-        : `<span class="chip possible">${c.distance_m}m</span>`;
+        ? `<span class="chip definite">${c.verified === 'street' ? 'confirmed' : 'in zone'}</span>`
+        : `<span class="chip possible">${c.verified === 'street-not-listed' ? 'street not listed' : c.distance_m + 'm'}</span>`;
       const link = c.client_id
         ? `<a href="?focus=${esc(c.client_id)}" style="color:#0b57d0">${esc(c.name)}</a>`
         : esc(c.name);

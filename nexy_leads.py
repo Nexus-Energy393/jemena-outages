@@ -14,6 +14,10 @@ Idempotent + two-way:
     never clobbers CRM-side state (status, owner, links, archive, deal).
   * Cancelled outages are pushed too; the CRM closes the matching lead as
     NOT_AFFECTED (and never creates leads for cancelled-only rows).
+  * Retractions travel the same road: when verify.py rules a site out of an
+    outage (the network's own town list or street search says it is not
+    affected), any lead an earlier run opened for that pair is closed as
+    NOT_AFFECTED. Only leads that exist and are still open are touched.
   * After pushing, statuses are read back (GET ?ids=…) so the map can deep-link
     each client to its CRM lead and hide clients the rep dismissed.
 
@@ -46,6 +50,21 @@ HTTP_TIMEOUT = 30
 # CRM lead statuses that mean "the rep said this client isn't affected — hide it"
 DISMISSED_STATUSES = {"DISMISSED", "DISQUALIFIED"}
 
+# Statuses a retraction may close. Anything a person has already resolved
+# (dismissed, converted, expired) is left exactly as they left it.
+OPEN_STATUSES = {"NEW", "REVIEWED", "CONTACTED", "QUALIFIED", "EMAILED", "ENGAGED"}
+
+# The CRM closes a lead when outageStatus contains "cancel"; this wording does
+# that and still tells whoever opens the lead what actually happened.
+RETRACTED_STATUS = "Not affected (match cancelled)"
+
+# Jemena's forward table names streets, not a boundary. A site ON a listed
+# street (name + suburb) is a strong match. A site merely within 100 m of some
+# part of that street is shown amber on the map, but only becomes a lead when
+# it is this close, i.e. it fronts the street and its address just did not
+# parse. Bell Street alone would otherwise raise dozens of weak leads.
+DEFAULT_STREET_NEAR_M = 30.0
+
 
 class NexyClient:
     def __init__(self):
@@ -58,6 +77,10 @@ class NexyClient:
         except ValueError:
             self.max_days_ahead = 21
         self.map_base_url = os.environ.get("MAP_BASE_URL", "https://outages.nexusenergy.au").rstrip("/")
+        try:
+            self.street_near_m = float(os.environ.get("NEXY_STREET_NEAR_M", str(DEFAULT_STREET_NEAR_M)))
+        except ValueError:
+            self.street_near_m = DEFAULT_STREET_NEAR_M
         self._session = requests.Session()
 
     @property
@@ -148,12 +171,19 @@ def _aware_iso(s: str | None) -> str | None:
     return s + "+10:00"
 
 
-def prepare_opportunities(affected, min_hours, max_days_ahead=None, map_base_url="https://outages.nexusenergy.au"):
+def _weak_street_match(outage: dict, limit_m: float) -> bool:
+    """A 'near an affected street' match (no polygon, no name match) beyond the limit."""
+    return outage.get("_match") is None and outage.get("_distance_m") is not None and outage["_distance_m"] > limit_m
+
+
+def prepare_opportunities(affected, min_hours, max_days_ahead=None, map_base_url="https://outages.nexusenergy.au",
+                          street_near_m=DEFAULT_STREET_NEAR_M):
     """One opportunity per (client, incident). Cancelled-only groups are still
     emitted (with outageStatus='Cancelled') so the CRM can close their leads."""
     today = datetime.now(MELBOURNE_TZ).date()
     skipped_too_far = 0
     skipped_below = 0
+    skipped_weak = 0
     opportunities = []
 
     for a in affected:
@@ -163,11 +193,18 @@ def prepare_opportunities(affected, min_hours, max_days_ahead=None, map_base_url
             continue
 
         # Group this client's outages by incident key, remembering definiteness.
+        # Records verify.py could not check (`_soft`) are simply left out:
+        # no new lead, and nothing closed on the strength of a failed lookup.
         groups: dict[str, list[tuple[dict, bool]]] = {}
         for o in a.get("definite", []):
-            groups.setdefault(_incident_key(o), []).append((o, True))
+            if not o.get("_soft"):
+                groups.setdefault(_incident_key(o), []).append((o, True))
         for o in a.get("possible", []):
-            groups.setdefault(_incident_key(o), []).append((o, False))
+            if _weak_street_match(o, street_near_m):
+                skipped_weak += 1
+                continue
+            if not o.get("_soft"):
+                groups.setdefault(_incident_key(o), []).append((o, False))
 
         client_min = client.get("min_outage_hours")
         try:
@@ -176,8 +213,14 @@ def prepare_opportunities(affected, min_hours, max_days_ahead=None, map_base_url
             threshold = min_hours
 
         for key, items in groups.items():
+            # Ruled out by the network's own data: a retraction, unless another
+            # record for the same incident still stands.
+            standing = [(o, d) for o, d in items if not o.get("_rejected")]
+            retraction = not standing
+            if standing:
+                items = standing
             outages = [o for o, _ in items]
-            active = [o for o in outages if (o.get("status") or "").lower() != "cancelled"]
+            active = [] if retraction else [o for o in outages if (o.get("status") or "").lower() != "cancelled"]
             cancelled_only = not active
             pool = active or outages
             durations = [float(o.get("duration_hours") or 0) for o in pool]
@@ -207,7 +250,7 @@ def prepare_opportunities(affected, min_hours, max_days_ahead=None, map_base_url
 
             client_name = client.get("name") or "Unknown"
             title_date = iso_date or _time_from_display(primary.get("start"), "date")
-            status = "Cancelled" if cancelled_only else (primary.get("status") or "Scheduled")
+            status = RETRACTED_STATUS if retraction else ("Cancelled" if cancelled_only else (primary.get("status") or "Scheduled"))
 
             payload = {
                 "externalId": f"{cid}::{key}",
@@ -243,9 +286,13 @@ def prepare_opportunities(affected, min_hours, max_days_ahead=None, map_base_url
             # Drop empty-string / None optionals to keep the payload tight.
             payload = {k: v for k, v in payload.items() if v not in (None, "")}
             payload["_cancelled_only"] = cancelled_only  # internal, stripped before send
+            payload["_retraction"] = retraction
+            payload["_why"] = primary.get("_rejected") or ""
             payload["_client_id"] = cid
             opportunities.append(payload)
 
+    if skipped_weak:
+        print(f"[nexy] {skipped_weak} near-street matches beyond {street_near_m:.0f} m kept on the map only", flush=True)
     if skipped_below:
         print(f"[nexy] {skipped_below} opportunities below duration threshold", flush=True)
     if skipped_too_far:
@@ -265,7 +312,7 @@ def sync_to_nexy(affected):
       client_lead_ids  {client_id: leadId} for deep links,
       not_affected_client_ids [client_id] the rep dismissed (hidden from map)."""
     nexy = NexyClient()
-    summary = {"created": 0, "updated": 0, "cancelled": 0, "skipped": 0, "errors": 0,
+    summary = {"created": 0, "updated": 0, "cancelled": 0, "retracted": 0, "skipped": 0, "errors": 0,
                "configured": nexy.configured, "not_affected_client_ids": [], "client_lead_ids": {}}
     if not nexy.configured:
         print("[nexy] not configured (no NEXY_INTAKE_SECRET set); skipping", flush=True)
@@ -274,7 +321,7 @@ def sync_to_nexy(affected):
     print(f"[nexy] url={nexy.url} dry_run={nexy.dry_run} min_hours={nexy.min_hours} "
           f"max_days_ahead={nexy.max_days_ahead}", flush=True)
 
-    opps = prepare_opportunities(affected, nexy.min_hours, nexy.max_days_ahead, nexy.map_base_url)
+    opps = prepare_opportunities(affected, nexy.min_hours, nexy.max_days_ahead, nexy.map_base_url, nexy.street_near_m)
     print(f"[nexy] {len(opps)} opportunities prepared", flush=True)
     if not opps:
         return summary
@@ -299,8 +346,27 @@ def sync_to_nexy(affected):
     for opp in opps:
         cid = opp.pop("_client_id")
         cancelled_only = opp.pop("_cancelled_only")
+        retraction = opp.pop("_retraction", False)
+        why = opp.pop("_why", "")
         st = pre.get(opp["externalId"]) or {}
         is_new = not st.get("exists")
+
+        if retraction:
+            # Nothing to close unless an earlier run opened a lead that is
+            # still open. (A dry run cannot read CRM state, so it only counts.)
+            if nexy.dry_run:
+                summary["retracted"] += 1
+                continue
+            if is_new or st.get("status") not in OPEN_STATUSES:
+                continue
+            try:
+                nexy.push(opp)
+                summary["retracted"] += 1
+                print(f"[nexy] closed {opp['externalId']} ({opp.get('client')}): {why}", flush=True)
+            except Exception as e:
+                summary["errors"] += 1
+                print(f"[nexy] retraction failed for {opp['externalId']}: {e}", flush=True)
+            continue
 
         if is_new and cid in dismissed_clients and not cancelled_only:
             summary["skipped"] += 1

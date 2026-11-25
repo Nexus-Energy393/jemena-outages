@@ -1,6 +1,18 @@
 """
-Scrape Jemena planned outages, match streets to OpenStreetMap geometry,
-identify affected client sites, and rebuild docs/.
+Scrape planned outages from Victoria's five electricity networks, match them
+to watched client sites, and rebuild docs/.
+
+Where each network's data comes from (traced Nov 2026 by reading what each
+distributor's own public outage pages load):
+
+    Jemena       UPCOMING: jemena.com.au planned-outages table (suburb, street,
+                 date, time), up to ~3 weeks ahead. TODAY: the outage-map feed,
+                 which adds the real boundary polygon once an outage starts.
+    AusNet       outagetracker combined list + per-incident boundary, checked
+                 against AusNet's town list and street search (verify.py).
+    CitiPower,   live map feeds only. They carry an outage from the minute it
+    Powercor,    starts, never before, so they sharpen the map on the day but
+    United En.   cannot produce a lead in advance. No public forward feed exists.
 
 Outputs:
     docs/index.html          - interactive map (suburbs + shaded streets + clients)
@@ -58,6 +70,17 @@ JEMENA_FEED_URLS = [
     "https://poweroutages.jemena.com.au/data/all-outages.json",
 ]
 
+# The table came back (found Nov 2026). Jemena's planned-outages page renders
+# an "ElectricityPlannedOutagesBlock" from this JSON: one row per suburb +
+# street with Date ("03-Dec"), Time ("1030-1500") and Status. It is the ONLY
+# place Jemena publishes outages before the day itself: the map feed above
+# lists an event once it is under way and never earlier, which is why this map
+# showed no upcoming Jemena outages from Jul to Nov 2026 while the table was
+# quietly publishing ~170 of them. Not geo-restricted, so no relay needed.
+JEMENA_PLANNED_URL = os.environ.get(
+    "JEMENA_PLANNED_URL", "https://www.jemena.com.au/api/ElectricityOutage/electricity-outage"
+)
+
 OVERPASS_ENDPOINTS = [
     "https://overpass-api.de/api/interpreter",
     "https://overpass.kumi.systems/api/interpreter",
@@ -74,6 +97,19 @@ NOMINATIM_REVERSE_URL = "https://nominatim.openstreetmap.org/reverse"
 REPO_URL = os.environ.get("REPO_URL", "https://github.com/Nexus-Energy393/jemena-outages")
 USER_AGENT = f"jemena-outage-map/2.0 (+{REPO_URL})"
 MELBOURNE_TZ = timezone(timedelta(hours=10))
+
+
+def melbourne_now() -> datetime:
+    """Melbourne wall-clock time as a naive datetime, daylight saving included.
+    (MELBOURNE_TZ above is a fixed +10:00, an hour slow from October to April;
+    it is kept only because feed timestamps are serialised with it and the CRM
+    reads them as the wall-clock times they are.)"""
+    try:
+        from zoneinfo import ZoneInfo
+        return datetime.now(ZoneInfo("Australia/Melbourne")).replace(tzinfo=None)
+    except Exception:
+        return datetime.now(MELBOURNE_TZ).replace(tzinfo=None)
+
 
 # Chains to pull from OSM. Each entry is an Overpass tag filter and a label.
 # Refreshed weekly; cached the rest of the time.
@@ -244,7 +280,10 @@ def normalise_street(raw: str) -> str:
 
 
 def norm_key(s: str) -> str:
-    return re.sub(r"\s+", " ", s.strip().lower())
+    # "MT ALEXANDER RD" (Jemena) and "Mount Alexander Road" (OSM, the CRM) are
+    # the same street; without this the busiest roads never matched.
+    k = re.sub(r"\s+", " ", s.strip().lower())
+    return re.sub(r"^mt\.? ", "mount ", k)
 
 
 def extract_street_from_address(address: str) -> str:
@@ -369,13 +408,17 @@ def point_in_bbox(plat, plng, bbox):
 # ---------------------------------------------------------------------------
 # Scraping — v2: Jemena's outage-map JSON feed (the website table is gone)
 # ---------------------------------------------------------------------------
-def scrape_outages():
-    """Fetch planned outages from Jemena's outage-map JSON feed.
+SOURCE_HEALTH: dict[str, dict] = {}
 
-    Each feed event carries Type/Status, PlannedStartTime/PlannedEndTime and
-    ImpactedSuburbs -> [{SuburbName, PostCode, Streets: [...]}, ...], which maps
-    one-to-one onto the suburb/street rows the old website table provided.
-    """
+
+def _note_health(source: str, ok: bool, count: int, detail: str = "") -> None:
+    """Per-source result for docs/health.json and the run's annotations."""
+    SOURCE_HEALTH[source] = {"ok": ok, "count": count, "detail": detail}
+
+
+def _fetch_live_feed():
+    """Jemena's outage-map feed: events under way or just finished, with the
+    real boundary polygon. Returns the raw event list, or raises."""
     headers = {
         "User-Agent": (
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -408,23 +451,123 @@ def scrape_outages():
         (DOCS / "_last_scrape_raw.json").write_text(json.dumps(data, indent=2), encoding="utf-8")
     except Exception:
         pass
-
     if not isinstance(data, list):
         raise RuntimeError("Unexpected Jemena feed shape (expected a JSON list of events).")
     if data and not any(isinstance(ev, dict) and "Type" in ev for ev in data):
         raise RuntimeError("Jemena feed schema changed: events no longer carry a Type field.")
+    return data
 
-    outages = _parse_feed(data)
-    planned = sum(1 for ev in data if isinstance(ev, dict) and ev.get("Type") == "Planned")
-    print(
-        f"[scrape] feed: {len(data)} events, {planned} planned, "
-        f"{len(outages)} suburb/street entries",
-        flush=True,
+
+def _fetch_planned_table():
+    """Jemena's upcoming planned-outages table. Returns the row list, or raises."""
+    print(f"[scrape] fetching {JEMENA_PLANNED_URL}", flush=True)
+    resp = requests.get(
+        JEMENA_PLANNED_URL, timeout=60,
+        headers={
+            "User-Agent": USER_AGENT,
+            "Accept": "application/json",
+            "Referer": "https://www.jemena.com.au/outages/electricity-outages/planned-outages",
+        },
     )
-    # An empty result can be legitimate (nothing scheduled right now, or street
-    # detail not yet attached to upcoming events) — the schema tripwire above
-    # is what guards against silent breakage, so don't fail the run on quiet days.
-    return outages
+    resp.raise_for_status()
+    data = resp.json()
+    rows = (data.get("Outages") or data.get("outages")) if isinstance(data, dict) else None
+    if not isinstance(rows, list):
+        raise RuntimeError("Jemena planned-outages table changed shape (no Outages list).")
+    if rows and not all(k in rows[0] for k in ("Suburb", "Street", "Date", "Time")):
+        raise RuntimeError(f"Jemena planned-outages table changed columns: {sorted(rows[0])}")
+    try:
+        (DOCS / "_last_planned_table.json").write_text(json.dumps(data, indent=2), encoding="utf-8")
+    except Exception:
+        pass
+    return rows
+
+
+def _parse_planned_table(rows, now=None):
+    """Table rows -> the suburb+street entries the pipeline uses. Rows carry no
+    event id or polygon, so matching falls back to street name + suburb (and
+    street geometry for near misses). Cancelled rows are kept: that is how a
+    cancellation reaches the CRM and closes the lead."""
+    now = now or melbourne_now()
+    out = []
+    skipped_past = skipped_bad = 0
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        suburb = (row.get("Suburb") or "").strip()
+        street = (row.get("Street") or "").strip()
+        date_dt = parse_date_str(row.get("Date") or "")
+        sh, eh = parse_time_range(row.get("Time") or "")
+        if not suburb or not street or date_dt is None or sh is None or eh is None:
+            skipped_bad += 1
+            continue
+        day = date_dt.replace(tzinfo=None)
+        start_dt = day.replace(hour=sh[0], minute=sh[1])
+        end_dt = day.replace(hour=eh[0], minute=eh[1])
+        if end_dt <= start_dt:
+            end_dt = end_dt + timedelta(days=1)
+        if end_dt < now:
+            skipped_past += 1
+            continue  # already over: nothing to sell, nothing to warn about
+        out.append({
+            "suburb": suburb.upper(),
+            "street_raw": street,
+            "street": normalise_street(street),
+            "start_dt": start_dt,
+            "end_dt": end_dt,
+            "start_display": start_dt.strftime("%a %d %b, %I:%M %p").replace(" 0", " "),
+            "end_display": end_dt.strftime("%I:%M %p").lstrip("0"),
+            "status": (row.get("Status") or "Scheduled").strip() or "Scheduled",
+            "event_id": None,
+            "polygon": [],
+            "customers": None,
+        })
+    print(f"[scrape] planned table: {len(rows)} rows, {len(out)} upcoming "
+          f"({skipped_past} already over, {skipped_bad} unreadable)", flush=True)
+    return out
+
+
+def scrape_outages():
+    """Jemena planned outages from both of its public sources.
+
+    The planned-outages table is the forward view (weeks ahead, no polygon);
+    the outage-map feed is the today view (polygon, customers, event id). An
+    outage that is in both is taken from the feed, which is the richer record.
+    Either source can fail without sinking the run; both failing raises.
+    """
+    live, table = [], []
+    live_err = table_err = None
+    try:
+        data = _fetch_live_feed()
+        live = _parse_feed(data)
+        planned = sum(1 for ev in data if isinstance(ev, dict) and ev.get("Type") == "Planned")
+        print(f"[scrape] map feed: {len(data)} events, {planned} planned, "
+              f"{len(live)} suburb/street entries", flush=True)
+        _note_health("jemena-map-feed", True, len(live))
+    except Exception as e:
+        live_err = e
+        print(f"::warning::Jemena outage-map feed failed: {e}", flush=True)
+        _note_health("jemena-map-feed", False, 0, str(e))
+    try:
+        table = _parse_planned_table(_fetch_planned_table())
+        _note_health("jemena-planned-table", True, len(table),
+                     "" if table else "table returned no upcoming outages")
+        if not table:
+            # Jemena always has work booked. An empty table is how the last
+            # silent failure looked (Jul 2026), so say so where it is seen.
+            print("::warning::Jemena planned-outages table returned no upcoming outages", flush=True)
+    except Exception as e:
+        table_err = e
+        print(f"::warning::Jemena planned-outages table failed: {e}", flush=True)
+        _note_health("jemena-planned-table", False, 0, str(e))
+    if live_err and table_err:
+        raise RuntimeError(f"Both Jemena sources failed: feed: {live_err}; table: {table_err}")
+
+    covered = {(o["suburb"], norm_key(o["street"]), o["start_dt"].date()) for o in live}
+    fresh = [o for o in table if (o["suburb"], norm_key(o["street"]), o["start_dt"].date()) not in covered]
+    if len(fresh) != len(table):
+        print(f"[scrape] {len(table) - len(fresh)} table rows already in the map feed (kept the feed's polygon)", flush=True)
+    return live + fresh
 
 
 def _parse_feed_time(s):
@@ -617,6 +760,28 @@ def nominatim(query: str, retries=2):
     return None
 
 
+UNLOCATED_RETRY_DAYS = 7
+
+
+def _unlocated_stamp() -> dict:
+    return {"unlocated": True, "at": melbourne_now().date().isoformat()}
+
+
+def _unlocated_fresh(entry) -> bool:
+    """True while a remembered 'could not locate' is still young enough to
+    trust. ~170 watched sites sit interstate or carry an address Nominatim
+    cannot place; re-asking for every one of them on every run was 8 of each
+    run's 13 minutes. Fixing the address in the CRM changes the cache key, so
+    a corrected site is retried on the very next run regardless."""
+    if not isinstance(entry, dict) or not entry.get("unlocated"):
+        return False
+    try:
+        age = (melbourne_now().date() - datetime.strptime(entry.get("at", ""), "%Y-%m-%d").date()).days
+    except ValueError:
+        return False
+    return age < UNLOCATED_RETRY_DAYS
+
+
 def geocode_suburb(name):
     name = (name or "").strip()
     if not name:
@@ -624,14 +789,19 @@ def geocode_suburb(name):
     cache = load_cache("suburbs.json")
     if name.upper() in cache:
         loc = cache[name.upper()]
-        return loc if _valid_vic_loc(loc.get("lat", 0), loc.get("lng", 0)) else None
+        if _valid_vic_loc(loc.get("lat", 0), loc.get("lng", 0)):
+            return loc
+        if _unlocated_fresh(loc):
+            return None
     print(f"[geocode-suburb] {name}", flush=True)
     r = nominatim(f"{name}, Victoria, Australia")
     if not r:
-        return None
+        return None  # lookup failed (network): not a verdict, ask again next run
     loc = {"lat": float(r["lat"]), "lng": float(r["lon"])}
     if not _valid_vic_loc(loc["lat"], loc["lng"]):
         print(f"[geo-quality] suburb {name!r} geocoded outside Victoria — rejected", flush=True)
+        cache[name.upper()] = _unlocated_stamp()
+        save_cache("suburbs.json", cache)
         return None
     cache[name.upper()] = loc
     save_cache("suburbs.json", cache)
@@ -653,7 +823,9 @@ def geocode_client(client):
             c = dict(client)
             c.update(loc)
             return c
-        # junk cached before validation existed — drop and re-geocode
+        if _unlocated_fresh(loc):
+            return None
+        # junk cached before validation existed, or a stale "unlocated" — retry
         cache.pop(key, None)
         save_cache("clients.json", cache)
     address = (client.get("address", "") or "").strip()
@@ -684,6 +856,8 @@ def geocode_client(client):
             c.update(cache[key])
             return c
         print(f"[geo-quality] UNLOCATED: {client.get('name')!r} — fix the address/suburb on this record in the CRM", flush=True)
+        cache[key] = _unlocated_stamp()
+        save_cache("clients.json", cache)
         return None
     loc = {"lat": float(r["lat"]), "lng": float(r["lon"]), "geocoded": "address"}
     cache[key] = loc
@@ -728,7 +902,12 @@ def build_streets_query(suburb_streets, suburb_geo):
         g = suburb_geo.get(suburb)
         if not g:
             continue
-        names = "|".join(regex_escape_minimal(s) for s in sorted(suburb_streets[suburb]))
+        variants = set()
+        for st in suburb_streets[suburb]:
+            variants.add(st)
+            if re.match(r"^Mt\.? ", st):  # OSM spells it out
+                variants.add(re.sub(r"^Mt\.? ", "Mount ", st))
+        names = "|".join(regex_escape_minimal(v) for v in sorted(variants))
         lines.append(f'  way["name"~"^({names})$",i]["highway"](around:3500,{g["lat"]},{g["lng"]});')
     lines += [");", "out geom;"]
     return "\n".join(lines)
@@ -758,12 +937,27 @@ def fetch_chains():
         except Exception:
             pass
 
+    # The state-wide chains query has timed out on every run since mid Nov
+    # 2026, costing ~3 minutes of waiting each time before falling back to the
+    # cache anyway. After a failed refresh, wait a day before trying again.
+    last_try = meta.get("last_attempt")
+    if last_try:
+        try:
+            if (datetime.now(timezone.utc) - datetime.fromisoformat(last_try)) < timedelta(hours=24):
+                cached = load_cache("chains.json")
+                if cached.get("clients"):
+                    print(f"[chains] refresh failed at {last_try}; using cache until a day has passed", flush=True)
+                    return cached["clients"]
+        except Exception:
+            pass
+
     print("[chains] fetching from OSM (weekly refresh)", flush=True)
     query = build_chains_query(JEMENA_BBOX)
     try:
         result = fetch_overpass(query, endpoints=OVERPASS_ENDPOINTS[:3], attempts=1, timeout=(15, 60))
     except Exception as e:
         print(f"[chains] fetch failed, using stale cache if any: {e}", flush=True)
+        save_cache("chains_meta.json", {**meta, "last_attempt": datetime.now(timezone.utc).isoformat()})
         cached = load_cache("chains.json")
         return cached.get("clients", [])
 
@@ -1082,7 +1276,8 @@ def assemble_clients():
 
     # One-off hygiene: drop cached locations that fail plausibility (state
     # centroid / outside VIC) so those clients re-geocode under validation.
-    junk = [k for k, v in client_cache.items() if not _valid_vic_loc(v.get("lat", 0), v.get("lng", 0))]
+    junk = [k for k, v in client_cache.items()
+            if not v.get("unlocated") and not _valid_vic_loc(v.get("lat", 0), v.get("lng", 0))]
     if junk:
         for k in junk:
             client_cache.pop(k, None)
@@ -1096,7 +1291,8 @@ def assemble_clients():
     new_lookups = 0
     deferred = 0
     for c in user_clients:
-        cached = _cache_key(c) in client_cache
+        hit = client_cache.get(_cache_key(c))
+        cached = hit is not None and (not hit.get("unlocated") or _unlocated_fresh(hit))
         if not cached:
             if new_lookups >= budget:
                 deferred += 1
@@ -1421,6 +1617,10 @@ def write_affected_csv(affected, path, default_min_hours):
                         "listed-street-edge": "Listed street, zone edge",
                         "near-zone": "Near outage zone",
                     }.get(o.get("_match"), "Street/suburb match" if label == "Definite" else "Near affected street")
+                    if o.get("_verified") == "street":
+                        basis = "Street confirmed by AusNet"
+                    elif o.get("_verified") == "street-not-listed":
+                        basis = "In zone, street not listed by AusNet"
                     w.writerow([
                         label, basis, c.get("name", ""), c.get("category", ""), c.get("source", ""),
                         c.get("address", ""), c.get("suburb", ""), c.get("postcode", ""),
@@ -1438,12 +1638,17 @@ def write_affected_csv(affected, path, default_min_hours):
 # Main
 # ---------------------------------------------------------------------------
 def main() -> int:
+    # Jemena failing no longer sinks the run: AusNet (most of the leads) and
+    # the other networks still publish. The run is marked failed at the end so
+    # the workflow's 15-minute retry and the red cross still happen.
+    jemena_failed = False
     try:
         raw_outages = scrape_outages()
     except Exception as e:
-        print(f"[fatal] scrape failed: {e}", flush=True)
+        print(f"::error::Jemena scrape failed, continuing with the other networks: {e}", flush=True)
         traceback.print_exc()
-        return 1
+        raw_outages = []
+        jemena_failed = True
 
     print(f"[scrape] got {len(raw_outages)} outages", flush=True)
 
@@ -1472,9 +1677,27 @@ def main() -> int:
 
     overpass = None
     if suburb_streets:
+        # Street geometry does not change; the question only changes when the
+        # list of affected streets does. Ask Overpass again only then (its
+        # public mirrors cost minutes in timeouts on a bad day).
+        import hashlib
+        streets_query = build_streets_query(suburb_streets, suburb_geo)
+        query_hash = hashlib.sha1(streets_query.encode("utf-8")).hexdigest()
+        cached_streets = load_cache("streets.json")
+        if load_cache("streets_meta.json").get("hash") == query_hash and cached_streets.get("elements"):
+            print(f"[overpass] affected streets unchanged; reusing {len(cached_streets['elements'])} cached segments", flush=True)
+            overpass = cached_streets
+    if suburb_streets and overpass is None:
         try:
-            overpass = fetch_overpass(build_streets_query(suburb_streets, suburb_geo))
+            # The mirror that has been answering goes first; one try each and a
+            # shorter wait, so a dead mirror costs a minute, not six.
+            overpass = fetch_overpass(
+                streets_query,
+                endpoints=[OVERPASS_ENDPOINTS[2], OVERPASS_ENDPOINTS[1], OVERPASS_ENDPOINTS[0]] + OVERPASS_ENDPOINTS[3:],
+                attempts=1, timeout=(15, 90),
+            )
             save_cache("streets.json", overpass)
+            save_cache("streets_meta.json", {"hash": query_hash})
         except Exception as e:
             print(f"[warn] overpass streets failed: {e}", flush=True)
             cached_streets = load_cache("streets.json")
@@ -1485,8 +1708,11 @@ def main() -> int:
                 )
                 overpass = cached_streets
             else:
-                print("[fatal] overpass streets failed and no cached streets available", flush=True)
-                return 1
+                # Street geometry only draws the shaded streets and finds near
+                # misses. Sites ON a listed street match by name + suburb with
+                # no geometry at all, so carry on rather than lose the run.
+                print("::warning::Overpass unavailable and no cached streets: Jemena near-miss matching skipped this run", flush=True)
+                overpass = None
 
     outages_by_pair = {}
     for o in raw_outages:
@@ -1518,13 +1744,18 @@ def main() -> int:
     try:
         from ausnet import scrape_ausnet
         ausnet_outages = scrape_ausnet()
+        _note_health("ausnet", True, len(ausnet_outages), "" if ausnet_outages else "no upcoming outages returned")
+        if not ausnet_outages:
+            print("::warning::AusNet returned no upcoming planned outages", flush=True)
     except Exception as e:
-        print(f"[ausnet] scrape failed (continuing without Ausnet): {e}", flush=True)
+        print(f"::warning::AusNet scrape failed (continuing without AusNet): {e}", flush=True)
         traceback.print_exc()
+        _note_health("ausnet", False, 0, str(e))
     try:
         from vic_networks import scrape_vic_networks
         vic = scrape_vic_networks()
         print(f"[vic] {len(vic)} CitiPower/Powercor/United Energy outages", flush=True)
+        _note_health("citipower-powercor-united-energy", True, len(vic), "live outages only, none in advance")
         ausnet_outages = list(ausnet_outages) + vic
     except Exception as e:
         print(f"[vic] scrape failed (continuing without CPPC/UE): {e}", flush=True)
@@ -1541,7 +1772,7 @@ def main() -> int:
     affected = match_clients_to_outages(clients, streets, raw_outages, ausnet_outages)
     n_def = sum(1 for a in affected if a["definite"])
     n_pos = sum(1 for a in affected if a["possible"] and not a["definite"])
-    print(f"[affected] {n_def} definite, {n_pos} possible-only", flush=True)
+    print(f"[affected] by geometry: {n_def} definite, {n_pos} possible-only", flush=True)
 
     # Reverse-geocode any affected client without a suburb. This catches
     # OSM-pulled chains that lack addr:suburb tags but are inside an Ausnet
@@ -1590,12 +1821,25 @@ def main() -> int:
             rg_lookups += 1
             time.sleep(1.1)  # respect Nominatim rate limit
         except Exception as e:
+            # Not cached: a rate-limit blip used to pin a site to "no suburb" for good.
             print(f"[reverse-geo] failed for {client.get('name')}: {e}", flush=True)
-            reverse_cache[cache_key] = {"suburb": "", "postcode": "", "street": ""}
     if rg_lookups > 0:
         save_cache("reverse_geo.json", reverse_cache)
         print(f"[reverse-geo] resolved {rg_lookups} new client locations "
               f"({len(reverse_cache)} cached total)", flush=True)
+
+    # Second opinion from AusNet's own town list and street search. Runs after
+    # the reverse-geocode above so OSM-sourced sites have a suburb to check. Rejected
+    # records stay on the list (tagged) until the CRM sync has closed any lead
+    # an earlier run opened for them; they are stripped just after it.
+    verify_stats = {}
+    try:
+        from verify import verify_ausnet_matches
+        verify_stats = verify_ausnet_matches(affected, ausnet_outages)
+        print(f"[verify] AusNet matches: {verify_stats}", flush=True)
+    except Exception as e:
+        print(f"::warning::AusNet verification failed, using boundary matches unchecked: {e}", flush=True)
+        traceback.print_exc()
 
     # Outage-suburb fallback: if an affected client's name still has no suburb
     # or mall, append the outage's suburb. (User CSV rows always have suburb,
@@ -1655,6 +1899,16 @@ def main() -> int:
         traceback.print_exc()
         lead_summary = {"created": 0, "updated": 0, "cancelled": 0, "skipped": 0, "configured": False}
 
+    # Verification rejects have done their job (closing stale CRM leads).
+    from verify import strip_rejected
+    before = len(affected)
+    affected = strip_rejected(affected)
+    if before != len(affected):
+        print(f"[verify] {before - len(affected)} site(s) removed: not in the outage per the network's own data", flush=True)
+    n_def = sum(1 for a in affected if a["definite"])
+    n_pos = sum(1 for a in affected if a["possible"] and not a["definite"])
+    print(f"[affected] after verification: {n_def} definite, {n_pos} possible-only", flush=True)
+
     # Apply dismissed-client exclusions to the affected list shown on the map
     # (clients the rep marked "Hide / not affected" in the CRM or on the table)
     not_affected_ids = set(lead_summary.get("not_affected_client_ids", []) or [])
@@ -1699,7 +1953,7 @@ def main() -> int:
 
     matched_pairs = sorted({(s["suburb"].lower(), norm_key(s["name"])) for s in streets})
 
-    now = datetime.now(MELBOURNE_TZ).strftime("%a %d %b %Y, %I:%M %p AEST")
+    now = melbourne_now().strftime("%a %d %b %Y, %I:%M %p") + " Melbourne time"
 
     # Slim down clients for embedding (drop heavy/unused fields)
     def slim_client(c):
@@ -1747,40 +2001,32 @@ def main() -> int:
     # matched within or near each polygon for popup display.
     # Polygons with NO matched clients are dropped — they're noise for our
     # generator-hire use case.
-    from ausnet import point_in_polygon as _pip, polygon_distance_m as _pdist
-
-    ausnet_payload = []
-    ausnet_skipped_no_clients = 0
-    for ao in ausnet_outages:
-        # Find affected clients sitting in or near THIS specific polygon
-        matched_clients = []
-        for a in affected:
-            c = a["client"]
-            clat, clng = c.get("lat"), c.get("lng")
-            if clat is None or clng is None:
-                continue
-            if _pip(clat, clng, ao["polygon"]):
-                matched_clients.append({
+    # Which clients belong to which zone comes from the verified records, not
+    # from re-testing geometry: a site can sit inside a boundary and still have
+    # been ruled out of that outage by the network's own data.
+    zone_clients: dict[str, list[dict]] = {}
+    for a in affected:
+        c = a["client"]
+        for bucket, label in (("definite", "definite"), ("possible", "possible")):
+            for rec in a.get(bucket, []):
+                zid = rec.get("incident_id") or rec.get("event_id")
+                if not zid:
+                    continue
+                zone_clients.setdefault(str(zid), []).append({
                     "client_id": c.get("client_id"),
                     "name": c.get("name"),
                     "category": c.get("category"),
                     "address": c.get("address", ""),
                     "suburb": c.get("suburb", ""),
-                    "match": "definite",
-                    "distance_m": 0,
+                    "match": label,
+                    "distance_m": 0 if label == "definite" else int(rec.get("_distance_m") or 0),
+                    "verified": rec.get("_verified", ""),
                 })
-            else:
-                d = _pdist(clat, clng, ao["polygon"])
-                if d <= BUFFER_METRES:
-                    matched_clients.append({
-                        "client_id": c.get("client_id"),
-                        "name": c.get("name"),
-                        "category": c.get("category"),
-                        "address": c.get("address", ""),
-                        "suburb": c.get("suburb", ""),
-                        "match": "possible",
-                        "distance_m": int(d),
-                    })
+
+    ausnet_payload = []
+    ausnet_skipped_no_clients = 0
+    for ao in ausnet_outages:
+        matched_clients = zone_clients.get(str(ao["incident_id"]), [])
 
         # Every planned outage zone is kept — even with no tracked client — so
         # the map can double as a prospecting tool (planned outages near sites
@@ -1801,7 +2047,9 @@ def main() -> int:
             "duration_hours": ao["duration_hours"],
             "status": ao["status"],
             "customers": ao["customers"],
-            "polygon": ao["polygon"],
+            # Draw the cleaned boundary; the raw one was only for finding candidates.
+            "polygon": ao.get("polygon_display") or ao["polygon"],
+            "point_only": bool(ao.get("polygon_synthetic")),
             "centroid": list(ao["polygon_centroid"]),
             "affected_clients": matched_clients,
             "has_clients": bool(matched_clients),
@@ -1835,24 +2083,7 @@ def main() -> int:
         z["streets"].add(o["street"])
         z["suburbs"].add(o["suburb"].title())
     for eid, z in jemena_zone_payload.items():
-        matched_clients = []
-        for a in affected:
-            c = a["client"]
-            clat, clng = c.get("lat"), c.get("lng")
-            if clat is None or clng is None:
-                continue
-            if _pip(clat, clng, z["polygon"]):
-                dm, mm = 0, "definite"
-            else:
-                dd = _pdist(clat, clng, z["polygon"])
-                if dd > BUFFER_METRES:
-                    continue
-                dm, mm = int(dd), "possible"
-            matched_clients.append({
-                "client_id": c.get("client_id"), "name": c.get("name"),
-                "category": c.get("category"), "address": c.get("address", ""),
-                "suburb": c.get("suburb", ""), "match": mm, "distance_m": dm,
-            })
+        matched_clients = zone_clients.get(str(eid), [])
         # Kept whether or not a client is inside (prospecting layer).
         ausnet_payload.append({
             "incident_id": eid, "network": "Jemena",
@@ -1876,6 +2107,8 @@ def main() -> int:
         "ausnet": ausnet_payload,
         "meta": {
             "source": "Jemena + Ausnet + CitiPower/Powercor + United Energy planned outages · auto-updated",
+            "health": SOURCE_HEALTH,
+            "verify": verify_stats,
             "extracted": now,
             "totalOutages": len(raw_outages),
             "totalAusnet": len(ausnet_outages),
@@ -1907,9 +2140,14 @@ def main() -> int:
         encoding="utf-8",
     )
 
+    (DOCS / "health.json").write_text(
+        json.dumps({"extracted": now, "sources": SOURCE_HEALTH, "verify": verify_stats,
+                    "leads": {k: v for k, v in lead_summary.items() if isinstance(v, (int, bool))}}, indent=2),
+        encoding="utf-8",
+    )
     size = (DOCS / "index.html").stat().st_size
-    print(f"[done] wrote docs/index.html ({size:,}B), affected.html, affected.csv", flush=True)
-    return 0
+    print(f"[done] wrote docs/index.html ({size:,}B), affected.html, affected.csv, health.json", flush=True)
+    return 1 if jemena_failed else 0
 
 
 if __name__ == "__main__":
