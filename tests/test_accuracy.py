@@ -86,6 +86,19 @@ class VerifyTests(unittest.TestCase):
         rec = rows[0]["definite"][0]
         self.assertTrue(rec.get("_rejected") and rec.get("_soft"))
 
+    def test_point_only_outage_with_one_customer_cannot_make_several_sites_definite(self):
+        # Westfield Knox, 2 Dec 2026: 1 HV customer, seven shops on the street.
+        rows = [site(n, "425 Burwood Highway", "Seaspray", "3851") for n in ("Woolworths", "ALDI", "Subway")]
+        inc = {**incident(synthetic=True), "customers": 1}
+        self.run_verify(rows, [inc], {"BURWOOD HIGHWAY|SEASPRAY": ["INCD-1"]})
+        for r in rows:
+            self.assertEqual(r["definite"], [])
+            self.assertEqual(r["possible"][0]["_verified"], "street-shared")
+        # ...but a single matching site on a one-customer outage stays definite
+        one = [site("Factory", "12 Main Road", "Seaspray", "3851")]
+        self.run_verify(one, [inc], {"MAIN ROAD|SEASPRAY": ["INCD-1"]})
+        self.assertEqual(one[0]["definite"][0]["_verified"], "street")
+
     def test_search_failure_is_unknown_not_a_no(self):
         rows = [site("Servo", "12 Main Road", "Seaspray", "3851")]
         self.run_verify(rows, [incident()], {"MAIN ROAD|SEASPRAY": None})

@@ -242,7 +242,7 @@ function buildAusnetPopup(ao) {
       // "confirmed" = the network's own street search lists this site's street.
       const chip = c.match === 'definite'
         ? `<span class="chip definite">${c.verified === 'street' ? 'confirmed' : 'in zone'}</span>`
-        : `<span class="chip possible">${c.verified === 'street-not-listed' ? 'street not listed' : c.distance_m + 'm'}</span>`;
+        : `<span class="chip possible">${c.verified === 'street-not-listed' ? 'street not listed' : c.verified === 'street-shared' ? 'same street' : c.distance_m + 'm'}</span>`;
       const link = c.client_id
         ? `<a href="?focus=${esc(c.client_id)}" style="color:#0b57d0">${esc(c.name)}</a>`
         : esc(c.name);

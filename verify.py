@@ -21,7 +21,9 @@ Each AusNet record on an affected client gets one verdict:
   kept        inside the boundary and nothing contradicts it (town agrees, or
               the site has no usable address to check)
   demoted     inside the boundary and the town agrees, but AusNet does not
-              list the street: stays as a "possible" at the bottom of the pile
+              list the street: stays as a "possible" at the bottom of the pile.
+              Also: more street-confirmed sites than a point-only outage has
+              customers, so no one of them can be called definite
   rejected    AusNet's own data says no: the town is not listed, or the site
               is beside the boundary / on a point-only outage and the street
               is not listed either
@@ -119,6 +121,31 @@ def verify_ausnet_matches(affected: list[dict], outages: list[dict]) -> dict:
                 stats["demoted"] += 1
             else:
                 rec["_rejected"] = f"AusNet does not list {street}, {suburb.title()} for this outage"
+
+    # A point-only outage cannot make more sites "definite" than it has
+    # customers. One HV customer on Burwood Highway, with seven watched shops
+    # on that street inside the search circle (Westfield Knox, 2 Dec 2026), is
+    # one site losing power, or one landlord's supply feeding all seven. We
+    # cannot tell which from here, so each is shown as possible, not definite.
+    shared: dict[str, list] = {}
+    for a in affected:
+        for bucket in ("definite", "possible"):
+            for rec in a.get(bucket, []):
+                inc = by_id.get(rec.get("incident_id")) or {}
+                if rec.get("_verified") == "street" and inc.get("polygon_synthetic"):
+                    shared.setdefault(rec["incident_id"], []).append((rec, bucket))
+    for iid, recs in shared.items():
+        customers = by_id[iid].get("customers") or 0
+        if customers and len(recs) > customers:
+            note = f"(on the outage's street; it affects {customers} customer{'' if customers == 1 else 's'})"
+            for rec, bucket in recs:
+                rec["_verified"] = "street-shared"
+                rec["street"] = rec["street"].replace("(confirmed by AusNet)", note)
+                rec.pop("_promote", None)
+                if bucket == "definite":
+                    rec["_demote"] = True
+                stats["confirmed"] -= 1
+                stats["demoted"] += 1
 
     # Apply promotions / demotions between the two buckets.
     by_incident: dict[str, tuple] = {}

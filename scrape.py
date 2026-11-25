@@ -1621,6 +1621,8 @@ def write_affected_csv(affected, path, default_min_hours):
                         basis = "Street confirmed by AusNet"
                     elif o.get("_verified") == "street-not-listed":
                         basis = "In zone, street not listed by AusNet"
+                    elif o.get("_verified") == "street-shared":
+                        basis = "On the outage's street, fewer customers affected than sites"
                     w.writerow([
                         label, basis, c.get("name", ""), c.get("category", ""), c.get("source", ""),
                         c.get("address", ""), c.get("suburb", ""), c.get("postcode", ""),
@@ -1855,20 +1857,26 @@ def main() -> int:
         if current.lower() != brand.lower():
             # Already enriched (suburb or mall present)
             continue
-        # Pick the outage suburb from the closest outage
-        candidates = a.get("definite", []) + a.get("possible", [])
-        if not candidates:
+        # Pick the outage suburb from the closest outage. Records verify.py
+        # ruled out are no guide to where the site is. AusNet records are left
+        # out as well: their "suburb" is now a list of towns ("Seaspray, The
+        # Honeysuckles +8 more"), and a site's name is also its id (the slug
+        # below), so decorating from it renamed 50 sites and moved their ids
+        # on the first run. AusNet sites keep the name they have always had.
+        definite = [o for o in a.get("definite", []) if not o.get("_rejected") and o.get("network") != "Ausnet"]
+        possible = [o for o in a.get("possible", []) if not o.get("_rejected") and o.get("network") != "Ausnet"]
+        if not definite and not possible:
             continue
         # Prefer definite; otherwise use closest possible
-        if a.get("definite"):
-            outage_suburb = a["definite"][0]["suburb"]
+        if definite:
+            outage_suburb = definite[0]["suburb"]
         else:
             sorted_possible = sorted(
-                a["possible"],
+                possible,
                 key=lambda o: o.get("_distance_m") if o.get("_distance_m") is not None else float("inf"),
             )
             outage_suburb = sorted_possible[0]["suburb"]
-        if outage_suburb and not _name_already_includes(current, outage_suburb):
+        if outage_suburb and "," not in outage_suburb and not _name_already_includes(current, outage_suburb):
             sub = outage_suburb if not outage_suburb.isupper() else outage_suburb.title()
             client["name"] = f"{brand} {sub}"
 
